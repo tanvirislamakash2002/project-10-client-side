@@ -3,16 +3,22 @@ import {
 } from "react-router";
 import App from "../App";
 import RootLayout from "../RootLayout/RootLayout";
-import FindRoommate from "../Pages/FindRoommate";
+import AddFindRoommate from "../Pages/AddFindRoommate";
+import Details from "../Pages/Details";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout></RootLayout>,
+    Component: RootLayout,
     children:[
         {
             index:true,
-            element:<FindRoommate></FindRoommate>
+            Component:AddFindRoommate
+        },
+        {
+            path:'/details',
+            loader:()=>fetch('http://localhost:3000/add-roommate'),
+            Component:Details
         }
     ]
   },

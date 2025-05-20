@@ -1,14 +1,45 @@
 import React from 'react';
+import Swal from 'sweetalert2';
 
-const FindRoommate = () => {
+const AddFindRoommate = () => {
+
+    const handleAddRoommate = (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form)
+        const data = Object.fromEntries(formData.entries())
+        console.log(data)
+
+        //send data to db
+        fetch('http://localhost:3000/add-roommate', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Roommate information added successfully",
+                        showConfirmButton: true,
+                        timer: 900
+                    });
+                    form.reset();
+                }
+            })
+    }
     return (
-        <form className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+        <form onSubmit={handleAddRoommate} className="mx-auto fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
 
             <label className="label">Location</label>
-            <input type="text" className="input" placeholder="Location" />
+            <input name='location' type="text" className="input" placeholder="Location" />
 
             <label className="label">Rent Amount</label>
-            <input type="text" className="input" placeholder="Rent Amount" />
+            <input name='rent-amount' type="text" className="input" placeholder="Rent Amount" />
 
             <label className="label">Room Type</label>
 
@@ -47,7 +78,7 @@ const FindRoommate = () => {
             <textarea placeholder='Description' className='input' name="" id=""></textarea>
 
             <label className="label">Contact info</label>
-            <input type="text" className="input" placeholder="Contact info" />
+            <input name='contact-info' type="text" className="input" placeholder="Contact info" />
 
             <label className="label">Availability</label>
             <div className="flex gap-5">
@@ -61,12 +92,12 @@ const FindRoommate = () => {
                 </div>
             </div>
             <label className="label">User Email</label>
-            <input type="text" className="input" value="DemoEmail@gmail.com" />
+            <input type="text" className="input" readOnly value="DemoEmail@gmail.com" />
             <label className="label">User Name</label>
-            <input type="text" className="input" value="Demo Name" />
+            <input type="text" className="input" readOnly value="Demo Name" />
             <button type='submit' className="btn btn-neutral mt-4">Login</button>
         </form>
     );
 };
 
-export default FindRoommate;
+export default AddFindRoommate;
