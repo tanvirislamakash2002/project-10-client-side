@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import Swal from 'sweetalert2';
 
 const DetailsCard = ({detail}) => {
@@ -40,7 +41,8 @@ const DetailsCard = ({detail}) => {
                 <h2 className="card-title">Cookies!</h2>
                 <p>We are using cookies for no reason.</p>
                 <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Edit</button>
+                    <Link to={`/update-post/${detail._id}`} className="btn btn-primary">Edit</Link>
+                    <Link to={`/single-detail/${detail._id}`} className="btn btn-primary">view detail</Link>
                     <button onClick={()=>handleDelete(detail._id)} className="btn btn-ghost">Delete</button>
                 </div>
             </div>

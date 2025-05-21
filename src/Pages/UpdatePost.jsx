@@ -1,45 +1,41 @@
 import React from 'react';
-import Swal from 'sweetalert2';
+import { useLoaderData } from 'react-router';
 
-const AddFindRoommate = () => {
+const UpdatePost = () => {
+    const data = useLoaderData();
+    const {_id, location, rent_amount } = data
+    console.log('get data', _id)
 
-    const handleAddRoommate = (e) => {
+    const handleEditPost = (e) => {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form)
-        const data = Object.fromEntries(formData.entries())
-        console.log(data)
+        const updatedData = Object.fromEntries(formData.entries())
+        console.log('tis iis data',updatedData)
 
-        //send data to db
-        fetch('http://localhost:3000/add-roommate', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
+        // updated post 
+
+        fetch(`http://localhost:3000/add-roommate/${_id}`,{
+            method:'PUT',
+            headers:{
+                'content-type':'application/json'
             },
-            body: JSON.stringify(data)
+            body:JSON.stringify(updatedData)
         })
-            .then(res => res.json())
-            .then(data => {
-                if (data.insertedId) {
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Roommate information added successfully",
-                        showConfirmButton: true,
-                        timer: 900
-                    });
-                    form.reset();
-                }
-            })
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data)
+        })
+
     }
     return (
-        <form onSubmit={handleAddRoommate} className="mx-auto fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+        <form onSubmit={handleEditPost} className="mx-auto fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
 
             <label className="label">Location</label>
-            <input name='location' type="text" className="input" placeholder="Location" />
+            <input defaultValue={location} name='location' type="text" className="input" placeholder="Location" />
 
             <label className="label">Rent Amount</label>
-            <input name='rent_amount' type="text" className="input" placeholder="Rent Amount" />
+            <input name='rent-amount' type="text" className="input" placeholder="Rent Amount" />
 
             <label className="label">Room Type</label>
 
@@ -78,7 +74,7 @@ const AddFindRoommate = () => {
             <textarea placeholder='Description' className='input' name="" id=""></textarea>
 
             <label className="label">Contact info</label>
-            <input name='contact_info' type="text" className="input" placeholder="Contact info" />
+            <input name='contact-info' type="text" className="input" placeholder="Contact info" />
 
             <label className="label">Availability</label>
             <div className="flex gap-5">
@@ -100,4 +96,4 @@ const AddFindRoommate = () => {
     );
 };
 
-export default AddFindRoommate;
+export default UpdatePost;
