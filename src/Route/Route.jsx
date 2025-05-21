@@ -7,6 +7,8 @@ import AddFindRoommate from "../Pages/AddFindRoommate";
 import Details from "../Pages/Details";
 import SingleDetails from "../Pages/SingleDetails";
 import UpdatePost from "../Pages/UpdatePost";
+import Register from "../Pages/Register";
+import Login from "../Pages/Login";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +18,14 @@ export const router = createBrowserRouter([
         {
             index:true,
             Component:AddFindRoommate
+        },
+        {
+          path:'/register',
+          Component:Register
+        },
+        {
+          path:'/login',
+          Component:Login
         },
         {
             path:'/details',

@@ -1,9 +1,10 @@
 import React from 'react';
 import { useLoaderData } from 'react-router';
+import Swal from 'sweetalert2';
 
 const UpdatePost = () => {
     const data = useLoaderData();
-    const {_id, location, rent_amount } = data
+    const { _id, location, rent_amount } = data
     console.log('get data', _id)
 
     const handleEditPost = (e) => {
@@ -11,21 +12,29 @@ const UpdatePost = () => {
         const form = e.target;
         const formData = new FormData(form)
         const updatedData = Object.fromEntries(formData.entries())
-        console.log('tis iis data',updatedData)
+        console.log('tis iis data', updatedData)
 
         // updated post 
 
-        fetch(`http://localhost:3000/add-roommate/${_id}`,{
-            method:'PUT',
-            headers:{
-                'content-type':'application/json'
+        fetch(`http://localhost:3000/add-roommate/${_id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
             },
-            body:JSON.stringify(updatedData)
+            body: JSON.stringify(updatedData)
         })
-        .then(res=>res.json())
-        .then(data=>{
-            console.log(data)
-        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Updated successfully",
+                        showConfirmButton: true,
+                        timer: 900
+                    });
+                }
+            })
 
     }
     return (
