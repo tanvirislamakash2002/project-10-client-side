@@ -10,11 +10,11 @@ const Navbar = () => {
       <li><NavLink to='/'>Home</NavLink></li>
       <li><NavLink to='/add-find-roommate'>Add Roommate</NavLink></li>
       <li><NavLink to='/browse-listings'>Browse Listings</NavLink></li>
-      <li><NavLink to='/my-listings'>My Listings</NavLink></li>
+      
     </>
 
   return (
-    <div className={`${darkMode&&`bg-amber-600`} navbar shadow-sm`}>
+    <div className={`${darkMode && `bg-amber-600`} navbar shadow-sm`}>
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -36,11 +36,11 @@ const Navbar = () => {
       <div className="navbar-end">
         <label className="swap swap-rotate">
           {/* this hidden checkbox controls the state */}
-          <input type="checkbox" onClick={()=>setDarkMode(!darkMode)} />
+          <input type="checkbox" onClick={() => setDarkMode(!darkMode)} />
 
           {/* sun icon */}
           <svg
-            className={`${darkMode&&`hidden`} h-10 w-10 fill-current`}
+            className={`${darkMode && `hidden`} h-10 w-10 fill-current`}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24">
             <path
@@ -49,15 +49,17 @@ const Navbar = () => {
 
           {/* moon icon */}
           <svg
-            className={`${!darkMode&&`hidden`} h-10 w-10 fill-current`}
+            className={`${!darkMode && `hidden`} h-10 w-10 fill-current`}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24">
             <path
               d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
           </svg>
         </label>
-        {user ? <div><span>{user?.email}</span>
-          <button onClick={logOut} className='btn'>LogOut</button></div>
+        {user ? <div>
+          <NavLink to='/my-listings' className='btn'>My Listings</NavLink>
+          <button onClick={logOut} className='btn'>LogOut</button>
+        </div>
           :
           <>
             <Link to='/login' className="btn">Login</Link>

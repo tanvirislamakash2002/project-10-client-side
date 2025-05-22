@@ -28,7 +28,10 @@ export const router = createBrowserRouter([
         },
         {
           path:'/add-find-roommate',
-          Component:AddFindRoommate
+          element: 
+            <PrivateRoute>
+              <AddFindRoommate></AddFindRoommate>,
+            </PrivateRoute>,
         },
         {
           path:'/register',
@@ -41,12 +44,17 @@ export const router = createBrowserRouter([
         {
           path:'/browse-listings',
           loader:()=>fetch('http://localhost:3000/add-roommate'),
-          Component:BrowseListings
+          Component:BrowseListings,          
+            hydrateFallbackElement:<Loading></Loading>
         },
         {
           path:'/my-listings',
           loader:()=>fetch('http://localhost:3000/add-roommate'),
-          Component:MyListings
+          element: 
+            <PrivateRoute>
+              <MyListings></MyListings>,
+            </PrivateRoute>,            
+            hydrateFallbackElement:<Loading></Loading>
         },
         {
             path:'/details/:id',
