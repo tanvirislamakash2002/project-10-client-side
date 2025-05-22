@@ -7,9 +7,10 @@ const Navbar = () => {
   // console.log(user?.email)
     const links = 
         <>
-        <li><NavLink to='/'>Home</NavLink></li>
-        <li><NavLink to='/details'>Details</NavLink></li>
         <li><NavLink to='/'>Add Roommate</NavLink></li>
+        <li><NavLink to='/browse-listings'>Browse Listings</NavLink></li>
+        <li><NavLink to='/my-listings'>My Listings</NavLink></li>
+        <li><NavLink to='/details'>Details</NavLink></li>
         </>
     
     return (

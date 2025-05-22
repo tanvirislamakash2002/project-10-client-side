@@ -41,8 +41,8 @@ const DetailsCard = ({detail}) => {
                 <h2 className="card-title">Cookies!</h2>
                 <p>We are using cookies for no reason.</p>
                 <div className="card-actions justify-end">
-                    <Link to={`/update-post/${detail._id}`} className="btn btn-primary">Edit</Link>
                     <Link to={`/single-detail/${detail._id}`} className="btn btn-primary">view detail</Link>
+                    <Link to={`/update-post/${detail._id}`} className="btn btn-primary">Edit</Link>
                     <button onClick={()=>handleDelete(detail._id)} className="btn btn-ghost">Delete</button>
                 </div>
             </div>

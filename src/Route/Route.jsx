@@ -11,6 +11,8 @@ import Register from "../Pages/Register";
 import Login from "../Pages/Login";
 import PrivateRoute from "../provider/PrivateRoute";
 import Loading from "../components/Loading";
+import BrowseListings from "../Pages/BrowseListings";
+import MyListings from "../Pages/MyListings";
 
 export const router = createBrowserRouter([
   {
@@ -30,7 +32,17 @@ export const router = createBrowserRouter([
           Component:Login
         },
         {
-            path:'/details',
+          path:'/browse-listings',
+          loader:()=>fetch('http://localhost:3000/add-roommate'),
+          Component:BrowseListings
+        },
+        {
+          path:'/my-listings',
+          loader:()=>fetch('http://localhost:3000/add-roommate'),
+          Component:MyListings
+        },
+        {
+            path:'/details/:id',
             loader:()=>fetch('http://localhost:3000/add-roommate'),
             element: 
             <PrivateRoute>
