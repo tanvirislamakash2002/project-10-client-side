@@ -13,6 +13,7 @@ import PrivateRoute from "../provider/PrivateRoute";
 import Loading from "../components/Loading";
 import BrowseListings from "../Pages/BrowseListings";
 import MyListings from "../Pages/MyListings";
+import Home from "../Pages/Home";
 
 export const router = createBrowserRouter([
   {
@@ -21,7 +22,11 @@ export const router = createBrowserRouter([
     children:[
         {
             index:true,
-            Component:AddFindRoommate
+            Component:Home
+        },
+        {
+          path:'/add-find-roommate',
+          Component:AddFindRoommate
         },
         {
           path:'/register',

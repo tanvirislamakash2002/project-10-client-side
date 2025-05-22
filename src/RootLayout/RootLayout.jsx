@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router';
 import Navbar from '../components/Navbar';
 import Loading from '../components/Loading';
+import Banner from '../components/Banner';
 
 const RootLayout = () => {
     return (

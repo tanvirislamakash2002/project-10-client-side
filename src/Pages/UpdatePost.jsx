@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { use } from 'react';
 import { useLoaderData } from 'react-router';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../provider/AuthProvider';
 
 const UpdatePost = () => {
+    const {user} = use(AuthContext)
     const data = useLoaderData();
-    const { _id, location, rent_amount } = data
+    const { _id, availability, contact_info, description, location, post_email, post_name, post_user_photo, preferences, rent_amount, roomType } = data
     console.log('get data', _id)
 
     const handleEditPost = (e) => {
@@ -44,22 +46,18 @@ const UpdatePost = () => {
             <input defaultValue={location} name='location' type="text" className="input" placeholder="Location" />
 
             <label className="label">Rent Amount</label>
-            <input name='rent-amount' type="text" className="input" placeholder="Rent Amount" />
+            <input defaultValue={rent_amount} name='rent_amount' type="text" className="input" placeholder="Rent Amount" />
 
             <label className="label">Room Type</label>
 
             <div className="flex gap-5">
                 <div className="flex gap-3">
                     <label className="label">Single</label>
-                    <input type="radio" name='roomType' />
+                    <input value="single" type="radio" name='roomType' />
                 </div>
                 <div className="flex gap-3">
                     <label className="label">Shared</label>
-                    <input type="radio" name='roomType' />
-                </div>
-                <div className="flex gap-3">
-                    <label className="label">Single + Shared</label>
-                    <input type="radio" name='roomType' />
+                    <input value="shared" type="radio" name='roomType' />
                 </div>
             </div>
 
@@ -67,39 +65,40 @@ const UpdatePost = () => {
             <div className="flex gap-5">
                 <div className="flex gap-3">
                     <label className="label">Pets</label>
-                    <input type="Checkbox" />
+                    <input name='preferences' value='pets' type="Checkbox" />
                 </div>
                 <div className="flex gap-3">
                     <label className="label">Smoking</label>
-                    <input type="Checkbox" />
+                    <input name='preferences' value='smoking' type="Checkbox" />
                 </div>
                 <div className="flex gap-3">
                     <label className="label">Night Owl</label>
-                    <input type="Checkbox" />
+                    <input name='preferences' value='night_owl' type="Checkbox" />
                 </div>
             </div>
 
             <label className="label">Description</label>
-            <textarea placeholder='Description' className='input' name="" id=""></textarea>
+            <textarea defaultValue={description} placeholder='Description' className='input' name="description" id=""></textarea>
 
             <label className="label">Contact info</label>
-            <input name='contact-info' type="text" className="input" placeholder="Contact info" />
+            <input defaultValue={contact_info} name='contact_info' type="text" className="input" placeholder="Contact info" />
 
             <label className="label">Availability</label>
             <div className="flex gap-5">
                 <div className="flex gap-3">
                     <label className="label">yes</label>
-                    <input type="radio" name='available' />
+                    <input value='yes' name="availability" type="radio" />
                 </div>
                 <div className="flex gap-3">
                     <label className="label">no</label>
-                    <input type="radio" name='available' />
+                    <input value='no' name="availability" type="radio" />
                 </div>
             </div>
             <label className="label">User Email</label>
-            <input type="text" className="input" readOnly value="DemoEmail@gmail.com" />
+            <input name='post_email' type="text" className="input" readOnly value={user && user.email} />
             <label className="label">User Name</label>
-            <input type="text" className="input" readOnly value="Demo Name" />
+            <input name='post_name' type="text" className="input" readOnly value={user && user.displayName} />
+            <input name='post_user_photo' type="text" className="input" readOnly value={user && user.photoURL} />
             <button type='submit' className="btn btn-neutral mt-4">Login</button>
         </form>
     );

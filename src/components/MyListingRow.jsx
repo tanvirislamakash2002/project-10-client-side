@@ -4,7 +4,7 @@ import { AuthContext } from '../provider/AuthProvider';
 import Swal from 'sweetalert2';
 
 const MyListingRow = ({ rowData }) => {
-    const { _id, contact_info, location } = rowData
+    const {  _id, availability, contact_info, description, location, post_email, post_name, post_user_photo, preferences, rent_amount, roomType  } = rowData
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -48,7 +48,7 @@ const MyListingRow = ({ rowData }) => {
                     <div className="avatar">
                         <div className="mask mask-squircle h-12 w-12">
                             <img
-                                src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                                src={post_user_photo}
                                 alt="Avatar Tailwind CSS Component" />
                         </div>
                     </div>
