@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const ListingTableRow = ({rowData}) => {
-    const {_id, contact_info, location} =rowData
+    const {_id, post_email, post_name, post_user_photo, contact_info, location} =rowData
     return (
         <tr>
             <th>
@@ -15,13 +15,13 @@ const ListingTableRow = ({rowData}) => {
                     <div className="avatar">
                         <div className="mask mask-squircle h-12 w-12">
                             <img
-                                src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                                src={post_user_photo}
                                 alt="Avatar Tailwind CSS Component" />
                         </div>
                     </div>
                     <div>
-                        <div className="font-bold">Hart Hagerty</div>
-                        <div className="text-sm opacity-50">United States</div>
+                        <div className="font-bold">{post_name}</div>
+                        <div className="text-sm opacity-50">{post_email}</div>
                     </div>
                 </div>
             </td>
