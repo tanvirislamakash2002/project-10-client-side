@@ -7,6 +7,7 @@ const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [darkMode, setDarkMode] = useState(false)
     
 
     //register
@@ -61,6 +62,8 @@ const AuthProvider = ({ children }) => {
         signIn,
         loginWithGoogle,
         logOut,
+        darkMode,
+        setDarkMode
     }
     return (
         <AuthContext value={authData}>

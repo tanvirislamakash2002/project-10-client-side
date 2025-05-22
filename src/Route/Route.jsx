@@ -14,11 +14,13 @@ import Loading from "../components/Loading";
 import BrowseListings from "../Pages/BrowseListings";
 import MyListings from "../Pages/MyListings";
 import Home from "../Pages/Home";
+import ErrorPage from "../Pages/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
+    errorElement:<ErrorPage></ErrorPage>,
     children:[
         {
             index:true,
