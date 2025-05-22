@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useLoaderData, useParams } from 'react-router';
 import DetailsCard from '../components/DetailsCard';
 import { AuthContext } from '../provider/AuthProvider';
@@ -9,42 +9,54 @@ const Details = () => {
     const data = useLoaderData()
     const { id } = useParams()
 
-    
+
     const singleData = data.find(info => info._id == id)
     const { _id, availability, contact_info, description, location, post_email, post_name, post_user_photo, preferences, rent_amount, roomType, liked_by } = singleData
-    
-    console.log(liked_by)
-    
+
+
     // like management 
     const [liked, setLiked] = useState(false)
-    const checkAvailable = liked_by.includes(user.email)
-    // checkAvailable&&setLiked(false)
-    console.log(checkAvailable)
+    const [currentLiked, setCurrentLiked] = useState(liked_by || [])
+    const [likeCount, setLikeCount] = useState(liked_by?.length || 0)
 
-    const handleLiked=()=>{
-        
+    console.log(liked_by)
+
+    useEffect(() => {
+        setLiked(currentLiked.includes(user?.email))
+
+    }, [currentLiked, user?.email])
+
+    // console.log(likeCount)
+    const handleLiked = () => {
         setLiked(!liked)
-const filterAvailable = liked_by.filter(filterEmail=>filterEmail!=user.email)
-        const updateLike =checkAvailable?{liked_by:filterAvailable}:{ liked_by:[...liked_by, user.email]}
-        console.log('filtered',filterAvailable)
-    
+
+        setLikeCount(liked ? likeCount - 1 : likeCount + 1)
+        console.log(likeCount)
+
+        const filterAvailable = currentLiked.filter(filterEmail => filterEmail != user?.email)
+
+        const updateLike = liked ? filterAvailable : [...currentLiked, user?.email]
+
+
         fetch(`http://localhost:3000/add-roommate/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify(updateLike)
+            body: JSON.stringify({ liked_by: updateLike })
         })
             .then(res => res.json())
             .then(data => {
                 if (data.modifiedCount) {
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Updated successfully",
-                        showConfirmButton: true,
-                        timer: 900
-                    });
+                    // Swal.fire({
+                    //     position: "center",
+                    //     icon: "success",
+                    //     title: "Updated successfully",
+                    //     showConfirmButton: true,
+                    //     timer: 900
+                    // });
+                } else {
+                    setCurrentLiked(currentLiked)
                 }
             })
     }
@@ -59,8 +71,8 @@ const filterAvailable = liked_by.filter(filterEmail=>filterEmail!=user.email)
                     <span className="badge badge-xs badge-warning">Most Popular</span>
                     <div className="flex justify-between">
                         <h2 className="text-3xl font-bold">Premium</h2>
-                        <img src={post_user_photo} alt="" />
-                        <span className="text-xl">$29/mo</span>
+                        <img className='w-44' src={post_user_photo} alt="" />
+                        <span className="text-xl">{likeCount}</span>
                     </div>
                     <ul className="mt-6 flex flex-col gap-2 text-xs">
                         <li>
@@ -103,7 +115,7 @@ const filterAvailable = liked_by.filter(filterEmail=>filterEmail!=user.email)
 
                     </ul>
                     <div className="mt-6">
-                        <button onClick={handleLiked} className="btn btn-primary btn-block">{liked ? `liked` : `disliked`}</button>
+                        <button onClick={handleLiked} className="btn btn-primary btn-block">{liked ? `disliked` : `liked`}</button>
                         <p>{liked ? contact_info : ``}</p>
                     </div>
                 </div>
