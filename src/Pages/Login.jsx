@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { use } from 'react';
+import { AuthContext } from '../provider/AuthProvider';
 
 const Login = () => {
+
+    const {signIn} = use(AuthContext)
+
     const handleLogin = (e) => {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form)
         const data = Object.fromEntries(formData.entries())
         console.log('login', data)
+
+        signIn(data)
+        .then(res=>{
+            alert('login success')
+        })
+        .catch(error=>{
+            alert('faild to login')
+        })
     }
     return (
         <form onSubmit={handleLogin} className="hero bg-base-200 min-h-screen">
