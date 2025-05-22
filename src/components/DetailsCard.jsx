@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import Swal from 'sweetalert2';
 
 const DetailsCard = ({detail}) => {
-    console.log(detail)
+    // console.log(detail)
 
     const handleDelete =(id)=>{
         Swal.fire({

@@ -33,10 +33,14 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    <span>{user?.email}</span>
-    <button onClick={logOut} className='btn'>LogOut</button>
+{user? <div><span>{user?.email}</span>
+    <button onClick={logOut} className='btn'>LogOut</button></div>
+    :
+<>    
     <Link to='/login' className="btn">Login</Link>
     <Link to='/register' className="btn">Register</Link>
+    </>
+  }
   </div>
 </div>
     );

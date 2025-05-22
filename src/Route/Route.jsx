@@ -9,6 +9,8 @@ import SingleDetails from "../Pages/SingleDetails";
 import UpdatePost from "../Pages/UpdatePost";
 import Register from "../Pages/Register";
 import Login from "../Pages/Login";
+import PrivateRoute from "../provider/PrivateRoute";
+import Loading from "../components/Loading";
 
 export const router = createBrowserRouter([
   {
@@ -30,17 +32,23 @@ export const router = createBrowserRouter([
         {
             path:'/details',
             loader:()=>fetch('http://localhost:3000/add-roommate'),
-            Component:Details
+            element: 
+            <PrivateRoute>
+              <Details></Details>,
+            </PrivateRoute>,
+            hydrateFallbackElement:<Loading></Loading>
         },
         {
             path:'/single-detail/:id',
             loader:({params})=>fetch(`http://localhost:3000/add-roommate/${params.id}`),
-            Component:SingleDetails
+            Component:SingleDetails,
+            hydrateFallbackElement:<Loading></Loading>
         },
         {
             path:'/update-post/:id',
             loader:({params})=>fetch(`http://localhost:3000/add-roommate/${params.id}`),
-            Component:UpdatePost
+            Component:UpdatePost,
+            hydrateFallbackElement:<Loading></Loading>
         }
     ]
   },
