@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from 'react';
 import Banner from '../components/Banner';
 import FeaturedRoommates from '../components/FeaturedRoommates';
 import { AuthContext } from '../provider/AuthProvider';
+import { Typewriter } from 'react-simple-typewriter';
 
 const Home = () => {
     const {darkMode} = use(AuthContext)
@@ -18,7 +19,11 @@ useEffect(()=>{
 },[])
 console.log(posts)
     return (
-        <div>
+        <div>a
+            <Typewriter 
+            words={['what a lovely day', 'are you ok']}
+            loop={Infinity}
+            ></Typewriter>
             <Banner></Banner>
                     <div className={`${darkMode&&`bg-amber-400`} px-14 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20`}>
             <div className="grid gap-8 lg:grid-cols-3 sm:max-w-sm sm:mx-auto lg:max-w-full">

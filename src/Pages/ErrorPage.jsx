@@ -1,5 +1,9 @@
+import Lottie from 'lottie-react';
 import React from 'react';
 import { Link } from 'react-router';
+import groovyWalkAnimation from "./groovyWalk.json";
+
+
 
 const ErrorPage = () => {
     return (
@@ -14,6 +18,10 @@ const ErrorPage = () => {
                     <Link to='/' className="px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50">Back to homepage</Link>
                 </div>
             </div>
+
+
+            <Lottie animationData={groovyWalkAnimation} loop={true} />
+
         </section>
     );
 };
