@@ -10,7 +10,7 @@ import ExtraSection2 from '../components/ExptaSection/ExtraSection2';
 const Home = () => {
     const { darkMode } = use(AuthContext)
     const [posts, setPosts] = useState([])
-    console.log(darkMode)
+    // console.log(darkMode)
 
     useEffect(() => {
         fetch('http://localhost:3000/add-roommate')
@@ -20,7 +20,7 @@ const Home = () => {
                 //  console.log(data)
             })
     }, [])
-    console.log(posts)
+    // console.log(posts)
     return (
         <div>
             <CountUp end={444} duration={3} ></CountUp>
