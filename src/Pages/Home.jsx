@@ -10,12 +10,13 @@ import ExtraSection2 from '../components/ExptaSection/ExtraSection2';
 const Home = () => {
     const { darkMode } = use(AuthContext)
     const [posts, setPosts] = useState([])
-    // console.log(darkMode)
+    
 
     useEffect(() => {
-        fetch('http://localhost:3000/add-roommate')
+        fetch('http://localhost:3000/home')
             .then(res => res.json())
             .then(data => {
+
                 setPosts(data)
                 //  console.log(data)
             })
