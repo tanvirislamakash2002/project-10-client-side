@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 const FeaturedRoommates = ({post}) => {
     const {  _id, availability, contact_info, description, location, post_email, post_name, post_user_photo, preferences, rent_amount, roomType  } = post
-    console.log(post_user_photo)
+    // console.log(post_user_photo)
     return (
 
                 <div className="p-8 bg-white border rounded shadow-sm">

@@ -12,7 +12,7 @@ const ExtraSection2 = () => {
         })
         
     },[])
-    console.log(reviewData)
+    // console.log(reviewData)
     return (
         <>
         {

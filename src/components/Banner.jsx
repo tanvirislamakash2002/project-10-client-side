@@ -20,7 +20,7 @@ const Banner = () => {
     },[])
 
 
-console.log(bannerData)
+// console.log(bannerData)
 
 
 
