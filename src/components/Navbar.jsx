@@ -7,14 +7,14 @@ const Navbar = () => {
   // console.log(user?.email)
   const links =
     <>
-      <li className='text-lg'><NavLink className={({isActive})=>isActive?`bg-base-300 text-green-500 border-green-400 border-b-2`:`border-transparent border-b-2`} to='/'>Home</NavLink></li>
-      <li className='text-lg'><NavLink className={({isActive})=>isActive?`bg-base-300 text-green-500 border-green-400 border-b-2`:`border-transparent border-b-2`} to='/add-find-roommate'>Add Roommate</NavLink></li>
-      <li className='text-lg'><NavLink className={({isActive})=>isActive?`bg-base-300 text-green-500 border-green-400 border-b-2`:`border-transparent border-b-2`} to='/browse-listings'>Browse Listings</NavLink></li>
+      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 text-green-500 border-green-400 border-b-2`:`border-transparent border-b-2`} to='/'>Home</NavLink></li>
+      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 text-green-500 border-green-400 border-b-2`:`border-transparent border-b-2`} to='/add-find-roommate'>Add Roommate</NavLink></li>
+      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 text-green-500 border-green-400 border-b-2`:`border-transparent border-b-2`} to='/browse-listings'>Browse Listings</NavLink></li>
       
     </>
 
   return (
-    <div className={`${darkMode && `bg-amber-600`} navbar shadow-sm`}>
+    <div className={` navbar max-w-7xl mx-auto w-11/12`}>
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -26,7 +26,7 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className="text-xl font-bold">Roommate</a>
+        <a className={`${darkMode && `text-white`} text-3xl font-bold`}>Roommate</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
@@ -49,7 +49,7 @@ const Navbar = () => {
 
           {/* moon icon */}
           <svg
-            className={`${!darkMode && `hidden`} h-10 w-10 fill-current`}
+            className={`${!darkMode && `hidden`} h-10 w-10 fill-current text-white`}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24">
             <path
@@ -57,13 +57,13 @@ const Navbar = () => {
           </svg>
         </label>
         {user ? <div className='flex gap-1'>
-          <NavLink to='/my-listings' className='btn bg-green-500 text-white hover:text-green-900 hover:bg-white hover:border-green-500'>My Listings</NavLink>
+          <NavLink to='/my-listings' className='btn bg-green-500 text-white hover:text-green-900 hover:bg-white border-green-500 hover:border-green-500'>My Listings</NavLink>
           <button onClick={logOut} className='btn hover:bg-green-500 hover:text-white border-green-500 text-green-900'>LogOut</button>
         </div>
           :
-          <div>
-            <Link to='/login' className="btn">Login</Link>
-            <Link to='/register' className="btn">Register</Link>
+          <div className='flex gap-1'>
+            <Link to='/login' className="btn bg-green-500 text-white hover:text-green-900 hover:bg-white border-green-500 hover:border-green-500">Login</Link>
+            <Link to='/register' className="btn hover:bg-green-500 hover:text-white border-green-500 text-green-900">Register</Link>
           </div>
         }
       </div>

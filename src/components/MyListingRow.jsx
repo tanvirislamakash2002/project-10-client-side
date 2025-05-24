@@ -37,36 +37,33 @@ const MyListingRow = ({ rowData }) => {
         });
     }
     return (
+
+
         <tr>
-            <th>
-                <label>
-                    <input type="checkbox" className="checkbox" />
-                </label>
-            </th>
+
+
             <td>
-                <div className="flex items-center gap-3">
-                    <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                            <img
-                                src={post_user_photo}
-                                alt="Avatar Tailwind CSS Component" />
-                        </div>
-                    </div>
-                    <div>
-                        <div className="font-bold">Hart Hagerty</div>
-                        <div className="text-sm opacity-50">United States</div>
-                    </div>
-                </div>
+                {location}
             </td>
             <td>
                 {contact_info}
             </td>
-            <td>{location}</td>
-            <th>
-                <Link to={`/update-post/${_id}`} className="btn btn-primary">Edit</Link>
-                <button onClick={() => handleDelete(_id)} className="btn btn-ghost">Delete</button>
+            <td>
+                {rent_amount} <span className="font-semibold">TK</span>
+            </td>
+            <td>
+                {description}
+            </td>
+            <td>{availability}</td>
+            <th className='w-44 flex gap-3'>
+                <Link to={`/update-post/${_id}`} className="btn btn-primary ">Edit</Link>
+                 <button onClick={() => handleDelete(_id)} className="btn btn-error text-white">Delete</button>
             </th>
         </tr>
+
+
+
+
     );
 };
 

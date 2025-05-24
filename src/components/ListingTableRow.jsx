@@ -2,14 +2,10 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const ListingTableRow = ({rowData}) => {
-    const {_id, post_email, post_name, post_user_photo, contact_info, location} =rowData
+    const {_id, post_email, post_name, post_user_photo, contact_info, location, rent_amount, description, availability} =rowData
     return (
         <tr>
-            <th>
-                <label>
-                    <input type="checkbox" className="checkbox" />
-                </label>
-            </th>
+
             <td>
                 <div className="flex items-center gap-3">
                     <div className="avatar">
@@ -26,11 +22,17 @@ const ListingTableRow = ({rowData}) => {
                 </div>
             </td>
             <td>
-                {contact_info}
+                {location}
             </td>
-            <td>{location}</td>
+            <td>
+                {rent_amount} <span className="font-semibold">TK</span>
+            </td>
+            <td>
+                {description}
+            </td>
+            <td>{availability}</td>
             <th>
-                <Link to={`/details/${_id}`}><button className="btn btn-ghost btn-xs">details</button></Link>
+                <Link to={`/details/${_id}`}><button className="btn btn-primary">details</button></Link>
             </th>
         </tr>
     );

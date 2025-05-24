@@ -47,7 +47,7 @@ const AddFindRoommate = () => {
     }
     return (
         <div className="bg-[url(https://i.ibb.co/0R66sGNY/finding-roomate.jpg)] bg-cover ">
-            <div className="bg-black/70 min-h-screen flex py-8 md:items-center md:justify-center">
+            <div className="bg-black/70  min-h-[calc(100vh-142px)] flex py-8 md:items-center md:justify-center">
                 <form onSubmit={handleAddRoommate} className="mx-auto bg-base-200/60 border-base-300 rounded-box border p-4 max-w-7xl w-11/12">
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">

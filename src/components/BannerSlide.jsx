@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const BannerSlide = ({ data }) => {
     
@@ -14,7 +15,7 @@ const BannerSlide = ({ data }) => {
                     </h2>
                     <p className='pt-2 pb-5 text-xl'>{data.sub_title}</p>
                     <div className="card-actions justify-center">
-                        <button className="btn btn-primary">Browse Roommates Now</button>
+                        <Link to='/browse-listings' className="btn btn-primary">Browse Roommates Now</Link>
                     </div>
 
                 </div>

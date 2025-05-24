@@ -42,7 +42,7 @@ const UpdatePost = () => {
     return (
 
 
-        <div className="bg-[url(https://i.ibb.co/0R66sGNY/finding-roomate.jpg)] bg-cover ">
+        <div className="bg-[url(https://i.ibb.co/XrB1Hzz4/roommate2.webp)] bg-cover ">
             <div className="bg-black/70 min-h-screen flex py-8 md:items-center md:justify-center">
                 <form onSubmit={handleEditPost} className="mx-auto bg-base-200/60 border-base-300 rounded-box border p-4 max-w-7xl w-11/12">
 

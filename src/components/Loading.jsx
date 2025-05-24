@@ -8,7 +8,7 @@ const Loading = () => {
         justify-center
         items-center
         '>
-            <span className="loading loading-dots w-40 text-blue-400"></span>
+            <span className="loading loading-dots w-40 text-green-400"></span>
         </div>
     );
 };

@@ -5,7 +5,6 @@ import App from "../App";
 import RootLayout from "../RootLayout/RootLayout";
 import AddFindRoommate from "../Pages/AddFindRoommate";
 import Details from "../Pages/Details";
-import SingleDetails from "../Pages/SingleDetails";
 import UpdatePost from "../Pages/UpdatePost";
 import Register from "../Pages/Register";
 import Login from "../Pages/Login";
@@ -52,7 +51,7 @@ export const router = createBrowserRouter([
           loader:()=>fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
           element: 
             <PrivateRoute>
-              <MyListings></MyListings>,
+              <MyListings></MyListings>
             </PrivateRoute>,            
             hydrateFallbackElement:<Loading></Loading>
         },
@@ -61,20 +60,17 @@ export const router = createBrowserRouter([
             loader:()=>fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
             element: 
             <PrivateRoute>
-              <Details></Details>,
+              <Details></Details>
             </PrivateRoute>,
-            hydrateFallbackElement:<Loading></Loading>
-        },
-        {
-            path:'/single-detail/:id',
-            loader:({params})=>fetch(`https://ph-a10-server-two.vercel.app/add-roommate/${params.id}`),
-            Component:SingleDetails,
             hydrateFallbackElement:<Loading></Loading>
         },
         {
             path:'/update-post/:id',
             loader:({params})=>fetch(`https://ph-a10-server-two.vercel.app/add-roommate/${params.id}`),
-            Component:UpdatePost,
+            element: 
+            <PrivateRoute>
+              <UpdatePost></UpdatePost>
+            </PrivateRoute>,
             hydrateFallbackElement:<Loading></Loading>
         }
     ]
