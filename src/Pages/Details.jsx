@@ -15,30 +15,33 @@ const Details = () => {
 
 
     // like management 
-    const [liked, setLiked] = useState(false)
+    // const [liked, setLiked] = useState(false)
     const [currentLiked, setCurrentLiked] = useState(liked_by || [])
     const [likeCount, setLikeCount] = useState(liked_by?.length || 0)
 
-    console.log(liked_by)
+    //console.log(liked_by)
 
-    useEffect(() => {
-        setLiked(currentLiked.includes(user?.email))
+    // useEffect(() => {
+    //     setLiked(currentLiked.includes(user?.email))
 
-    }, [currentLiked, user?.email])
+    // }, [currentLiked, user?.email])
 
     // console.log(likeCount)
     const handleLiked = () => {
-        setLiked(!liked)
+        // setLiked(!liked)
 
-        setLikeCount(liked ? likeCount - 1 : likeCount + 1)
-        console.log(likeCount)
+        setLikeCount( likeCount + 1)
+        // setLikeCount(liked ? likeCount - 1 : likeCount + 1)
+        //console.log(likeCount)
 
-        const filterAvailable = currentLiked.filter(filterEmail => filterEmail != user?.email)
+        // const filterAvailable = currentLiked.filter(filterEmail => filterEmail != user?.email)
 
-        const updateLike = liked ? filterAvailable : [...currentLiked, user?.email]
+        const updateLike =  [...currentLiked, user?.email]
+        console.log(updateLike)
+        // const updateLike = liked ? filterAvailable : [...currentLiked, user?.email]
 
 
-        fetch(`http://localhost:3000/add-roommate/${_id}`, {
+        fetch(`https://ph-a10-server-two.vercel.app/add-roommate/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -48,6 +51,7 @@ const Details = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.modifiedCount) {
+                    setCurrentLiked(updateLike)
                     // Swal.fire({
                     //     position: "center",
                     //     icon: "success",
@@ -116,10 +120,14 @@ const Details = () => {
                     </ul>
                     <div className="mt-6">
                         {/* <button onClick={handleLiked} className="btn btn-primary btn-block">{liked ? `disliked` : `liked`}</button> */}
-                        <button onClick={handleLiked} className={`${liked?'btn-success':'btn-primary'} btn btn-block`}>
+                        <button onClick={handleLiked} className=' btn-primary btn btn-block'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-[1.2em]"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg>
                             Like</button>
-                        <p>{liked ? contact_info : ``}</p>
+                        <p>{ contact_info}</p>
+                        {/* <button onClick={handleLiked} className={`${liked?'btn-success':'btn-primary'} btn btn-block`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="size-[1.2em]"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg>
+                            Like</button>
+                        <p>{liked ? contact_info : ``}</p> */}
                     </div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const FeaturedRoommates = ({post}) => {
     const {  _id, availability, contact_info, description, location, post_email, post_name, post_user_photo, preferences, rent_amount, roomType  } = post
@@ -44,8 +45,9 @@ const FeaturedRoommates = ({post}) => {
                                 Vasile Melinte
                             </a>
                             <p className="text-sm font-medium leading-4 text-gray-600">
-                                Author
+                                lAuthor
                             </p>
+                            <Link to={`/details/${_id}`} className='btn'>See More</Link>
                         </div>
                     </div>
                 </div>

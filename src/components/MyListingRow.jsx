@@ -18,12 +18,12 @@ const MyListingRow = ({ rowData }) => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                fetch(`http://localhost:3000/add-roommate/${id}`, {
+                fetch(`https://ph-a10-server-two.vercel.app/add-roommate/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
                     .then(data => {
-                        console.log('after delete', data)
+                        //console.log('after delete', data)
                         if (data.deletedCount > 0) {
                             Swal.fire({
                                 title: "Deleted!",

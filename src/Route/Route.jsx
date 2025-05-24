@@ -43,13 +43,13 @@ export const router = createBrowserRouter([
         },
         {
           path:'/browse-listings',
-          loader:()=>fetch('http://localhost:3000/add-roommate'),
+          loader:()=>fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
           Component:BrowseListings,          
             hydrateFallbackElement:<Loading></Loading>
         },
         {
           path:'/my-listings',
-          loader:()=>fetch('http://localhost:3000/add-roommate'),
+          loader:()=>fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
           element: 
             <PrivateRoute>
               <MyListings></MyListings>,
@@ -58,7 +58,7 @@ export const router = createBrowserRouter([
         },
         {
             path:'/details/:id',
-            loader:()=>fetch('http://localhost:3000/add-roommate'),
+            loader:()=>fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
             element: 
             <PrivateRoute>
               <Details></Details>,
@@ -67,13 +67,13 @@ export const router = createBrowserRouter([
         },
         {
             path:'/single-detail/:id',
-            loader:({params})=>fetch(`http://localhost:3000/add-roommate/${params.id}`),
+            loader:({params})=>fetch(`https://ph-a10-server-two.vercel.app/add-roommate/${params.id}`),
             Component:SingleDetails,
             hydrateFallbackElement:<Loading></Loading>
         },
         {
             path:'/update-post/:id',
-            loader:({params})=>fetch(`http://localhost:3000/add-roommate/${params.id}`),
+            loader:({params})=>fetch(`https://ph-a10-server-two.vercel.app/add-roommate/${params.id}`),
             Component:UpdatePost,
             hydrateFallbackElement:<Loading></Loading>
         }

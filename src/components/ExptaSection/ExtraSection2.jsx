@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ExtraCard from './ExtraCard';
 
 const ExtraSection2 = () => {
+    const [reviewData, setReviewData] = useState([]) 
+    
+    useEffect(()=>{
+        fetch('reviewData.json')
+        .then(res=>res.json())
+        .then(data=>{
+            setReviewData(data)
+        })
+        
+    },[])
+    console.log(reviewData)
     return (
         <>
-            <ExtraCard></ExtraCard>
-            <ExtraCard></ExtraCard>
-            <ExtraCard></ExtraCard>
+        {
+            reviewData.map((data, index)=><ExtraCard key={index} data={data}></ExtraCard>)
+        }
+
         </>
     );
 };

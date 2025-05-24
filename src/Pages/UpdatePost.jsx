@@ -7,18 +7,18 @@ const UpdatePost = () => {
     const {user} = use(AuthContext)
     const data = useLoaderData();
     const { _id, availability, contact_info, description, location, post_email, post_name, post_user_photo, preferences, rent_amount, roomType } = data
-    console.log('get data', _id)
+    //console.log('get data', _id)
 
     const handleEditPost = (e) => {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form)
         const updatedData = Object.fromEntries(formData.entries())
-        console.log('tis iis data', updatedData)
+        //console.log('tis iis data', updatedData)
 
         // updated post 
 
-        fetch(`http://localhost:3000/add-roommate/${_id}`, {
+        fetch(`https://ph-a10-server-two.vercel.app/add-roommate/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

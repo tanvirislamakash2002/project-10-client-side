@@ -1,10 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, use, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import BannerSlide from './BannerSlide';
+
+
 const Banner = () => {
 
+    const [bannerData, setBannerData] = useState([])
+
+    
+    useEffect(()=>{
+        fetch('bannerData.json')
+        .then(res=>res.json())
+        .then(data=>{
+            setBannerData(data)
+        })
+        
+    },[])
+
+
+console.log(bannerData)
 
 
     // const onChange = (index) => {
@@ -25,12 +41,19 @@ const Banner = () => {
             // onClickItem={onClickItem}
             // onClickThumb={onClickThumb}
             autoPlay={true}
-            interval={2000}
+            interval={3000}
             infiniteLoop={true}
             showThumbs={false}
-            showStatus={false}>
-<BannerSlide></BannerSlide>
-<BannerSlide></BannerSlide>
+            showStatus={false}
+
+            
+            >
+{/* <BannerSlide></BannerSlide>
+<BannerSlide></BannerSlide> */}
+
+{
+    bannerData.map((data,index)=><BannerSlide key={index} data={data}></BannerSlide>)
+}
 
 
              {/* <div className='bg-[url(https://i.ibb.co/6JbzQr3q/Awesome-Green-Nature-Wallpaper-HD.jpg)]  bg-cover'>
@@ -53,6 +76,7 @@ const Banner = () => {
                 
                 <p className="legend">Legend 4</p>
             </div>  */}
+
 
 
         </Carousel>

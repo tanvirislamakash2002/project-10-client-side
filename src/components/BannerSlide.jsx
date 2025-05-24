@@ -1,27 +1,25 @@
 import React from 'react';
 
-const BannerSlide = () => {
+const BannerSlide = ({ data }) => {
+    
     return (
-        <div className='bg-[url(https://i.ibb.co/6JbzQr3q/Awesome-Green-Nature-Wallpaper-HD.jpg)]  bg-cover'>
+        <div style={{ backgroundImage: `url(${data.image_url})` }} className={`  bg-cover h-[500px]`}>
 
-<div className='bg-black/50'>
-                <div className="card card-side pt-22 text-white">
-                <figure>
-                    <img
-                        src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
-                        alt="Movie" />
-                </figure>
-                <div className="">
-                    <h2 className="card-title">New movie is released!</h2>
-                    <p>Click the button to watch on Jetflix app.</p>
-                    <div className="card-actions justify-end">
-                        <button className="btn btn-primary">Watch</button>
+            <div className='bg-black/50 h-[500px] flex flex-col justify-center items-center'>
+                <div className=" text-white">
+
+                    <h2 className="text-5xl text-center font-bold ">
+                        <span className='invisible'>.</span>
+                        {data.title}
+                    </h2>
+                    <p className='pt-2 pb-5 text-xl'>{data.sub_title}</p>
+                    <div className="card-actions justify-center">
+                        <button className="btn btn-primary">Browse Roommates Now</button>
                     </div>
+
                 </div>
+
             </div>
-            <h2 className='pt-12 text-4xl font-bold text-white'>tis is on e</h2>
-            
-</div>
         </div>
     );
 };

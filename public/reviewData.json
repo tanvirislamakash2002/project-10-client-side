@@ -1,0 +1,23 @@
+[
+    {
+  "userName": "Alex Rivera",
+  "date": "2024-03-15",
+  "rating": 5,
+  "reviewDescription": "Found my perfect roommate in just 2 days! We’ve been living together for 6 months now, and it’s been amazing. Highly recommend this platform.",
+  "image": "https://randomuser.me/api/portraits/men/32.jpg"
+},
+{
+  "userName": "Priya Patel",
+  "date": "2024-02-28",
+  "rating": 4.4,
+  "reviewDescription": "The filters made it easy to find someone with similar habits (early riser, vegan). Moving in next week—excited!",
+  "image": "https://randomuser.me/api/portraits/women/44.jpg"
+},
+{
+  "userName": "Jordan Smith",
+  "date": "2024-01-10",
+  "rating": 4.7,
+  "reviewDescription": "Great selection, though one match flaked last minute. Support team helped me reconnect with another option quickly.",
+  "image": "https://randomuser.me/api/portraits/men/32.jpg"
+}
+]

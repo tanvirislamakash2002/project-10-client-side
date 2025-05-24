@@ -1,10 +1,11 @@
 import React from 'react';
 import { useLoaderData } from 'react-router';
 import ListingTableRow from '../components/ListingTableRow';
+import Loading from '../components/Loading';
 
 const BrowseListings = () => {
     const data = useLoaderData()
-    console.log(data)
+
     return (
         <div className="overflow-x-auto">
             <table className="table">

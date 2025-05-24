@@ -6,8 +6,8 @@ const AddFindRoommate = () => {
 
     const {user} = use(AuthContext)
 if(user){
-        console.log(user)
-    console.log(user?.email)
+        //console.log(user)
+    //console.log(user?.email)
 }
 
     const handleAddRoommate = (e) => {
@@ -21,10 +21,10 @@ if(user){
 
         const data = {...Object.fromEntries(formData.entries()), preferences}
 
-        console.log(data)
+        //console.log(data)
 
         // send data to db
-        fetch('http://localhost:3000/add-roommate', {
+        fetch('https://ph-a10-server-two.vercel.app/add-roommate', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

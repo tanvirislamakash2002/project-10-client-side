@@ -6,10 +6,10 @@ import { AuthContext } from '../provider/AuthProvider';
 const MyListings = () => {
     const {user} = use(AuthContext)
     const {email, displayName, photoURL} = user
-    console.log(user)
+    //console.log(user)
     const getData = useLoaderData()
     const data = getData.filter(info=>info.post_email==user.email)
-    console.log(data)
+    //console.log(data)
     return (
         <div className="overflow-x-auto">
             <div className="max-w-md p-8 sm:flex sm:space-x-6 dark:bg-gray-50 dark:text-gray-800">
