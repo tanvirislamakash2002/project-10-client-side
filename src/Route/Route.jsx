@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
           path:'/add-find-roommate',
           element: 
             <PrivateRoute>
-              <AddFindRoommate></AddFindRoommate>,
+              <AddFindRoommate></AddFindRoommate>
             </PrivateRoute>,
         },
         {

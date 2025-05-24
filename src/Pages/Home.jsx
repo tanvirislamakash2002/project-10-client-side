@@ -49,7 +49,7 @@ const Home = () => {
             </div>
             <div className=" max-w-7xl mx-auto my-28">
                 <h2 className='text-5xl font-bold text-center'>What People Think About Us</h2>
-                <div className="grid grid-cols-3">
+                <div className="grid grid-cols-3 mt-8">
                     <ExtraSection2></ExtraSection2>
                 </div>
             </div>
