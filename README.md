@@ -1,4 +1,4 @@
-live site url: https://ph-b11-a10.web.app/
+live url: https://ph-b11-a10.web.app/
 
 # React + Vite + test
 
