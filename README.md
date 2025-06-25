@@ -1,4 +1,40 @@
-live url: https://ph-b11-a10.web.app/
+
+
+# project name: 
+Job Track
+
+# purpose: 
+
+This is a job seeking website where people can find their desire jobs.
+
+# live URL:
+
+https://ph-b11-a10.web.app/
+
+
+ # key features: 
+
+ There is a list of company they are providing jobs. people can visit the company profile and get jobs from there.
+ 
+ 
+# npm packages I have used:
+1. tailwindcss/vite (tailwind css integration for vite)
+2. firebase
+3. gasp
+4. motion
+5. react + react-dom
+6. react-helmet-async
+7. react-icons
+8. react-router
+9. react-toastify
+10. tailwindcss (css framework)
+
+
+
+
+# How to Run
+1.npm install
+2.npm run dev
 
 # React + Vite + test
 
