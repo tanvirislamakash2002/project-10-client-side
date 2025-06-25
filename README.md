@@ -1,11 +1,11 @@
 
 
 # project name: 
-Job Track
+Roommate
 
 # purpose: 
 
-This is a job seeking website where people can find their desire jobs.
+This is a Roommate finding website where people can find their desire roommate.
 
 # live URL:
 
@@ -14,7 +14,7 @@ https://ph-b11-a10.web.app/
 
  # key features: 
 
- There is a list of company they are providing jobs. people can visit the company profile and get jobs from there.
+people can find there roommate. They can also post find roommate. and able to find there desire roommate
  
  
 # npm packages I have used:
@@ -36,7 +36,7 @@ https://ph-b11-a10.web.app/
 1.npm install
 2.npm run dev
 
-# React + Vite + test
+# React + Vite 
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
