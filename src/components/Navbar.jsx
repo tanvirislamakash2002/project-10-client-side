@@ -7,12 +7,12 @@ const Navbar = () => {
   // console.log(user?.email)
   const links =
     <>
-      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 text-green-500 border-green-400 border-b-2`:`border-transparent border-b-2`} to='/'>Home</NavLink></li>
-      {/* <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 text-green-500 border-green-400 border-b-2`:`border-transparent border-b-2`} to='/add-find-roommate'>Add Roommate</NavLink></li> */}
-      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 text-green-500 border-green-400 border-b-2`:`border-transparent border-b-2`} to='/browse-listings'>Browse Listings</NavLink></li>
-      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 text-green-500 border-green-400 border-b-2`:`border-transparent border-b-2`} to='/browse-listings'>About Us</NavLink></li>
-      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 text-green-500 border-green-400 border-b-2`:`border-transparent border-b-2`} to='/browse-listings'>Contact Us</NavLink></li>
-      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 text-green-500 border-green-400 border-b-2`:`border-transparent border-b-2`} to='/browse-listings'>Support</NavLink></li>
+      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600`:`border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/'>Home</NavLink></li>
+      {/* <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2`:`border-transparent border-b-2`} to='/add-find-roommate'>Add Roommate</NavLink></li> */}
+      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600`:`border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/browse-listings'>Browse Listings</NavLink></li>
+      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600`:`border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/about-us'>About Us</NavLink></li>
+      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600`:`border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/contact-us'>Contact Us</NavLink></li>
+ 
       
     </>
 
@@ -29,7 +29,7 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className={`${darkMode && `text-white`} text-3xl font-bold `}>Roommate</a>
+        <a className={`${darkMode && `text-white`} text-3xl font-bold text-white`}>Roommate</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
@@ -53,7 +53,7 @@ const Navbar = () => {
 
           {/* moon icon */}
           <svg
-            className={`${darkMode && `hidden`} h-10 w-10 fill-current`}
+            className={`${darkMode && `hidden`} h-10 w-10 fill-current text-white`}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24">
             <path
@@ -61,13 +61,13 @@ const Navbar = () => {
           </svg>
         </label>
         {user ? <div className='flex gap-1'>
-          <NavLink to='/dashboard' className='btn bg-green-500 text-white hover:text-green-900 hover:bg-white border-green-500 hover:border-green-500'>Dashboard</NavLink>
-          <button onClick={logOut} className='btn hover:bg-green-500 hover:text-white border-green-500 text-green-900'>LogOut</button>
+          <NavLink to='/dashboard' className='btn bg-green-700 text-white hover:text-green-900 hover:bg-white border-green-700 hover:border-green-700'>Dashboard</NavLink>
+          <button onClick={logOut} className='btn hover:bg-green-700 hover:text-white border-green-700 text-green-900'>LogOut</button>
         </div>
           :
           <div className='flex gap-1'>
-            <Link to='/login' className="btn bg-green-500 text-white hover:text-green-900 hover:bg-white border-green-500 hover:border-green-500">Login</Link>
-            <Link to='/register' className="btn hover:bg-green-500 hover:text-white border-green-500 text-green-900">Register</Link>
+            <Link to='/login' className="btn bg-green-700 text-white hover:text-green-900 hover:bg-white border-green-700 hover:border-green-700">Login</Link>
+            <Link to='/register' className="btn hover:bg-green-700 hover:text-white border-green-700 text-green-900">Register</Link>
           </div>
         }
       </div>

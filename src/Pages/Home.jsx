@@ -30,7 +30,7 @@ const Home = () => {
             <Banner></Banner>
             <div className={` px-14 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20`}>
                 <h2 className={`${darkMode && `text-white`} text-center text-5xl font-bold mb-16`}>Available Feature Roommate Posts</h2>
-                <div className="grid gap-8 lg:grid-cols-3 sm:max-w-sm sm:mx-auto lg:max-w-full">
+                <div className="grid gap-8 lg:grid-cols-3 md:grid-cols-2  sm:mx-auto lg:max-w-full">
                     {
                         posts.map(post => <FeaturedRoommates key={post._id} post={post}></FeaturedRoommates>)
                     }

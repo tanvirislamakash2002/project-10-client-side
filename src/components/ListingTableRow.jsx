@@ -32,7 +32,7 @@ const ListingTableRow = ({rowData}) => {
             </td>
             <td>{availability}</td>
             <th>
-                <Link to={`/details/${_id}`}><button className="btn btn-primary">details</button></Link>
+                <Link to={`/details/${_id}`}><button className="btn custom-bg-500 text-white">details</button></Link>
             </th>
         </tr>
     );

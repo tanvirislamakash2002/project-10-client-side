@@ -5,7 +5,7 @@
 
 /* custom color  */
 .custom-color-100{
-  color: #18230F;
+  color: #189b60;
 }
 .custom-color-200{
 color: #1F7D53;
@@ -21,7 +21,7 @@ color: #18230F;
 }
 /* custom background  */
 .custom-bg-100{
-  background-color: #18230F;
+  background-color: #189b60;
 }
 .custom-bg-200{
 background-color: #1F7D53;
@@ -34,4 +34,20 @@ background-color: #27391C;
 }
 .custom-bg-500{
 background-color: #18230F;
+}
+/* custom background  */
+.custom-border-100{
+  border-color: #189b60;
+}
+.custom-border-200{
+border-color: #1F7D53;
+}
+.custom-border-300{
+border-color: #255F38;
+}
+.custom-border-400{
+border-color: #27391C;
+}
+.custom-border-500{
+border-color: #18230F;
 }

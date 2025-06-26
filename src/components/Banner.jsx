@@ -25,13 +25,14 @@ const Banner = () => {
 
 
     return (
-        <Carousel
+<div className="">
+            <Carousel
             showArrows={true}
             autoPlay={true}
             interval={3000}
             infiniteLoop={true}
             showThumbs={false}
-            showStatus={false}            
+            showStatus={false}          
             >
 
 
@@ -41,6 +42,7 @@ const Banner = () => {
 
 
         </Carousel>
+</div>
     );
 };
 

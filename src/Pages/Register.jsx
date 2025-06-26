@@ -68,7 +68,8 @@ const Register = () => {
  <div className="bg-black/50 flex items-center justify-center min-h-screen ">
                <div className="mx-auto flex items-center justify-center w-full">
 
-                <div className="card bg-base-100/70 mx-4 w-4/4 sm:w-3/4 md:w-2/4 lg:w-1/4">
+                {/* <div className="card bg-base-100/70 mx-4 w-4/4 sm:w-3/4 md:w-2/4 lg:w-1/4"> */}
+                <div className="card bg-base-100/70 mx-14 w-md">
                     <div className="card-body">
                         <form onSubmit={handleRegister} className="flex flex-col">
                             <label className="label text-black mb-1 font-semibold">Name</label>

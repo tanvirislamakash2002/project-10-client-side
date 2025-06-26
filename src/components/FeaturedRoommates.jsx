@@ -38,7 +38,7 @@ const FeaturedRoommates = ({post}) => {
                             <p className="text-sm font-medium leading-4 text-gray-600">
                                 {post_email}
                             </p>
-                            <Link to={`/details/${_id}`} className='btn bg-green-600 text-white mt-4'>See More</Link>
+                            <Link to={`/details/${_id}`} className='btn custom-bg-500 text-white mt-4'>See More</Link>
                         </div>
                     </div>
                 </div>

@@ -16,6 +16,8 @@ import Home from "../Pages/Home";
 import ErrorPage from "../Pages/ErrorPage";
 import DashboardLayout from "../dashboardLayout/dashboardLayout";
 import Overview from "../dashboardPages/Overview";
+import AboutUs from "../components/AboutUs";
+import ContactUs from "../components/ContactUs";
 
 export const router = createBrowserRouter([
   {
@@ -74,9 +76,19 @@ export const router = createBrowserRouter([
             <UpdatePost></UpdatePost>
           </PrivateRoute>,
         hydrateFallbackElement: <Loading></Loading>
-      }
+      },
+            {
+        path: '/about-us',
+        Component: AboutUs
+      },
+            {
+        path: '/contact-us',
+        Component: ContactUs
+      },
     ]
   },
+
+  // dashboard route 
   {
     path: "/dashboard",
     element:
