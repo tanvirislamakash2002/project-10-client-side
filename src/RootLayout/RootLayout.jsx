@@ -17,6 +17,7 @@ const RootLayout = () => {
     }
     return (
         <div>
+            what a day
             <header className={`${darkMode && `bg-[#1F1F1F]`}`}>
                 <Navbar></Navbar>
             </header>
