@@ -1,0 +1,37 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default
+}
+
+/* custom color  */
+.custom-color-100{
+  color: #18230F;
+}
+.custom-color-200{
+color: #1F7D53;
+}
+.custom-color-300{
+color: #255F38;
+}
+.custom-color-400{
+color: #27391C;
+}
+.custom-color-500{
+color: #18230F;
+}
+/* custom background  */
+.custom-bg-100{
+  background-color: #18230F;
+}
+.custom-bg-200{
+background-color: #1F7D53;
+}
+.custom-bg-300{
+background-color: #255F38;
+}
+.custom-bg-400{
+background-color: #27391C;
+}
+.custom-bg-500{
+background-color: #18230F;
+}
