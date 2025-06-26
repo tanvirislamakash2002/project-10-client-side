@@ -20,7 +20,7 @@ const RootLayout = () => {
             <header className={`${darkMode && `bg-[#1F1F1F]`}  fixed z-50 custom-bg-500 w-full`}>
                 <Navbar></Navbar>
             </header>
-            <main className={`${darkMode && `bg-[#1F1F1F]`} min-h-[calc(100vh-143px)] pt-16`}>
+            <main className={`${darkMode ? `bg-[#1F1F1F]`:`bg-base-200`} min-h-[calc(100vh-143px)] pt-16`}>
                 <Outlet></Outlet>
                 <ToastContainer />
             </main>
