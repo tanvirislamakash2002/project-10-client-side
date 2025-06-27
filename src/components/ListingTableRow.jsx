@@ -24,9 +24,9 @@ const ListingTableRow = ({rowData}) => {
             <td>
                 {location}
             </td>
-            <td>
+            {/* <td>
                 {rent_amount} <span className="font-semibold">TK</span>
-            </td>
+            </td> */}
             <td>
                 {description}
             </td>

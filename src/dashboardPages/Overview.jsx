@@ -3,31 +3,27 @@ import React from 'react';
 const Overview = () => {
     return (
         <div>
-           <section className="p-6 dark:bg-gray-100 dark:text-gray-800">
-	<div className="container mx-auto grid justify-center grid-cols-2 text-center lg:grid-cols-3">
-		<div className="flex flex-col justify-start m-2 lg:m-6">
+
+           <section className="">
+			<h2 className="text-center font-bold text-4xl my-4">Overview Of The Website</h2>
+	<div className="container mx-auto grid justify-center grid-cols-1 text-center md:grid-cols-2 gap-4 p-4">
+		<div className="flex flex-col bg-green-100 p-6">
 			<p className="text-4xl font-bold leading-none lg:text-6xl">50+</p>
-			<p className="text-sm sm:text-base">Clients</p>
+			<p className="text-sm sm:text-base">Total user</p>
 		</div>
-		<div className="flex flex-col justify-start m-2 lg:m-6">
-			<p className="text-4xl font-bold leading-none lg:text-6xl">89K</p>
-			<p className="text-sm sm:text-base">Followers on social media</p>
-		</div>
-		<div className="flex flex-col justify-start m-2 lg:m-6">
+
+		<div className="flex flex-col bg-green-100 p-6">
 			<p className="text-4xl font-bold leading-none lg:text-6xl">3</p>
-			<p className="text-sm sm:text-base">Published books</p>
+			<p className="text-sm sm:text-base">Total post</p>
 		</div>
-		<div className="flex flex-col justify-start m-2 lg:m-6">
+		<div className="flex flex-col bg-green-100 p-6">
 			<p className="text-4xl font-bold leading-none lg:text-6xl">8</p>
-			<p className="text-sm sm:text-base">TED talks</p>
+			<p className="text-sm sm:text-base">My post</p>
 		</div>
-		<div className="flex flex-col justify-start m-2 lg:m-6">
-			<p className="text-4xl font-bold leading-none lg:text-6xl">22</p>
-			<p className="text-sm sm:text-base">Years of experience</p>
-		</div>
-		<div className="flex flex-col justify-start m-2 lg:m-6">
+
+		<div className="flex flex-col bg-green-100 p-6">
 			<p className="text-4xl font-bold leading-none lg:text-6xl">10+</p>
-			<p className="text-sm sm:text-base">Workshops</p>
+			<p className="text-sm sm:text-base">daily active user</p>
 		</div>
 	</div>
 </section>

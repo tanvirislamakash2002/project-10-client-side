@@ -72,6 +72,8 @@ const Register = () => {
                 <div className="card bg-base-100/70 mx-14 w-md">
                     <div className="card-body">
                         <form onSubmit={handleRegister} className="flex flex-col">
+                            <h2 className='text-3xl font-bold text-center mb-5'>Please Register!</h2>
+
                             <label className="label text-black mb-1 font-semibold">Name</label>
                             <input name='name' type="text" className="input w-full" placeholder="Name" />
                             <label className="label text-black mb-1 font-semibold">Email</label>

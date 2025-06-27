@@ -46,9 +46,10 @@ const AddFindRoommate = () => {
             })
     }
     return (
-        <div className="bg-[url(https://i.ibb.co/0R66sGNY/finding-roomate.jpg)] bg-cover ">
+        <div className="bg-[url(https://i.ibb.co/0R66sGNY/finding-roomate.jpg)] bg-cover">
             <div className="bg-black/70  min-h-[calc(100vh-142px)] flex py-8 md:items-center md:justify-center">
                 <form onSubmit={handleAddRoommate} className="mx-auto bg-base-200/60 border-base-300 rounded-box border p-4 max-w-7xl w-11/12">
+<h2 className="text-4xl text-center font-bold py-14">Add Find Roommate To Find Your Desire Roommate</h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
                         <div className=" flex flex-col md:col-span-2 col-span-1  ">

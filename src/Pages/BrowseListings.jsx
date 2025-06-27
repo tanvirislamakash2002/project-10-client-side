@@ -18,7 +18,7 @@ const BrowseListings = () => {
   
                         <th>Posted By (Name and Email)</th>
                         <th>Location</th>
-                        <th>Rent Amount</th>
+                        {/* <th>Rent Amount</th> */}
                         <th>Description</th>
                         <th>Availability</th>
                         <th>Details</th>
@@ -37,6 +37,7 @@ const BrowseListings = () => {
                 {/* foot */}
                 <tfoot>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>

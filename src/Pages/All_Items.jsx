@@ -1,23 +1,94 @@
-import React, { use } from 'react';
-import { useLoaderData } from 'react-router';
-import ListingTableRow from '../components/ListingTableRow';
-import Loading from '../components/Loading';
+import React, { useState } from 'react';
+import { Link, useLoaderData } from 'react-router';
 import { AuthContext } from '../provider/AuthProvider';
+import { useContext } from 'react';
 
 const All_Items = () => {
-    const data = useLoaderData()
-    // _id, post_email, post_name, post_user_photo, contact_info, location, rent_amount, description, availability
-    const { darkMode } = use(AuthContext)
+    const loadedData = useLoaderData();
+    const { darkMode } = useContext(AuthContext);
+    const [sortOrder, setSortOrder] = useState('oldest'); 
+    const [showAvailableOnly, setShowAvailableOnly] = useState(false);
 
+    //  filters
+    const displayData = () => {
+        // First filter by availability if needed
+        let result = [...loadedData];
+        
+        if (showAvailableOnly) {
+            result = result.filter(item => item.availability);
+        }
+        
+        // Then reverse if newest first is selected
+        if (sortOrder === 'newest') {
+            return [...result].reverse();
+        }
+        
+        return result;
+    };
 
+    const handleSortChange = (e) => {
+        setSortOrder(e.target.value === 'New Post' ? 'newest' : 'oldest');
+    };
+
+    const handleAvailabilityChange = (e) => {
+        setShowAvailableOnly(e.target.checked);
+    };
 
     return (
-        <div className={`${darkMode && `text-white`} overflow-x-auto max-w-7xl mx-auto w-11/12`}>
-            <h2 className="text-4xl font-bold text-center mt-12 mb-8">All Available Roommate Listings</h2>
-{
-    data.map(cardData=><h2>{cardData?.location}</h2>)
-}
-
+        <div className={`${darkMode && ``} overflow-x-auto max-w-7xl mx-auto w-12/12 py-12 px-4`}>
+            <h2 className={`${darkMode && `text-white`} text-4xl font-bold text-center mb-8`}>All Available Roommate Listings</h2>
+            <div className="flex gap-5">
+                <div className={`${darkMode && `text-white`} w-4/12 md:w-2/12`}>
+                    <h2 className='font-bold text-xl mb-2'>Filter by</h2>
+                    <h4 className="font-bold mb-1">
+                        post order
+                    </h4>
+                    <select 
+                        defaultValue="Oldest Post" 
+                        className="select text-black"
+                        onChange={handleSortChange}
+                    >
+                        <option disabled>Select post order</option>
+                        <option>Oldest Post</option>
+                        <option>New Post</option>
+                    </select>
+                    <div className="mt-3">
+                        <h4 className="font-bold">availability</h4>
+                        <div className='mt-1'>
+                            <span className='font-semibold'>available</span> 
+                            <input 
+                                type="checkbox" 
+                                className="checkbox checkbox-success" 
+                                onChange={handleAvailabilityChange}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="w-8/12 md:w-10/12">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                        {displayData().map(cardData => (
+                            <div key={cardData._id} className={`${darkMode ? `text-white bg-white/30` : `text-black bg-white`} card shadow-sm`}>
+                                <figure className="px-3 pt-3">
+                                    <img
+                                        src={cardData.post_user_photo}
+                                        className="rounded-xl h-36 w-full object-cover" 
+                                        alt="User"
+                                    />
+                                </figure>
+                                <div className="card-body items-center text-center pt-2">
+                                    <h2 className="card-title">{cardData?.location}</h2>
+                                    <p>{cardData?.description}</p>
+                                    <div className="card-actions">
+                                        <Link to={`/details/${cardData._id}`}>
+                                            <button className="btn custom-bg-500 text-white custom-border-300 shadow-none">See More</button>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

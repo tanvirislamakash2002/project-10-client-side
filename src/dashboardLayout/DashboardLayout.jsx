@@ -18,18 +18,18 @@ const DashboardLayout = () => {
 <div className="  custom-bg-500">
             <div className='flex max-w-7xl mx-auto'>
             {/* navigation bar  */}
-            <aside className='w-1/6 custom-bg-500'>
+            <aside className='w-4/12 md:w-2/12 custom-bg-500'>
                 <Sidebar></Sidebar>
             </aside>
 
-            <div className='w-5/6 bg-base-100'>
+            <div className='w-8/12 md:w-10/12 bg-base-100'>
                 {/* <header className={`${darkMode && `bg-[#1F1F1F]`}`}> */}
                 <header>
                     {/* <Navbar></Navbar> */}
-                    <Link to='/'>Move back to home page</Link>
+                    
                 </header>
                 {/* <main className={`${darkMode && `bg-[#1F1F1F]`}`}> */}
-                <main className='min-h-[calc(100vh-284px)] '>
+                <main className='min-h-[calc(100vh-260px)] '>
                     <Outlet></Outlet>
                     {/* <ToastContainer /> */}
                 </main>

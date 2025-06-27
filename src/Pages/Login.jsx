@@ -45,6 +45,7 @@ const Login = () => {
                 <div className=" card bg-base-100/70 w-full shadow-2xl">
                     <div className="card-body">
                         <form onSubmit={handleLogin}>
+                            <h2 className='text-3xl font-bold text-center mb-5'>Please Login!</h2>
                                 <div className="">
                                     <label className="label text-black mb-1">Email</label>
                                 <input name='email' type="email" className="input" placeholder="Your Email" />
