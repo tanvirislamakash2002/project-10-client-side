@@ -9,7 +9,7 @@ const Navbar = () => {
     <>
       <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600`:`border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/'>Home</NavLink></li>
       {/* <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2`:`border-transparent border-b-2`} to='/add-find-roommate'>Add Roommate</NavLink></li> */}
-      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600`:`border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/browse-listings'>Browse Listings</NavLink></li>
+      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600`:`border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/all-items'>All Items</NavLink></li>
       <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600`:`border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/about-us'>About Us</NavLink></li>
       <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600`:`border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/contact-us'>Contact Us</NavLink></li>
  
@@ -29,7 +29,7 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className={`${darkMode && `text-white`} text-3xl font-bold text-white`}>Roommate</a>
+        <a className={` text-3xl font-bold text-white`}>Room<span className='text-green-500'>Ease</span></a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">

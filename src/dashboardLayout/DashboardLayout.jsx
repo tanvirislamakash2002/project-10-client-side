@@ -29,7 +29,7 @@ const DashboardLayout = () => {
                     <Link to='/'>Move back to home page</Link>
                 </header>
                 {/* <main className={`${darkMode && `bg-[#1F1F1F]`}`}> */}
-                <main className='min-h-[calc(100vh-92px)] '>
+                <main className='min-h-[calc(100vh-284px)] '>
                     <Outlet></Outlet>
                     {/* <ToastContainer /> */}
                 </main>

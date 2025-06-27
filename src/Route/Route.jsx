@@ -18,6 +18,7 @@ import DashboardLayout from "../dashboardLayout/dashboardLayout";
 import Overview from "../dashboardPages/Overview";
 import AboutUs from "../components/AboutUs";
 import ContactUs from "../components/ContactUs";
+import All_Items from "../Pages/All_Items";
 
 export const router = createBrowserRouter([
   {
@@ -45,11 +46,17 @@ export const router = createBrowserRouter([
         Component: Login
       },
       {
-        path: '/browse-listings',
+        path: '/all-items',
         loader: () => fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
-        Component: BrowseListings,
+        Component: All_Items,
         hydrateFallbackElement: <Loading></Loading>
       },
+      // {
+      //   path: '/browse-listings',
+      //   loader: () => fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
+      //   Component: BrowseListings,
+      //   hydrateFallbackElement: <Loading></Loading>
+      // },
       // {
       //   path:'/my-listings',
       //   loader:()=>fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
