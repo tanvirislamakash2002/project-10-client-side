@@ -2,6 +2,8 @@ import React, { use } from 'react';
 import { Link, useLoaderData } from 'react-router';
 import { AuthContext } from '../provider/AuthProvider';
 import Swal from 'sweetalert2';
+import { FaEdit } from 'react-icons/fa';
+import { RiDeleteBin5Line } from 'react-icons/ri';
 
 const MyListingRow = ({ rowData }) => {
     const {  _id, availability, contact_info, description, location, post_email, post_name, post_user_photo, preferences, rent_amount, roomType  } = rowData
@@ -55,9 +57,9 @@ const MyListingRow = ({ rowData }) => {
                 {description}
             </td>
             <td>{availability}</td>
-            <th className='w-44 flex gap-3'>
-                <Link to={`/update-post/${_id}`} className="btn btn-primary ">Edit</Link>
-                 <button onClick={() => handleDelete(_id)} className="btn btn-error text-white">Delete</button>
+            <th className='w-44 flex'>
+                <Link to={`/update-post/${_id}`} className=" custom-color-200 flex items-center"><FaEdit size={42} className=' p-2 hover:bg-green-50'/></Link>
+                 <button onClick={() => handleDelete(_id)} className="cursor-pointer flex items-center text-red-700 "><RiDeleteBin5Line size={42}  className=' p-2 hover:bg-red-50'/></button>
             </th>
         </tr>
 

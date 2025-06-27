@@ -7,29 +7,31 @@ const Navbar = () => {
   // console.log(user?.email)
   const links =
     <>
-      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600`:`border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/'>Home</NavLink></li>
-      {/* <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2`:`border-transparent border-b-2`} to='/add-find-roommate'>Add Roommate</NavLink></li> */}
-      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600`:`border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/all-items'>All Items</NavLink></li>
-      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600`:`border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/about-us'>About Us</NavLink></li>
-      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({isActive})=>isActive?`bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600`:`border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/contact-us'>Contact Us</NavLink></li>
- 
-      
+      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/'>Home</NavLink></li>
+      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/all-items'>All Items</NavLink></li>
+      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/about-us'>About Us</NavLink></li>
+      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/contact-us'>Contact Us</NavLink></li>
+
+
     </>
 
   return (
     <div className={` navbar max-w-7xl mx-auto w-11/12`}>
       <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+          <div tabIndex={0} role="button" className="btn lg:hidden">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-            {links}
+            className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow bg-base-300">
+            <li className={`${darkMode && `text-black`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-black rounded-none hover:border-green-600`} to='/'>Home</NavLink></li>
+            <li className={`${darkMode && `text-black`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-black rounded-none hover:border-green-600`} to='/all-items'>All Items</NavLink></li>
+            <li className={`${darkMode && `text-black`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-black rounded-none hover:border-green-600`} to='/about-us'>About Us</NavLink></li>
+            <li className={`${darkMode && `text-black`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-black rounded-none hover:border-green-600`} to='/contact-us'>Contact Us</NavLink></li>
           </ul>
         </div>
-        <a className={` text-3xl font-bold text-white`}>Room<span className='text-green-500'>Ease</span></a>
+        <a className={` text-3xl font-bold text-white ml-2`}>Room<span className='text-green-500'>Ease</span></a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">

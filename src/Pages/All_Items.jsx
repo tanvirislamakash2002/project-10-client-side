@@ -1,29 +1,26 @@
 import React, { useState } from 'react';
-import { Link, useLoaderData } from 'react-router';
+import { Link, useLoaderData } from 'react-router'; 
 import { AuthContext } from '../provider/AuthProvider';
 import { useContext } from 'react';
 
 const All_Items = () => {
     const loadedData = useLoaderData();
     const { darkMode } = useContext(AuthContext);
-    const [sortOrder, setSortOrder] = useState('oldest'); 
-    const [showAvailableOnly, setShowAvailableOnly] = useState(false);
+    const [sortOrder, setSortOrder] = useState('oldest');
+    const [showAvailableOnly, setShowAvailableOnly] = useState('no');
 
-    //  filters
+    // filter process
     const displayData = () => {
-        // First filter by availability if needed
         let result = [...loadedData];
-        
+
         if (showAvailableOnly) {
-            result = result.filter(item => item.availability);
+            result = result.filter(item => {
+                const availability = item.availability;
+                return availability === 'yes';
+            });
         }
-        
-        // Then reverse if newest first is selected
-        if (sortOrder === 'newest') {
-            return [...result].reverse();
-        }
-        
-        return result;
+
+        return sortOrder === 'newest' ? [...result].reverse() : result;
     };
 
     const handleSortChange = (e) => {
@@ -43,8 +40,8 @@ const All_Items = () => {
                     <h4 className="font-bold mb-1">
                         post order
                     </h4>
-                    <select 
-                        defaultValue="Oldest Post" 
+                    <select
+                        defaultValue="Oldest Post"
                         className="select text-black"
                         onChange={handleSortChange}
                     >
@@ -55,11 +52,12 @@ const All_Items = () => {
                     <div className="mt-3">
                         <h4 className="font-bold">availability</h4>
                         <div className='mt-1'>
-                            <span className='font-semibold'>available</span> 
-                            <input 
-                                type="checkbox" 
-                                className="checkbox checkbox-success" 
+                            <span className='font-semibold'>available</span>
+                            <input
+                                type="checkbox"
+                                className="checkbox checkbox-success"
                                 onChange={handleAvailabilityChange}
+                                checked={showAvailableOnly}  
                             />
                         </div>
                     </div>
@@ -71,7 +69,7 @@ const All_Items = () => {
                                 <figure className="px-3 pt-3">
                                     <img
                                         src={cardData.post_user_photo}
-                                        className="rounded-xl h-36 w-full object-cover" 
+                                        className="rounded-xl h-36 w-full object-cover"
                                         alt="User"
                                     />
                                 </figure>

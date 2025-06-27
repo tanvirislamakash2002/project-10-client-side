@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const AboutUs = () => {
     return (
@@ -219,12 +220,12 @@ const AboutUs = () => {
                             Join thousands of happy roommates who found their ideal living situation.
                         </p>
                         <div className="mt-8">
-                            <a
-                                href="#"
+                            <Link
+                                to='/all-items'
                                 className="inline-block px-8 py-3 border border-transparent text-base font-medium rounded-md custom-color-500 bg-white hover:bg-green-50 md:py-4 md:text-lg md:px-10"
                             >
                                 Get Started Now
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </section>

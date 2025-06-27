@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Sidebar from '../dashboardPages/sidebar';
 import Loading from '../components/Loading';
+import { ToastContainer } from 'react-toastify';
 
 const DashboardLayout = () => {
     const navigation = useNavigation()
@@ -23,15 +24,12 @@ const DashboardLayout = () => {
             </aside>
 
             <div className='w-8/12 md:w-10/12 bg-base-100'>
-                {/* <header className={`${darkMode && `bg-[#1F1F1F]`}`}> */}
                 <header>
-                    {/* <Navbar></Navbar> */}
                     
                 </header>
-                {/* <main className={`${darkMode && `bg-[#1F1F1F]`}`}> */}
                 <main className='min-h-[calc(100vh-260px)] '>
                     <Outlet></Outlet>
-                    {/* <ToastContainer /> */}
+                    <ToastContainer />
                 </main>
                 <footer>
                     <Footer></Footer>
