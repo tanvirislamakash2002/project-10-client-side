@@ -26,7 +26,7 @@ const Home = () => {
     }, [])
     // console.log(posts)
     return (
-        <div className='max-w-7xl mx-auto'>
+        <div className=''>
 
 
             <Banner></Banner>

@@ -9,40 +9,40 @@ const Banner = () => {
 
     const [bannerData, setBannerData] = useState([])
 
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         fetch('bannerData.json')
-        .then(res=>res.json())
-        .then(data=>{
-            setBannerData(data)
-        })
-        
-    },[])
+            .then(res => res.json())
+            .then(data => {
+                setBannerData(data)
+            })
+
+    }, [])
 
 
-// console.log(bannerData)
+    // console.log(bannerData)
 
 
 
     return (
-<div className="">
+        <div className="">
             <Carousel
-            showArrows={true}
-            autoPlay={true}
-            interval={3000}
-            infiniteLoop={true}
-            showThumbs={false}
-            showStatus={false}          
+                showArrows={true}
+                autoPlay={true}
+                interval={3000}
+                infiniteLoop={true}
+                showThumbs={false}
+                showStatus={false}
             >
 
 
-{
-    bannerData.map((data,index)=><BannerSlide key={index} data={data}></BannerSlide>)
-}
+                {
+                    bannerData.map((data, index) => <BannerSlide key={index} data={data}></BannerSlide>)
+                }
 
 
-        </Carousel>
-</div>
+            </Carousel>
+        </div>
     );
 };
 

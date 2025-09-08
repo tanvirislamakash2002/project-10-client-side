@@ -1,26 +1,38 @@
+const App = () => {
 
-import './App.css'
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const image = e.target.image.files[0];
 
-function App() {
+    if (!image) return;
+
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", "random123"); 
+    try {
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dcnjyz91w/image/upload", 
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = await res.json();
+      console.log("Uploaded:", data);
+    } catch (err) {
+      console.error("Upload failed:", err);
+    }
+  };
 
   return (
-    <>
-     <div className="card bg-base-100 w-96 shadow-sm">
-  <figure>
-    <img
-      src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-      alt="Shoes" />
-  </figure>
-  <div className="card-body">
-    <h2 className="card-title">Card Title</h2>
-    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-    <div className="card-actions justify-end">
-      <button className="btn btn-primary">Buy Now</button>
+    <div className="flex flex-col items-center gap-4 mt-10">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+        <input type="file" name="image" className="file-input" />
+        <input type="submit" value="Upload" className="btn" />
+      </form>
     </div>
-  </div>
-</div>
-    </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

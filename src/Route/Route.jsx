@@ -30,13 +30,7 @@ export const router = createBrowserRouter([
         index: true,
         Component: Home
       },
-      // {
-      //   path: '/add-find-roommate',
-      //   element:
-      //     <PrivateRoute>
-      //       <AddFindRoommate></AddFindRoommate>
-      //     </PrivateRoute>,
-      // },
+
       {
         path: '/register',
         Component: Register
@@ -51,28 +45,11 @@ export const router = createBrowserRouter([
         Component: All_Items,
         hydrateFallbackElement: <Loading></Loading>
       },
-      // {
-      //   path: '/browse-listings',
-      //   loader: () => fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
-      //   Component: BrowseListings,
-      //   hydrateFallbackElement: <Loading></Loading>
-      // },
-      // {
-      //   path:'/my-listings',
-      //   loader:()=>fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
-      //   element: 
-      //     <PrivateRoute>
-      //       <MyListings></MyListings>
-      //     </PrivateRoute>,            
-      //     hydrateFallbackElement:<Loading></Loading>
-      // },
+
       {
         path: '/details/:id',
         loader: () => fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
-        element:
-          <PrivateRoute>
-            <Details></Details>
-          </PrivateRoute>,
+        element: <Details></Details>,
         hydrateFallbackElement: <Loading></Loading>
       },
       {
@@ -84,16 +61,24 @@ export const router = createBrowserRouter([
           </PrivateRoute>,
         hydrateFallbackElement: <Loading></Loading>
       },
-            {
+      {
         path: '/about-us',
         Component: AboutUs
       },
-            {
+      {
         path: '/contact-us',
         Component: ContactUs
       },
+      {
+        path: '/test',
+        element:<App></App>
+      },
     ]
   },
+  {
+        path: '/upload',
+        element:<App></App>
+      },
 
   // dashboard route 
   {
