@@ -1,35 +1,48 @@
 import React, { useState } from 'react';
-import { Link, useLoaderData } from 'react-router'; 
+import { Link, useLoaderData } from 'react-router';
 import { AuthContext } from '../provider/AuthProvider';
 import { useContext } from 'react';
-
+import { useQuery, useMutation, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 const All_Items = () => {
-    const loadedData = useLoaderData();
+    // const loadedData = useLoaderData();
     const { darkMode } = useContext(AuthContext);
     const [sortOrder, setSortOrder] = useState('oldest');
     const [showAvailableOnly, setShowAvailableOnly] = useState('no');
+    // console.log(loadedData)
+
+    // Usage in component
+  const { data:RoomData, isLoading, error } = useQuery({
+    queryKey: ['posts'],
+    queryFn: () => 
+      fetch('https://ph-a10-server-two.vercel.app/add-roommate')
+        .then(res => res.json())
+  });
+  console.log('data',RoomData);
+  if(!isLoading){
+    console.log('dda',RoomData);
+  }
 
     // filter process
-    const displayData = () => {
-        let result = [...loadedData];
+    // const displayData = () => {
+    //     let result = [...RoomData];
 
-        if (showAvailableOnly) {
-            result = result.filter(item => {
-                const availability = item.availability;
-                return availability === 'yes';
-            });
-        }
+    //     if (showAvailableOnly) {
+    //         result = result.filter(item => {
+    //             const availability = item.availability;
+    //             return availability === 'yes';
+    //         });
+    //     }
 
-        return sortOrder === 'newest' ? [...result].reverse() : result;
-    };
+    //     return sortOrder === 'newest' ? [...result].reverse() : result;
+    // };
 
-    const handleSortChange = (e) => {
-        setSortOrder(e.target.value === 'New Post' ? 'newest' : 'oldest');
-    };
+    // const handleSortChange = (e) => {
+    //     setSortOrder(e.target.value === 'New Post' ? 'newest' : 'oldest');
+    // };
 
-    const handleAvailabilityChange = (e) => {
-        setShowAvailableOnly(e.target.checked);
-    };
+    // const handleAvailabilityChange = (e) => {
+    //     setShowAvailableOnly(e.target.checked);
+    // };
 
     return (
         <div className={`${darkMode && ``} overflow-x-auto max-w-7xl mx-auto w-12/12 py-12 px-4`}>
@@ -43,7 +56,7 @@ const All_Items = () => {
                     <select
                         defaultValue="Oldest Post"
                         className="select text-black"
-                        onChange={handleSortChange}
+                        // onChange={handleSortChange}
                     >
                         <option disabled>Select post order</option>
                         <option>Oldest Post</option>
@@ -56,15 +69,15 @@ const All_Items = () => {
                             <input
                                 type="checkbox"
                                 className="checkbox checkbox-success"
-                                onChange={handleAvailabilityChange}
-                                checked={showAvailableOnly}  
+                                // onChange={handleAvailabilityChange}
+                                checked={showAvailableOnly}
                             />
                         </div>
                     </div>
                 </div>
                 <div className="w-8/12 md:w-10/12">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-                        {displayData().map(cardData => (
+                        {RoomData?.map(cardData => (
                             <div key={cardData._id} className={`${darkMode ? `text-white bg-white/30` : `text-black bg-white`} card shadow-sm`}>
                                 <figure className="px-3 pt-3">
                                     <img

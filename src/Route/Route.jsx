@@ -3,7 +3,7 @@ import {
 } from "react-router";
 import App from "../App";
 import RootLayout from "../RootLayout/RootLayout";
-import AddFindRoommate from "../Pages/AddFindRoommate";
+import AddFindRoommate from "../Pages/AddFindRoommate/AddFindRoommate";
 import Details from "../Pages/Details";
 import UpdatePost from "../Pages/UpdatePost";
 import Register from "../Pages/Register";
