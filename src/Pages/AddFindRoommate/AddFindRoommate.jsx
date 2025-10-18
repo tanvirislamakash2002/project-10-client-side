@@ -38,7 +38,7 @@ const AddFindRoommate = () => {
       rent: '',
       availableFrom: '',
       description: '',
-      status: 'pending',
+      status: 'accepted',
       preferences: {
         gender: '',
         ageRange: '',
@@ -99,8 +99,8 @@ const AddFindRoommate = () => {
 
   const addRoomMutation = useMutation({
     mutationFn: (roomData) =>
-      axios.post("http://localhost:3000/add-roommate", roomData),
-    // axios.post("https://ph-a10-server-two.vercel.app/add-roommate", roomData),
+      axios.post(`${import.meta.env.VITE_API_URL}/add-roommate`, roomData),
+    
     onSuccess: (res) => {
       if (res.data.insertedId) {
         Swal.fire("Success", "Donation added!", "success");
@@ -188,7 +188,7 @@ const AddFindRoommate = () => {
     //   Swal.fire("Error", "At least one image is required", "error");
     //   return;
     // }
-console.log(data);
+    console.log(data);
     try {
       // 1. Upload all images to ImgBB
       const uploadedUrls = await uploadImagesToImgBB(images);
@@ -336,7 +336,7 @@ console.log(data);
             </div>
 
             {/* Images Section */}
-            {/* <div>
+            <div>
               <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
                 <div className="p-2 bg-purple-100 rounded-lg">
                   <FaImages className="text-purple-600 text-xl" />
@@ -345,7 +345,7 @@ console.log(data);
               </div>
 
               <RoomImage props={{ removeImage, images, handleImageUpload, errors }}></RoomImage>
-            </div> */}
+            </div>
 
             {/* Preferences Section */}
             <div>
@@ -360,10 +360,10 @@ console.log(data);
                 {/* gender preference */}
                 <GenderPreference props={{ register, errors }}></GenderPreference>
 
-                {/* age range */}
-                <AgeRange props={{ register }}></AgeRange>
-
                 <Occupation props={{ register }}></Occupation>
+                {/* age range */}
+                <AgeRange props={{ register, setValue, watch, errors }}></AgeRange>
+
 
                 <Lifestyle props={{ register }}></Lifestyle>
               </div>

@@ -17,7 +17,7 @@ const DetailsCard = ({detail}) => {
 }).then((result) => {
   if (result.isConfirmed) {
 
-    fetch(`https://ph-a10-server-two.vercel.app/add-roommate/${id}`,{
+    fetch(`${import.meta.env.VITE_API_URL}/add-roommate/${id}`,{
         method:'DELETE'
     })
     .then(res=>res.json())

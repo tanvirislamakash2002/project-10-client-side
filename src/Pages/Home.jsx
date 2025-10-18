@@ -16,7 +16,7 @@ const Home = () => {
 
 
     useEffect(() => {
-        fetch('https://ph-a10-server-two.vercel.app/home')
+        fetch(`${import.meta.env.VITE_API_URL}/home`)
             .then(res => res.json())
             .then(data => {
 

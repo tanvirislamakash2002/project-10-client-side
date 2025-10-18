@@ -6,7 +6,7 @@ import { FaEdit } from 'react-icons/fa';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 
 const MyListingRow = ({ rowData }) => {
-    const {  _id, availability, contact_info, description, location, post_email, post_name, post_user_photo, preferences, rent_amount, roomType  } = rowData
+    const { _id, availability, contact_info, description, location, post_email, post_name, post_user_photo, preferences, rent_amount, roomType } = rowData
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -20,7 +20,7 @@ const MyListingRow = ({ rowData }) => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                fetch(`https://ph-a10-server-two.vercel.app/add-roommate/${id}`, {
+                fetch(`${import.meta.env.VITE_API_URL}/add-roommate/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -58,8 +58,8 @@ const MyListingRow = ({ rowData }) => {
             </td>
             <td>{availability}</td>
             <th className='w-44 flex'>
-                <Link to={`/update-post/${_id}`} className=" custom-color-200 flex items-center"><FaEdit size={42} className=' p-2 hover:bg-green-50'/></Link>
-                 <button onClick={() => handleDelete(_id)} className="cursor-pointer flex items-center text-red-700 "><RiDeleteBin5Line size={42}  className=' p-2 hover:bg-red-50'/></button>
+                <Link to={`/update-post/${_id}`} className=" custom-color-200 flex items-center"><FaEdit size={42} className=' p-2 hover:bg-green-50' /></Link>
+                <button onClick={() => handleDelete(_id)} className="cursor-pointer flex items-center text-red-700 "><RiDeleteBin5Line size={42} className=' p-2 hover:bg-red-50' /></button>
             </th>
         </tr>
 

@@ -18,7 +18,7 @@ import DashboardLayout from "../dashboardLayout/dashboardLayout";
 import Overview from "../dashboardPages/Overview";
 import AboutUs from "../components/AboutUs";
 import ContactUs from "../components/ContactUs";
-import All_Items from "../Pages/All_Items";
+import Browse from "../Pages/Browse/Browse";
 
 export const router = createBrowserRouter([
   {
@@ -40,21 +40,18 @@ export const router = createBrowserRouter([
         Component: Login
       },
       {
-        path: '/all-items',
-        loader: () => fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
-        Component: All_Items,
+        path: '/browse',
+        Component: Browse,
         hydrateFallbackElement: <Loading></Loading>
       },
 
       {
         path: '/details/:id',
-        loader: () => fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
         element: <Details></Details>,
         hydrateFallbackElement: <Loading></Loading>
       },
       {
         path: '/update-post/:id',
-        loader: ({ params }) => fetch(`https://ph-a10-server-two.vercel.app/add-roommate/${params.id}`),
         element:
           <PrivateRoute>
             <UpdatePost></UpdatePost>
@@ -91,7 +88,6 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: () => fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
         element:
           <Overview></Overview>,
         hydrateFallbackElement: <Loading></Loading>
@@ -99,13 +95,11 @@ export const router = createBrowserRouter([
       },
       {
         path: '/dashboard/browse-listings',
-        loader: () => fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
         Component: BrowseListings,
         hydrateFallbackElement: <Loading></Loading>
       },
       {
         path: '/dashboard/my-listings',
-        loader: () => fetch('https://ph-a10-server-two.vercel.app/add-roommate'),
         element:
           <PrivateRoute>
             <MyListings></MyListings>

@@ -2,13 +2,20 @@ import React, { use } from 'react';
 import { useLoaderData } from 'react-router';
 import MyListingRow from '../components/MyListingRow';
 import { AuthContext } from '../provider/AuthProvider';
+import { useQuery } from '@tanstack/react-query';
 
 const MyListings = () => {
     const {user, darkMode} = use(AuthContext)
     const {email, displayName, photoURL} = user
     //console.log(user)
-    const getData = useLoaderData()
-    const data = getData.filter(info=>info.post_email==user.email)
+        const { data: RoomData, isLoading, error } = useQuery({
+        queryKey: ['listings'],
+        queryFn: () =>
+            fetch(`${import.meta.env.VITE_API_URL}/add-roommate`)
+                .then(res => res.json())
+                
+    });
+    const data = RoomData?.filter(info=>info.poster.email==user.email)
     //console.log(data)
     return (
         <div className="max-w-7xl mx-auto w-11/12 min-h-[calc(100vh-142px)]">
@@ -55,7 +62,7 @@ const MyListings = () => {
                 <tbody>
                     {/* row  */}
 {
-    data.map(rowData=><MyListingRow key={rowData._id} rowData={rowData}></MyListingRow>)
+    data?.map(rowData=><MyListingRow key={rowData._id} rowData={rowData}></MyListingRow>)
 }
 
 

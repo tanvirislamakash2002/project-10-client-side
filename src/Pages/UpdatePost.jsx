@@ -18,7 +18,7 @@ const UpdatePost = () => {
 
         // updated post 
 
-        fetch(`https://ph-a10-server-two.vercel.app/add-roommate/${_id}`, {
+        fetch(`${import.meta.env.VITE_API_URL}/add-roommate/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

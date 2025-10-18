@@ -29,7 +29,7 @@ const App = () => {
   const { data: roomData, isLoading: isRoomLoading } = useQuery({
     queryKey: ['roomData', id],
     queryFn: async () => {
-      const res = await axios.get(`https://ph-a10-server-two.vercel.app/add-roommate/${id}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/add-roommate/${id}`);
       return res.data;
     },
     onError: () => toast.error('Failed to load room details'),

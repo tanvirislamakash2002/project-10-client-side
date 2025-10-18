@@ -15,7 +15,7 @@ const BannerSlide = ({ data }) => {
                     </h2>
                     <p className='pt-2 pb-5 text-xl'>{data.sub_title}</p>
                     <div className="card-actions justify-center">
-                        <Link to='/all-items' className="btn custom-bg-500 text-white font-bold custom-border-400 shadow-none">Browse Roommates Now</Link>
+                        <Link to='/browse' className="btn custom-bg-500 text-white font-bold custom-border-400 shadow-none">Browse Roommates Now</Link>
                     </div>
 
                 </div>
