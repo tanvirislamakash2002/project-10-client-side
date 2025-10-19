@@ -47,10 +47,10 @@ export const ListingCard = ({ listing }) => {
                     <span className="font-semibold">Type:</span> {listing.roomType} • {listing.propertyType}
                 </p>
                 <p className="text-gray-700">
-                    <span className="font-semibold">Gender:</span> {listing.preferredGender}
+                    <span className="font-semibold">Gender:</span> {listing.preferences.gender}
                 </p>
                 <p className="text-gray-700">
-                    <span className="font-semibold">Age:</span> {listing.ageMin}-{listing.ageMax}
+                    <span className="font-semibold">Age:</span> {listing?.preferences?.ageRange?.min}-{listing?.preferences?.ageRange?.max}
                 </p>
                 <p className="text-gray-700">
                     <span className="font-semibold">Available:</span> {new Date(listing.availableFrom).toLocaleDateString()}

@@ -15,10 +15,10 @@ import MyListings from "../Pages/MyListings";
 import Home from "../Pages/Home";
 import ErrorPage from "../Pages/ErrorPage";
 import DashboardLayout from "../dashboardLayout/dashboardLayout";
-import Overview from "../dashboardPages/Overview";
 import AboutUs from "../components/AboutUs";
 import ContactUs from "../components/ContactUs";
 import Browse from "../Pages/Browse/Browse";
+import Dashboard from "../dashboardPages/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -89,7 +89,7 @@ export const router = createBrowserRouter([
       {
         index: true,
         element:
-          <Overview></Overview>,
+          <Dashboard></Dashboard>,
         hydrateFallbackElement: <Loading></Loading>
 
       },
@@ -107,7 +107,7 @@ export const router = createBrowserRouter([
         hydrateFallbackElement: <Loading></Loading>
       },
       {
-        path: '/dashboard/add-find-roommate',
+        path: '/dashboard/listings/new',
         element:
           <PrivateRoute>
             <AddFindRoommate></AddFindRoommate>
