@@ -6,6 +6,7 @@ import {
   MoreVertical, Download, CheckSquare, X, AlertCircle,
   Home, Layers, Grid, List, ArrowUpDown
 } from 'lucide-react';
+import Swal from 'sweetalert2';
 
 export default function MyListingsPage() {
   const [selectedTab, setSelectedTab] = useState('all');
@@ -22,6 +23,38 @@ export default function MyListingsPage() {
       fetch(`${import.meta.env.VITE_API_URL}/add-roommate`)
         .then(res => res.json())
   });
+
+
+      const handleDelete = (id) => {
+          Swal.fire({
+              title: `Are you sure? you want to delete id: ${id}`,
+              text: "You won't be able to revert this!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+              if (result.isConfirmed) {
+  
+                  fetch(`${import.meta.env.VITE_API_URL}/add-roommate/${id}`, {
+                      method: 'DELETE'
+                  })
+                      .then(res => res.json())
+                      .then(data => {
+                          console.log('after delete', data)
+                          if (data.deletedCount > 0) {
+                              Swal.fire({
+                                  title: "Deleted!",
+                                  text: "Your file has been deleted.",
+                                  icon: "success"
+                              });
+                          }
+                      })
+  
+              }
+          });
+      }
 
   // Calculate statistics
   const stats = useMemo(() => {
@@ -212,7 +245,7 @@ export default function MyListingsPage() {
             <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
               <Copy size={18} className="text-gray-600" />
             </button>
-            <button className="p-2 border border-red-300 rounded-lg hover:bg-red-50 transition-colors">
+            <button onClick={() => handleDelete(listing._id)} className="p-2 border border-red-300 rounded-lg hover:bg-red-50 transition-colors">
               <Trash2 size={18} className="text-red-600" />
             </button>
           </div>
@@ -287,7 +320,7 @@ export default function MyListingsPage() {
             <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
               <Copy size={16} className="text-gray-600" />
             </button>
-            <button className="p-2 hover:bg-red-50 rounded-lg transition-colors">
+            <button onClick={() => handleDelete(listing._id)} className="p-2 hover:bg-red-50 rounded-lg transition-colors">
               <Trash2 size={16} className="text-red-600" />
             </button>
           </div>
