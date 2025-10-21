@@ -11,10 +11,11 @@ import Footer from '../components/Footer';
 import Loading from '../components/Loading';
 import { ToastContainer } from 'react-toastify';
 
-const SidebarLink = ({ to, icon: Icon, label, badge = null, sidebarCollapsed }) => (
+const SidebarLink = ({ to, icon: Icon, label, badge = null, sidebarCollapsed, exact=false }) => (
   <li className="mb-1">
     <NavLink
       to={to}
+      end={exact}
       className={({ isActive }) =>
         `flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative ${
           isActive
@@ -250,6 +251,7 @@ const DashboardLayout = () => {
                 to="/dashboard"
                 icon={FaTachometerAlt}
                 label="Dashboard"
+                exact={true}
               />
               
               <SidebarLink
@@ -257,6 +259,7 @@ const DashboardLayout = () => {
                 to="/dashboard/my-listings"
                 icon={MdAssignmentInd}
                 label="My Listings"
+                exact={false}
               />
               
               <SidebarLink
@@ -264,6 +267,7 @@ const DashboardLayout = () => {
                 to="/dashboard/listings/new"
                 icon={MdPostAdd}
                 label="Create New Listing"
+                exact={true}
               />
 
               {/* Activity Section */}
@@ -275,6 +279,7 @@ const DashboardLayout = () => {
                 icon={FaEnvelope}
                 label="Inquiries"
                 badge="5"
+                exact={true}
               />
               
               <SidebarLink
