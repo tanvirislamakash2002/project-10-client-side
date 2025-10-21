@@ -72,7 +72,7 @@ const DashboardLayout = () => {
       {/* Main Content */}
       <div className="drawer-content flex flex-col">
         {/* Mobile Header */}
-        <div className="navbar bg-white shadow-sm lg:hidden px-6 border-b border-gray-200">
+        <div className="navbar bg-white shadow-sm lg:hidden px-6 border-b border-gray-200 sticky top-0 z-10">
           <div className="flex-none">
             <label htmlFor="my-drawer-2" className="btn btn-ghost hover:bg-green-50">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

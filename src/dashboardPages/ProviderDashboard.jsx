@@ -106,23 +106,25 @@ export default function ProviderDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Provider Dashboard</h1>
-            <p className="text-gray-500 text-sm mt-1">Welcome back! Here's your performance overview.</p>
-          </div>
-          <Link to={'/dashboard/listings/new'}>
-          <button className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center gap-2">
-            <Plus size={20} />
-            Create Listing
-          </button>
-          </Link>
-        </div>
-      </div>
+
+
 
       <div className="max-w-7xl mx-auto px-6 py-8">
+        {/* Quick Actions Banner */}
+        <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl p-6 mb-8 text-white">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold mb-2">Ready to list your space?</h2>
+              <p className="text-blue-100">Create a new listing and find your ideal roommate faster</p>
+            </div>
+            <Link to="/dashboard/listings/new">
+              <button className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors flex items-center gap-2">
+                <Plus size={20} />
+                Create New Listing
+              </button>
+            </Link>
+          </div>
+        </div>
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <SummaryCard
@@ -399,13 +401,12 @@ export default function ProviderDashboard() {
                   return (
                     <div
                       key={i}
-                      className={`py-2 rounded font-medium text-sm ${
-                        isBooked
+                      className={`py-2 rounded font-medium text-sm ${isBooked
                           ? 'bg-blue-600 text-white'
                           : i % 7 === 0 || i % 7 === 6
-                          ? 'bg-gray-100 text-gray-600'
-                          : 'text-gray-900 hover:bg-gray-100'
-                      }`}
+                            ? 'bg-gray-100 text-gray-600'
+                            : 'text-gray-900 hover:bg-gray-100'
+                        }`}
                     >
                       {i + 1}
                     </div>
