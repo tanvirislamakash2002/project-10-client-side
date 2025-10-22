@@ -19,6 +19,7 @@ import AboutUs from "../components/AboutUs";
 import ContactUs from "../components/ContactUs";
 import Browse from "../Pages/Browse/Browse";
 import Dashboard from "../dashboardPages/Dashboard";
+import Inquiries from "../dashboardPages/Provider/Inquiries/Inquiries";
 
 export const router = createBrowserRouter([
   {
@@ -93,6 +94,7 @@ export const router = createBrowserRouter([
         hydrateFallbackElement: <Loading></Loading>
 
       },
+      // provider dashboard
       {
         path: '/dashboard/browse-listings',
         Component: BrowseListings,
@@ -111,6 +113,13 @@ export const router = createBrowserRouter([
         element:
           <PrivateRoute>
             <AddFindRoommate></AddFindRoommate>
+          </PrivateRoute>,
+      },
+      {
+        path: '/dashboard/inquiries',
+        element:
+          <PrivateRoute>
+            <Inquiries></Inquiries>
           </PrivateRoute>,
       },
     ]
