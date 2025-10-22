@@ -19,7 +19,7 @@ import {
 import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
 
-const App = () => {
+const Details = () => {
   const [isApplying, setIsApplying] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
 
@@ -304,4 +304,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Details;

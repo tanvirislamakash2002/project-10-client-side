@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import Footer from '../components/Footer';
 import { AuthContext } from '../provider/AuthProvider';
 
-const RootLayout = () => {
+const Root = () => {
     const navigation = useNavigation()
     const { darkMode, setDarkMode  } = use(AuthContext)
     if (navigation.state === 'loading') {
@@ -31,4 +31,4 @@ const RootLayout = () => {
     );
 };
 
-export default RootLayout;
+export default Root;

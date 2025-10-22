@@ -2,29 +2,30 @@ import {
   createBrowserRouter,
 } from "react-router";
 import App from "../App";
-import RootLayout from "../RootLayout/RootLayout";
 import AddFindRoommate from "../Pages/AddFindRoommate/AddFindRoommate";
-import Details from "../Pages/Details";
-import UpdatePost from "../Pages/UpdatePost";
-import Register from "../Pages/Register";
-import Login from "../Pages/Login";
 import PrivateRoute from "../provider/PrivateRoute";
 import Loading from "../components/Loading";
-import BrowseListings from "../Pages/BrowseListings";
-import MyListings from "../Pages/MyListings";
-import Home from "../Pages/Home";
 import ErrorPage from "../Pages/ErrorPage";
-import DashboardLayout from "../dashboardLayout/dashboardLayout";
 import AboutUs from "../components/AboutUs";
 import ContactUs from "../components/ContactUs";
 import Browse from "../Pages/Browse/Browse";
-import Dashboard from "../dashboardPages/Dashboard";
-import Inquiries from "../dashboardPages/Provider/Inquiries/Inquiries";
+import UnderConstructionPage from "../Pages/UnderConstructionPage";
+import Root from "../layout/Root";
+import Details from "../Pages/public/Details";
+import Register from "../Pages/auth/Register";
+import Login from "../Pages/auth/Login";
+import BrowseListings from "../Pages/public/BrowseListings";
+import MyListings from "../Pages/dashboard/MyListings";
+import Home from "../Pages/public/Home";
+import DashboardLayout from "../layout/DashboardLayout";
+import Inquiries from "../Pages/dashboard/Provider/Inquiries/Inquiries";
+import UpdatePost from "../Pages/dashboard/Provider/UpdatePost";
+import Dashboard from "../Pages/dashboard/Dashboard";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    Component: RootLayout,
+    Component: Root,
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
@@ -120,6 +121,34 @@ export const router = createBrowserRouter([
         element:
           <PrivateRoute>
             <Inquiries></Inquiries>
+          </PrivateRoute>,
+      },
+      {
+        path: '/dashboard/favorites',
+        element:
+          <PrivateRoute>
+            <UnderConstructionPage></UnderConstructionPage>
+          </PrivateRoute>,
+      },
+      {
+        path: '/dashboard/analytics',
+        element:
+          <PrivateRoute>
+            <UnderConstructionPage></UnderConstructionPage>
+          </PrivateRoute>,
+      },
+      {
+        path: '/dashboard/profile',
+        element:
+          <PrivateRoute>
+            <UnderConstructionPage></UnderConstructionPage>
+          </PrivateRoute>,
+      },
+      {
+        path: '/dashboard/settings',
+        element:
+          <PrivateRoute>
+            <UnderConstructionPage></UnderConstructionPage>
           </PrivateRoute>,
       },
     ]

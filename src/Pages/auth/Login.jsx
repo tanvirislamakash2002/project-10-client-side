@@ -1,7 +1,7 @@
 import React, { use } from 'react';
-import { AuthContext } from '../provider/AuthProvider';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../provider/AuthProvider';
 
 const Login = () => {
 

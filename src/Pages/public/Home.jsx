@@ -1,14 +1,14 @@
 import React, { use, useEffect, useState } from 'react';
-import Banner from '../components/Banner';
-import FeaturedRoommates from '../components/FeaturedRoommates';
-import { AuthContext } from '../provider/AuthProvider';
 import { Typewriter } from 'react-simple-typewriter';
 import CountUp from 'react-countup';
-import ExtraSection1 from '../components/ExptaSection/ExtraSection1';
-import ExtraSection2 from '../components/ExptaSection/ExtraSection2';
 import { Link } from 'react-router';
-import ExtraSection3 from '../components/ExptaSection/ExtraSection3';
-import ExtraSection4 from '../components/ExptaSection/ExtraSection4';
+import Banner from '../../components/Banner';
+import FeaturedRoommates from '../../components/FeaturedRoommates';
+import { AuthContext } from '../../provider/AuthProvider';
+import ExtraSection1 from '../../components/ExptaSection/ExtraSection1';
+import ExtraSection2 from '../../components/ExptaSection/ExtraSection2';
+import ExtraSection3 from '../../components/ExptaSection/ExtraSection3';
+import ExtraSection4 from '../../components/ExptaSection/ExtraSection4';
 
 const Home = () => {
     const { darkMode } = use(AuthContext)

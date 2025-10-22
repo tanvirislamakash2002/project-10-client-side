@@ -9,7 +9,7 @@ import {
 import Swal from 'sweetalert2';
 import { Link } from 'react-router';
 
-export default function MyListingsPage() {
+export default function MyListings() {
     const [selectedTab, setSelectedTab] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
     const [sortBy, setSortBy] = useState('newest');

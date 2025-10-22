@@ -1,9 +1,6 @@
 import React, { use } from 'react';
-import { useLoaderData } from 'react-router';
-import ListingTableRow from '../components/ListingTableRow';
-import Loading from '../components/Loading';
-import { AuthContext } from '../provider/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
+import { AuthContext } from '../../provider/AuthProvider';
 
 const BrowseListings = () => {
     const { data: RoomData, isLoading, error } = useQuery({

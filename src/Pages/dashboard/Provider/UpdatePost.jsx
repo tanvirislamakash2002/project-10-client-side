@@ -1,7 +1,7 @@
 import React, { use } from 'react';
 import { useLoaderData } from 'react-router';
 import Swal from 'sweetalert2';
-import { AuthContext } from '../provider/AuthProvider';
+import { AuthContext } from '../../../provider/AuthProvider';
 
 const UpdatePost = () => {
     const { user } = use(AuthContext)
