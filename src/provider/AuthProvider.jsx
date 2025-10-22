@@ -30,7 +30,8 @@ const AuthProvider = ({ children }) => {
     }
 
     //login with google
-    const loginWithGoogle=()=>{
+    const signInWithGoogle=()=>{
+        setLoading(true)
         const provider = new GoogleAuthProvider()
         return signInWithPopup(auth, provider)
     }
@@ -61,7 +62,7 @@ const AuthProvider = ({ children }) => {
         createUser,
         updateUser,
         signIn,
-        loginWithGoogle,
+        signInWithGoogle,
         logOut,
         darkMode,
         setDarkMode
