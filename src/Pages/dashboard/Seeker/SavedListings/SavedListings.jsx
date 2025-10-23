@@ -1,489 +1,389 @@
 import React, { useState } from 'react';
 import { Heart, Search, Filter, Grid, List, Share2, X, MapPin, Calendar, DollarSign, Eye, Send, Download, ChevronLeft, ChevronRight, ArrowUpDown, GitCompare, CheckCircle, Clock, AlertCircle, Home } from 'lucide-react';
+import { ListingCard } from '../../../Browse/Components/ListingCard';
 
 export default function SavedListings() {
-  const [view, setView] = useState('grid');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [sortBy, setSortBy] = useState('recent');
-  const [selectedListings, setSelectedListings] = useState([]);
-  const [showComparison, setShowComparison] = useState(false);
-  const [compareListings, setCompareListings] = useState([]);
+    const [view, setView] = useState('grid');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [statusFilter, setStatusFilter] = useState('all');
+    const [sortBy, setSortBy] = useState('recent');
+    const [selectedListings, setSelectedListings] = useState([]);
+    const [showComparison, setShowComparison] = useState(false);
+    const [compareListings, setCompareListings] = useState([]);
 
-  // Mock data
-  const savedListings = [
-    {
-      id: 1,
-      title: "Spacious Room in Shared House",
-      location: "Downtown, 2.3 miles away",
-      price: 800,
-      availability: "Nov 1, 2025",
-      status: "available",
-      lastViewed: "2 hours ago",
-      image: "🏠",
-      applied: false,
-      amenities: ["WiFi", "Parking", "Laundry"],
-      roomType: "Private Room",
-      savedDate: "Oct 20, 2025"
-    },
-    {
-      id: 2,
-      title: "Private Studio Apartment",
-      location: "Midtown, 1.8 miles away",
-      price: 950,
-      availability: "Oct 28, 2025",
-      status: "applied",
-      lastViewed: "1 day ago",
-      image: "🏢",
-      applied: true,
-      appliedDate: "Oct 21, 2025",
-      amenities: ["WiFi", "Gym", "Pool"],
-      roomType: "Studio",
-      savedDate: "Oct 18, 2025"
-    },
-    {
-      id: 3,
-      title: "Room with Private Bath",
-      location: "Suburbs, 5.1 miles away",
-      price: 650,
-      availability: "Nov 15, 2025",
-      status: "available",
-      lastViewed: "3 days ago",
-      image: "🏡",
-      applied: false,
-      amenities: ["WiFi", "Parking"],
-      roomType: "Private Room",
-      savedDate: "Oct 15, 2025"
-    },
-    {
-      id: 4,
-      title: "Modern Loft Downtown",
-      location: "Downtown, 1.2 miles away",
-      price: 1200,
-      availability: "Dec 1, 2025",
-      status: "unavailable",
-      lastViewed: "1 week ago",
-      image: "🏙️",
-      applied: false,
-      amenities: ["WiFi", "Gym", "Parking", "Laundry"],
-      roomType: "Loft",
-      savedDate: "Oct 10, 2025"
-    },
-    {
-      id: 5,
-      title: "Cozy Bedroom Near University",
-      location: "University Area, 3.5 miles away",
-      price: 720,
-      availability: "Nov 5, 2025",
-      status: "available",
-      lastViewed: "5 hours ago",
-      image: "🎓",
-      applied: false,
-      amenities: ["WiFi", "Study Room"],
-      roomType: "Private Room",
-      savedDate: "Oct 22, 2025"
-    }
-  ];
+    // Mock data
+    const savedListings = [
+        {
+            id: 1,
+            title: "Spacious Room in Shared House",
+            location: "Downtown, 2.3 miles away",
+            price: 800,
+            availability: "Nov 1, 2025",
+            status: "available",
+            lastViewed: "2 hours ago",
+            image: "🏠",
+            applied: false,
+            amenities: ["WiFi", "Parking", "Laundry"],
+            roomType: "Private Room",
+            savedDate: "Oct 20, 2025"
+        },
+        {
+            id: 2,
+            title: "Private Studio Apartment",
+            location: "Midtown, 1.8 miles away",
+            price: 950,
+            availability: "Oct 28, 2025",
+            status: "applied",
+            lastViewed: "1 day ago",
+            image: "🏢",
+            applied: true,
+            appliedDate: "Oct 21, 2025",
+            amenities: ["WiFi", "Gym", "Pool"],
+            roomType: "Studio",
+            savedDate: "Oct 18, 2025"
+        },
+        {
+            id: 3,
+            title: "Room with Private Bath",
+            location: "Suburbs, 5.1 miles away",
+            price: 650,
+            availability: "Nov 15, 2025",
+            status: "available",
+            lastViewed: "3 days ago",
+            image: "🏡",
+            applied: false,
+            amenities: ["WiFi", "Parking"],
+            roomType: "Private Room",
+            savedDate: "Oct 15, 2025"
+        },
+        {
+            id: 4,
+            title: "Modern Loft Downtown",
+            location: "Downtown, 1.2 miles away",
+            price: 1200,
+            availability: "Dec 1, 2025",
+            status: "unavailable",
+            lastViewed: "1 week ago",
+            image: "🏙️",
+            applied: false,
+            amenities: ["WiFi", "Gym", "Parking", "Laundry"],
+            roomType: "Loft",
+            savedDate: "Oct 10, 2025"
+        },
+        {
+            id: 5,
+            title: "Cozy Bedroom Near University",
+            location: "University Area, 3.5 miles away",
+            price: 720,
+            availability: "Nov 5, 2025",
+            status: "available",
+            lastViewed: "5 hours ago",
+            image: "🎓",
+            applied: false,
+            amenities: ["WiFi", "Study Room"],
+            roomType: "Private Room",
+            savedDate: "Oct 22, 2025"
+        }
+    ];
 
-  const getStatusBadge = (status) => {
-    switch(status) {
-      case "available":
-        return <span className="flex items-center gap-1 text-green-600 text-sm font-medium"><span className="w-2 h-2 bg-green-600 rounded-full"></span>Available</span>;
-      case "applied":
-        return <span className="flex items-center gap-1 text-yellow-600 text-sm font-medium"><span className="w-2 h-2 bg-yellow-600 rounded-full"></span>Applied</span>;
-      case "unavailable":
-        return <span className="flex items-center gap-1 text-red-600 text-sm font-medium"><span className="w-2 h-2 bg-red-600 rounded-full"></span>No Longer Available</span>;
-      default:
-        return null;
-    }
-  };
+    const getStatusBadge = (status) => {
+        switch (status) {
+            case "available":
+                return <span className="flex items-center gap-1 text-green-600 text-sm font-medium"><span className="w-2 h-2 bg-green-600 rounded-full"></span>Available</span>;
+            case "applied":
+                return <span className="flex items-center gap-1 text-yellow-600 text-sm font-medium"><span className="w-2 h-2 bg-yellow-600 rounded-full"></span>Applied</span>;
+            case "unavailable":
+                return <span className="flex items-center gap-1 text-red-600 text-sm font-medium"><span className="w-2 h-2 bg-red-600 rounded-full"></span>No Longer Available</span>;
+            default:
+                return null;
+        }
+    };
 
-  const filteredListings = savedListings.filter(listing => {
-    const matchesSearch = listing.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         listing.location.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus = statusFilter === 'all' || listing.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
+    const filteredListings = savedListings.filter(listing => {
+        const matchesSearch = listing.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            listing.location.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesStatus = statusFilter === 'all' || listing.status === statusFilter;
+        return matchesSearch && matchesStatus;
+    });
 
-  const sortedListings = [...filteredListings].sort((a, b) => {
-    switch(sortBy) {
-      case 'price-low':
-        return a.price - b.price;
-      case 'price-high':
-        return b.price - a.price;
-      case 'recent':
-      default:
-        return new Date(b.savedDate) - new Date(a.savedDate);
-    }
-  });
+    const sortedListings = [...filteredListings].sort((a, b) => {
+        switch (sortBy) {
+            case 'price-low':
+                return a.price - b.price;
+            case 'price-high':
+                return b.price - a.price;
+            case 'recent':
+            default:
+                return new Date(b.savedDate) - new Date(a.savedDate);
+        }
+    });
 
-  const handleSelectListing = (id) => {
-    setSelectedListings(prev => 
-      prev.includes(id) ? prev.filter(l => l !== id) : [...prev, id]
+    const handleSelectListing = (id) => {
+        setSelectedListings(prev =>
+            prev.includes(id) ? prev.filter(l => l !== id) : [...prev, id]
+        );
+    };
+
+    const handleCompare = (listing) => {
+        if (compareListings.find(l => l.id === listing.id)) {
+            setCompareListings(prev => prev.filter(l => l.id !== listing.id));
+        } else if (compareListings.length < 3) {
+            setCompareListings(prev => [...prev, listing]);
+        }
+    };
+
+
+    const EmptyState = () => (
+        <div className="text-center py-16">
+            <div className="text-8xl mb-4">🏠</div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">No Saved Listings Yet</h3>
+            <p className="text-gray-600 mb-6 max-w-md mx-auto">
+                Start browsing available rooms and save your favorites to keep track of them here.
+            </p>
+            <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition inline-flex items-center">
+                <Home className="w-5 h-5 mr-2" />
+                Start Browsing Listings
+            </button>
+            <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-lg mx-auto text-left">
+                <h4 className="font-semibold text-blue-900 mb-3">Tips for Finding Good Listings:</h4>
+                <ul className="space-y-2 text-sm text-blue-800">
+                    <li className="flex items-start">
+                        <span className="mr-2">✓</span>
+                        <span>Check listings frequently - good rooms get taken quickly</span>
+                    </li>
+                    <li className="flex items-start">
+                        <span className="mr-2">✓</span>
+                        <span>Set up price alerts to get notified of drops</span>
+                    </li>
+                    <li className="flex items-start">
+                        <span className="mr-2">✓</span>
+                        <span>Save multiple options to increase your chances</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
     );
-  };
 
-  const handleCompare = (listing) => {
-    if (compareListings.find(l => l.id === listing.id)) {
-      setCompareListings(prev => prev.filter(l => l.id !== listing.id));
-    } else if (compareListings.length < 3) {
-      setCompareListings(prev => [...prev, listing]);
-    }
-  };
-
-  const ListingCard = ({ listing }) => (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition">
-      <div className="relative">
-        <div className="bg-gradient-to-br from-blue-100 to-purple-100 h-48 flex items-center justify-center text-6xl">
-          {listing.image}
-        </div>
-        <button 
-          onClick={() => handleSelectListing(listing.id)}
-          className={`absolute top-3 left-3 p-2 rounded-full ${selectedListings.includes(listing.id) ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'} shadow-md hover:scale-110 transition`}
-        >
-          <CheckCircle className="w-5 h-5" />
-        </button>
-        <button className="absolute top-3 right-3 p-2 bg-white text-red-500 rounded-full shadow-md hover:bg-red-50 transition">
-          <Heart className="w-5 h-5 fill-current" />
-        </button>
-        {listing.status === 'applied' && (
-          <div className="absolute bottom-3 left-3 bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
-            Applied {listing.appliedDate}
-          </div>
-        )}
-      </div>
-      
-      <div className="p-4">
-        <div className="flex items-start justify-between mb-2">
-          <h3 className="font-semibold text-gray-900 text-lg">{listing.title}</h3>
-          {getStatusBadge(listing.status)}
-        </div>
-        
-        <div className="space-y-2 mb-4">
-          <p className="text-sm text-gray-600 flex items-center">
-            <MapPin className="w-4 h-4 mr-1" />
-            {listing.location}
-          </p>
-          <p className="text-sm text-gray-600 flex items-center">
-            <Calendar className="w-4 h-4 mr-1" />
-            Available: {listing.availability}
-          </p>
-          <p className="text-xl font-bold text-green-600">
-            ${listing.price}<span className="text-sm text-gray-600 font-normal">/month</span>
-          </p>
-        </div>
-
-        <div className="flex flex-wrap gap-2 mb-4">
-          {listing.amenities.map((amenity, idx) => (
-            <span key={idx} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
-              {amenity}
-            </span>
-          ))}
-        </div>
-
-        <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
-          <span className="flex items-center">
-            <Clock className="w-3 h-3 mr-1" />
-            Last viewed: {listing.lastViewed}
-          </span>
-          <span className="flex items-center">
-            <Eye className="w-3 h-3 mr-1" />
-            Saved: {listing.savedDate}
-          </span>
-        </div>
-
-        <div className="grid grid-cols-2 gap-2">
-          {listing.status === 'available' && !listing.applied ? (
-            <button className="bg-blue-600 text-white py-2 px-3 rounded-lg text-sm font-semibold hover:bg-blue-700 transition flex items-center justify-center">
-              <Send className="w-4 h-4 mr-1" />
-              Apply Now
-            </button>
-          ) : listing.status === 'applied' ? (
-            <button className="bg-gray-100 text-gray-600 py-2 px-3 rounded-lg text-sm font-semibold cursor-not-allowed flex items-center justify-center">
-              <CheckCircle className="w-4 h-4 mr-1" />
-              Applied
-            </button>
-          ) : (
-            <button className="bg-gray-100 text-gray-400 py-2 px-3 rounded-lg text-sm font-semibold cursor-not-allowed flex items-center justify-center">
-              <AlertCircle className="w-4 h-4 mr-1" />
-              Unavailable
-            </button>
-          )}
-          
-          <button className="bg-gray-100 text-gray-700 py-2 px-3 rounded-lg text-sm font-semibold hover:bg-gray-200 transition flex items-center justify-center">
-            <Eye className="w-4 h-4 mr-1" />
-            View
-          </button>
-        </div>
-
-        <div className="flex gap-2 mt-3 pt-3 border-t border-gray-200">
-          <button 
-            onClick={() => handleCompare(listing)}
-            className={`flex-1 ${compareListings.find(l => l.id === listing.id) ? 'bg-purple-100 text-purple-700' : 'bg-gray-50 text-gray-600'} py-2 px-3 rounded-lg text-xs font-semibold hover:bg-purple-50 transition flex items-center justify-center`}
-          >
-            <GitCompare className="w-3 h-3 mr-1" />
-            Compare
-          </button>
-          <button className="flex-1 bg-gray-50 text-gray-600 py-2 px-3 rounded-lg text-xs font-semibold hover:bg-gray-100 transition flex items-center justify-center">
-            <Share2 className="w-3 h-3 mr-1" />
-            Share
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-
-  const EmptyState = () => (
-    <div className="text-center py-16">
-      <div className="text-8xl mb-4">🏠</div>
-      <h3 className="text-2xl font-bold text-gray-900 mb-2">No Saved Listings Yet</h3>
-      <p className="text-gray-600 mb-6 max-w-md mx-auto">
-        Start browsing available rooms and save your favorites to keep track of them here.
-      </p>
-      <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition inline-flex items-center">
-        <Home className="w-5 h-5 mr-2" />
-        Start Browsing Listings
-      </button>
-      <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-lg mx-auto text-left">
-        <h4 className="font-semibold text-blue-900 mb-3">Tips for Finding Good Listings:</h4>
-        <ul className="space-y-2 text-sm text-blue-800">
-          <li className="flex items-start">
-            <span className="mr-2">✓</span>
-            <span>Check listings frequently - good rooms get taken quickly</span>
-          </li>
-          <li className="flex items-start">
-            <span className="mr-2">✓</span>
-            <span>Set up price alerts to get notified of drops</span>
-          </li>
-          <li className="flex items-start">
-            <span className="mr-2">✓</span>
-            <span>Save multiple options to increase your chances</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-  );
-
-  const ComparisonPanel = () => (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg max-w-6xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">Compare Listings</h2>
-          <button onClick={() => setShowComparison(false)} className="p-2 hover:bg-gray-100 rounded-full">
-            <X className="w-6 h-6" />
-          </button>
-        </div>
-        
-        <div className="p-6">
-          <div className="grid grid-cols-3 gap-6">
-            {compareListings.map((listing) => (
-              <div key={listing.id} className="border border-gray-200 rounded-lg overflow-hidden">
-                <div className="bg-gradient-to-br from-blue-100 to-purple-100 h-32 flex items-center justify-center text-5xl">
-                  {listing.image}
+    const ComparisonPanel = () => (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-lg max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
+                    <h2 className="text-2xl font-bold text-gray-900">Compare Listings</h2>
+                    <button onClick={() => setShowComparison(false)} className="p-2 hover:bg-gray-100 rounded-full">
+                        <X className="w-6 h-6" />
+                    </button>
                 </div>
-                <div className="p-4 space-y-3">
-                  <h3 className="font-bold text-gray-900">{listing.title}</h3>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Price:</span>
-                      <span className="font-semibold text-green-600">${listing.price}/mo</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Location:</span>
-                      <span className="font-semibold">{listing.location.split(',')[0]}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Type:</span>
-                      <span className="font-semibold">{listing.roomType}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Available:</span>
-                      <span className="font-semibold">{listing.availability}</span>
-                    </div>
-                    <div className="pt-2 border-t border-gray-200">
-                      <p className="text-gray-600 mb-2">Amenities:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {listing.amenities.map((amenity, idx) => (
-                          <span key={idx} className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
-                            {amenity}
-                          </span>
+
+                <div className="p-6">
+                    <div className="grid grid-cols-3 gap-6">
+                        {compareListings.map((listing) => (
+                            <div key={listing.id} className="border border-gray-200 rounded-lg overflow-hidden">
+                                <div className="bg-gradient-to-br from-blue-100 to-purple-100 h-32 flex items-center justify-center text-5xl">
+                                    {listing.image}
+                                </div>
+                                <div className="p-4 space-y-3">
+                                    <h3 className="font-bold text-gray-900">{listing.title}</h3>
+                                    <div className="space-y-2 text-sm">
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-600">Price:</span>
+                                            <span className="font-semibold text-green-600">${listing.price}/mo</span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-600">Location:</span>
+                                            <span className="font-semibold">{listing.location.split(',')[0]}</span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-600">Type:</span>
+                                            <span className="font-semibold">{listing.roomType}</span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-600">Available:</span>
+                                            <span className="font-semibold">{listing.availability}</span>
+                                        </div>
+                                        <div className="pt-2 border-t border-gray-200">
+                                            <p className="text-gray-600 mb-2">Amenities:</p>
+                                            <div className="flex flex-wrap gap-1">
+                                                {listing.amenities.map((amenity, idx) => (
+                                                    <span key={idx} className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
+                                                        {amenity}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition mt-4">
+                                        Choose This One
+                                    </button>
+                                </div>
+                            </div>
                         ))}
-                      </div>
                     </div>
-                  </div>
-                  <button className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition mt-4">
-                    Choose This One
-                  </button>
                 </div>
-              </div>
-            ))}
-          </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-bold text-gray-900">Saved Listings</h1>
-              <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                {savedListings.length}
-              </span>
-            </div>
-            <div className="flex gap-3">
-              <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-semibold hover:bg-gray-200 transition flex items-center">
-                <Home className="w-4 h-4 mr-2" />
-                Continue Browsing
-              </button>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center">
-                <Send className="w-4 h-4 mr-2" />
-                Apply to Selected ({selectedListings.length})
-              </button>
-            </div>
-          </div>
+    return (
+        <div className="min-h-screen bg-gray-50">
+            {/* Header */}
+            <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-3">
+                            <h1 className="text-3xl font-bold text-gray-900">Saved Listings</h1>
+                            <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                {savedListings.length}
+                            </span>
+                        </div>
+                        <div className="flex gap-3">
+                            <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-semibold hover:bg-gray-200 transition flex items-center">
+                                <Home className="w-4 h-4 mr-2" />
+                                Continue Browsing
+                            </button>
+                            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center">
+                                <Send className="w-4 h-4 mr-2" />
+                                Apply to Selected ({selectedListings.length})
+                            </button>
+                        </div>
+                    </div>
 
-          {/* Search and Filters */}
-          <div className="flex flex-col lg:flex-row gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search within saved listings..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
+                    {/* Search and Filters */}
+                    <div className="flex flex-col lg:flex-row gap-4">
+                        <div className="flex-1 relative">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                            <input
+                                type="text"
+                                placeholder="Search within saved listings..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            />
+                        </div>
 
-            <div className="flex gap-2">
-              <select 
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="all">All Status</option>
-                <option value="available">Available</option>
-                <option value="applied">Applied</option>
-                <option value="unavailable">Expired</option>
-              </select>
+                        <div className="flex gap-2">
+                            <select
+                                value={statusFilter}
+                                onChange={(e) => setStatusFilter(e.target.value)}
+                                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="all">All Status</option>
+                                <option value="available">Available</option>
+                                <option value="applied">Applied</option>
+                                <option value="unavailable">Expired</option>
+                            </select>
 
-              <select 
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="recent">Recently Saved</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-              </select>
+                            <select
+                                value={sortBy}
+                                onChange={(e) => setSortBy(e.target.value)}
+                                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="recent">Recently Saved</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                            </select>
 
-              <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50">
-                <Filter className="w-5 h-5 text-gray-600" />
-              </button>
+                            <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                                <Filter className="w-5 h-5 text-gray-600" />
+                            </button>
 
-              <div className="flex border border-gray-300 rounded-lg overflow-hidden">
-                <button 
-                  onClick={() => setView('grid')}
-                  className={`p-2 ${view === 'grid' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'}`}
-                >
-                  <Grid className="w-5 h-5" />
-                </button>
-                <button 
-                  onClick={() => setView('list')}
-                  className={`p-2 ${view === 'list' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'}`}
-                >
-                  <List className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </div>
+                            <div className="flex border border-gray-300 rounded-lg overflow-hidden">
+                                <button
+                                    onClick={() => setView('grid')}
+                                    className={`p-2 ${view === 'grid' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'}`}
+                                >
+                                    <Grid className="w-5 h-5" />
+                                </button>
+                                <button
+                                    onClick={() => setView('list')}
+                                    className={`p-2 ${view === 'list' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'}`}
+                                >
+                                    <List className="w-5 h-5" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
-          {/* Bulk Actions Bar */}
-          {selectedListings.length > 0 && (
-            <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-center justify-between">
-              <span className="text-blue-900 font-semibold">
-                {selectedListings.length} listing{selectedListings.length > 1 ? 's' : ''} selected
-              </span>
-              <div className="flex gap-2">
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">
-                  Bulk Apply
-                </button>
-                <button className="bg-white text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition border border-gray-300">
-                  Remove All
-                </button>
-                <button className="bg-white text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition border border-gray-300 flex items-center">
-                  <Download className="w-4 h-4 mr-1" />
-                  Export
-                </button>
-              </div>
-            </div>
-          )}
+                    {/* Bulk Actions Bar */}
+                    {selectedListings.length > 0 && (
+                        <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-center justify-between">
+                            <span className="text-blue-900 font-semibold">
+                                {selectedListings.length} listing{selectedListings.length > 1 ? 's' : ''} selected
+                            </span>
+                            <div className="flex gap-2">
+                                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">
+                                    Bulk Apply
+                                </button>
+                                <button className="bg-white text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition border border-gray-300">
+                                    Remove All
+                                </button>
+                                <button className="bg-white text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition border border-gray-300 flex items-center">
+                                    <Download className="w-4 h-4 mr-1" />
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+                    )}
 
-          {/* Comparison Bar */}
-          {compareListings.length > 0 && (
-            <div className="mt-4 bg-purple-50 border border-purple-200 rounded-lg p-4 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <GitCompare className="w-5 h-5 text-purple-600" />
-                <span className="text-purple-900 font-semibold">
-                  {compareListings.length} listing{compareListings.length > 1 ? 's' : ''} to compare
-                </span>
-              </div>
-              <div className="flex gap-2">
-                <button 
-                  onClick={() => setShowComparison(true)}
-                  className="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-purple-700 transition"
-                >
-                  Compare Now
-                </button>
-                <button 
-                  onClick={() => setCompareListings([])}
-                  className="bg-white text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition border border-gray-300"
-                >
-                  Clear
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {sortedListings.length === 0 ? (
-          <EmptyState />
-        ) : (
-          <div className={view === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
-            {sortedListings.map((listing) => (
-              <ListingCard key={listing.id} listing={listing} />
-            ))}
-          </div>
-        )}
-
-        {/* Similar Listings Section */}
-        {sortedListings.length > 0 && (
-          <div className="mt-12 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">You Might Also Like</h2>
-            <p className="text-gray-600 mb-4">Based on your saved preferences</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="border border-gray-200 rounded-lg p-4 hover:border-blue-500 transition cursor-pointer">
-                  <div className="text-4xl mb-2">🏘️</div>
-                  <h4 className="font-semibold text-gray-900 mb-1">Similar Listing {i}</h4>
-                  <p className="text-sm text-gray-600">Close to your saved locations</p>
-                  <p className="text-green-600 font-bold mt-2">$750/month</p>
+                    {/* Comparison Bar */}
+                    {compareListings.length > 0 && (
+                        <div className="mt-4 bg-purple-50 border border-purple-200 rounded-lg p-4 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <GitCompare className="w-5 h-5 text-purple-600" />
+                                <span className="text-purple-900 font-semibold">
+                                    {compareListings.length} listing{compareListings.length > 1 ? 's' : ''} to compare
+                                </span>
+                            </div>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => setShowComparison(true)}
+                                    className="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-purple-700 transition"
+                                >
+                                    Compare Now
+                                </button>
+                                <button
+                                    onClick={() => setCompareListings([])}
+                                    className="bg-white text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition border border-gray-300"
+                                >
+                                    Clear
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
-              ))}
             </div>
-          </div>
-        )}
-      </div>
 
-      {showComparison && <ComparisonPanel />}
-    </div>
-  );
+            {/* Main Content */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                {sortedListings.length === 0 ? (
+                    <EmptyState />
+                ) : (
+                    <div className={view === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
+                        {sortedListings.map((listing) => (
+                            <ListingCard key={listing.id} props={{ handleSelectListing, handleCompare, selectedListings, getStatusBadge, compareListings,listing }}/>
+                        ))}
+                    </div>
+                )}
+
+                {/* Similar Listings Section */}
+                {sortedListings.length > 0 && (
+                    <div className="mt-12 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <h2 className="text-xl font-bold text-gray-900 mb-4">You Might Also Like</h2>
+                        <p className="text-gray-600 mb-4">Based on your saved preferences</p>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            {[1, 2, 3].map((i) => (
+                                <div key={i} className="border border-gray-200 rounded-lg p-4 hover:border-blue-500 transition cursor-pointer">
+                                    <div className="text-4xl mb-2">🏘️</div>
+                                    <h4 className="font-semibold text-gray-900 mb-1">Similar Listing {i}</h4>
+                                    <p className="text-sm text-gray-600">Close to your saved locations</p>
+                                    <p className="text-green-600 font-bold mt-2">$750/month</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {showComparison && <ComparisonPanel />}
+        </div>
+    );
 }
