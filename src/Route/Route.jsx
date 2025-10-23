@@ -15,12 +15,12 @@ import Details from "../Pages/public/Details";
 import Register from "../Pages/auth/Register";
 import Login from "../Pages/auth/Login";
 import BrowseListings from "../Pages/public/BrowseListings";
-import MyListings from "../Pages/dashboard/MyListings";
 import Home from "../Pages/public/Home";
 import DashboardLayout from "../layout/DashboardLayout";
 import Inquiries from "../Pages/dashboard/Provider/Inquiries/Inquiries";
 import UpdatePost from "../Pages/dashboard/Provider/UpdatePost";
 import Dashboard from "../Pages/dashboard/Dashboard";
+import MyListings from "../Pages/dashboard/Provider/MyListings";
 
 export const router = createBrowserRouter([
   {

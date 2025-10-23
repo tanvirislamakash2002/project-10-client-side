@@ -10,6 +10,7 @@ import { AuthContext } from '../provider/AuthProvider';
 import Footer from '../components/Footer';
 import Loading from '../components/Loading';
 import { ToastContainer } from 'react-toastify';
+import { SectionHeader } from './components/SectionHeader';
 
 const SidebarLink = ({ to, icon: Icon, label, badge = null, sidebarCollapsed, exact=false }) => (
   <li className="mb-1">
@@ -39,15 +40,15 @@ const SidebarLink = ({ to, icon: Icon, label, badge = null, sidebarCollapsed, ex
   </li>
 );
 
-const SectionHeader = ({ title, sidebarCollapsed }) => (
-  !sidebarCollapsed && (
-    <div className="px-4 py-3 mb-2">
-      <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-        {title}
-      </h3>
-    </div>
-  )
-);
+// const SectionHeader = ({ title, sidebarCollapsed }) => (
+//   !sidebarCollapsed && (
+//     <div className="px-4 py-3 mb-2">
+//       <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+//         {title}
+//       </h3>
+//     </div>
+//   )
+// );
 
 const DashboardLayout = () => {
   const navigation = useNavigation();

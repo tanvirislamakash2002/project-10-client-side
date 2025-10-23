@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router';
+import useUserRole from '../../../../hooks/useUserRole';
 
 export default function MyListings() {
     const [selectedTab, setSelectedTab] = useState('all');
@@ -16,6 +17,9 @@ export default function MyListings() {
     const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'table'
     const [selectedListings, setSelectedListings] = useState([]);
     const [showFilters, setShowFilters] = useState(false);
+
+  const { role, roleLoading } = useUserRole();
+console.log(role);
 
     // Fetch listings
     const { data: RoomData = [], isLoading, error } = useQuery({
