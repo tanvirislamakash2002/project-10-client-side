@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Heart, Search, Filter, Grid, List, Share2, X, MapPin, Calendar, DollarSign, Eye, Send, Download, ChevronLeft, ChevronRight, ArrowUpDown, GitCompare, CheckCircle, Clock, AlertCircle, Home } from 'lucide-react';
-import { ListingCard } from '../../../Browse/Components/ListingCard';
+import { ListingCard } from './components/ListingCard';
 
 export default function SavedListings() {
     const [view, setView] = useState('grid');
