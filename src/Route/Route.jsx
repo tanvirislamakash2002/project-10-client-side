@@ -21,6 +21,7 @@ import Inquiries from "../Pages/dashboard/Provider/Inquiries/Inquiries";
 import UpdatePost from "../Pages/dashboard/Provider/UpdatePost";
 import Dashboard from "../Pages/dashboard/Dashboard";
 import MyListings from "../Pages/dashboard/Provider/MyListings";
+import SavedListings from "../Pages/dashboard/Seeker/SavedListings/SavedListings";
 
 export const router = createBrowserRouter([
   {
@@ -149,6 +150,14 @@ export const router = createBrowserRouter([
         element:
           <PrivateRoute>
             <UnderConstructionPage></UnderConstructionPage>
+          </PrivateRoute>,
+      },
+// seeker Dashboard
+      {
+        path: '/dashboard/saved',
+        element:
+          <PrivateRoute>
+            <SavedListings></SavedListings>
           </PrivateRoute>,
       },
     ]
