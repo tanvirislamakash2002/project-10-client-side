@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import SideBar from './components/SideBar';
 import DesktopHeader from './components/DesktopHeader';
 import MobileHeader from './components/MobileHeader';
+import { useApplicationModal } from '../../hooks/useApplicationModal';
 
 
 
@@ -16,6 +17,7 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
   const { darkMode, setDarkMode, user, signOutUser } = use(AuthContext);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const { isModalOpen, selectedListing, closeModal } = useApplicationModal();
 
   const handleSignOut = () => {
     signOutUser()
@@ -43,6 +45,13 @@ const DashboardLayout = () => {
         <main className="flex-1 p-6 lg:p-8 bg-gray-50">
           <div className="max-w-7xl mx-auto">
             <Outlet />
+            {isModalOpen && (
+              <ApplicationModal
+                listing={selectedListing}
+                onClose={closeModal}
+                onSuccess={handleApplicationSuccess}
+              />
+            )}
           </div>
         </main>
 

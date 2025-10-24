@@ -3,6 +3,7 @@ import { Search, Filter, Grid, List, Send, Download, GitCompare, Home } from 'lu
 import { ListingCard } from './components/ListingCard';
 import { EmptyState } from './components/EmptyState';
 import { ComparisonPanel } from './components/ComparisonPanel';
+import ApplicationModal from '../ApplicationModal/ApplicationModal';
 
 export default function SavedListings() {
     const [view, setView] = useState('grid');
