@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, Search, Filter, Grid, List, Share2, X, MapPin, Calendar, DollarSign, Eye, Send, Download, ChevronLeft, ChevronRight, ArrowUpDown, GitCompare, CheckCircle, Clock, AlertCircle, Home } from 'lucide-react';
+import { Search, Filter, Grid, List, Send, Download, GitCompare, Home } from 'lucide-react';
 import { ListingCard } from './components/ListingCard';
 import { EmptyState } from './components/EmptyState';
 import { ComparisonPanel } from './components/ComparisonPanel';
@@ -275,7 +275,7 @@ export default function SavedListings() {
                 ) : (
                     <div className={view === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
                         {sortedListings.map((listing) => (
-                            <ListingCard key={listing.id} props={{ handleSelectListing, handleCompare, selectedListings, getStatusBadge, compareListings,listing }}/>
+                            <ListingCard key={listing.id} props={{ handleSelectListing, handleCompare, selectedListings, getStatusBadge, compareListings, listing }} />
                         ))}
                     </div>
                 )}
@@ -299,7 +299,7 @@ export default function SavedListings() {
                 )}
             </div>
 
-            {showComparison && <ComparisonPanel props={{compareListings,setShowComparison}}/>}
+            {showComparison && <ComparisonPanel props={{ compareListings, setShowComparison }} />}
         </div>
     );
 }
