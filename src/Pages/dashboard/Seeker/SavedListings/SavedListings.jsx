@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Heart, Search, Filter, Grid, List, Share2, X, MapPin, Calendar, DollarSign, Eye, Send, Download, ChevronLeft, ChevronRight, ArrowUpDown, GitCompare, CheckCircle, Clock, AlertCircle, Home } from 'lucide-react';
 import { ListingCard } from './components/ListingCard';
 import { EmptyState } from './components/EmptyState';
+import { ComparisonPanel } from './components/ComparisonPanel';
 
 export default function SavedListings() {
     const [view, setView] = useState('grid');
@@ -136,64 +137,7 @@ export default function SavedListings() {
 
 
 
-    const ComparisonPanel = () => (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg max-w-6xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
-                    <h2 className="text-2xl font-bold text-gray-900">Compare Listings</h2>
-                    <button onClick={() => setShowComparison(false)} className="p-2 hover:bg-gray-100 rounded-full">
-                        <X className="w-6 h-6" />
-                    </button>
-                </div>
 
-                <div className="p-6">
-                    <div className="grid grid-cols-3 gap-6">
-                        {compareListings.map((listing) => (
-                            <div key={listing.id} className="border border-gray-200 rounded-lg overflow-hidden">
-                                <div className="bg-gradient-to-br from-blue-100 to-purple-100 h-32 flex items-center justify-center text-5xl">
-                                    {listing.image}
-                                </div>
-                                <div className="p-4 space-y-3">
-                                    <h3 className="font-bold text-gray-900">{listing.title}</h3>
-                                    <div className="space-y-2 text-sm">
-                                        <div className="flex justify-between">
-                                            <span className="text-gray-600">Price:</span>
-                                            <span className="font-semibold text-green-600">${listing.price}/mo</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span className="text-gray-600">Location:</span>
-                                            <span className="font-semibold">{listing.location.split(',')[0]}</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span className="text-gray-600">Type:</span>
-                                            <span className="font-semibold">{listing.roomType}</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span className="text-gray-600">Available:</span>
-                                            <span className="font-semibold">{listing.availability}</span>
-                                        </div>
-                                        <div className="pt-2 border-t border-gray-200">
-                                            <p className="text-gray-600 mb-2">Amenities:</p>
-                                            <div className="flex flex-wrap gap-1">
-                                                {listing.amenities.map((amenity, idx) => (
-                                                    <span key={idx} className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
-                                                        {amenity}
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition mt-4">
-                                        Choose This One
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -355,7 +299,7 @@ export default function SavedListings() {
                 )}
             </div>
 
-            {showComparison && <ComparisonPanel />}
+            {showComparison && <ComparisonPanel props={{compareListings,setShowComparison}}/>}
         </div>
     );
 }
