@@ -1,10 +1,9 @@
 import { Heart, Search, Filter, Grid, List, Share2, X, MapPin, Calendar, DollarSign, Eye, Send, Download, ChevronLeft, ChevronRight, ArrowUpDown, GitCompare, CheckCircle, Clock, AlertCircle, Home } from 'lucide-react';
-import { useApplicationModal } from '../../../../../../hooks/useApplicationModal';
 
 export const ListingCard = ({ props }) => {
-    const { handleSelectListing, handleCompare, listing, selectedListings, getStatusBadge, compareListings } = props
+    const { handleSelectListing, handleCompare, listing, selectedListings, getStatusBadge, compareListings, openModal } = props
 
-    const { openModal } = useApplicationModal();
+    // const { openModal } = useApplicationModal();
     return (<div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition">
         <div className="relative">
             <div className="bg-gradient-to-br from-blue-100 to-purple-100 h-48 flex items-center justify-center text-6xl">
@@ -68,7 +67,7 @@ export const ListingCard = ({ props }) => {
             <div className="grid grid-cols-2 gap-2">
                 {listing.status === 'available' && !listing.applied ? (
                     <button
-                        onClick={() => openModal(listing)}
+                        onClick={openModal}
                         className="bg-blue-600 text-white py-2 px-3 rounded-lg text-sm font-semibold hover:bg-blue-700 transition flex items-center justify-center">
                         <Send className="w-4 h-4 mr-1" />
                         Apply Now

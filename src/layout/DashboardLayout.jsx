@@ -8,6 +8,7 @@ import SideBar from './components/SideBar';
 import DesktopHeader from './components/DesktopHeader';
 import MobileHeader from './components/MobileHeader';
 import { useApplicationModal } from '../../hooks/useApplicationModal';
+import ApplicationModal from '../Pages/dashboard/Seeker/ApplicationModal/ApplicationModal';
 
 
 
@@ -17,8 +18,11 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
   const { darkMode, setDarkMode, user, signOutUser } = use(AuthContext);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const { isModalOpen, selectedListing, closeModal } = useApplicationModal();
-
+  const { isModalOpen, closeModal } = useApplicationModal();
+  const handleApplicationSuccess = () => {
+    // Handle successful application
+    closeModal();
+  };
   const handleSignOut = () => {
     signOutUser()
       .then(() => navigate('/login'))
@@ -45,13 +49,6 @@ const DashboardLayout = () => {
         <main className="flex-1 p-6 lg:p-8 bg-gray-50">
           <div className="max-w-7xl mx-auto">
             <Outlet />
-            {isModalOpen && (
-              <ApplicationModal
-                listing={selectedListing}
-                onClose={closeModal}
-                onSuccess={handleApplicationSuccess}
-              />
-            )}
           </div>
         </main>
 
@@ -63,11 +60,19 @@ const DashboardLayout = () => {
         <ToastContainer
           position="bottom-right"
           className="z-50"
-        />
+          />
       </div>
 
       {/* Sidebar */}
       <SideBar props={{ sidebarCollapsed, setSidebarCollapsed, user, handleSignOut }}></SideBar>
+
+{/* application modal */}
+          {isModalOpen && (
+            <ApplicationModal
+              onClose={closeModal}
+              onSuccess={handleApplicationSuccess}
+            />
+          )}
     </div>
   );
 };
