@@ -58,7 +58,7 @@ const MyListingRow = ({ rowData }) => {
             </td>
             <td>{availability}</td>
             <th className='w-44 flex'>
-                <Link to={`/update-post/${_id}`} className=" custom-color-200 flex items-center"><FaEdit size={42} className=' p-2 hover:bg-green-50' /></Link>
+                <Link to={`/update-post/${_id}`} className=" text-custom-200 flex items-center"><FaEdit size={42} className=' p-2 hover:bg-green-50' /></Link>
                 <button onClick={() => handleDelete(_id)} className="cursor-pointer flex items-center text-red-700 "><RiDeleteBin5Line size={42} className=' p-2 hover:bg-red-50' /></button>
             </th>
         </tr>

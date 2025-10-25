@@ -10,6 +10,13 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
     const [darkMode, setDarkMode] = useState(false)
     
+      useEffect(() => {
+        if (darkMode) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      }, [darkMode]);
 
     //register
     const createUser = ({ email, password }) => {

@@ -63,7 +63,7 @@ const ContactUs = () => {
                             </div>
 
                             <button                                
-                                className="w-full custom-bg-300 text-white py-2 px-4 rounded transition duration-200"
+                                className="w-full bg-custom-300 text-white py-2 px-4 rounded transition duration-200"
                             >
                                 Submit
                             </button>

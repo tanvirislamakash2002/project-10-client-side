@@ -16,8 +16,8 @@ const Root = () => {
         )
     }
     return (
-        <div className='custom-color-500'>
-            <header className={`${darkMode && `bg-[#1F1F1F]`}  fixed z-50 custom-bg-500 w-full`}>
+        <div className='text-custom-500'>
+            <header className={`${darkMode && `bg-[#1F1F1F]`}  fixed z-50 bg-custom-500 w-full`}>
                 <Navbar></Navbar>
             </header>
             <main className={`${darkMode ? `bg-[#1F1F1F]`:`bg-base-200`} min-h-[calc(100vh-260px)] pt-16`}>

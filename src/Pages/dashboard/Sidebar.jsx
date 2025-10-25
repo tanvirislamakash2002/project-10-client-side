@@ -8,23 +8,23 @@ const Sidebar = () => {
     const location = useLocation()
     // console.log(location.pathname)
     return (
-        <div className="join join-vertical w-full custom-border-100">
+        <div className="join join-vertical w-full border-custom-100">
             <a className={` text-3xl font-bold text-white ml-2 my-4`}>Room<span className='text-green-500'>Ease</span></a>
             <Link to='/dashboard'>
-                <button className={`${location.pathname == '/dashboard' ? 'custom-bg-300 custom-border-200' : 'custom-bg-100 custom-border-200'} btn join-item w-full text-white font-semibold`}>
+                <button className={`${location.pathname == '/dashboard' ? 'bg-custom-300 border-custom-200' : 'bg-custom-100 border-custom-200'} btn join-item w-full text-white font-semibold`}>
                     <MdDashboard size={18} />Dashboard</button>
             </Link>
             <Link to='/dashboard/my-listings'>
-                <button className={`${location.pathname == '/dashboard/my-listings' ? 'custom-bg-300 custom-border-200' : 'custom-bg-100 custom-border-200'} btn join-item w-full text-white font-semibold`}>
+                <button className={`${location.pathname == '/dashboard/my-listings' ? 'bg-custom-300 border-custom-200' : 'bg-custom-100 border-custom-200'} btn join-item w-full text-white font-semibold`}>
                     <MdAssignmentInd size={18} />My Listings</button>
             </Link>
 
             <Link to='/dashboard/listings/new'>
-                <button className={`${location.pathname == '/dashboard/listings/new' ? 'custom-bg-300 custom-border-200' : 'custom-bg-100 custom-border-200'} btn join-item w-full text-white font-semibold`}>
+                <button className={`${location.pathname == '/dashboard/listings/new' ? 'bg-custom-300 border-custom-200' : 'bg-custom-100 border-custom-200'} btn join-item w-full text-white font-semibold`}>
                     <MdPostAdd size={18} />Create new</button>
             </Link>
             <Link to='/'>
-                <button className="btn join-item w-full bg-yellow-200 custom-border-200 font-semibold">
+                <button className="btn join-item w-full bg-yellow-200 border-custom-200 font-semibold">
                     <FaHome size={18} />
                     Back to Home</button>
             </Link>

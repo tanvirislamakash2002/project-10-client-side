@@ -1,53 +1,32 @@
+/* index.css - Complete Tailwind v4 setup */
 @import "tailwindcss";
-@plugin "daisyui" {
-  themes: light --default
+
+@theme {
+  /* Your custom colors */
+  --color-custom-100: #44570A;
+  --color-custom-200: #1F7D53;
+  --color-custom-300: #255F38;
+  --color-custom-400: #27391C;
+  --color-custom-500: #18230F;
+  
+  /* Dark mode colors */
+  --color-dark-bg: #1f2937;
+  --color-dark-text: #44570A;
 }
 
-/* custom color  */
-.custom-color-100{
-  color: #189b60;
+@plugin "daisyui" {
+  themes: light --default, dark;
 }
-.custom-color-200{
-color: #1F7D53;
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Custom dark mode styles */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
 }
-.custom-color-300{
-color: #255F38;
+
+.dark {
+  color-scheme: dark;
 }
-.custom-color-400{
-color: #27391C;
-}
-.custom-color-500{
-color: #18230F;
-}
-/* custom background  */
-.custom-bg-100{
-  background-color: #189b60;
-}
-.custom-bg-200{
-background-color: #1F7D53;
-}
-.custom-bg-300{
-background-color: #255F38;
-}
-.custom-bg-400{
-background-color: #27391C;
-}
-.custom-bg-500{
-background-color: #18230F;
-}
-/* custom background  */
-.custom-border-100{
-  border-color: #189b60;
-}
-.custom-border-200{
-border-color: #1F7D53;
-}
-.custom-border-300{
-border-color: #255F38;
-}
-.custom-border-400{
-border-color: #27391C;
-}
-.custom-border-500{
-border-color: #18230F;
-}
+

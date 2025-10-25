@@ -28,8 +28,8 @@ const AboutUs = () => {
                                     Our platform was designed by people who've been through the roommate search process themselves, so we understand
                                     exactly what you need to find your perfect living situation.
                                 </p>
-                                <div className="bg-green-50 p-6 rounded-lg border-l-4 custom-border-300">
-                                    <p className="custom-color-500 font-medium">
+                                <div className="bg-green-50 p-6 rounded-lg border-l-4 border-custom-300">
+                                    <p className="text-custom-500 font-medium">
                                         "We believe that the right roommate can transform a house into a home."
                                     </p>
                                 </div>
@@ -39,7 +39,7 @@ const AboutUs = () => {
                             <div className="space-y-8">
                                 <div className="flex items-start">
                                     <div className="flex-shrink-0 bg-blue-100 p-3 rounded-full">
-                                        <svg className="h-6 w-6 custom-color-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg className="h-6 w-6 text-custom-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                         </svg>
                                     </div>
@@ -84,19 +84,19 @@ const AboutUs = () => {
 
                         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                             <div className="bg-white p-6 rounded-lg shadow-sm">
-                                <p className="text-3xl font-bold custom-color-500">50,000+</p>
+                                <p className="text-3xl font-bold text-custom-500">50,000+</p>
                                 <p className="mt-2 text-gray-600">Successful matches</p>
                             </div>
                             <div className="bg-white p-6 rounded-lg shadow-sm">
-                                <p className="text-3xl font-bold custom-color-500">200+</p>
+                                <p className="text-3xl font-bold text-custom-500">200+</p>
                                 <p className="mt-2 text-gray-600">Cities nationwide</p>
                             </div>
                             <div className="bg-white p-6 rounded-lg shadow-sm">
-                                <p className="text-3xl font-bold custom-color-500">4.8/5</p>
+                                <p className="text-3xl font-bold text-custom-500">4.8/5</p>
                                 <p className="mt-2 text-gray-600">User satisfaction</p>
                             </div>
                             <div className="bg-white p-6 rounded-lg shadow-sm">
-                                <p className="text-3xl font-bold custom-color-500">24/7</p>
+                                <p className="text-3xl font-bold text-custom-500">24/7</p>
                                 <p className="mt-2 text-gray-600">Support available</p>
                             </div>
                         </div>
@@ -117,7 +117,7 @@ const AboutUs = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             <div className="text-center p-6 rounded-lg bg-gray-50">
-                                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 custom-color-500 mb-4">
+                                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 text-custom-500 mb-4">
                                     <span className="text-xl font-bold">1</span>
                                 </div>
                                 <h3 className="text-lg font-medium text-gray-900 mb-2">Create Your Profile</h3>
@@ -127,7 +127,7 @@ const AboutUs = () => {
                             </div>
 
                             <div className="text-center p-6 rounded-lg bg-gray-50">
-                                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 custom-color-500 mb-4">
+                                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 text-custom-500 mb-4">
                                     <span className="text-xl font-bold">2</span>
                                 </div>
                                 <h3 className="text-lg font-medium text-gray-900 mb-2">Browse Matches</h3>
@@ -137,7 +137,7 @@ const AboutUs = () => {
                             </div>
 
                             <div className="text-center p-6 rounded-lg bg-gray-50">
-                                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 custom-color-500 mb-4">
+                                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 text-custom-500 mb-4">
                                     <span className="text-xl font-bold">3</span>
                                 </div>
                                 <h3 className="text-lg font-medium text-gray-900 mb-2">Connect & Move In</h3>
@@ -211,7 +211,7 @@ const AboutUs = () => {
                 </section>
 
 
-                <section className="py-16 custom-bg-300 text-white">
+                <section className="py-16 bg-custom-300 text-white">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                         <h2 className="text-3xl font-extrabold sm:text-4xl">
                             Ready to find your perfect roommate?
@@ -222,7 +222,7 @@ const AboutUs = () => {
                         <div className="mt-8">
                             <Link
                                 to='/all-items'
-                                className="inline-block px-8 py-3 border border-transparent text-base font-medium rounded-md custom-color-500 bg-white hover:bg-green-50 md:py-4 md:text-lg md:px-10"
+                                className="inline-block px-8 py-3 border border-transparent text-base font-medium rounded-md text-custom-500 bg-white hover:bg-green-50 md:py-4 md:text-lg md:px-10"
                             >
                                 Get Started Now
                             </Link>

@@ -24,7 +24,7 @@ const ExtraSection3 = () => {
             <div className="container mx-auto px-4">
 
                 <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-                    Find Your Perfect Roommate in <span className="custom-color-200">3 Easy Steps</span>
+                    Find Your Perfect Roommate in <span className="text-custom-200">3 Easy Steps</span>
                 </h2>
 
 

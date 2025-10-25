@@ -1,77 +1,181 @@
-import React, { use } from 'react';
-import { Link, NavLink } from 'react-router';
-import { AuthContext } from '../provider/AuthProvider';
+import React from 'react';
+import { Link, NavLink, useNavigate } from 'react-router';
+
+import { FiHome, FiSearch, FiInfo, FiPhone, FiUser, FiLogOut, FiSettings, FiHelpCircle, FiPlus } from 'react-icons/fi';
+import { MdDashboard, MdLightMode, MdDarkMode } from 'react-icons/md';
+import useAuth from '../../hooks/useAuth';
 
 const Navbar = () => {
-  const { user, logOut, darkMode, setDarkMode } = use(AuthContext)
-  // console.log(user?.email)
-  const links =
-    <>
-      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/'>Home</NavLink></li>
-      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/browse'>Browse</NavLink></li>
-      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/about-us'>About Us</NavLink></li>
-      <li className={`${darkMode && `text-white`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-white rounded-none hover:border-green-600`} to='/contact-us'>Contact Us</NavLink></li>
+  const { user, logOut, darkMode, setDarkMode, userRole } = useAuth(); // Assuming you have userRole in context
+  const navigate = useNavigate();
 
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      navigate('/');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
 
-    </>
+  // Common nav link styles
+  const navLinkClass = ({ isActive }) => 
+    `flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${
+      isActive 
+        ? 'bg-green-600 text-white shadow-lg' 
+        : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+    }`;
+
+  // Main navigation links
+  const mainLinks = [
+    { path: '/', label: 'Home', icon: <FiHome className="w-4 h-4" /> },
+    { path: '/browse', label: 'Browse', icon: <FiSearch className="w-4 h-4" /> },
+    { path: '/how-it-works', label: 'How It Works', icon: <FiInfo className="w-4 h-4" /> },
+    { path: '/about-us', label: 'About Us', icon: <FiInfo className="w-4 h-4" /> },
+    { path: '/contact-us', label: 'Contact', icon: <FiPhone className="w-4 h-4" /> },
+  ];
+
+  // User dropdown menu items
+  const userMenuItems = [
+    { path: '/dashboard', label: 'Dashboard', icon: <MdDashboard className="w-4 h-4" /> },
+    { path: '/profile', label: 'My Profile', icon: <FiUser className="w-4 h-4" /> },
+    { path: '/settings', label: 'Settings', icon: <FiSettings className="w-4 h-4" /> },
+    { path: '/help', label: 'Help Center', icon: <FiHelpCircle className="w-4 h-4" /> },
+  ];
 
   return (
-    <div className={` navbar max-w-7xl mx-auto w-11/12`}>
+    <div className={`navbar bg-base-100 shadow-lg sticky top-0 z-50 transition-colors duration-300 ${
+      darkMode ? 'bg-gray-900' : 'bg-white'
+    }`}>
       <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn lg:hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+        {/* Mobile dropdown */}
+        <div className="dropdown lg:hidden">
+          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow bg-base-300">
-            <li className={`${darkMode && `text-black`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-black rounded-none hover:border-green-600`} to='/'>Home</NavLink></li>
-            <li className={`${darkMode && `text-black`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-black rounded-none hover:border-green-600`} to='/browse'>All Items</NavLink></li>
-            <li className={`${darkMode && `text-black`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-black rounded-none hover:border-green-600`} to='/about-us'>About Us</NavLink></li>
-            <li className={`${darkMode && `text-black`} text-lg`}><NavLink className={({ isActive }) => isActive ? `bg-base-300 custom-bg-200 custom-border-300 border-b-2 text-white rounded-none hover:border-green-600` : `border-transparent border-b-2 text-black rounded-none hover:border-green-600`} to='/contact-us'>Contact Us</NavLink></li>
+          <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+            {mainLinks.map((link) => (
+              <li key={link.path}>
+                <NavLink to={link.path} className={navLinkClass}>
+                  {link.icon}
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </div>
-        <a className={` text-3xl font-bold text-white ml-2`}>Room<span className='text-green-500'>Ease</span></a>
+
+        {/* Logo */}
+        <Link to="/" className="btn btn-ghost text-xl normal-case">
+          <span className="font-bold text-gray-800 dark:text-white">Room</span>
+          <span className="text-green-600 font-bold">Ease</span>
+        </Link>
       </div>
+
+      {/* Desktop Navigation */}
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          {links}
+        <ul className="menu menu-horizontal px-1 gap-1">
+          {mainLinks.map((link) => (
+            <li key={link.path}>
+              <NavLink to={link.path} className={navLinkClass}>
+                {link.icon}
+                {link.label}
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </div>
 
-      <div className="navbar-end">
-        <label className="swap swap-rotate mr-5">
-          {/* this hidden checkbox controls the state */}
-          <input type="checkbox" onClick={() => setDarkMode(!darkMode)} />
+      <div className="navbar-end gap-2">
+        {/* Dark Mode Toggle */}
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="btn btn-ghost btn-circle"
+          aria-label="Toggle dark mode"
+        >
+          {darkMode ? (
+            <MdLightMode className="w-5 h-5 text-yellow-400" />
+          ) : (
+            <MdDarkMode className="w-5 h-5 text-gray-600" />
+          )}
+        </button>
 
-          {/* sun icon */}
-          <svg
-            className={`${!darkMode && `hidden`} h-10 w-10 fill-current text-white`}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24">
-            <path
-              d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
-          </svg>
+        {/* Conditional Add Listing Button (Providers only) */}
+        { userRole === 'provider' && (
+          <Link
+            to="/add-listing"
+            className="btn btn-primary gap-2 hidden sm:flex"
+          >
+            <FiPlus className="w-4 h-4" />
+            Add Listing
+          </Link>
+        )}
 
-          {/* moon icon */}
-          <svg
-            className={`${darkMode && `hidden`} h-10 w-10 fill-current text-white`}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24">
-            <path
-              d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
-          </svg>
-        </label>
-        {user ? <div className='flex gap-1'>
-          <NavLink to='/dashboard' className='btn bg-green-700 text-white hover:text-green-900 hover:bg-white border-green-700 hover:border-green-700'>Dashboard</NavLink>
-          <button onClick={logOut} className='btn hover:bg-green-700 hover:text-white border-green-700 text-green-900'>LogOut</button>
-        </div>
-          :
-          <div className='flex gap-1'>
-            <Link to='/login' className="btn bg-green-700 text-white hover:text-green-900 hover:bg-white border-green-700 hover:border-green-700">Login</Link>
-            <Link to='/register' className="btn hover:bg-green-700 hover:text-white border-green-700 text-green-900">Register</Link>
+        {/* Authentication Section */}
+        {user ? (
+          <div className="dropdown dropdown-end">
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+              <div className="w-8 rounded-full bg-green-600 flex items-center justify-center text-white font-semibold">
+                {user.photoURL ? (
+                  <img src={user.photoURL} alt="Profile" className="rounded-full" />
+                ) : (
+                  <span>{user.email?.[0]?.toUpperCase() || 'U'}</span>
+                )}
+              </div>
+            </div>
+            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              {/* User welcome */}
+              <li className="px-4 py-2 border-b border-gray-200 dark:border-gray-600">
+                <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                  Hello, {user.displayName || user.email?.split('@')[0] || 'User'}!
+                </span>
+              </li>
+              
+              {/* User menu items */}
+              {userMenuItems.map((item) => (
+                <li key={item.path}>
+                  <NavLink to={item.path} className={navLinkClass}>
+                    {item.icon}
+                    {item.label}
+                  </NavLink>
+                </li>
+              ))}
+
+              {/* Add Listing for mobile (if provider) */}
+              {userRole === 'provider' && (
+                <li className="lg:hidden">
+                  <Link to="/add-listing" className="flex items-center gap-2 px-4 py-2 text-green-600 hover:bg-green-50">
+                    <FiPlus className="w-4 h-4" />
+                    Add Listing
+                  </Link>
+                </li>
+              )}
+
+              {/* Logout */}
+              <li className="border-t border-gray-200 dark:border-gray-600 mt-1">
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 w-full text-left"
+                >
+                  <FiLogOut className="w-4 h-4" />
+                  Logout
+                </button>
+              </li>
+            </ul>
           </div>
-        }
+        ) : (
+          /* Login/Register Buttons */
+          <div className="flex gap-2">
+            <Link to="/login" className="btn btn-ghost">
+              Login
+            </Link>
+            <Link to="/register" className="btn btn-primary">
+              Register
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
