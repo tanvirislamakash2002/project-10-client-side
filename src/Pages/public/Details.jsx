@@ -1,231 +1,355 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import React, { useState } from 'react';
-import {
-  FaMapMarkerAlt,
-  FaDollarSign,
-  FaCalendarAlt,
-  FaUser,
-  FaWifi,
-  FaCar,
-  FaPaw,
-  FaSmoking,
-  FaUsers,
-  FaPhone,
-  FaEnvelope,
-  FaHeart,
-  FaShare
-} from 'react-icons/fa';
-import { useParams } from 'react-router';
-import { toast } from 'react-toastify';
+import { ChevronLeft, ChevronRight, Heart, Share2, MapPin, DollarSign, Calendar, Clock, Wifi, Droplet, Zap, Wind, Car, Dumbbell, Home, Bed, Monitor, Sofa, Bath, Users, MessageSquare, CheckCircle, X, Phone, Mail, Star, TrendingUp, Shield, AlertCircle, Send, Eye } from 'lucide-react';
 
-const Details = () => {
-  const [isApplying, setIsApplying] = useState(false);
-  const [isFavorited, setIsFavorited] = useState(false);
-
-  const { id } = useParams()
-
-
-  const { data: roomData, isLoading: isRoomLoading } = useQuery({
-    queryKey: ['roomData', id],
-    queryFn: async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/add-roommate/${id}`);
-      return res.data;
-    },
-    onError: () => toast.error('Failed to load room details'),
-  });
-  console.log(roomData);
-  // Sample data - in real app this would come from props/API
-  const postData = {
-    id: 1,
-    title: "Spacious Room in Modern Downtown Apartment",
-    location: "Downtown Seattle, WA 98101",
-    rent: 950,
-    availability: "Available from March 1st, 2025",
-    description: "Beautiful furnished room in a modern 3-bedroom apartment located in the heart of downtown Seattle. The apartment features floor-to-ceiling windows with stunning city views, modern appliances, in-unit laundry, and a spacious living area perfect for socializing. You'll be sharing with two friendly professionals who value cleanliness and respect.",
-    images: [
-      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-    ],
-    preferences: {
-      gender: "Any",
-      ageRange: "22-35",
-      occupation: "Working Professional/Student",
-      lifestyle: "Clean, Quiet, Social"
-    },
-    amenities: [
-      { icon: FaWifi, label: "High-speed Internet" },
-      { icon: FaCar, label: "Parking Available" },
-      { icon: FaPaw, label: "Pet Friendly" },
-      { icon: FaSmoking, label: "No Smoking" }
-    ],
-    poster: {
-      name: "Sarah Johnson",
-      phone: "+1 (555) 123-4567",
-      email: "sarah.johnson@email.com",
-      verified: true
-    },
-    postedDate: "2 days ago"
-  };
-
+export default function ListingDetailsPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isSaved, setIsSaved] = useState(false);
+  const [showApplicationModal, setShowApplicationModal] = useState(false);
 
-  const handleApply = () => {
-    setIsApplying(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsApplying(false);
-      // In real app, show success message with SweetAlert2
-      alert("Application submitted successfully! The poster will contact you soon.");
-    }, 2000);
+  // Mock listing data
+  const listing = {
+    id: 1,
+    title: "Sunny Private Room in Downtown Apartment",
+    rent: 950,
+    deposit: 500,
+    availableFrom: "November 1, 2025",
+    leaseTerm: "12 months",
+    roomType: "Private Room",
+    roomSize: "120 sq ft",
+    furnishing: "Furnished",
+    furniture: ["Queen Bed", "Desk & Chair", "Wardrobe", "Nightstand", "Reading Lamp"],
+    neighborhood: "Downtown",
+    address: "Near 5th Avenue & Main Street",
+    images: ["🏠", "🛏️", "🪟", "🚿", "🏢"],
+    description: "Beautiful, sunlit private room in a modern 3-bedroom apartment. Perfect for young professionals. The room faces east with large windows providing excellent natural light throughout the morning. Hardwood floors and freshly painted walls.",
+    
+    amenities: {
+      inRoom: [
+        { name: "Private Bathroom", icon: Bath, available: false },
+        { name: "Air Conditioning", icon: Wind, available: true },
+        { name: "Heating", icon: Wind, available: true },
+        { name: "Desk & Chair", icon: Monitor, available: true },
+        { name: "Closet Space", icon: Home, available: true }
+      ],
+      building: [
+        { name: "Laundry In-Unit", icon: Home, available: true },
+        { name: "Gym", icon: Dumbbell, available: true },
+        { name: "Rooftop Access", icon: Home, available: true },
+        { name: "Parking (Extra $50)", icon: Car, available: true },
+        { name: "Bike Storage", icon: Home, available: true },
+        { name: "Elevator", icon: Home, available: true }
+      ]
+    },
+    
+    utilities: ["WiFi", "Water", "Gas", "Electricity"],
+    
+    transportation: [
+      "5-min walk to Metro Blue Line",
+      "Bus stop 50m away (Routes 12, 45)",
+      "15-min bike ride to Central Station",
+      "Easy highway access (I-95)"
+    ],
+    
+    housemates: {
+      count: 2,
+      description: "2 working professionals in their late 20s - one software engineer and one graphic designer",
+      lifestyle: "We enjoy a clean, respectful living environment. Occasionally host small gatherings on weekends but generally quiet during weekdays."
+    },
+    
+    preferences: {
+      ideal: "Professional or graduate student, non-smoker, clean, respectful of quiet hours after 11 PM",
+      pets: "Small pets negotiable (extra deposit required)",
+      smoking: "No smoking inside (designated outdoor area available)",
+      cleanliness: "We maintain a clean common space and have a weekly cleaning schedule",
+      social: "Social but respectful - we enjoy occasional movie nights but value personal space"
+    },
+    
+    provider: {
+      name: "Sarah Chen",
+      type: "Current Tenant",
+      photo: "👩",
+      responseTime: "Usually responds within 24 hours",
+      rating: 4.8,
+      reviews: 12,
+      verified: true,
+      joinedDate: "Member since 2023"
+    }
   };
 
-  const toggleFavorite = () => {
-    setIsFavorited(!isFavorited);
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % listing.images.length);
   };
 
-  const handleShare = () => {
-    navigator.share?.({
-      title: roomData.title,
-      text: `Check out this roommate opportunity: ${postData.title}`,
-      url: window.location.href
-    }) || navigator.clipboard.writeText(window.location.href);
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + listing.images.length) % listing.images.length);
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
+      {/* Header with Back Button */}
+      <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between">
+            <button className="flex items-center text-gray-600 hover:text-gray-900 transition">
+              <ChevronLeft className="w-5 h-5 mr-1" />
+              Back to Listings
+            </button>
+            <div className="flex gap-2">
+              <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                <Share2 className="w-5 h-5 text-gray-600" />
+              </button>
+              <button 
+                onClick={() => setIsSaved(!isSaved)}
+                className={`p-2 border rounded-lg transition ${
+                  isSaved 
+                    ? 'border-red-500 bg-red-50' 
+                    : 'border-gray-300 hover:bg-gray-50'
+                }`}
+              >
+                <Heart className={`w-5 h-5 ${isSaved ? 'text-red-500 fill-current' : 'text-gray-600'}`} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2">
-            {/* Image Gallery */}
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
-              <div className="relative h-96">
-                <img
-                  src={roomData?.images[currentImageIndex]}
-                  alt={postData.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-4 right-4 flex gap-2">
-                  <button
-                    onClick={toggleFavorite}
-                    className={`p-3 rounded-full shadow-lg transition-all ${isFavorited
-                        ? 'bg-red-500 text-white hover:bg-red-600'
-                        : 'bg-white text-gray-600 hover:bg-gray-100'
-                      }`}
-                  >
-                    <FaHeart />
-                  </button>
-                  <button
-                    onClick={handleShare}
-                    className="p-3 bg-white text-gray-600 rounded-full shadow-lg hover:bg-gray-100 transition-all"
-                  >
-                    <FaShare />
-                  </button>
-                </div>
-                {roomData?.images.length > 1 && (
-                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-                    {roomData?.images.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentImageIndex(index)}
-                        className={`w-3 h-3 rounded-full transition-all ${index === currentImageIndex ? 'bg-white' : 'bg-white/50'
-                          }`}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
-              {roomData?.images.length > 1 && (
-                <div className="p-4 flex gap-2 overflow-x-auto">
-                  {roomData?.images.map((image, index) => (
+          <div className="lg:col-span-2 space-y-8">
+            {/* Photo Gallery */}
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div className="relative h-96 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
+                <div className="text-9xl">{listing.images[currentImageIndex]}</div>
+                
+                <button 
+                  onClick={prevImage}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
+                >
+                  <ChevronLeft className="w-6 h-6 text-gray-800" />
+                </button>
+                
+                <button 
+                  onClick={nextImage}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
+                >
+                  <ChevronRight className="w-6 h-6 text-gray-800" />
+                </button>
+
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+                  {listing.images.map((_, idx) => (
                     <button
-                      key={index}
-                      onClick={() => setCurrentImageIndex(index)}
-                      className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${index === currentImageIndex ? 'border-blue-500' : 'border-gray-200'
-                        }`}
-                    >
-                      <img src={image} alt={`View ${index + 1}`} className="w-full h-full object-cover" />
-                    </button>
+                      key={idx}
+                      onClick={() => setCurrentImageIndex(idx)}
+                      className={`w-2 h-2 rounded-full transition ${
+                        idx === currentImageIndex ? 'bg-white w-8' : 'bg-white bg-opacity-50'
+                      }`}
+                    />
                   ))}
                 </div>
-              )}
+              </div>
+
+              {/* Thumbnail Strip */}
+              <div className="flex gap-2 p-4 overflow-x-auto">
+                {listing.images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentImageIndex(idx)}
+                    className={`flex-shrink-0 w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center text-3xl border-2 transition ${
+                      idx === currentImageIndex ? 'border-blue-500' : 'border-transparent hover:border-gray-300'
+                    }`}
+                  >
+                    {img}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* Post Details */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-              <div className="flex justify-between items-start mb-6">
-                <h1 className="text-3xl font-bold text-gray-900">{postData.title}</h1>
-                <span className="text-sm text-gray-500">{postData.postedDate}</span>
-              </div>
-
-              {/* Key Info Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl border border-blue-200">
-                  <div className="flex items-center gap-3 mb-2">
-                    <FaMapMarkerAlt className="text-blue-600 text-xl" />
-                    <h3 className="font-semibold text-gray-900">Location</h3>
-                  </div>
-                  <p className="text-gray-700">{roomData?.location}</p>
+            {/* Title and Quick Facts */}
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">{listing.title}</h1>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <p className="text-sm text-green-600 font-medium mb-1">Monthly Rent</p>
+                  <p className="text-2xl font-bold text-green-700">${listing.rent}</p>
                 </div>
-
-                <div className="bg-gradient-to-r from-green-50 to-green-100 p-6 rounded-xl border border-green-200">
-                  <div className="flex items-center gap-3 mb-2">
-                    <FaDollarSign className="text-green-600 text-xl" />
-                    <h3 className="font-semibold text-gray-900">Rent</h3>
-                  </div>
-                  <p className="text-2xl font-bold text-green-600">${roomData?.rent_amount || roomData?.rent}/month</p>
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <p className="text-sm text-blue-600 font-medium mb-1">Security Deposit</p>
+                  <p className="text-2xl font-bold text-blue-700">${listing.deposit}</p>
                 </div>
-
-                <div className="bg-gradient-to-r from-purple-50 to-purple-100 p-6 rounded-xl border border-purple-200">
-                  <div className="flex items-center gap-3 mb-2">
-                    <FaCalendarAlt className="text-purple-600 text-xl" />
-                    <h3 className="font-semibold text-gray-900">Availability</h3>
-                  </div>
-                  <p className="text-gray-700">{postData.availability}</p>
+                <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                  <p className="text-sm text-purple-600 font-medium mb-1">Available From</p>
+                  <p className="text-sm font-bold text-purple-700">{listing.availableFrom}</p>
+                </div>
+                <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                  <p className="text-sm text-orange-600 font-medium mb-1">Lease Term</p>
+                  <p className="text-sm font-bold text-orange-700">{listing.leaseTerm}</p>
                 </div>
               </div>
+            </div>
 
-              {/* Description */}
-              <div className="mb-8">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Description</h3>
-                <p className="text-gray-700 leading-relaxed">{roomData?.description}</p>
+            {/* Description */}
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">About This Space</h2>
+              <p className="text-gray-700 leading-relaxed">{listing.description}</p>
+            </div>
+
+            {/* The Space & Offer */}
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-6">Room Details</h2>
+              
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                <div className="border border-gray-200 rounded-lg p-4">
+                  <p className="text-sm text-gray-600 mb-1">Room Type</p>
+                  <p className="font-semibold text-gray-900">{listing.roomType}</p>
+                </div>
+                <div className="border border-gray-200 rounded-lg p-4">
+                  <p className="text-sm text-gray-600 mb-1">Room Size</p>
+                  <p className="font-semibold text-gray-900">{listing.roomSize}</p>
+                </div>
+                <div className="border border-gray-200 rounded-lg p-4">
+                  <p className="text-sm text-gray-600 mb-1">Furnishing</p>
+                  <p className="font-semibold text-gray-900">{listing.furnishing}</p>
+                </div>
               </div>
 
-              {/* Amenities */}
-              <div className="mb-8">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Amenities</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {postData.amenities.map((amenity, index) => (
-                    <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                      <amenity.icon className="text-blue-600" />
-                      <span className="text-sm text-gray-700">{amenity.label}</span>
-                    </div>
+              <div className="mb-6">
+                <h3 className="font-semibold text-gray-900 mb-3">Included Furniture</h3>
+                <div className="flex flex-wrap gap-2">
+                  {listing.furniture.map((item, idx) => (
+                    <span key={idx} className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
+                      {item}
+                    </span>
                   ))}
                 </div>
               </div>
 
-              {/* Preferences */}
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
+                    <Home className="w-5 h-5 mr-2 text-blue-600" />
+                    In-Room Amenities
+                  </h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    {listing.amenities.inRoom.map((amenity, idx) => (
+                      <div key={idx} className="flex items-center gap-2">
+                        {amenity.available ? (
+                          <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                        ) : (
+                          <X className="w-5 h-5 text-gray-300 flex-shrink-0" />
+                        )}
+                        <span className={amenity.available ? 'text-gray-900' : 'text-gray-400'}>
+                          {amenity.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
+                    <Dumbbell className="w-5 h-5 mr-2 text-blue-600" />
+                    Building Amenities
+                  </h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    {listing.amenities.building.map((amenity, idx) => (
+                      <div key={idx} className="flex items-center gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                        <span className="text-gray-900">{amenity.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
+                    <Wifi className="w-5 h-5 mr-2 text-blue-600" />
+                    Utilities Included in Rent
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {listing.utilities.map((utility, idx) => (
+                      <span key={idx} className="bg-green-100 text-green-700 px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4" />
+                        {utility}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Location */}
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                <MapPin className="w-6 h-6 mr-2 text-blue-600" />
+                Location
+              </h2>
+              
+              <div className="mb-4">
+                <p className="text-gray-900 font-semibold mb-1">{listing.neighborhood}</p>
+                <p className="text-gray-600 text-sm">{listing.address}</p>
+              </div>
+
+              {/* Mock Map */}
+              <div className="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg h-64 mb-4 flex items-center justify-center border border-gray-200">
+                <div className="text-center">
+                  <MapPin className="w-16 h-16 text-blue-600 mx-auto mb-2" />
+                  <p className="text-gray-600">Interactive Map</p>
+                  <p className="text-sm text-gray-500">Exact location shown after contact</p>
+                </div>
+              </div>
+
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Roommate Preferences</h3>
-                <div className="bg-gray-50 rounded-xl p-6">
+                <h3 className="font-semibold text-gray-900 mb-3">Transportation</h3>
+                <ul className="space-y-2">
+                  {listing.transportation.map((option, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-gray-700">
+                      <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span>{option}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Housemates & Lifestyle */}
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                <Users className="w-6 h-6 mr-2 text-blue-600" />
+                Housemates & Lifestyle
+              </h2>
+
+              <div className="space-y-6">
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <h3 className="font-semibold text-blue-900 mb-2">Current Housemates</h3>
+                  <p className="text-blue-800 text-sm mb-2">
+                    <span className="font-semibold">{listing.housemates.count} roommates</span>
+                  </p>
+                  <p className="text-blue-800 text-sm">{listing.housemates.description}</p>
+                  <p className="text-blue-700 text-sm mt-2 italic">"{listing.housemates.lifestyle}"</p>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-3">Looking For</h3>
+                  <p className="text-gray-700 mb-4">{listing.preferences.ideal}</p>
+                  
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Gender Preference</h4>
-                      <p className="text-gray-700">{postData.preferences.gender}</p>
+                    <div className="border border-gray-200 rounded-lg p-4">
+                      <p className="text-sm text-gray-600 mb-1">🐾 Pets Policy</p>
+                      <p className="text-gray-900 font-medium">{listing.preferences.pets}</p>
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Age Range</h4>
-                      <p className="text-gray-700">{postData.preferences.ageRange}</p>
+                    <div className="border border-gray-200 rounded-lg p-4">
+                      <p className="text-sm text-gray-600 mb-1">🚭 Smoking Policy</p>
+                      <p className="text-gray-900 font-medium">{listing.preferences.smoking}</p>
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Occupation</h4>
-                      <p className="text-gray-700">{postData.preferences.occupation}</p>
+                    <div className="border border-gray-200 rounded-lg p-4">
+                      <p className="text-sm text-gray-600 mb-1">🧹 Cleanliness</p>
+                      <p className="text-gray-900 font-medium">{listing.preferences.cleanliness}</p>
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Lifestyle</h4>
-                      <p className="text-gray-700">{postData.preferences.lifestyle}</p>
+                    <div className="border border-gray-200 rounded-lg p-4">
+                      <p className="text-sm text-gray-600 mb-1">👥 Social Environment</p>
+                      <p className="text-gray-900 font-medium">{listing.preferences.social}</p>
                     </div>
                   </div>
                 </div>
@@ -235,73 +359,129 @@ const Details = () => {
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            {/* Contact Card */}
-            <div className="bg-white rounded-2xl shadow-lg p-8 mb-6 sticky top-8">
-              <div className="text-center mb-6">
-                {roomData?.poster?.photo ? <div className="avatar">
-                  <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
-                    <img src={roomData?.poster?.photo} />
+            <div className="sticky top-24 space-y-6">
+              {/* Provider Info */}
+              <div className="bg-white rounded-lg shadow-sm p-6">
+                <h3 className="font-semibold text-gray-900 mb-4">Posted By</h3>
+                
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full flex items-center justify-center text-3xl flex-shrink-0">
+                    {listing.provider.photo}
                   </div>
-                </div> : <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <FaUser className="text-white text-2xl" />
-                </div>}
-                <h3 className="text-xl font-bold text-gray-900">{roomData?.post_name || roomData?.poster?.name}</h3>
-                {postData.poster.verified && (
-                  <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mt-2">
-                    ✓ Verified
-                  </span>
-                )}
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h4 className="font-bold text-gray-900">{listing.provider.name}</h4>
+                      {listing.provider.verified && (
+                        <Shield className="w-4 h-4 text-blue-600" />
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-600">{listing.provider.type}</p>
+                    <div className="flex items-center gap-1 mt-1">
+                      <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                      <span className="text-sm font-semibold text-gray-900">{listing.provider.rating}</span>
+                      <span className="text-sm text-gray-600">({listing.provider.reviews} reviews)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2 mb-4 text-sm">
+                  <p className="text-gray-600 flex items-center gap-2">
+                    <Clock className="w-4 h-4" />
+                    {listing.provider.responseTime}
+                  </p>
+                  <p className="text-gray-600 flex items-center gap-2">
+                    <Calendar className="w-4 h-4" />
+                    {listing.provider.joinedDate}
+                  </p>
+                </div>
+
+                <button className="w-full text-blue-600 text-sm font-semibold hover:underline">
+                  View Provider Profile
+                </button>
               </div>
 
-              <div className="space-y-4 mb-8">
-                <div className="flex items-center gap-3 text-gray-700">
-                  <FaPhone className="text-blue-600" />
-                  <span>{roomData?.contact_info || roomData?.poster?.phone}</span>
-                </div>
-                <div className="flex items-center gap-3 text-gray-700">
-                  <FaEnvelope className="text-blue-600" />
-                  <span className="text-sm">{roomData?.post_email || roomData?.poster?.email}</span>
+              {/* Action Buttons */}
+              <div className="bg-white rounded-lg shadow-sm p-6 space-y-3">
+                <button 
+                  onClick={() => setShowApplicationModal(true)}
+                  className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2 shadow-md"
+                >
+                  <Send className="w-5 h-5" />
+                  I'm Interested
+                </button>
+                
+                <button className="w-full bg-green-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-green-700 transition flex items-center justify-center gap-2">
+                  <MessageSquare className="w-5 h-5" />
+                  Contact Provider
+                </button>
+
+                <button className="w-full border-2 border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-50 transition flex items-center justify-center gap-2">
+                  <Calendar className="w-5 h-5" />
+                  Schedule Viewing
+                </button>
+              </div>
+
+              {/* Safety Tips */}
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-yellow-900 mb-2">Safety Tips</h4>
+                    <ul className="text-sm text-yellow-800 space-y-1">
+                      <li>• Always meet in person before committing</li>
+                      <li>• Never send money before viewing</li>
+                      <li>• Use our secure messaging system</li>
+                      <li>• Report suspicious listings</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
 
-              <button
-                onClick={handleApply}
-                disabled={isApplying}
-                className="w-full bg-gradient-to-r from-green-600 to-yellow-600 hover:green-blue-700 hover:to-yellow-700 text-white font-bold py-4 px-6 rounded-xl transition-all transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-              >
-                {isApplying ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                    Submitting...
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center gap-2">
-                    <FaUsers />
-                    Apply to Become Roommate
-                  </div>
-                )}
-              </button>
-
-              <p className="text-xs text-gray-500 text-center mt-4">
-                Your application will be sent directly to the poster. They will contact you if interested.
-              </p>
-            </div>
-
-            {/* Safety Tips */}
-            <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6">
-              <h4 className="font-bold text-amber-800 mb-3">Safety Tips</h4>
-              <ul className="text-sm text-amber-700 space-y-2">
-                <li>• Meet in a public place first</li>
-                <li>• Verify identity before sharing personal info</li>
-                <li>• Trust your instincts</li>
-                <li>• Never send money upfront</li>
-              </ul>
+              {/* Similar Listings */}
+              <div className="bg-white rounded-lg shadow-sm p-6">
+                <h3 className="font-semibold text-gray-900 mb-4">Similar Listings</h3>
+                <div className="space-y-3">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="border border-gray-200 rounded-lg p-3 hover:border-blue-500 transition cursor-pointer">
+                      <div className="flex gap-3">
+                        <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center text-2xl flex-shrink-0">
+                          🏘️
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold text-gray-900 text-sm truncate">Room Near Downtown</h4>
+                          <p className="text-xs text-gray-600">Downtown</p>
+                          <p className="text-sm font-bold text-green-600 mt-1">${900 + (i * 50)}/mo</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Application Modal Placeholder */}
+      {showApplicationModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg max-w-md w-full p-8 text-center">
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Send className="w-8 h-8 text-blue-600" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Application Modal</h2>
+            <p className="text-gray-600 mb-6">
+              This would open the full application modal component
+            </p>
+            <button 
+              onClick={() => setShowApplicationModal(false)}
+              className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
-};
-
-export default Details;
+}

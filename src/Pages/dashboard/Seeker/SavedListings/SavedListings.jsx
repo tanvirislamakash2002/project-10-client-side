@@ -14,7 +14,7 @@ export default function SavedListings() {
     const [selectedListings, setSelectedListings] = useState([]);
     const [showComparison, setShowComparison] = useState(false);
     const [compareListings, setCompareListings] = useState([]);
-const { isModalOpen, openModal, closeModal } = useApplicationModal();
+    const { isModalOpen, openModal, closeModal } = useApplicationModal();
     // Mock data
     const savedListings = [
         {
@@ -277,18 +277,18 @@ const { isModalOpen, openModal, closeModal } = useApplicationModal();
                 ) : (
                     <div className={view === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
                         {sortedListings.map((listing) => (
-                            <ListingCard key={listing.id} props={{ handleSelectListing, handleCompare, selectedListings, getStatusBadge, compareListings, listing, openModal  }} />
+                            <ListingCard key={listing.id} props={{ handleSelectListing, handleCompare, selectedListings, getStatusBadge, compareListings, listing, openModal }} />
                         ))}
 
-                              {isModalOpen && (
-        <ApplicationModal
-          onClose={closeModal}
-          onSuccess={() => {
-            console.log('Application submitted successfully');
-            closeModal();
-          }}
-        />
-      )}
+                        {isModalOpen && (
+                            <ApplicationModal
+                                onClose={closeModal}
+                                onSuccess={() => {
+                                    console.log('Application submitted successfully');
+                                    closeModal();
+                                }}
+                            />
+                        )}
                     </div>
                 )}
 
