@@ -15,7 +15,7 @@ import Details from "../Pages/public/Details";
 import Register from "../Pages/auth/Register";
 import Login from "../Pages/auth/Login";
 import BrowseListings from "../Pages/public/BrowseListings";
-import Home from "../Pages/public/Home";
+import Home from "../Pages/public/Home/Home";
 import DashboardLayout from "../layout/DashboardLayout";
 import Inquiries from "../Pages/dashboard/Provider/Inquiries/Inquiries";
 import UpdatePost from "../Pages/dashboard/Provider/UpdatePost";

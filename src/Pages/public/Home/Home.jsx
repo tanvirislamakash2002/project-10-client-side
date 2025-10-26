@@ -2,14 +2,14 @@ import React, { use, useEffect, useState } from 'react';
 import { Typewriter } from 'react-simple-typewriter';
 import CountUp from 'react-countup';
 import { Link } from 'react-router';
-import Banner from '../../components/Banner';
-import FeaturedRoommates from '../../components/FeaturedRoommates';
-import { AuthContext } from '../../provider/AuthProvider';
-import ExtraSection1 from '../../components/ExptaSection/ExtraSection1';
-import ExtraSection2 from '../../components/ExptaSection/ExtraSection2';
-import ExtraSection3 from '../../components/ExptaSection/ExtraSection3';
-import ExtraSection4 from '../../components/ExptaSection/ExtraSection4';
-import HeroSection from './Home/components/HeroSection';
+import FeaturedRoommates from '../../../components/FeaturedRoommates';
+import { AuthContext } from '../../../provider/AuthProvider';
+import ExtraSection1 from '../../../components/ExptaSection/ExtraSection1';
+import ExtraSection2 from '../../../components/ExptaSection/ExtraSection2';
+import ExtraSection3 from '../../../components/ExptaSection/ExtraSection3';
+import ExtraSection4 from '../../../components/ExptaSection/ExtraSection4';
+import HeroSection from './components/HeroSection';
+import HowItWorksSection from './components/HowItWorks';
 
 const Home = () => {
     const { darkMode } = use(AuthContext)
@@ -29,8 +29,8 @@ const Home = () => {
     return (
         <div className=''>
 
-<HeroSection></HeroSection>
-            {/* <Banner></Banner> */}
+            <HeroSection></HeroSection>
+            <HowItWorksSection></HowItWorksSection>
             <div className={` px-14 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20`}>
                 <h2 className={`${darkMode && `text-white`} text-center text-4xl font-bold mb-16`}>Available Feature Roommate Posts</h2>
                 <div className="grid gap-8 lg:grid-cols-3 md:grid-cols-2  sm:mx-auto lg:max-w-full">
@@ -42,7 +42,7 @@ const Home = () => {
             </div>
 
             <div className=" w-11/12 mx-auto ">
-            <h2 className={`${darkMode && `text-white`} text-center text-4xl font-bold mb-4`}>Roommate Connection Stats</h2>
+                <h2 className={`${darkMode && `text-white`} text-center text-4xl font-bold mb-4`}>Roommate Connection Stats</h2>
                 <div className={`${darkMode && `text-white`} text-center font-bold text-xl mb-8`}><span className='invisible'>.</span><Typewriter
                     words={['Helping people find their perfect roommate since, 1971', 'Browse thousands of profiles to find your ideal match.', 'Join our community of verified roommates today!']}
                     loop={Infinity}
