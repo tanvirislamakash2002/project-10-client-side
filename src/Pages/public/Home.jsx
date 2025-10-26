@@ -9,6 +9,7 @@ import ExtraSection1 from '../../components/ExptaSection/ExtraSection1';
 import ExtraSection2 from '../../components/ExptaSection/ExtraSection2';
 import ExtraSection3 from '../../components/ExptaSection/ExtraSection3';
 import ExtraSection4 from '../../components/ExptaSection/ExtraSection4';
+import HeroSection from './Home/components/HeroSection';
 
 const Home = () => {
     const { darkMode } = use(AuthContext)
@@ -28,8 +29,8 @@ const Home = () => {
     return (
         <div className=''>
 
-
-            <Banner></Banner>
+<HeroSection></HeroSection>
+            {/* <Banner></Banner> */}
             <div className={` px-14 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20`}>
                 <h2 className={`${darkMode && `text-white`} text-center text-4xl font-bold mb-16`}>Available Feature Roommate Posts</h2>
                 <div className="grid gap-8 lg:grid-cols-3 md:grid-cols-2  sm:mx-auto lg:max-w-full">

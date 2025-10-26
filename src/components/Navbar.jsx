@@ -125,7 +125,7 @@ const Navbar = () => {
                 )}
               </div>
             </div>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 dark:bg-gray-700">
               {/* User welcome */}
               <li className="px-4 py-2 border-b border-gray-200 dark:border-gray-600">
                 <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
