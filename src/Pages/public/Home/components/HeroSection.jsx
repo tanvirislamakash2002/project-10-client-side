@@ -91,7 +91,7 @@ export default function HeroSection() {
 
           {/* Trust Indicators */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            <div className="bg-white dark:bg-gray-700 bg-opacity-70 backdrop-blur-sm rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-200">
+            <div className="bg-white/70 dark:bg-gray-700/70 backdrop-blur-sm rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-200">
               <div className="flex flex-col items-center text-center">
                 <div className="bg-gradient-to-br from-blue-500 to-purple-500 rounded-full p-3 mb-3">
                   <Shield className="w-7 h-7 text-white" />
@@ -101,7 +101,7 @@ export default function HeroSection() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-700 bg-opacity-70 backdrop-blur-sm rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-200">
+            <div className="bg-white/70 dark:bg-gray-700/70 backdrop-blur-sm rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-200">
               <div className="flex flex-col items-center text-center">
                 <div className="bg-gradient-to-br from-green-500 to-teal-500 rounded-full p-3 mb-3">
                   <CheckCircle className="w-7 h-7 text-white" />
@@ -111,7 +111,7 @@ export default function HeroSection() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-700 bg-opacity-70 backdrop-blur-sm rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-200">
+            <div className="bg-white/70 dark:bg-gray-700/70 backdrop-blur-sm rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-200">
               <div className="flex flex-col items-center text-center">
                 <div className="bg-gradient-to-br from-purple-500 to-pink-500 rounded-full p-3 mb-3">
                   <Users className="w-7 h-7 text-white" />
@@ -121,7 +121,7 @@ export default function HeroSection() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-700 bg-opacity-70 backdrop-blur-sm rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-200">
+            <div className="bg-white/70 dark:bg-gray-700/70 backdrop-blur-sm rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-200">
               <div className="flex flex-col items-center text-center">
                 <div className="bg-gradient-to-br from-orange-500 to-red-500 rounded-full p-3 mb-3">
                   <Home className="w-7 h-7 text-white" />
@@ -137,8 +137,8 @@ export default function HeroSection() {
       {/* Bottom wave decoration */}
       <div className="absolute bottom-0 left-0 right-0">
         <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-          <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" fillOpacity="0.3"/>
-          <path d="M0 120L60 112.5C120 105 240 90 360 82.5C480 75 600 75 720 78.75C840 82.5 960 90 1080 93.75C1200 97.5 1320 97.5 1380 97.5L1440 97.5V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" fillOpacity="0.5"/>
+          <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" fillOpacity="0.1"/>
+          <path d="M0 120L60 112.5C120 105 240 90 360 82.5C480 75 600 75 720 78.75C840 82.5 960 90 1080 93.75C1200 97.5 1320 97.5 1380 97.5L1440 97.5V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" fillOpacity="0.2"/>
         </svg>
       </div>
     </div>
