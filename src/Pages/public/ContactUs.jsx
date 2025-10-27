@@ -1,7 +1,7 @@
 import React, { use } from 'react';
-import { AuthContext } from '../provider/AuthProvider';
 import { FaLocationDot, FaPhone } from 'react-icons/fa6';
 import { MdEmail } from 'react-icons/md';
+import { AuthContext } from '../../provider/AuthProvider';
 
 const ContactUs = () => {
     const { darkMode } = use(AuthContext)

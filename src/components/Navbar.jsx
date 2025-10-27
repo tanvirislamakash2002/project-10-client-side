@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, NavLink, useNavigate } from 'react-router';
 
 import { FiHome, FiSearch, FiInfo, FiPhone, FiUser, FiLogOut, FiSettings, FiHelpCircle, FiPlus, FiFileText } from 'react-icons/fi';
-import { MdDashboard, MdLightMode, MdDarkMode } from 'react-icons/md';
+import { MdDashboard, MdLightMode, MdDarkMode, MdOutlineMessage } from 'react-icons/md';
 import useAuth from '../../hooks/useAuth';
 import useUserRole from '../../hooks/useUserRole';
 
@@ -42,6 +42,7 @@ console.log(userRole);
   const userMenuItems = [
     { path: '/dashboard', label: 'Dashboard', icon: <MdDashboard className="w-4 h-4" /> },
     { path: '/profile', label: 'My Profile', icon: <FiUser className="w-4 h-4" /> },
+    { path: '/dashboard/inquiries', label: 'Messages', icon: <MdOutlineMessage  className="w-4 h-4" /> },
     { path: '/settings', label: 'Settings', icon: <FiSettings className="w-4 h-4" /> },
     { path: '/help', label: 'Help Center', icon: <FiHelpCircle className="w-4 h-4" /> },
   ];

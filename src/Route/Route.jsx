@@ -6,15 +6,12 @@ import AddFindRoommate from "../Pages/AddFindRoommate/AddFindRoommate";
 import PrivateRoute from "../provider/PrivateRoute";
 import Loading from "../components/Loading";
 import ErrorPage from "../Pages/ErrorPage";
-import AboutUs from "../components/AboutUs";
-import ContactUs from "../components/ContactUs";
 import Browse from "../Pages/Browse/Browse";
 import UnderConstructionPage from "../Pages/UnderConstructionPage";
 import Root from "../layout/Root";
 import Details from "../Pages/public/Details";
 import Register from "../Pages/auth/Register";
 import Login from "../Pages/auth/Login";
-import BrowseListings from "../Pages/public/BrowseListings";
 import Home from "../Pages/public/Home/Home";
 import DashboardLayout from "../layout/DashboardLayout";
 import Inquiries from "../Pages/dashboard/Provider/Inquiries/Inquiries";
@@ -22,6 +19,8 @@ import UpdatePost from "../Pages/dashboard/Provider/UpdatePost";
 import Dashboard from "../Pages/dashboard/Dashboard";
 import MyListings from "../Pages/dashboard/Provider/MyListings";
 import SavedListings from "../Pages/dashboard/Seeker/SavedListings/SavedListings";
+import AboutUs from "../Pages/public/AboutUs";
+import ContactUs from "../Pages/public/ContactUs";
 
 export const router = createBrowserRouter([
   {
@@ -97,11 +96,6 @@ export const router = createBrowserRouter([
 
       },
       // provider dashboard
-      {
-        path: '/dashboard/browse-listings',
-        Component: BrowseListings,
-        hydrateFallbackElement: <Loading></Loading>
-      },
       {
         path: '/dashboard/my-listings',
         element:

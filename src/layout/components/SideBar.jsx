@@ -127,7 +127,7 @@ const SideBar = ({ props }) => {
 
                         <SidebarLink
                             sidebarCollapsed={sidebarCollapsed}
-                            to="/dashboard/messages"
+                            to="/dashboard/inquiries"
                             icon={FaMessage}
                             label="Messages"
                             badge="5"
