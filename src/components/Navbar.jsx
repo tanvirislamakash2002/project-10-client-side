@@ -1,14 +1,17 @@
 import React from 'react';
 import { Link, NavLink, useNavigate } from 'react-router';
 
-import { FiHome, FiSearch, FiInfo, FiPhone, FiUser, FiLogOut, FiSettings, FiHelpCircle, FiPlus } from 'react-icons/fi';
+import { FiHome, FiSearch, FiInfo, FiPhone, FiUser, FiLogOut, FiSettings, FiHelpCircle, FiPlus, FiFileText } from 'react-icons/fi';
 import { MdDashboard, MdLightMode, MdDarkMode } from 'react-icons/md';
 import useAuth from '../../hooks/useAuth';
+import useUserRole from '../../hooks/useUserRole';
 
 const Navbar = () => {
-  const { user, logOut, darkMode, setDarkMode, userRole } = useAuth(); // Assuming you have userRole in context
+  const { user, logOut, darkMode, setDarkMode } = useAuth(); 
   const navigate = useNavigate();
 
+  const {role:userRole}= useUserRole()
+console.log(userRole);
   const handleLogout = async () => {
     try {
       await logOut();
@@ -30,7 +33,7 @@ const Navbar = () => {
   const mainLinks = [
     { path: '/', label: 'Home', icon: <FiHome className="w-4 h-4" /> },
     { path: '/browse', label: 'Browse', icon: <FiSearch className="w-4 h-4" /> },
-    { path: '/how-it-works', label: 'How It Works', icon: <FiInfo className="w-4 h-4" /> },
+    { path: '/blog', label: 'Blog', icon: <FiFileText className="w-4 h-4" /> },
     { path: '/about-us', label: 'About Us', icon: <FiInfo className="w-4 h-4" /> },
     { path: '/contact-us', label: 'Contact', icon: <FiPhone className="w-4 h-4" /> },
   ];
@@ -105,7 +108,7 @@ const Navbar = () => {
         {/* Conditional Add Listing Button (Providers only) */}
         { userRole === 'provider' && (
           <Link
-            to="/add-listing"
+            to="/dashboard/listings/new"
             className="btn btn-primary gap-2 hidden sm:flex"
           >
             <FiPlus className="w-4 h-4" />
@@ -146,7 +149,7 @@ const Navbar = () => {
               {/* Add Listing for mobile (if provider) */}
               {userRole === 'provider' && (
                 <li className="lg:hidden">
-                  <Link to="/add-listing" className="flex items-center gap-2 px-4 py-2 text-green-600 hover:bg-green-50">
+                  <Link to="/dashboard/listings/new" className="flex items-center gap-2 px-4 py-2 text-green-600 hover:bg-green-50">
                     <FiPlus className="w-4 h-4" />
                     Add Listing
                   </Link>
