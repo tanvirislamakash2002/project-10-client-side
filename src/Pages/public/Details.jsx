@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Heart, Share2, MapPin, DollarSign, Calendar, Clock, Wifi, Droplet, Zap, Wind, Car, Dumbbell, Home, Bed, Monitor, Sofa, Bath, Users, MessageSquare, CheckCircle, X, Phone, Mail, Star, TrendingUp, Shield, AlertCircle, Send, Eye } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
+import useAuth from '../../../hooks/useAuth';
 
 export default function ListingDetailsPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
   const [showApplicationModal, setShowApplicationModal] = useState(false);
+  const { user } = useAuth();
 
   const { id } = useParams()
 
@@ -16,7 +18,9 @@ export default function ListingDetailsPage() {
       fetch(`${import.meta.env.VITE_API_URL}/add-roommate/${id}`)
         .then(res => res.json()),
   });
-  console.log(singleRoom);
+
+
+  console.log(user);
 
 
   // Mock listing data
@@ -90,23 +94,35 @@ export default function ListingDetailsPage() {
   };
 
   const nextImage = () => {
+    if (!singleRoom?.images?.length) return;
     setCurrentImageIndex((prev) => (prev + 1) % singleRoom.images.length);
   };
 
   const prevImage = () => {
+    if (!singleRoom?.images?.length) return;
     setCurrentImageIndex((prev) => (prev - 1 + singleRoom.images.length) % singleRoom.images.length);
   };
-if(!singleRoom) return <h2>loading...</h2>
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="loading loading-spinner loading-lg"></div>
+        <span className="ml-2">Loading room details...</span>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header with Back Button */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <button className="flex items-center text-gray-600 hover:text-gray-900 transition">
-              <ChevronLeft className="w-5 h-5 mr-1" />
-              Back to Listings
-            </button>
+            <Link to={'/browse'}>
+              <button className="flex items-center text-gray-600 hover:text-gray-900 transition">
+                <ChevronLeft className="w-5 h-5 mr-1" />
+                Back to Listings
+              </button>
+            </Link>
             <div className="flex gap-2">
               <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                 <Share2 className="w-5 h-5 text-gray-600" />
@@ -114,8 +130,8 @@ if(!singleRoom) return <h2>loading...</h2>
               <button
                 onClick={() => setIsSaved(!isSaved)}
                 className={`p-2 border rounded-lg transition ${isSaved
-                    ? 'border-red-500 bg-red-50'
-                    : 'border-gray-300 hover:bg-gray-50'
+                  ? 'border-red-500 bg-red-50'
+                  : 'border-gray-300 hover:bg-gray-50'
                   }`}
               >
                 <Heart className={`w-5 h-5 ${isSaved ? 'text-red-500 fill-current' : 'text-gray-600'}`} />
@@ -132,59 +148,62 @@ if(!singleRoom) return <h2>loading...</h2>
             {/* Photo Gallery */}
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
               <div className="relative h-96 bg-gray-100 flex items-center justify-center">
-                {/* Main Image Display */}
+                {/* Main Image Display with safe fallback */}
                 <img
-                  src={singleRoom?.images[currentImageIndex]}
+                  src={singleRoom?.images?.[currentImageIndex] || "/placeholder-image.jpg"}
                   alt={`Room image ${currentImageIndex + 1}`}
                   className="w-full h-full object-cover"
                 />
 
-                {/* Previous Button */}
-                <button
-                  onClick={prevImage}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
-                >
-                  <ChevronLeft className="w-6 h-6 text-gray-800" />
-                </button>
+                {/* Only show navigation if images exist and there are multiple */}
+                {singleRoom?.images && singleRoom.images.length > 1 && (
+                  <>
+                    <button
+                      onClick={prevImage}
+                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
+                    >
+                      <ChevronLeft className="w-6 h-6 text-gray-800" />
+                    </button>
+                    <button
+                      onClick={nextImage}
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
+                    >
+                      <ChevronRight className="w-6 h-6 text-gray-800" />
+                    </button>
 
-                {/* Next Button */}
-                <button
-                  onClick={nextImage}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
-                >
-                  <ChevronRight className="w-6 h-6 text-gray-800" />
-                </button>
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+                      {singleRoom.images.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setCurrentImageIndex(idx)}
+                          className={`w-2 h-2 rounded-full transition ${idx === currentImageIndex ? 'bg-white w-8' : 'bg-white bg-opacity-50'
+                            }`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
 
-                {/* Image Indicator Dots */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-                  {singleRoom?.images.map((_, idx) => (
+              {/* Thumbnail strip - only if images exist */}
+              {singleRoom?.images && (
+                <div className="flex gap-2 p-4 overflow-x-auto">
+                  {singleRoom.images.map((img, idx) => (
                     <button
                       key={idx}
                       onClick={() => setCurrentImageIndex(idx)}
-                      className={`w-2 h-2 rounded-full transition ${idx === currentImageIndex ? 'bg-white w-8' : 'bg-white bg-opacity-50'
+                      className={`flex-shrink-0 w-20 h-20 bg-gray-100 rounded-lg overflow-hidden border-2 transition ${idx === currentImageIndex ? 'border-blue-500' : 'border-transparent hover:border-gray-300'
                         }`}
-                    />
+                    >
+                      <img
+                        src={img}
+                        alt={`Thumbnail ${idx + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
                   ))}
                 </div>
-              </div>
-
-              {/* Thumbnail Strip */}
-              <div className="flex gap-2 p-4 overflow-x-auto">
-                {singleRoom?.images.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentImageIndex(idx)}
-                    className={`flex-shrink-0 w-20 h-20 bg-gray-100 rounded-lg overflow-hidden border-2 transition ${idx === currentImageIndex ? 'border-blue-500' : 'border-transparent hover:border-gray-300'
-                      }`}
-                  >
-                    <img
-                      src={img}
-                      alt={`Thumbnail ${idx + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
+              )}
             </div>
 
             {/* Title and Quick Facts */}
@@ -387,12 +406,12 @@ if(!singleRoom) return <h2>loading...</h2>
                 <h3 className="font-semibold text-gray-900 mb-4">Posted By</h3>
 
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full flex items-center justify-center text-3xl flex-shrink-0">
-                    {listing.provider.photo}
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full btn-circle flex items-center justify-center text-3xl flex-shrink-0 avatar p-[2px]">
+                    <img src={user?.photoURL} alt="" className=' rounded-full' />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-bold text-gray-900">{listing.provider.name}</h4>
+                      <h4 className="font-bold text-gray-900">{user?.displayName}</h4>
                       {listing.provider.verified && (
                         <Shield className="w-4 h-4 text-blue-600" />
                       )}
