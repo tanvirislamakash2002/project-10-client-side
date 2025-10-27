@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Heart, Share2, MapPin, DollarSign, Calendar, Clock, Wifi, Droplet, Zap, Wind, Car, Dumbbell, Home, Bed, Monitor, Sofa, Bath, Users, MessageSquare, CheckCircle, X, Phone, Mail, Star, TrendingUp, Shield, AlertCircle, Send, Eye } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router';
 
 export default function ListingDetailsPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
   const [showApplicationModal, setShowApplicationModal] = useState(false);
+
+  const {id} = useParams()
+
+    const { data: singleRoom = [], isLoading, error } = useQuery({
+      queryKey: ['posts'],
+      queryFn: () =>
+        fetch(`${import.meta.env.VITE_API_URL}/add-roommate/${id}`)
+          .then(res => res.json()),
+    });
+console.log(singleRoom);
+
 
   // Mock listing data
   const listing = {
@@ -118,52 +131,64 @@ export default function ListingDetailsPage() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Photo Gallery */}
-            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-              <div className="relative h-96 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
-                <div className="text-9xl">{listing.images[currentImageIndex]}</div>
-                
-                <button 
-                  onClick={prevImage}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
-                >
-                  <ChevronLeft className="w-6 h-6 text-gray-800" />
-                </button>
-                
-                <button 
-                  onClick={nextImage}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
-                >
-                  <ChevronRight className="w-6 h-6 text-gray-800" />
-                </button>
+<div className="bg-white rounded-lg shadow-sm overflow-hidden">
+  <div className="relative h-96 bg-gray-100 flex items-center justify-center">
+    {/* Main Image Display */}
+    <img 
+      src={singleRoom.images[currentImageIndex]} 
+      alt={`Room image ${currentImageIndex + 1}`}
+      className="w-full h-full object-cover"
+    />
+    
+    {/* Previous Button */}
+    <button 
+      onClick={prevImage}
+      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
+    >
+      <ChevronLeft className="w-6 h-6 text-gray-800" />
+    </button>
+    
+    {/* Next Button */}
+    <button 
+      onClick={nextImage}
+      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
+    >
+      <ChevronRight className="w-6 h-6 text-gray-800" />
+    </button>
 
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-                  {listing.images.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setCurrentImageIndex(idx)}
-                      className={`w-2 h-2 rounded-full transition ${
-                        idx === currentImageIndex ? 'bg-white w-8' : 'bg-white bg-opacity-50'
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
+    {/* Image Indicator Dots */}
+    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+      {singleRoom.images.map((_, idx) => (
+        <button
+          key={idx}
+          onClick={() => setCurrentImageIndex(idx)}
+          className={`w-2 h-2 rounded-full transition ${
+            idx === currentImageIndex ? 'bg-white w-8' : 'bg-white bg-opacity-50'
+          }`}
+        />
+      ))}
+    </div>
+  </div>
 
-              {/* Thumbnail Strip */}
-              <div className="flex gap-2 p-4 overflow-x-auto">
-                {listing.images.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentImageIndex(idx)}
-                    className={`flex-shrink-0 w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center text-3xl border-2 transition ${
-                      idx === currentImageIndex ? 'border-blue-500' : 'border-transparent hover:border-gray-300'
-                    }`}
-                  >
-                    {img}
-                  </button>
-                ))}
-              </div>
-            </div>
+  {/* Thumbnail Strip */}
+  <div className="flex gap-2 p-4 overflow-x-auto">
+    {singleRoom.images.map((img, idx) => (
+      <button
+        key={idx}
+        onClick={() => setCurrentImageIndex(idx)}
+        className={`flex-shrink-0 w-20 h-20 bg-gray-100 rounded-lg overflow-hidden border-2 transition ${
+          idx === currentImageIndex ? 'border-blue-500' : 'border-transparent hover:border-gray-300'
+        }`}
+      >
+        <img 
+          src={img} 
+          alt={`Thumbnail ${idx + 1}`}
+          className="w-full h-full object-cover"
+        />
+      </button>
+    ))}
+  </div>
+</div>
 
             {/* Title and Quick Facts */}
             <div className="bg-white rounded-lg shadow-sm p-6">
