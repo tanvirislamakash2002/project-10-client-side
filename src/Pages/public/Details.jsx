@@ -8,15 +8,15 @@ export default function ListingDetailsPage() {
   const [isSaved, setIsSaved] = useState(false);
   const [showApplicationModal, setShowApplicationModal] = useState(false);
 
-  const {id} = useParams()
+  const { id } = useParams()
 
-    const { data: singleRoom = [], isLoading, error } = useQuery({
-      queryKey: ['posts'],
-      queryFn: () =>
-        fetch(`${import.meta.env.VITE_API_URL}/add-roommate/${id}`)
-          .then(res => res.json()),
-    });
-console.log(singleRoom);
+  const { data: singleRoom = {}, isLoading, error } = useQuery({
+    queryKey: ['posts'],
+    queryFn: () =>
+      fetch(`${import.meta.env.VITE_API_URL}/add-roommate/${id}`)
+        .then(res => res.json()),
+  });
+  console.log(singleRoom);
 
 
   // Mock listing data
@@ -35,7 +35,7 @@ console.log(singleRoom);
     address: "Near 5th Avenue & Main Street",
     images: ["🏠", "🛏️", "🪟", "🚿", "🏢"],
     description: "Beautiful, sunlit private room in a modern 3-bedroom apartment. Perfect for young professionals. The room faces east with large windows providing excellent natural light throughout the morning. Hardwood floors and freshly painted walls.",
-    
+
     amenities: {
       inRoom: [
         { name: "Private Bathroom", icon: Bath, available: false },
@@ -53,22 +53,22 @@ console.log(singleRoom);
         { name: "Elevator", icon: Home, available: true }
       ]
     },
-    
+
     utilities: ["WiFi", "Water", "Gas", "Electricity"],
-    
+
     transportation: [
       "5-min walk to Metro Blue Line",
       "Bus stop 50m away (Routes 12, 45)",
       "15-min bike ride to Central Station",
       "Easy highway access (I-95)"
     ],
-    
+
     housemates: {
       count: 2,
       description: "2 working professionals in their late 20s - one software engineer and one graphic designer",
       lifestyle: "We enjoy a clean, respectful living environment. Occasionally host small gatherings on weekends but generally quiet during weekdays."
     },
-    
+
     preferences: {
       ideal: "Professional or graduate student, non-smoker, clean, respectful of quiet hours after 11 PM",
       pets: "Small pets negotiable (extra deposit required)",
@@ -76,7 +76,7 @@ console.log(singleRoom);
       cleanliness: "We maintain a clean common space and have a weekly cleaning schedule",
       social: "Social but respectful - we enjoy occasional movie nights but value personal space"
     },
-    
+
     provider: {
       name: "Sarah Chen",
       type: "Current Tenant",
@@ -90,13 +90,13 @@ console.log(singleRoom);
   };
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % listing.images.length);
+    setCurrentImageIndex((prev) => (prev + 1) % singleRoom.images.length);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + listing.images.length) % listing.images.length);
+    setCurrentImageIndex((prev) => (prev - 1 + singleRoom.images.length) % singleRoom.images.length);
   };
-
+if(!singleRoom) return <h2>loading...</h2>
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header with Back Button */}
@@ -111,13 +111,12 @@ console.log(singleRoom);
               <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                 <Share2 className="w-5 h-5 text-gray-600" />
               </button>
-              <button 
+              <button
                 onClick={() => setIsSaved(!isSaved)}
-                className={`p-2 border rounded-lg transition ${
-                  isSaved 
-                    ? 'border-red-500 bg-red-50' 
+                className={`p-2 border rounded-lg transition ${isSaved
+                    ? 'border-red-500 bg-red-50'
                     : 'border-gray-300 hover:bg-gray-50'
-                }`}
+                  }`}
               >
                 <Heart className={`w-5 h-5 ${isSaved ? 'text-red-500 fill-current' : 'text-gray-600'}`} />
               </button>
@@ -131,69 +130,67 @@ console.log(singleRoom);
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Photo Gallery */}
-<div className="bg-white rounded-lg shadow-sm overflow-hidden">
-  <div className="relative h-96 bg-gray-100 flex items-center justify-center">
-    {/* Main Image Display */}
-    <img 
-      src={singleRoom.images[currentImageIndex]} 
-      alt={`Room image ${currentImageIndex + 1}`}
-      className="w-full h-full object-cover"
-    />
-    
-    {/* Previous Button */}
-    <button 
-      onClick={prevImage}
-      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
-    >
-      <ChevronLeft className="w-6 h-6 text-gray-800" />
-    </button>
-    
-    {/* Next Button */}
-    <button 
-      onClick={nextImage}
-      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
-    >
-      <ChevronRight className="w-6 h-6 text-gray-800" />
-    </button>
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div className="relative h-96 bg-gray-100 flex items-center justify-center">
+                {/* Main Image Display */}
+                <img
+                  src={singleRoom?.images[currentImageIndex]}
+                  alt={`Room image ${currentImageIndex + 1}`}
+                  className="w-full h-full object-cover"
+                />
 
-    {/* Image Indicator Dots */}
-    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-      {singleRoom.images.map((_, idx) => (
-        <button
-          key={idx}
-          onClick={() => setCurrentImageIndex(idx)}
-          className={`w-2 h-2 rounded-full transition ${
-            idx === currentImageIndex ? 'bg-white w-8' : 'bg-white bg-opacity-50'
-          }`}
-        />
-      ))}
-    </div>
-  </div>
+                {/* Previous Button */}
+                <button
+                  onClick={prevImage}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
+                >
+                  <ChevronLeft className="w-6 h-6 text-gray-800" />
+                </button>
 
-  {/* Thumbnail Strip */}
-  <div className="flex gap-2 p-4 overflow-x-auto">
-    {singleRoom.images.map((img, idx) => (
-      <button
-        key={idx}
-        onClick={() => setCurrentImageIndex(idx)}
-        className={`flex-shrink-0 w-20 h-20 bg-gray-100 rounded-lg overflow-hidden border-2 transition ${
-          idx === currentImageIndex ? 'border-blue-500' : 'border-transparent hover:border-gray-300'
-        }`}
-      >
-        <img 
-          src={img} 
-          alt={`Thumbnail ${idx + 1}`}
-          className="w-full h-full object-cover"
-        />
-      </button>
-    ))}
-  </div>
-</div>
+                {/* Next Button */}
+                <button
+                  onClick={nextImage}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
+                >
+                  <ChevronRight className="w-6 h-6 text-gray-800" />
+                </button>
+
+                {/* Image Indicator Dots */}
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+                  {singleRoom?.images.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentImageIndex(idx)}
+                      className={`w-2 h-2 rounded-full transition ${idx === currentImageIndex ? 'bg-white w-8' : 'bg-white bg-opacity-50'
+                        }`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Thumbnail Strip */}
+              <div className="flex gap-2 p-4 overflow-x-auto">
+                {singleRoom?.images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentImageIndex(idx)}
+                    className={`flex-shrink-0 w-20 h-20 bg-gray-100 rounded-lg overflow-hidden border-2 transition ${idx === currentImageIndex ? 'border-blue-500' : 'border-transparent hover:border-gray-300'
+                      }`}
+                  >
+                    <img
+                      src={img}
+                      alt={`Thumbnail ${idx + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
 
             {/* Title and Quick Facts */}
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h1 className="text-3xl font-bold text-gray-900 mb-4">{listing.title}</h1>
-              
+
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                   <p className="text-sm text-green-600 font-medium mb-1">Monthly Rent</p>
@@ -223,7 +220,7 @@ console.log(singleRoom);
             {/* The Space & Offer */}
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-6">Room Details</h2>
-              
+
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
                 <div className="border border-gray-200 rounded-lg p-4">
                   <p className="text-sm text-gray-600 mb-1">Room Type</p>
@@ -310,7 +307,7 @@ console.log(singleRoom);
                 <MapPin className="w-6 h-6 mr-2 text-blue-600" />
                 Location
               </h2>
-              
+
               <div className="mb-4">
                 <p className="text-gray-900 font-semibold mb-1">{listing.neighborhood}</p>
                 <p className="text-gray-600 text-sm">{listing.address}</p>
@@ -358,7 +355,7 @@ console.log(singleRoom);
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-3">Looking For</h3>
                   <p className="text-gray-700 mb-4">{listing.preferences.ideal}</p>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="border border-gray-200 rounded-lg p-4">
                       <p className="text-sm text-gray-600 mb-1">🐾 Pets Policy</p>
@@ -388,7 +385,7 @@ console.log(singleRoom);
               {/* Provider Info */}
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <h3 className="font-semibold text-gray-900 mb-4">Posted By</h3>
-                
+
                 <div className="flex items-start gap-4 mb-4">
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full flex items-center justify-center text-3xl flex-shrink-0">
                     {listing.provider.photo}
@@ -427,14 +424,14 @@ console.log(singleRoom);
 
               {/* Action Buttons */}
               <div className="bg-white rounded-lg shadow-sm p-6 space-y-3">
-                <button 
+                <button
                   onClick={() => setShowApplicationModal(true)}
                   className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2 shadow-md"
                 >
                   <Send className="w-5 h-5" />
                   I'm Interested
                 </button>
-                
+
                 <button className="w-full bg-green-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-green-700 transition flex items-center justify-center gap-2">
                   <MessageSquare className="w-5 h-5" />
                   Contact Provider
@@ -498,7 +495,7 @@ console.log(singleRoom);
             <p className="text-gray-600 mb-6">
               This would open the full application modal component
             </p>
-            <button 
+            <button
               onClick={() => setShowApplicationModal(false)}
               className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
             >
