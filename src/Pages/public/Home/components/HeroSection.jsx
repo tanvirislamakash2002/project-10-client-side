@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Shield, CheckCircle, Users, Home, MapPin, Calendar } from 'lucide-react';
+import { Link } from 'react-router';
 
 export default function HeroSection() {
   const [location, setLocation] = useState('');
@@ -41,14 +42,18 @@ export default function HeroSection() {
 
           {/* Dual Call-to-Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <button className="btn btn-primary btn-lg text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 w-full sm:w-auto">
-              <Search className="w-5 h-5 mr-2" />
-              Browse Rooms
-            </button>
+            <Link to={'/browse'}>
+              <button className="btn btn-primary btn-lg text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 w-full sm:w-auto">
+                <Search className="w-5 h-5 mr-2" />
+                Browse Rooms
+              </button>
+            </Link>
+            <Link to={'/dashboard/listings/new'}>
             <button className="btn btn-outline btn-lg text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 w-full sm:w-auto border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white hover:border-purple-600">
               <Home className="w-5 h-5 mr-2" />
               List Your Space
             </button>
+            </Link>
           </div>
 
           {/* Search Preview */}
@@ -79,7 +84,7 @@ export default function HeroSection() {
                     />
                   </div>
                 </div>
-                <button 
+                <button
                   onClick={handleSearch}
                   className="btn btn-primary px-8 py-3 rounded-lg hover:shadow-lg transition-all duration-200 md:w-auto w-full"
                 >
@@ -137,8 +142,8 @@ export default function HeroSection() {
       {/* Bottom wave decoration */}
       <div className="absolute bottom-0 left-0 right-0">
         <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-          <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" fillOpacity="0.1"/>
-          <path d="M0 120L60 112.5C120 105 240 90 360 82.5C480 75 600 75 720 78.75C840 82.5 960 90 1080 93.75C1200 97.5 1320 97.5 1380 97.5L1440 97.5V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" fillOpacity="0.2"/>
+          <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" fillOpacity="0.1" />
+          <path d="M0 120L60 112.5C120 105 240 90 360 82.5C480 75 600 75 720 78.75C840 82.5 960 90 1080 93.75C1200 97.5 1320 97.5 1380 97.5L1440 97.5V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" fillOpacity="0.2" />
         </svg>
       </div>
     </div>

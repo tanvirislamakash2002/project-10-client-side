@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, MapPin, DollarSign, Wifi, Car, Dog, Bed, Bath, Home, Shield, CheckCircle, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router';
 
 export default function FeaturedListingsSection() {
   // Sample listings data
@@ -99,10 +100,12 @@ export default function FeaturedListingsSection() {
 
         {/* Section Footer */}
         <div className="text-center">
+          <Link to={'/browse'}>
           <button className="btn btn-primary btn-lg px-10 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 group">
             Browse All Listings
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </button>
+          </Link>
           <p className="text-gray-600 dark:text-gray-300 mt-4">
             See 50+ more verified rooms
           </p>

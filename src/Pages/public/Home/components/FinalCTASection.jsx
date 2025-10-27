@@ -1,16 +1,8 @@
 import React from 'react';
 import { Search, Home, Shield, ArrowRight, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router';
 
 export default function FinalCTASection() {
-  const handleFindRoom = () => {
-    console.log('Find Room clicked');
-    // Navigate to browse listings page
-  };
-
-  const handleListSpace = () => {
-    console.log('List Space clicked');
-    // Navigate to create listing page
-  };
 
   return (
     <div className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 dark:from-blue-800 dark:via-purple-800 dark:to-pink-800 py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -22,7 +14,7 @@ export default function FinalCTASection() {
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="0.5" opacity="0.3"/>
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="0.5" opacity="0.3" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#grid)" />
@@ -57,23 +49,25 @@ export default function FinalCTASection() {
 
         {/* Dual CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-          <button 
-            onClick={handleFindRoom}
-            className="group bg-white dark:bg-gray-900 text-blue-600 dark:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 px-10 py-5 rounded-full text-lg font-bold shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 flex items-center gap-3 w-full sm:w-auto"
-          >
-            <Search className="w-6 h-6" />
-            <span>Find a Room</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </button>
-          
-          <button 
-            onClick={handleListSpace}
-            className="group bg-transparent border-3 border-white text-white hover:bg-white hover:text-purple-600 dark:hover:text-purple-800 px-10 py-5 rounded-full text-lg font-bold shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 flex items-center gap-3 w-full sm:w-auto"
-          >
-            <Home className="w-6 h-6" />
-            <span>List Your Space</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </button>
+          <Link to={'/browse'}>
+            <button
+              className="group bg-white dark:bg-gray-900 text-blue-600 dark:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 px-10 py-5 rounded-full text-lg font-bold shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 flex items-center gap-3 w-full sm:w-auto"
+            >
+              <Search className="w-6 h-6" />
+              <span>Find a Room</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </Link>
+
+          <Link to={'/dashboard/listings/new'}>
+            <button
+              className="group bg-transparent border-3 border-white text-white hover:bg-white hover:text-purple-600 dark:hover:text-purple-800 px-10 py-5 rounded-full text-lg font-bold shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 flex items-center gap-3 w-full sm:w-auto"
+            >
+              <Home className="w-6 h-6" />
+              <span>List Your Space</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </Link>
         </div>
 
         {/* Trust Indicators */}
@@ -121,7 +115,7 @@ export default function FinalCTASection() {
       {/* Decorative Bottom Wave */}
       <div className="absolute bottom-0 left-0 right-0">
         <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-          <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" className="dark:fill-gray-800" fillOpacity="0.1"/>
+          <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" className="dark:fill-gray-800" fillOpacity="0.1" />
         </svg>
       </div>
     </div>

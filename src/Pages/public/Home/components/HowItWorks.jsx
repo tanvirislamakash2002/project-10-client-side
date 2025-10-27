@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search, MessageCircle, Home, Edit, Shield, UserCheck, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router';
 
 export default function HowItWorksSection() {
   return (
@@ -104,10 +105,12 @@ export default function HowItWorksSection() {
             </div>
 
             {/* CTA Button */}
+            <Link to={'/browse'}>
             <button className="w-full mt-8 btn btn-primary btn-lg rounded-xl group">
               Browse Rooms
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </button>
+            </Link>
           </div>
 
           {/* Providers Section */}
@@ -196,10 +199,12 @@ export default function HowItWorksSection() {
             </div>
 
             {/* CTA Button */}
+            <Link to={'/dashboard/listings/new'}>
             <button className="w-full mt-8 btn btn-success btn-lg rounded-xl group">
               List Your Space
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </button>
+            </Link>
           </div>
 
         </div>
