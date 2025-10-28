@@ -4,37 +4,17 @@ import { Link } from "react-router";
 import useAxios from "../../../../hooks/useAxios";
 import { toast } from "react-toastify";
 import useAuth from "../../../../hooks/useAuth";
+import { useFavorite } from "../../../../hooks/useFavorite";
 
 
 export const ListingCard = ({ listing }) => {
     const { user } = useAuth()
-    const axiosInstance = useAxios()
 
     const id = listing?._id
-    const { data: isFavorite = false, refetch: refetchFavorite } = useQuery({
-        queryKey: ['favorite', id, user?.email],
-        queryFn: async () => {
-            const res = await axiosInstance.get(`/favorites/check?userEmail=${user.email}&listingId=${id}`);
-            return res.data.isFavorite;
-        },
-        enabled: !!user?.email && !!id
-    });
 
-    const toggleFavorite = async () => {
-        try {
-            const res = await axiosInstance.post('/favorites/toggle', {
-                userEmail: user.email,
-                listingId: id,
-            });
-            toast.success(res.data.message);
-            refetchFavorite();
-        } catch {
-            toast.error('Failed to update favorite');
-        }
-    };
+const { isFavorite, toggleFavorite, isLoading } = useFavorite(id, user?.email);
 
-
-    console.log(isFavorite);
+    // console.log(isFavorite);
     return (
 
         <div className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow overflow-hidden flex flex-col h-full">
