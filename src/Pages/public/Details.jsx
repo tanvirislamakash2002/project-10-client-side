@@ -20,7 +20,12 @@ export default function ListingDetailsPage() {
   });
 
 
-  console.log(user);
+  const formattedDate =    singleRoom?.availableFrom? new Date(singleRoom.availableFrom).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }) : 'Not available';
+  console.log(formattedDate);
 
 
   // Mock listing data
@@ -208,12 +213,12 @@ export default function ListingDetailsPage() {
 
             {/* Title and Quick Facts */}
             <div className="bg-white rounded-lg shadow-sm p-6">
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">{listing.title}</h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">{singleRoom.title}</h1>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                   <p className="text-sm text-green-600 font-medium mb-1">Monthly Rent</p>
-                  <p className="text-2xl font-bold text-green-700">${listing.rent}</p>
+                  <p className="text-2xl font-bold text-green-700">${singleRoom.rent}</p>
                 </div>
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                   <p className="text-sm text-blue-600 font-medium mb-1">Security Deposit</p>
@@ -221,7 +226,7 @@ export default function ListingDetailsPage() {
                 </div>
                 <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
                   <p className="text-sm text-purple-600 font-medium mb-1">Available From</p>
-                  <p className="text-sm font-bold text-purple-700">{listing.availableFrom}</p>
+                  <p className="text-sm font-bold text-purple-700">{formattedDate}</p>
                 </div>
                 <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
                   <p className="text-sm text-orange-600 font-medium mb-1">Lease Term</p>
@@ -233,7 +238,7 @@ export default function ListingDetailsPage() {
             {/* Description */}
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">About This Space</h2>
-              <p className="text-gray-700 leading-relaxed">{listing.description}</p>
+              <p className="text-gray-700 leading-relaxed">{singleRoom.description}</p>
             </div>
 
             {/* The Space & Offer */}
