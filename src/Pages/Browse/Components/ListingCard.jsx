@@ -1,8 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import { Heart, MapPin, Shield } from "lucide-react";
 import { Link } from "react-router";
-import useAxios from "../../../../hooks/useAxios";
-import { toast } from "react-toastify";
 import useAuth from "../../../../hooks/useAuth";
 import { useFavorite } from "../../../../hooks/useFavorite";
 
@@ -12,7 +9,7 @@ export const ListingCard = ({ listing }) => {
 
     const id = listing?._id
 
-const { isFavorite, toggleFavorite, isLoading } = useFavorite(id, user?.email);
+    const { isFavorite, toggleFavorite, isLoading } = useFavorite(id, user?.email);
 
     // console.log(isFavorite);
     return (

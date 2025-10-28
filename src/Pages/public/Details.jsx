@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, Heart, Share2, MapPin, DollarSign, Calendar,
 import { useQuery } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
+import { useFavorite } from '../../../hooks/useFavorite';
 
 export default function ListingDetailsPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -12,6 +13,7 @@ export default function ListingDetailsPage() {
 
   const { id } = useParams()
 
+  const { isFavorite, toggleFavorite } = useFavorite(id, user?.email);
   const { data: singleRoom = {}, isLoading, error } = useQuery({
     queryKey: ['posts'],
     queryFn: () =>
@@ -133,13 +135,13 @@ export default function ListingDetailsPage() {
                 <Share2 className="w-5 h-5 text-gray-600" />
               </button>
               <button
-                onClick={() => setIsSaved(!isSaved)}
-                className={`p-2 border rounded-lg transition ${isSaved
+                onClick={toggleFavorite}
+                className={`p-2 border rounded-lg transition ${isFavorite
                   ? 'border-red-500 bg-red-50'
                   : 'border-gray-300 hover:bg-gray-50'
                   }`}
               >
-                <Heart className={`w-5 h-5 ${isSaved ? 'text-red-500 fill-current' : 'text-gray-600'}`} />
+                <Heart className={`w-5 h-5 ${isFavorite ? 'text-red-500 fill-current' : 'text-gray-600'}`} />
               </button>
             </div>
           </div>
