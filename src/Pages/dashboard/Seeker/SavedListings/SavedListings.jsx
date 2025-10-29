@@ -6,6 +6,7 @@ import { ComparisonPanel } from './components/ComparisonPanel';
 import ApplicationModal from '../ApplicationModal/ApplicationModal';
 import { useApplicationModal } from '../../../../../hooks/useApplicationModal';
 import { useFavorites } from '../../../../../hooks/useFavorites';
+import useAuth from '../../../../../hooks/useAuth';
 
 export default function SavedListings() {
     const [view, setView] = useState('grid');
@@ -17,7 +18,9 @@ export default function SavedListings() {
     const [compareListings, setCompareListings] = useState([]);
     const { isModalOpen, openModal, closeModal } = useApplicationModal();
 
-    const {favorites} = useFavorites('wakehukon@mailinator.com')
+    const {user} =useAuth()
+
+    const {favorites} = useFavorites(user.email)
 console.log(favorites);
     // Mock data
     const savedListings = [
@@ -34,69 +37,12 @@ console.log(favorites);
             amenities: ["WiFi", "Parking", "Laundry"],
             roomType: "Private Room",
             savedDate: "Oct 20, 2025"
-        },
-        {
-            id: 2,
-            title: "Private Studio Apartment",
-            location: "Midtown, 1.8 miles away",
-            price: 950,
-            availability: "Oct 28, 2025",
-            status: "applied",
-            lastViewed: "1 day ago",
-            image: "🏢",
-            applied: true,
-            appliedDate: "Oct 21, 2025",
-            amenities: ["WiFi", "Gym", "Pool"],
-            roomType: "Studio",
-            savedDate: "Oct 18, 2025"
-        },
-        {
-            id: 3,
-            title: "Room with Private Bath",
-            location: "Suburbs, 5.1 miles away",
-            price: 650,
-            availability: "Nov 15, 2025",
-            status: "available",
-            lastViewed: "3 days ago",
-            image: "🏡",
-            applied: false,
-            amenities: ["WiFi", "Parking"],
-            roomType: "Private Room",
-            savedDate: "Oct 15, 2025"
-        },
-        {
-            id: 4,
-            title: "Modern Loft Downtown",
-            location: "Downtown, 1.2 miles away",
-            price: 1200,
-            availability: "Dec 1, 2025",
-            status: "unavailable",
-            lastViewed: "1 week ago",
-            image: "🏙️",
-            applied: false,
-            amenities: ["WiFi", "Gym", "Parking", "Laundry"],
-            roomType: "Loft",
-            savedDate: "Oct 10, 2025"
-        },
-        {
-            id: 5,
-            title: "Cozy Bedroom Near University",
-            location: "University Area, 3.5 miles away",
-            price: 720,
-            availability: "Nov 5, 2025",
-            status: "available",
-            lastViewed: "5 hours ago",
-            image: "🎓",
-            applied: false,
-            amenities: ["WiFi", "Study Room"],
-            roomType: "Private Room",
-            savedDate: "Oct 22, 2025"
         }
     ];
 
     const getStatusBadge = (status) => {
         switch (status) {
-            case "available":
+            case "accepted":
                 return <span className="flex items-center gap-1 text-green-600 text-sm font-medium"><span className="w-2 h-2 bg-green-600 rounded-full"></span>Available</span>;
             case "applied":
                 return <span className="flex items-center gap-1 text-yellow-600 text-sm font-medium"><span className="w-2 h-2 bg-yellow-600 rounded-full"></span>Applied</span>;
@@ -282,7 +228,7 @@ console.log(favorites);
                     <>
                     <div className={view === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
                         {favorites.map((listing) => (
-                            <ListingCard key={listing.id} props={{ handleSelectListing, handleCompare, selectedListings, getStatusBadge, compareListings, listing, openModal }} />
+                            <ListingCard key={listing._id} props={{ handleSelectListing, handleCompare, selectedListings, getStatusBadge, compareListings, listing, openModal }} />
                         ))}
 
                         {isModalOpen && (
