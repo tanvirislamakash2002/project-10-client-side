@@ -1,7 +1,6 @@
 import {
   createBrowserRouter,
 } from "react-router";
-import App from "../App";
 import AddFindRoommate from "../Pages/AddFindRoommate/AddFindRoommate";
 import PrivateRoute from "../provider/PrivateRoute";
 import Loading from "../components/Loading";
@@ -68,16 +67,9 @@ export const router = createBrowserRouter([
         path: '/contact-us',
         Component: ContactUs
       },
-      {
-        path: '/test',
-        element:<App></App>
-      },
+
     ]
   },
-  {
-        path: '/upload',
-        element:<App></App>
-      },
 
   // dashboard route 
   {
