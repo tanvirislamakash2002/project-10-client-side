@@ -33,7 +33,7 @@ export const useFavorites = (userEmail) => {
         }
     });
 
-    // ✅ BULK remove favorites
+    // BULK remove favorites
     const bulkRemoveMutation = useMutation({
         mutationFn: async (favoriteIds) => {
             const res = await axiosInstance.delete('/favorites/bulk', {
@@ -54,7 +54,6 @@ export const useFavorites = (userEmail) => {
         removeMutation.mutate(favoriteId);
     };
 
-    // ✅ BULK remove function
     const bulkRemoveFavorites = (favoriteIds) => {
         if (favoriteIds.length === 0) {
             toast.error('Please select favorites to remove');
@@ -67,8 +66,8 @@ export const useFavorites = (userEmail) => {
         favorites,
         isLoading,
         error,
-        removeFavorite,
-        bulkRemoveFavorites, // ✅ BULK FUNCTION
+        removeFavorite, // ✅ NOW RETURNED
+        bulkRemoveFavorites, // ✅ RETURNED
         isRemoving: removeMutation.isLoading,
         isBulkRemoving: bulkRemoveMutation.isLoading,
         refetch: () => queryClient.invalidateQueries(['favorites', userEmail])

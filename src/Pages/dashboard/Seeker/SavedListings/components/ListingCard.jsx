@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Heart, Search, Filter, Grid, List, Share2, X, MapPin, Calendar, DollarSign, Eye, Send, Download, ChevronLeft, ChevronRight, ArrowUpDown, GitCompare, CheckCircle, Clock, AlertCircle, Home } from 'lucide-react';
-import { useFavorite } from '../../../../../../hooks/useFavorite';
 import useAuth from '../../../../../../hooks/useAuth';
+import { useFavorites } from '../../../../../../hooks/useFavorites';
 
 export const ListingCard = ({ props }) => {
     const {user} =useAuth()
@@ -9,7 +9,7 @@ export const ListingCard = ({ props }) => {
     
     const { handleSelectListing, handleCompare, listing, selectedListings, getStatusBadge, compareListings, openModal } = props
     const listingId = listing?.listingId
-    const { isFavorite, toggleFavorite } = useFavorite(listingId, user?.email);
+    const { removeFavorite, isRemoving } = useFavorites(user?.email);
     const { data: singleRoom = {}, isLoading, error } = useQuery({
         queryKey: ['room', listingId],
         queryFn: () =>
@@ -17,14 +17,12 @@ export const ListingCard = ({ props }) => {
                 .then(res => res.json()),
     });
     const { availableFrom, description, images, location, poster, preferences, rent, status, title, _id } = singleRoom
-    // const { openModal } = useApplicationModal();
 
     const formattedDate = singleRoom?.availableFrom ? new Date(singleRoom?.availableFrom).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     }) : 'Not available';
-
     return (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition">
             <div className="relative">
@@ -45,7 +43,7 @@ export const ListingCard = ({ props }) => {
                 >
                     <CheckCircle className="w-5 h-5" />
                 </button>
-                <button onClick={toggleFavorite} className="absolute top-3 right-3 p-2 bg-white text-red-500 rounded-full shadow-md hover:bg-red-50 transition">
+                <button onClick={()=>removeFavorite(listing?._id)} className="absolute top-3 right-3 p-2 bg-white text-red-500 rounded-full shadow-md hover:bg-red-50 transition">
                     <Heart className="w-5 h-5 fill-current" />
                 </button>
                 {listing.status === 'applied' && (
