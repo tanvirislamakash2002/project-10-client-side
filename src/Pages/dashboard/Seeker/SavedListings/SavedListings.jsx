@@ -20,9 +20,10 @@ export default function SavedListings() {
 
     const {user} =useAuth()
 
-    const {favorites} = useFavorites(user.email)
+    const {favorites, bulkRemoveFavorites, isBulkRemoving} = useFavorites(user.email)
 
-    // console.log(favorites);
+    // console.log(selectedListings);
+
     // Mock data
     const savedListings = [
         {
@@ -180,10 +181,10 @@ export default function SavedListings() {
                                 {selectedListings.length} listing{selectedListings.length > 1 ? 's' : ''} selected
                             </span>
                             <div className="flex gap-2">
-                                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">
+                                <button onClick={()=>alert('akash')} className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">
                                     Bulk Apply
                                 </button>
-                                <button className="bg-white text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition border border-gray-300">
+                                <button onClick={()=>bulkRemoveFavorites(selectedListings)} className="bg-white text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition border border-gray-300">
                                     Remove All
                                 </button>
                                 <button className="bg-white text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition border border-gray-300 flex items-center">

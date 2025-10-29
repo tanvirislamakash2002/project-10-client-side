@@ -55,6 +55,7 @@ export const useFavorites = (userEmail) => {
     };
 
     const bulkRemoveFavorites = (favoriteIds) => {
+        console.log(favoriteIds);
         if (favoriteIds.length === 0) {
             toast.error('Please select favorites to remove');
             return;

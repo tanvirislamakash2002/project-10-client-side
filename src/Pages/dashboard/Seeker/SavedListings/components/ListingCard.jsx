@@ -38,8 +38,8 @@ export const ListingCard = ({ props }) => {
                     )}
                 </div>
                 <button
-                    onClick={() => handleSelectListing(_id)}
-                    className={`absolute top-3 left-3 p-2 rounded-full ${selectedListings.includes(_id) ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'} shadow-md hover:scale-110 transition`}
+                    onClick={() => handleSelectListing(listing?._id)}
+                    className={`absolute top-3 left-3 p-2 rounded-full ${selectedListings.includes(listing?._id) ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'} shadow-md hover:scale-110 transition`}
                 >
                     <CheckCircle className="w-5 h-5" />
                 </button>
