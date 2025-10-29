@@ -1,13 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import { Heart, Search, Filter, Grid, List, Share2, X, MapPin, Calendar, DollarSign, Eye, Send, Download, ChevronLeft, ChevronRight, ArrowUpDown, GitCompare, CheckCircle, Clock, AlertCircle, Home } from 'lucide-react';
+import { useFavorite } from '../../../../../../hooks/useFavorite';
+import useAuth from '../../../../../../hooks/useAuth';
 
 export const ListingCard = ({ props }) => {
+    const {user} =useAuth()
+
+    
     const { handleSelectListing, handleCompare, listing, selectedListings, getStatusBadge, compareListings, openModal } = props
-    const favoriteId = listing?.listingId
+    const listingId = listing?.listingId
+    const { isFavorite, toggleFavorite } = useFavorite(listingId, user?.email);
     const { data: singleRoom = {}, isLoading, error } = useQuery({
-        queryKey: ['room', favoriteId],
+        queryKey: ['room', listingId],
         queryFn: () =>
-            fetch(`${import.meta.env.VITE_API_URL}/add-roommate/${favoriteId}`)
+            fetch(`${import.meta.env.VITE_API_URL}/add-roommate/${listingId}`)
                 .then(res => res.json()),
     });
     const { availableFrom, description, images, location, poster, preferences, rent, status, title, _id } = singleRoom
@@ -39,7 +45,7 @@ export const ListingCard = ({ props }) => {
                 >
                     <CheckCircle className="w-5 h-5" />
                 </button>
-                <button className="absolute top-3 right-3 p-2 bg-white text-red-500 rounded-full shadow-md hover:bg-red-50 transition">
+                <button onClick={toggleFavorite} className="absolute top-3 right-3 p-2 bg-white text-red-500 rounded-full shadow-md hover:bg-red-50 transition">
                     <Heart className="w-5 h-5 fill-current" />
                 </button>
                 {listing.status === 'applied' && (
@@ -119,8 +125,8 @@ export const ListingCard = ({ props }) => {
 
                 <div className="flex gap-2 mt-3 pt-3 border-t border-gray-200">
                     <button
-                        onClick={() => handleCompare(listing)}
-                        className={`flex-1 ${compareListings.find(l => l.id === listing.id) ? 'bg-purple-100 text-purple-700' : 'bg-gray-50 text-gray-600'} py-2 px-3 rounded-lg text-xs font-semibold hover:bg-purple-50 transition flex items-center justify-center`}
+                        onClick={() => handleCompare(singleRoom)}
+                        className={`flex-1 ${compareListings.find(l => l._id === listingId) ? 'bg-purple-100 text-purple-700' : 'bg-gray-50 text-gray-600'} py-2 px-3 rounded-lg text-xs font-semibold hover:bg-purple-50 transition flex items-center justify-center`}
                     >
                         <GitCompare className="w-3 h-3 mr-1" />
                         Compare

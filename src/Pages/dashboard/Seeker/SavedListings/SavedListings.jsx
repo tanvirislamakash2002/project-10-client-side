@@ -21,7 +21,8 @@ export default function SavedListings() {
     const {user} =useAuth()
 
     const {favorites} = useFavorites(user.email)
-console.log(favorites);
+
+    // console.log(favorites);
     // Mock data
     const savedListings = [
         {
@@ -53,24 +54,24 @@ console.log(favorites);
         }
     };
 
-    const filteredListings = savedListings.filter(listing => {
-        const matchesSearch = listing.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            listing.location.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesStatus = statusFilter === 'all' || listing.status === statusFilter;
-        return matchesSearch && matchesStatus;
-    });
+    // const filteredListings = favorites.filter(listing => {
+    //     const matchesSearch = listing.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    //         listing.location.toLowerCase().includes(searchQuery.toLowerCase());
+    //     const matchesStatus = statusFilter === 'all' || listing.status === statusFilter;
+    //     return matchesSearch && matchesStatus;
+    // });
 
-    const sortedListings = [...filteredListings].sort((a, b) => {
-        switch (sortBy) {
-            case 'price-low':
-                return a.price - b.price;
-            case 'price-high':
-                return b.price - a.price;
-            case 'recent':
-            default:
-                return new Date(b.savedDate) - new Date(a.savedDate);
-        }
-    });
+    // const sortedListings = [...filteredListings].sort((a, b) => {
+    //     switch (sortBy) {
+    //         case 'price-low':
+    //             return a.price - b.price;
+    //         case 'price-high':
+    //             return b.price - a.price;
+    //         case 'recent':
+    //         default:
+    //             return new Date(b.savedDate) - new Date(a.savedDate);
+    //     }
+    // });
 
     const handleSelectListing = (id) => {
         setSelectedListings(prev =>
@@ -79,8 +80,9 @@ console.log(favorites);
     };
 
     const handleCompare = (listing) => {
-        if (compareListings.find(l => l.id === listing.id)) {
-            setCompareListings(prev => prev.filter(l => l.id !== listing.id));
+        console.log(listing)
+        if (compareListings.find(l => l.id === listing._id)) {
+            setCompareListings(prev => prev.filter(l => l.id !== listing._id));
         } else if (compareListings.length < 3) {
             setCompareListings(prev => [...prev, listing]);
         }
@@ -222,13 +224,17 @@ console.log(favorites);
 
             {/* Main Content */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {sortedListings.length === 0 ? (
+                {favorites.length === 0 ? (
                     <EmptyState />
                 ) : (
                     <>
                     <div className={view === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
                         {favorites.map((listing) => (
-                            <ListingCard key={listing._id} props={{ handleSelectListing, handleCompare, selectedListings, getStatusBadge, compareListings, listing, openModal }} />
+                            <ListingCard key={listing._id} props={{ 
+                                
+                                
+                                handleSelectListing, handleCompare, 
+                                selectedListings, getStatusBadge, compareListings, listing, openModal }} />
                         ))}
 
                         {isModalOpen && (
@@ -260,7 +266,7 @@ console.log(favorites);
                 )}
 
                 {/* Similar Listings Section */}
-                {sortedListings.length > 0 && (
+                {favorites.length > 0 && (
                     <div className="mt-12 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                         <h2 className="text-xl font-bold text-gray-900 mb-4">You Might Also Like</h2>
                         <p className="text-gray-600 mb-4">Based on your saved preferences</p>
