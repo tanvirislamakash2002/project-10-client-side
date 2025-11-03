@@ -18,7 +18,7 @@ const Blog = () => {
     queryKey: ['blogPosts'],
     queryFn: async () => {
       // This would be your actual API call
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/add-roommate`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/posts`);
       return response.json();
     },
     placeholderData: {
