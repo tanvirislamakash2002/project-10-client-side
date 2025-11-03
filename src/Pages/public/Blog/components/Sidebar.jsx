@@ -1,6 +1,6 @@
 // src/components/Blog/Sidebar.jsx
 import { Search, TrendingUp, Clock } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 const Sidebar = ({
   searchTerm,

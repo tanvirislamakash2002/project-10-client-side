@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Clock, User, Calendar } from 'lucide-react';
 
 const BlogCard = ({ post }) => {

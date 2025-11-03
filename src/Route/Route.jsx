@@ -20,6 +20,7 @@ import MyListings from "../Pages/dashboard/Provider/MyListings";
 import SavedListings from "../Pages/dashboard/Seeker/SavedListings/SavedListings";
 import AboutUs from "../Pages/public/AboutUs";
 import ContactUs from "../Pages/public/ContactUs";
+import Blog from "../Pages/public/Blog/Blog";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +44,11 @@ export const router = createBrowserRouter([
       {
         path: '/browse',
         Component: Browse,
+        hydrateFallbackElement: <Loading></Loading>
+      },
+      {
+        path: '/blog',
+        Component: Blog,
         hydrateFallbackElement: <Loading></Loading>
       },
 

@@ -1,5 +1,5 @@
 // src/components/Blog/FeaturedArticle.jsx
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Clock, User, Calendar, ArrowRight } from 'lucide-react';
 
 const FeaturedArticle = ({ article }) => {

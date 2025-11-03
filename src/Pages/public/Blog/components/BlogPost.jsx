@@ -1,6 +1,6 @@
 // src/components/Blog/BlogPost.jsx
 import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import { Clock, User, Calendar, Share2, MessageCircle, ArrowLeft } from 'lucide-react';
 import BlogCard from './BlogCard';

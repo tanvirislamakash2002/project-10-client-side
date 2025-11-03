@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Search, Clock, User, Calendar, ArrowRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import BlogPost from './BlogPost';
-import FeaturedArticle from './FeaturedArticle';
-import BlogCard from './BlogCard';
-import Sidebar from './Sidebar';
-import Pagination from './Pagination';
-import NewsletterSignup from './NewsletterSignup';
+import FeaturedArticle from './components/FeaturedArticle';
+import BlogCard from './components/BlogCard';
+import Pagination from './components/Pagination';
+import Sidebar from './components/Sidebar';
+import NewsletterSignup from './components/NewsletterSignup';
 
-const BlogPage = () => {
+const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -19,7 +18,7 @@ const BlogPage = () => {
     queryKey: ['blogPosts'],
     queryFn: async () => {
       // This would be your actual API call
-      const response = await fetch('/api/blog-posts');
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/add-roommate`);
       return response.json();
     },
     placeholderData: {
@@ -28,6 +27,7 @@ const BlogPage = () => {
       popularPosts: []
     }
   });
+  console.log(blogData);
 
   const { posts = [], categories = [], popularPosts = [] } = blogData;
 
@@ -88,7 +88,8 @@ const BlogPage = () => {
             {/* Blog Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               {currentPosts.map(post => (
-                <BlogCard key={post.id} post={post} />
+                <BlogCard
+                 key={post.id} post={post} />
               ))}
             </div>
 
@@ -133,4 +134,4 @@ const BlogPage = () => {
   );
 };
 
-export default BlogPage;
+export default Blog;
