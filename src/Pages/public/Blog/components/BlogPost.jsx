@@ -8,16 +8,15 @@ import BlogCard from './BlogCard';
 const BlogPost = () => {
   const { slug } = useParams();
   const [showShareOptions, setShowShareOptions] = useState(false);
-
-  const { data: blogPost, isLoading } = useQuery({
+  const { data: post, isLoading } = useQuery({
     queryKey: ['blogPost', slug],
     queryFn: async () => {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/blog/posts/${slug}`);
       return response.json();
     }
   });
-  const {post}=blogPost
-console.log('nn');
+  
+console.log(post);
   const { data: relatedPosts } = useQuery({
     queryKey: ['relatedPosts', slug],
     queryFn: async () => {
@@ -76,25 +75,25 @@ console.log('nn');
       <header className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto text-center">
           <div className="badge badge-primary badge-lg mb-4">
-            {post.category}
+            {post?.post?.category}
           </div>
           <h1 className="text-3xl lg:text-4xl font-bold mb-6">
-            {post.title}
+            {post?.post?.title}
           </h1>
           <p className="text-xl text-base-content/70 mb-8 leading-relaxed">
-            {post.excerpt}
+            {post?.post?.excerpt}
           </p>
 
           {/* Meta Information */}
           <div className="flex flex-wrap justify-center items-center gap-6 text-base-content/70 mb-8">
             <div className="flex items-center gap-2">
               <User size={20} />
-              <span className="font-semibold">{post.author}</span>
+              <span className="font-semibold">{post?.post?.author}</span>
             </div>
             <div className="flex items-center gap-2">
               <Calendar size={20} />
-              <time dateTime={post.publishedAt}>
-                {new Date(post.publishedAt).toLocaleDateString('en-US', {
+              <time dateTime={post?.post?.publishedAt}>
+                {new Date(post?.post?.publishedAt).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric'
@@ -103,20 +102,20 @@ console.log('nn');
             </div>
             <div className="flex items-center gap-2">
               <Clock size={20} />
-              <span>{post.readTime}</span>
+              <span>{post?.post?.readTime}</span>
             </div>
           </div>
 
           {/* Featured Image */}
           <img
-            src={post.image}
-            alt={post.title}
+            src={post?.post?.image}
+            alt={post?.post?.title}
             className="w-full h-64 lg:h-96 object-cover rounded-lg shadow-xl mb-8"
           />
 
           {/* Tags */}
           <div className="flex flex-wrap justify-center gap-2 mb-8">
-            {post.tags.map(tag => (
+            {post?.post?.tags.map(tag => (
               <span key={tag} className="badge badge-outline badge-lg">
                 {tag}
               </span>
