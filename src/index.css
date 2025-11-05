@@ -1,6 +1,9 @@
 /* index.css - Complete Tailwind v4 setup */
 @import "tailwindcss";
 
+@plugin "daisyui" {
+  themes: light --default, dark;
+}
 @theme {
   /* Your custom colors */
   --color-custom-100: #44570A;
@@ -14,9 +17,64 @@
   --color-dark-text: #44570A;
 }
 
-@plugin "daisyui" {
-  themes: light --default, dark;
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #2563EB;
+  --color-primary-content: #FFFFFF;
+
+  --color-secondary: #7C3AED;
+  --color-secondary-content: #FFFFFF;
+
+  --color-accent: #F59E0B;
+  --color-accent-content: #1F1F1F;
+
+  --color-neutral: #475569;
+  --color-neutral-content: #FFFFFF;
+
+  --color-base-100: #FFFFFF;
+  --color-base-200: #F1F5F9;
+  --color-base-300: #E2E8F0;
+  --color-base-content: #1E293B;
+
+  --color-info: #3B82F6;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
 }
+
+@plugin "daisyui/theme" {
+  name: "dark";
+  --color-primary: #60A5FA;
+  --color-primary-content: #0C1E3E;
+  
+  --color-secondary: #A78BFA;
+  --color-secondary-content: #2E1065;
+  
+  --color-accent: #FBBF24;
+  --color-accent-content: #451A03;
+  
+  --color-neutral: #475569;
+  --color-neutral-content: #F1F5F9;
+  
+  --color-base-100: #0F172A;
+  --color-base-200: #1E293B;
+  --color-base-300: #334155;
+  --color-base-content: #E2E8F0;
+  
+  --color-info: #60A5FA;
+  --color-info-content: #0C1E3E;
+  
+  --color-success: #34D399;
+  --color-success-content: #064E3B;
+  
+  --color-warning: #FBBF24;
+  --color-warning-content: #451A03;
+  
+  --color-error: #F87171;
+  --color-error-content: #450A0A;
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Custom dark mode styles */
