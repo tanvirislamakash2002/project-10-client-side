@@ -21,6 +21,8 @@ import SavedListings from "../Pages/dashboard/Seeker/SavedListings/SavedListings
 import AboutUs from "../Pages/public/AboutUs";
 import ContactUs from "../Pages/public/ContactUs";
 import Blog from "../Pages/public/Blog/Blog";
+import BlogPost from "../Pages/public/Blog/components/BlogPost";
+import CreateBlogPost from "../Pages/dashboard/Admin/CreateBlogPost/CreateBlogPost";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +51,11 @@ export const router = createBrowserRouter([
       {
         path: '/blog',
         Component: Blog,
+        hydrateFallbackElement: <Loading></Loading>
+      },
+      {
+        path: '/blog/:slug',
+        Component: BlogPost,
         hydrateFallbackElement: <Loading></Loading>
       },
 
@@ -92,6 +99,15 @@ export const router = createBrowserRouter([
           <Dashboard></Dashboard>,
         hydrateFallbackElement: <Loading></Loading>
 
+      },
+      // admin dashboard
+      {
+        path: '/dashboard/create-blog',
+        element:
+          <PrivateRoute>
+            <CreateBlogPost></CreateBlogPost>
+          </PrivateRoute>,
+        hydrateFallbackElement: <Loading></Loading>
       },
       // provider dashboard
       {

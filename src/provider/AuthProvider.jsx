@@ -10,13 +10,20 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
     const [darkMode, setDarkMode] = useState(false)
     
-      useEffect(() => {
-        if (darkMode) {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
-      }, [darkMode]);
+useEffect(() => {
+  const html = document.documentElement;
+  
+  if (darkMode) {
+    html.classList.add('dark');
+    html.setAttribute('data-theme', 'dark');
+  } else {
+    html.classList.remove('dark');
+    html.setAttribute('data-theme', 'light');
+  }
+  
+  // Persist preference
+  localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+}, [darkMode]);
 
     //register
     const createUser = ({ email, password }) => {

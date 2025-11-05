@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
+import useAuth from '../../../hooks/useAuth';
+import { MdDarkMode, MdLightMode } from 'react-icons/md';
 
 const MobileHeader = ({user}) => {
+    const {darkMode, setDarkMode}=useAuth()
     return (
         <div className="navbar bg-white shadow-sm lg:hidden px-6 border-b border-gray-200 sticky top-0 z-10">
             <div className="flex-none">
@@ -19,7 +22,18 @@ const MobileHeader = ({user}) => {
                     </span>
                 </Link>
             </div>
-
+        {/* Dark Mode Toggle */}
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="btn btn-ghost btn-circle"
+          aria-label="Toggle dark mode"
+        >
+          {darkMode ? (
+            <MdLightMode className="w-5 h-5 text-yellow-400" />
+          ) : (
+            <MdDarkMode className="w-5 h-5 text-gray-600" />
+          )}
+        </button>
             <div className="flex-none">
                 <div className="avatar">
                     <div className="w-8 h-8 rounded-full border border-green-200">

@@ -1,20 +1,37 @@
 import React from 'react';
 import { FaSignOutAlt, FaUser, FaEnvelope, FaBell, FaCog } from 'react-icons/fa';
 import { Link } from 'react-router';
+import useAuth from '../../../hooks/useAuth';
+import { MdDarkMode, MdLightMode } from 'react-icons/md';
+import useUserRole from '../../../hooks/useUserRole';
 
 const DesktopHeader = ({props}) => {
     const {user,handleSignOut}=props
+    const {darkMode, setDarkMode}=useAuth()
+    const {role}= useUserRole()
     return (
         <div className="hidden lg:block bg-white shadow-sm border-b border-gray-200">
             <div className="px-8 py-4">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-800">Provider Dashboard</h1>
+                        <h1 className="text-2xl font-bold text-gray-800">{role||'user'} Dashboard</h1>
                         <p className="text-sm text-gray-500 mt-1">
-                            Welcome back, {user?.displayName || 'Provider'}
+                            Welcome back, {user?.displayName || 'unknown'}
                         </p>
                     </div>
                     <div className="flex items-center gap-4">
+                                {/* Dark Mode Toggle */}
+                                <button
+                                  onClick={() => setDarkMode(!darkMode)}
+                                  className="btn btn-ghost btn-circle"
+                                  aria-label="Toggle dark mode"
+                                >
+                                  {darkMode ? (
+                                    <MdLightMode className="w-5 h-5 text-yellow-400" />
+                                  ) : (
+                                    <MdDarkMode className="w-5 h-5 text-gray-600" />
+                                  )}
+                                </button>
                         {/* Notifications */}
                         <button className="relative btn btn-ghost btn-circle hover:bg-green-50">
                             <FaBell className="w-5 h-5 text-gray-600" />

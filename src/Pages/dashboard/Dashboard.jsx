@@ -2,6 +2,7 @@ import React from 'react';
 import ProviderDashboard from './Provider/ProviderDashboard';
 import useUserRole from '../../../hooks/useUserRole';
 import SeekerDashboard from './Seeker/SeekerDashboard/SeekerDashboard';
+import AdminDashboard from './Admin/AdminDashboard';
 
 const Dashboard = () => {
     const { role, roleLoading } = useUserRole();
@@ -16,6 +17,9 @@ const Dashboard = () => {
     }
 
     // Handle conditional rendering
+    if (role === 'admin') {
+        return <AdminDashboard />;
+    }
     if (role === 'provider') {
         return <ProviderDashboard />;
     }

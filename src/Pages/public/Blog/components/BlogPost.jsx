@@ -9,18 +9,19 @@ const BlogPost = () => {
   const { slug } = useParams();
   const [showShareOptions, setShowShareOptions] = useState(false);
 
-  const { data: post, isLoading } = useQuery({
+  const { data: blogPost, isLoading } = useQuery({
     queryKey: ['blogPost', slug],
     queryFn: async () => {
-      const response = await fetch(`/api/blog-posts/${slug}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/blog/posts/${slug}`);
       return response.json();
     }
   });
-
+  const {post}=blogPost
+console.log('nn');
   const { data: relatedPosts } = useQuery({
     queryKey: ['relatedPosts', slug],
     queryFn: async () => {
-      const response = await fetch(`/api/blog-posts/related/${slug}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/blog/posts/related/${slug}`);
       return response.json();
     },
     enabled: !!post

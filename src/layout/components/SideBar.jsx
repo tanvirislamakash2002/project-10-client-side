@@ -22,6 +22,7 @@ const SideBar = ({ props }) => {
         return <div>Loading...</div>;
     }
 
+    const isAdmin = role === 'admin';
     const isProvider = role === 'provider';
     const isSeeker = role === 'seeker';
 
@@ -72,6 +73,19 @@ const SideBar = ({ props }) => {
                             exact={true}
                         />
 
+                        {/* admin Routes */}
+                        {isAdmin && (
+                            <>
+                                <SidebarLink
+                                    sidebarCollapsed={sidebarCollapsed}
+                                    to="/dashboard/create-blog"
+                                    icon={MdAssignmentInd}
+                                    label="My Listings"
+                                    exact={false}
+                                />
+
+                            </>
+                        )}
                         {/* Provider Routes */}
                         {isProvider && (
                             <>
