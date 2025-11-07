@@ -20,7 +20,7 @@ console.log(post);
   const { data: relatedPosts } = useQuery({
     queryKey: ['relatedPosts', slug],
     queryFn: async () => {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/blog/posts/related/${slug}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/blog/posts/${slug}/related`);
       return response.json();
     },
     enabled: !!post
@@ -28,7 +28,7 @@ console.log(post);
 
   const sharePost = (platform) => {
     const url = window.location.href;
-    const title = post.title;
+    const title = post.post.title;
     
     const shareUrls = {
       twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,

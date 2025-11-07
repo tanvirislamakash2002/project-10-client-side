@@ -34,46 +34,47 @@ const DashboardLayout = () => {
   }
 
   return (
-    <div className="drawer lg:drawer-open min-h-screen bg-gray-50">
-      <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+<div className="drawer lg:drawer-open min-h-screen bg-gray-50 dark:bg-gray-900 dark:text-gray-100">
+  <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
 
-      {/* Main Content */}
-      <div className="drawer-content flex flex-col">
-        {/* Mobile Header */}
-        <MobileHeader user={user}></MobileHeader>
+  {/* Main Content */}
+  <div className="drawer-content flex flex-col">
+    {/* Mobile Header */}
+    <MobileHeader user={user}></MobileHeader>
 
-        {/* Desktop Header */}
-        <DesktopHeader props={{ user, handleSignOut }}></DesktopHeader>
+    {/* Desktop Header */}
+    <DesktopHeader props={{ user, handleSignOut }}></DesktopHeader>
 
-        {/* Main Content Area */}
-        <main className="flex-1 p-6 lg:p-8 bg-gray-50">
-          <div className="max-w-7xl mx-auto">
-            <Outlet />
-          </div>
-        </main>
-
-        {/* Footer */}
-        <footer className="bg-white border-t border-gray-200">
-          <Footer />
-        </footer>
-
-        <ToastContainer
-          position="bottom-right"
-          className="z-50"
-          />
+    {/* Main Content Area */}
+    <main className="flex-1 p-6 lg:p-8 bg-gray-50 dark:bg-gray-900">
+      <div className="max-w-7xl mx-auto">
+        <Outlet />
       </div>
+    </main>
 
-      {/* Sidebar */}
-      <SideBar props={{ sidebarCollapsed, setSidebarCollapsed, user, handleSignOut }}></SideBar>
+    {/* Footer */}
+    <footer className="bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+      <Footer />
+    </footer>
 
-{/* application modal */}
-          {isModalOpen && (
-            <ApplicationModal
-              onClose={closeModal}
-              onSuccess={handleApplicationSuccess}
-            />
-          )}
-    </div>
+    <ToastContainer
+      position="bottom-right"
+      className="z-50"
+    />
+  </div>
+
+  {/* Sidebar */}
+  <SideBar props={{ sidebarCollapsed, setSidebarCollapsed, user, handleSignOut }}></SideBar>
+
+  {/* application modal */}
+  {isModalOpen && (
+    <ApplicationModal
+      onClose={closeModal}
+      onSuccess={handleApplicationSuccess}
+    />
+  )}
+</div>
+
   );
 };
 
