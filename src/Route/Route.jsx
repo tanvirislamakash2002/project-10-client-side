@@ -1,11 +1,9 @@
 import {
   createBrowserRouter,
 } from "react-router";
-import AddFindRoommate from "../Pages/AddFindRoommate/AddFindRoommate";
 import PrivateRoute from "../provider/PrivateRoute";
 import Loading from "../components/Loading";
 import ErrorPage from "../Pages/ErrorPage";
-import Browse from "../Pages/Browse/Browse";
 import UnderConstructionPage from "../Pages/UnderConstructionPage";
 import Root from "../layout/Root";
 import Details from "../Pages/public/Details";
@@ -23,6 +21,8 @@ import ContactUs from "../Pages/public/ContactUs";
 import Blog from "../Pages/public/Blog/Blog";
 import BlogPost from "../Pages/public/Blog/components/BlogPost";
 import CreateBlogPost from "../Pages/dashboard/Admin/CreateBlogPost/CreateBlogPost";
+import AddFindRoommate from "../Pages/dashboard/Provider/AddFindRoommate/AddFindRoommate";
+import BrowsePage from "../Pages/public/Browse/Browse";
 
 export const router = createBrowserRouter([
   {
@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/browse',
-        Component: Browse,
+        Component: BrowsePage,
         hydrateFallbackElement: <Loading></Loading>
       },
       {

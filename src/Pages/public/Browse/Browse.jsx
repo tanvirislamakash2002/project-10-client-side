@@ -2,8 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Filter, X, ChevronDown, MapPin, DollarSign, Calendar, Home, Users, Shield, Heart } from 'lucide-react';
 import { ListingCard } from './Components/ListingCard';
-import { useListingsFilter } from '../../../hooks/useListingsFilter';
 import { FilterSidebar } from './Components/FilterSidebar';
+import { useListingsFilter } from '../../../../hooks/useListingsFilter';
 
 export default function BrowsePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

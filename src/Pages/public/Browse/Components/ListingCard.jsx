@@ -1,7 +1,7 @@
 import { Heart, MapPin, Shield } from "lucide-react";
 import { Link } from "react-router";
-import useAuth from "../../../../hooks/useAuth";
-import { useFavorite } from "../../../../hooks/useFavorite";
+import { useFavorite } from "../../../../../hooks/useFavorite";
+import useAuth from "../../../../../hooks/useAuth";
 
 
 export const ListingCard = ({ listing }) => {

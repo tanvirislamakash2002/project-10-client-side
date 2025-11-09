@@ -1,7 +1,6 @@
 import React, { use, useEffect, useState } from 'react';
 import { FaHome, FaImages, FaUser, FaPhone } from 'react-icons/fa';
 import { FiFileText } from 'react-icons/fi';
-import { AuthContext } from '../../provider/AuthProvider';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -20,6 +19,7 @@ import RoomRent from './components/BasicInformation/RoomRent';
 import RoomAvailability from './components/BasicInformation/RoomAvailability';
 import SubmitButton from './components/SubmitButton';
 import { useForm } from 'react-hook-form';
+import { AuthContext } from '../../../../provider/AuthProvider';
 
 const AddFindRoommate = () => {
   const { user } = use(AuthContext);
