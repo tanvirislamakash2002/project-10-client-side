@@ -4,75 +4,109 @@
 @plugin "daisyui" {
   themes: light --default, dark;
 }
-@theme {
-  /* Your custom colors */
-  --color-custom-100: #44570A;
-  --color-custom-200: #1F7D53;
-  --color-custom-300: #255F38;
-  --color-custom-400: #27391C;
-  --color-custom-500: #18230F;
-  
-  /* Dark mode colors */
-  --color-dark-bg: #1f2937;
-  --color-dark-text: #44570A;
-}
-
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
+  /* Your existing theme colors */
   --color-primary: #0E7490;
   --color-primary-content: #FFFFFF;
-
   --color-secondary: #059669;
   --color-secondary-content: #FFFFFF;
-
   --color-accent: #7DD3FC;
   --color-accent-content: #0C4A6E;
-
   --color-neutral: #475569;
   --color-neutral-content: #FFFFFF;
-
   --color-base-100: #FFFFFF;
   --color-base-200: #F0F9FF;
   --color-base-300: #E0F2FE;
   --color-base-content: #1E293B;
-
   --color-info: #0EA5E9;
   --color-success: #10B981;
   --color-warning: #F59E0B;
   --color-error: #EF4444;
+
+  /* Custom Colors - Light Mode */
+  --color-pending: #F59E0B;
+  --color-pending-content: #451A03;
+  --color-approved: #10B981;
+  --color-approved-content: #064E3B;
+  --color-rejected: #EF4444;
+  --color-rejected-content: #450A0A;
+  --color-draft: #6B7280;
+  --color-draft-content: #F9FAFB;
+
+  --color-feature-badge: #8B5CF6;
+  --color-feature-badge-content: #FFFFFF;
+  --color-premium-badge: #F59E0B;
+  --color-premium-badge-content: #451A03;
+  --color-verified-badge: #06B6D4;
+  --color-verified-badge-content: #FFFFFF;
+
+  --color-highlight: #FEF3C7;
+  --color-highlight-content: #92400E;
+  --color-card-hover: #F0F9FF;
+  --color-card-shadow: #E0F2FE;
+  
+  --color-section-alt: #F8FAFC;
+  --color-section-border: #E2E8F0;
+  
+  --color-text-muted: #64748B;
+  --color-text-disabled: #94A3B8;
+  --color-backdrop: rgba(15, 23, 42, 0.5);
 }
 
 @plugin "daisyui/theme" {
   name: "dark";
+  /* Your existing dark theme colors */
   --color-primary: #7DD3FC;
   --color-primary-content: #0C4A6E;
-  
   --color-secondary: #34D399;
   --color-secondary-content: #064E3B;
-  
   --color-accent: #0E7490;
   --color-accent-content: #FFFFFF;
-  
   --color-neutral: #475569;
   --color-neutral-content: #F1F5F9;
-  
   --color-base-100: #0F172A;
   --color-base-200: #1E293B;
   --color-base-300: #334155;
   --color-base-content: #E2E8F0;
-  
   --color-info: #38BDF8;
   --color-info-content: #0C4A6E;
-  
   --color-success: #34D399;
   --color-success-content: #064E3B;
-  
   --color-warning: #FBBF24;
   --color-warning-content: #451A03;
-  
   --color-error: #F87171;
   --color-error-content: #450A0A;
+
+  /* Custom Colors - Dark Mode */
+  --color-pending: #FBBF24;
+  --color-pending-content: #451A03;
+  --color-approved: #34D399;
+  --color-approved-content: #064E3B;
+  --color-rejected: #F87171;
+  --color-rejected-content: #450A0A;
+  --color-draft: #94A3B8;
+  --color-draft-content: #1E293B;
+
+  --color-feature-badge: #A78BFA;
+  --color-feature-badge-content: #1E1B4B;
+  --color-premium-badge: #FBBF24;
+  --color-premium-badge-content: #451A03;
+  --color-verified-badge: #22D3EE;
+  --color-verified-badge-content: #0C4A6E;
+
+  --color-highlight: #FEF3C7;
+  --color-highlight-content: #451A03;
+  --color-card-hover: #1E293B;
+  --color-card-shadow: #0F172A;
+  
+  --color-section-alt: #1E293B;
+  --color-section-border: #334155;
+  
+  --color-text-muted: #94A3B8;
+  --color-text-disabled: #475569;
+  --color-backdrop: rgba(0, 0, 0, 0.7);
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
