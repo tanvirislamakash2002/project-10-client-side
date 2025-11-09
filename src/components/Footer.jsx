@@ -7,17 +7,18 @@ import {
   Mail, 
   Phone, 
   MapPin,
-  Sun,
-  Moon,
   Home,
   Shield,
   CheckCircle,
-  Send
+  Send,
+  ArrowRight,
+  Star,
+  Users,
+  Award
 } from 'lucide-react';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
-  const [isDark, setIsDark] = useState(false);
 
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
@@ -26,195 +27,242 @@ const Footer = () => {
     // Add your newsletter signup logic here
   };
 
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-    document.documentElement.classList.toggle('dark');
-  };
-
   return (
-    <footer className="bg-[--color-section-alt] dark:bg-base-200 border-t border-[--color-section-border] dark:border-base-300">
+    <footer className="bg-gradient-to-br from-slate-50 to-sky-50 dark:from-slate-900 dark:to-slate-800 border-t border-slate-200 dark:border-slate-700">
+      
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
           
-          {/* Section 1: Platform Overview & Value Proposition */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <Home className="w-8 h-8 text-primary" />
-              <span className="text-2xl font-bold text-base-content">RoomMatch</span>
-            </div>
-            <p className="text-lg font-semibold text-primary mb-2">
-              Find Your Perfect Match, Not Just a Roommate
-            </p>
-            <p className="text-[--color-text-muted] dark:text-base-content/70 text-sm mb-4">
-              Connecting seekers with ideal living spaces through our dual-role system. 
-              All listings are admin-verified to ensure quality and safety.
-            </p>
-            <div className="flex items-center gap-2 text-sm">
-              <CheckCircle className="w-5 h-5 text-success" />
-              <span className="text-base-content font-medium">Trusted by 10,000+ Users</span>
-            </div>
-          </div>
-
-          {/* Section 2: Quick Links for Seekers */}
-          <div>
-            <h3 className="text-lg font-bold text-base-content mb-4 flex items-center gap-2">
-              <Home className="w-5 h-5 text-secondary" />
-              Find a Room
-            </h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="/listings" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Browse All Listings
-                </a>
-              </li>
-              <li>
-                <a href="/featured" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Featured Listings
-                </a>
-              </li>
-              <li>
-                <a href="/how-it-works" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  How It Works
-                </a>
-              </li>
-              <li>
-                <a href="/matching-quiz" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Roommate Matching Quiz
-                </a>
-              </li>
-              <li>
-                <a href="/blog" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Blog & Tips
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Section 3: Quick Links for Providers */}
-          <div>
-            <h3 className="text-lg font-bold text-base-content mb-4">List a Space</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="/post-listing" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Post a Listing
-                </a>
-              </li>
-              <li>
-                <a href="/dashboard" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Manage My Listings
-                </a>
-              </li>
-              <li>
-                <a href="/pricing" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Pricing & Plans
-                </a>
-              </li>
-              <li>
-                <a href="/provider-tips" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Tips for Providers
-                </a>
-              </li>
-            </ul>
-
-            {/* Section 5: Safety & Community Guidelines */}
-            <h3 className="text-lg font-bold text-base-content mb-4 mt-6 flex items-center gap-2">
-              <Shield className="w-5 h-5 text-info" />
-              Safety & Trust
-            </h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="/community-guidelines" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Community Guidelines
-                </a>
-              </li>
-              <li>
-                <a href="/safety-tips" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Safety Tips
-                </a>
-              </li>
-              <li>
-                <a href="/report" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Reporting & Support
-                </a>
-              </li>
-              <li>
-                <a href="/verification" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Verification Process
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Section 4: Company & Legal + Section 6: Stay Connected */}
-          <div>
-            <h3 className="text-lg font-bold text-base-content mb-4">Company</h3>
-            <ul className="space-y-2 mb-6">
-              <li>
-                <a href="/about" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="/contact" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors flex items-center gap-2">
-                  <Mail className="w-4 h-4" />
-                  Contact Us
-                </a>
-              </li>
-              <li>
-                <a href="/faq" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Help Center / FAQ
-                </a>
-              </li>
-              <li>
-                <a href="/privacy" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="/terms" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="/cookies" className="text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors">
-                  Cookie Policy
-                </a>
-              </li>
-            </ul>
-
-            {/* Section 6: Stay Connected */}
-            <h3 className="text-lg font-bold text-base-content mb-4">Stay Updated</h3>
-            <p className="text-sm text-[--color-text-muted] dark:text-base-content/70 mb-3">
-              Get the latest room listings and tips sent to your inbox.
-            </p>
-            <form onSubmit={handleNewsletterSubmit} className="mb-4">
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email"
-                  className="input input-bordered input-sm flex-1 bg-base-100 dark:bg-base-300 text-base-content"
-                  required
-                />
-                <button 
-                  type="submit" 
-                  className="btn btn-primary btn-sm"
-                  aria-label="Subscribe to newsletter"
-                >
-                  <Send className="w-4 h-4" />
-                </button>
+          {/* Section 1: Platform Overview & Value Proposition - Spans 4 columns */}
+          <div className="lg:col-span-4">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-12 h-12 bg-gradient-to-br from-cyan-600 to-emerald-500 dark:from-cyan-400 dark:to-emerald-400 rounded-xl flex items-center justify-center shadow-lg">
+                <Home className="w-7 h-7 text-white dark:text-slate-900" />
               </div>
-            </form>
+              <span className="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-emerald-600 dark:from-cyan-400 dark:to-emerald-400 bg-clip-text text-transparent">
+                RoomMatch
+              </span>
+            </div>
+            
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-3 leading-tight">
+              Find Your Perfect Match, Not Just a Roommate
+            </h3>
+            
+            <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-6">
+              Connecting seekers with ideal living spaces through our innovative dual-role system. 
+              Every listing is carefully admin-verified to ensure quality, safety, and peace of mind for our community.
+            </p>
+            
+            <div className="space-y-3">
+              <div className="flex items-center gap-3 bg-white dark:bg-slate-800 rounded-lg p-3 shadow-sm">
+                <div className="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center">
+                  <Users className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                </div>
+                <div>
+                  <p className="text-slate-800 dark:text-slate-100 font-semibold text-sm">10,000+ Active Users</p>
+                  <p className="text-slate-500 dark:text-slate-400 text-xs">Trusted community</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3 bg-white dark:bg-slate-800 rounded-lg p-3 shadow-sm">
+                <div className="w-10 h-10 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg flex items-center justify-center">
+                  <Award className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                </div>
+                <div>
+                  <p className="text-slate-800 dark:text-slate-100 font-semibold text-sm">Admin-Verified Listings</p>
+                  <p className="text-slate-500 dark:text-slate-400 text-xs">Quality guaranteed</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 2: Quick Links for Seekers - Spans 2 columns */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-2 mb-5">
+              <Home className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">Find a Room</h3>
+            </div>
+            <ul className="space-y-3">
+              <li>
+                <a href="/listings" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Browse All Listings</span>
+                </a>
+              </li>
+              <li>
+                <a href="/featured" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  <span>Featured Listings</span>
+                </a>
+              </li>
+              <li>
+                <a href="/how-it-works" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>How It Works</span>
+                </a>
+              </li>
+              <li>
+                <a href="/matching-quiz" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Matching Quiz</span>
+                </a>
+              </li>
+              <li>
+                <a href="/blog" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Blog & Tips</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Section 3: Quick Links for Providers - Spans 2 columns */}
+          <div className="lg:col-span-2">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 mb-5">List a Space</h3>
+            <ul className="space-y-3">
+              <li>
+                <a href="/post-listing" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Post a Listing</span>
+                </a>
+              </li>
+              <li>
+                <a href="/dashboard" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Manage My Listings</span>
+                </a>
+              </li>
+              <li>
+                <a href="/pricing" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Pricing & Plans</span>
+                </a>
+              </li>
+              <li>
+                <a href="/provider-tips" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Tips for Providers</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Section 5: Safety & Community Guidelines - Spans 2 columns */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-2 mb-5">
+              <Shield className="w-5 h-5 text-sky-600 dark:text-sky-400" />
+              <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">Safety & Trust</h3>
+            </div>
+            <ul className="space-y-3">
+              <li>
+                <a href="/community-guidelines" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Community Guidelines</span>
+                </a>
+              </li>
+              <li>
+                <a href="/safety-tips" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Safety Tips</span>
+                </a>
+              </li>
+              <li>
+                <a href="/report" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Report & Support</span>
+                </a>
+              </li>
+              <li>
+                <a href="/verification" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>Verification Process</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Section 4 & 6: Company Links - Spans 2 columns */}
+          <div className="lg:col-span-2">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 mb-5">Company</h3>
+            <ul className="space-y-3">
+              <li>
+                <a href="/about" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>About Us</span>
+                </a>
+              </li>
+              <li>
+                <a href="/contact" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <Mail className="w-4 h-4" />
+                  <span>Contact Us</span>
+                </a>
+              </li>
+              <li>
+                <a href="/faq" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Help Center / FAQ</span>
+                </a>
+              </li>
+              <li>
+                <a href="/privacy" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Privacy Policy</span>
+                </a>
+              </li>
+              <li>
+                <a href="/terms" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Terms of Service</span>
+                </a>
+              </li>
+              <li>
+                <a href="/cookies" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Cookie Policy</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Newsletter Section - Full Width */}
+        <div className="mt-16 pt-12 border-t border-slate-200 dark:border-slate-700">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-cyan-600 to-emerald-500 dark:from-cyan-400 dark:to-emerald-400 rounded-2xl mb-5 shadow-lg">
+              <Mail className="w-8 h-8 text-white dark:text-slate-900" />
+            </div>
+            <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-3">Stay Updated</h3>
+            <p className="text-slate-600 dark:text-slate-300 mb-6">
+              Get the latest room listings, safety tips, and exclusive offers delivered to your inbox.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email address"
+                className="flex-1 px-5 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 focus:border-transparent transition-all"
+                required
+              />
+              <button 
+                onClick={handleNewsletterSubmit}
+                className="px-6 py-3 bg-gradient-to-r from-cyan-600 to-emerald-500 dark:from-cyan-500 dark:to-emerald-400 text-white dark:text-slate-900 font-semibold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2"
+              >
+                <span>Subscribe</span>
+                <Send className="w-4 h-4" />
+              </button>
+            </div>
 
             {/* Social Media Icons */}
-            <div className="flex gap-3">
+            <div className="flex items-center justify-center gap-3 mt-8">
+              <p className="text-sm text-slate-600 dark:text-slate-400 mr-2">Follow us:</p>
               <a 
                 href="https://facebook.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="btn btn-circle btn-sm btn-ghost text-[--color-text-muted] hover:text-primary dark:text-base-content/70 dark:hover:text-primary"
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-white hover:bg-blue-600 dark:hover:bg-blue-600 hover:border-blue-600 transition-all duration-200 hover:scale-110"
                 aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5" />
@@ -223,7 +271,7 @@ const Footer = () => {
                 href="https://twitter.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="btn btn-circle btn-sm btn-ghost text-[--color-text-muted] hover:text-primary dark:text-base-content/70 dark:hover:text-primary"
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-white hover:bg-sky-500 dark:hover:bg-sky-500 hover:border-sky-500 transition-all duration-200 hover:scale-110"
                 aria-label="Twitter"
               >
                 <Twitter className="w-5 h-5" />
@@ -232,7 +280,7 @@ const Footer = () => {
                 href="https://instagram.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="btn btn-circle btn-sm btn-ghost text-[--color-text-muted] hover:text-primary dark:text-base-content/70 dark:hover:text-primary"
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-white hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-600 dark:hover:from-purple-600 dark:hover:to-pink-600 hover:border-transparent transition-all duration-200 hover:scale-110"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
@@ -241,7 +289,7 @@ const Footer = () => {
                 href="https://linkedin.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="btn btn-circle btn-sm btn-ghost text-[--color-text-muted] hover:text-primary dark:text-base-content/70 dark:hover:text-primary"
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-white hover:bg-blue-700 dark:hover:bg-blue-700 hover:border-blue-700 transition-all duration-200 hover:scale-110"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
@@ -252,35 +300,32 @@ const Footer = () => {
       </div>
 
       {/* Section 7: Final Bottom Bar */}
-      <div className="border-t border-[--color-section-border] dark:border-base-300 bg-base-100 dark:bg-base-300">
-        <div className="container mx-auto px-4 py-4">
+      <div className="border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-[--color-text-muted] dark:text-base-content/70">
+            <p className="text-sm text-slate-500 dark:text-slate-400">
               © {new Date().getFullYear()} RoomMatch. All rights reserved.
             </p>
             
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
               <a 
                 href="/privacy" 
-                className="text-sm text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors"
+                className="text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
               >
-                Privacy
+                Privacy Policy
               </a>
-              <span className="text-[--color-text-muted] dark:text-base-content/70">|</span>
               <a 
                 href="/terms" 
-                className="text-sm text-[--color-text-muted] dark:text-base-content/70 hover:text-primary dark:hover:text-primary transition-colors"
+                className="text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
               >
-                Terms
+                Terms of Service
               </a>
-              <span className="text-[--color-text-muted] dark:text-base-content/70">|</span>
-              <button
-                onClick={toggleTheme}
-                className="btn btn-circle btn-sm btn-ghost text-[--color-text-muted] hover:text-primary dark:text-base-content/70 dark:hover:text-primary"
-                aria-label="Toggle theme"
+              <a 
+                href="/cookies" 
+                className="text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
               >
-                {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </button>
+                Cookies
+              </a>
             </div>
           </div>
         </div>
