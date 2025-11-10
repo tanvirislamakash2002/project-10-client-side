@@ -1,11 +1,11 @@
 import React from 'react';
-import logo from '../assets/text-logo.png';
 import { Link, NavLink, useNavigate } from 'react-router';
 
 import { FiHome, FiSearch, FiInfo, FiPhone, FiUser, FiLogOut, FiSettings, FiHelpCircle, FiPlus, FiFileText } from 'react-icons/fi';
 import { MdDashboard, MdLightMode, MdDarkMode, MdOutlineMessage } from 'react-icons/md';
-import useAuth from '../../hooks/useAuth';
-import useUserRole from '../../hooks/useUserRole';
+import useAuth from '../../../hooks/useAuth';
+import useUserRole from '../../../hooks/useUserRole';
+import Logo from '../Logo';
 
 const Navbar = () => {
   const { user, logOut, darkMode, setDarkMode } = useAuth(); 
@@ -72,13 +72,7 @@ console.log(userRole);
         </div>
 
         {/* Logo */}
-<Link to="/" className="btn btn-ghost text-xl normal-case hover:bg-transparent">
-  <img 
-    src={logo} 
-    alt="RoomEase Logo" 
-    className="h-8 w-auto transition-all duration-300 hover:filter hover:drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)] dark:hover:drop-shadow-[0_2px_4px_rgba(255,255,255,0.1)]" 
-  />
-</Link>
+<Logo></Logo>
       </div>
 
       {/* Desktop Navigation */}

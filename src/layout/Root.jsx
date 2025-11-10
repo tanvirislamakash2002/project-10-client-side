@@ -1,10 +1,10 @@
 import React, { use } from 'react';
 import { Outlet, useNavigation } from 'react-router';
-import Navbar from '../components/Navbar';
 import Loading from '../components/Loading';
 import { ToastContainer } from 'react-toastify';
 import Footer from '../components/Footer';
 import { AuthContext } from '../provider/AuthProvider';
+import Navbar from '../components/Navbar/Navbar';
 
 const Root = () => {
     const navigation = useNavigation()
