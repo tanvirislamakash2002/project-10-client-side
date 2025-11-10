@@ -1,4 +1,5 @@
 import React from 'react';
+import logo from '../assets/text-logo.png';
 import { Link, NavLink, useNavigate } from 'react-router';
 
 import { FiHome, FiSearch, FiInfo, FiPhone, FiUser, FiLogOut, FiSettings, FiHelpCircle, FiPlus, FiFileText } from 'react-icons/fi';
@@ -48,9 +49,8 @@ console.log(userRole);
   ];
 
   return (
-    <div className={`navbar bg-base-100 shadow-lg sticky top-0 z-50 transition-colors duration-300 ${
-      darkMode ? 'bg-gray-900' : 'bg-white'
-    }`}>
+    <div className={`navbar bg-base-100 shadow-lg sticky top-0 z-50 transition-colors duration-300 
+      dark:bg-gray-900 `}>
       <div className="navbar-start">
         {/* Mobile dropdown */}
         <div className="dropdown lg:hidden">
@@ -72,10 +72,13 @@ console.log(userRole);
         </div>
 
         {/* Logo */}
-        <Link to="/" className="btn btn-ghost text-xl normal-case">
-          <span className="font-bold text-gray-800 dark:text-white">Room</span>
-          <span className="text-green-600 font-bold">Ease</span>
-        </Link>
+<Link to="/" className="btn btn-ghost text-xl normal-case hover:bg-transparent">
+  <img 
+    src={logo} 
+    alt="RoomEase Logo" 
+    className="h-8 w-auto transition-all duration-300 hover:filter hover:drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)] dark:hover:drop-shadow-[0_2px_4px_rgba(255,255,255,0.1)]" 
+  />
+</Link>
       </div>
 
       {/* Desktop Navigation */}
