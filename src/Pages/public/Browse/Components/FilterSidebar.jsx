@@ -4,15 +4,15 @@ export const FilterSidebar = ({ props }) => {
     const { filters, handleFilterChange, handleArrayFilter, clearFilters } = props
     return (
 
-        <div className="bg-white p-6 rounded-lg shadow-sm space-y-6">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm space-y-6">
             <div>
-                <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                <h3 className="font-semibold text-lg mb-4 flex items-center gap-2 dark:text-white">
                     <Filter size={20} />
                     Filters
                 </h3>
                 <button
                     onClick={clearFilters}
-                    className="text-sm text-blue-600 hover:text-blue-700 font-medium mb-4"
+                    className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium mb-4"
                 >
                     Clear all filters
                 </button>
@@ -20,7 +20,7 @@ export const FilterSidebar = ({ props }) => {
 
             {/* Price Range */}
             <div>
-                <label className="flex items-center gap-2 font-semibold mb-3 text-gray-700">
+                <label className="flex items-center gap-2 font-semibold mb-3 text-gray-700 dark:text-gray-300">
                     <DollarSign size={18} />
                     Price Range
                 </label>
@@ -43,7 +43,7 @@ export const FilterSidebar = ({ props }) => {
                         onChange={(e) => handleFilterChange('priceMax', Number(e.target.value))}
                         className="w-full"
                     />
-                    <div className="flex justify-between text-sm text-gray-600">
+                    <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
                         <span>${filters?.priceMin}</span>
                         <span>${filters?.priceMax}</span>
                     </div>
@@ -52,7 +52,7 @@ export const FilterSidebar = ({ props }) => {
 
             {/* Location */}
             <div>
-                <label className="flex items-center gap-2 font-semibold mb-3 text-gray-700">
+                <label className="flex items-center gap-2 font-semibold mb-3 text-gray-700 dark:text-gray-300">
                     <MapPin size={18} />
                     Location
                 </label>
@@ -61,13 +61,13 @@ export const FilterSidebar = ({ props }) => {
                     placeholder="City or neighborhood"
                     value={filters?.location}
                     onChange={(e) => handleFilterChange('location', e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg text-sm"
+                    className="w-full px-3 py-2 border rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
             </div>
 
             {/* Room Type */}
             <div>
-                <label className="font-semibold mb-3 text-gray-700 block">Room Type</label>
+                <label className="font-semibold mb-3 text-gray-700 dark:text-gray-300 block">Room Type</label>
                 <div className="space-y-2">
                     {['Private', 'Shared', 'Entire Place'].map(type => (
                         <label key={type} className="flex items-center gap-2 cursor-pointer">
@@ -75,9 +75,9 @@ export const FilterSidebar = ({ props }) => {
                                 type="checkbox"
                                 checked={filters?.roomType.includes(type)}
                                 onChange={() => handleArrayFilter('roomType', type)}
-                                className="w-4 h-4"
+                                className="w-4 h-4 dark:bg-gray-700 dark:border-gray-600"
                             />
-                            <span className="text-sm">{type}</span>
+                            <span className="text-sm dark:text-gray-300">{type}</span>
                         </label>
                     ))}
                 </div>
@@ -85,7 +85,7 @@ export const FilterSidebar = ({ props }) => {
 
             {/* Property Type */}
             <div>
-                <label className="font-semibold mb-3 text-gray-700 block">Property Type</label>
+                <label className="font-semibold mb-3 text-gray-700 dark:text-gray-300 block">Property Type</label>
                 <div className="space-y-2">
                     {['Apartment', 'House', 'Condo', 'Studio'].map(type => (
                         <label key={type} className="flex items-center gap-2 cursor-pointer">
@@ -93,9 +93,9 @@ export const FilterSidebar = ({ props }) => {
                                 type="checkbox"
                                 checked={filters?.propertyType.includes(type)}
                                 onChange={() => handleArrayFilter('propertyType', type)}
-                                className="w-4 h-4"
+                                className="w-4 h-4 dark:bg-gray-700 dark:border-gray-600"
                             />
-                            <span className="text-sm">{type}</span>
+                            <span className="text-sm dark:text-gray-300">{type}</span>
                         </label>
                     ))}
                 </div>
@@ -103,14 +103,14 @@ export const FilterSidebar = ({ props }) => {
 
             {/* Gender Preference */}
             <div>
-                <label className="flex items-center gap-2 font-semibold mb-3 text-gray-700">
+                <label className="flex items-center gap-2 font-semibold mb-3 text-gray-700 dark:text-gray-300">
                     <Users size={18} />
                     Gender Preference
                 </label>
                 <select
                     value={filters?.gender}
                     onChange={(e) => handleFilterChange('gender', e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg text-sm"
+                    className="w-full px-3 py-2 border rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 >
                     <option value="any">Any</option>
                     <option value="male">Male</option>
@@ -121,10 +121,10 @@ export const FilterSidebar = ({ props }) => {
 
             {/* Age Range */}
             <div>
-                <label className="font-semibold mb-3 text-gray-700 block">Age Range</label>
+                <label className="font-semibold mb-3 text-gray-700 dark:text-gray-300 block">Age Range</label>
                 <div className="space-y-3">
                     <div>
-                        <label className="text-xs text-gray-600">Min Age: {filters?.ageMin}</label>
+                        <label className="text-xs text-gray-600 dark:text-gray-400">Min Age: {filters?.ageMin}</label>
                         <input
                             type="range"
                             min="18"
@@ -135,7 +135,7 @@ export const FilterSidebar = ({ props }) => {
                         />
                     </div>
                     <div>
-                        <label className="text-xs text-gray-600">Max Age: {filters?.ageMax}</label>
+                        <label className="text-xs text-gray-600 dark:text-gray-400">Max Age: {filters?.ageMax}</label>
                         <input
                             type="range"
                             min="18"
@@ -150,7 +150,7 @@ export const FilterSidebar = ({ props }) => {
 
             {/* Amenities */}
             <div>
-                <label className="font-semibold mb-3 text-gray-700 block">Amenities</label>
+                <label className="font-semibold mb-3 text-gray-700 dark:text-gray-300 block">Amenities</label>
                 <div className="space-y-2">
                     {['Pet-friendly', 'Parking', 'Furnished', 'WiFi'].map(amenity => (
                         <label key={amenity} className="flex items-center gap-2 cursor-pointer">
@@ -158,9 +158,9 @@ export const FilterSidebar = ({ props }) => {
                                 type="checkbox"
                                 checked={filters?.amenities.includes(amenity)}
                                 onChange={() => handleArrayFilter('amenities', amenity)}
-                                className="w-4 h-4"
+                                className="w-4 h-4 dark:bg-gray-700 dark:border-gray-600"
                             />
-                            <span className="text-sm">{amenity}</span>
+                            <span className="text-sm dark:text-gray-300">{amenity}</span>
                         </label>
                     ))}
                 </div>
@@ -173,9 +173,9 @@ export const FilterSidebar = ({ props }) => {
                         type="checkbox"
                         checked={filters?.verifiedOnly}
                         onChange={(e) => handleFilterChange('verifiedOnly', e.target.checked)}
-                        className="w-4 h-4"
+                        className="w-4 h-4 dark:bg-gray-700 dark:border-gray-600"
                     />
-                    <span className="flex items-center gap-1 text-sm font-medium">
+                    <span className="flex items-center gap-1 text-sm font-medium dark:text-gray-300">
                         <Shield size={16} />
                         Verified providers only
                     </span>
