@@ -49,8 +49,7 @@ console.log(userRole);
   ];
 
   return (
-    <div className={`navbar bg-base-100 shadow-lg sticky top-0 z-50 transition-colors duration-300 
-      dark:bg-gray-900 `}>
+    <div className={`navbar sticky top-0 z-50  max-w-7xl mx-auto`}>
       <div className="navbar-start">
         {/* Mobile dropdown */}
         <div className="dropdown lg:hidden">

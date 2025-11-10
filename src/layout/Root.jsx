@@ -15,11 +15,11 @@ const Root = () => {
         )
     }
     return (
-        <div className='text-custom-500'>
-            <header className={`${darkMode && `bg-[#1F1F1F]`}  fixed z-50 bg-custom-500 w-full`}>
+        <div className=''>
+            <header className='bg-base-100 dark:bg-gray-900 transition-colors duration-300 shadow-lg fixed w-full z-50'>
                 <Navbar></Navbar>
             </header>
-            <main className={`${darkMode ? `bg-[#1F1F1F]`:`bg-base-200`} min-h-[calc(100vh-260px)] pt-16`}>
+            <main className={` dark:bg-[#1F1F1F] bg-base-200 pt-16`}>
                 <Outlet></Outlet>
                 <ToastContainer />
             </main>
