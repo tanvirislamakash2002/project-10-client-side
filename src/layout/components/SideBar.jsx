@@ -12,6 +12,7 @@ import UserInfoCard from './UserInfoCard';
 import { SectionHeader } from './SectionHeader';
 import SidebarLink from './SidebarLink';
 import useUserRole from '../../../hooks/useUserRole';
+import Logo from '../../components/Logo';
 
 const SideBar = ({ props }) => {
     const { sidebarCollapsed, setSidebarCollapsed, user, handleSignOut } = props
@@ -39,11 +40,7 @@ const SideBar = ({ props }) => {
         <div className="p-6 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between">
                 {!sidebarCollapsed && (
-                    <Link to="/" className="flex items-center gap-2">
-                        <span className="text-3xl font-bold text-gray-800 dark:text-white">
-                            Room<span className="text-green-500">Ease</span>
-                        </span>
-                    </Link>
+                    <Logo></Logo>
                 )}
                 <button
                     onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
