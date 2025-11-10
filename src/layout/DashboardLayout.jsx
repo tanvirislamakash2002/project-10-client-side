@@ -1,7 +1,6 @@
 import React, { useState, use } from 'react';
 import { Outlet, useNavigate, useNavigation } from 'react-router';
 import { AuthContext } from '../provider/AuthProvider';
-import Footer from '../components/Footer';
 import Loading from '../components/Loading';
 import { ToastContainer } from 'react-toastify';
 import SideBar from './components/SideBar';
@@ -9,6 +8,7 @@ import DesktopHeader from './components/DesktopHeader';
 import MobileHeader from './components/MobileHeader';
 import { useApplicationModal } from '../../hooks/useApplicationModal';
 import ApplicationModal from '../Pages/dashboard/Seeker/ApplicationModal/ApplicationModal';
+import Footer from '../components/Footer/Footer';
 
 
 

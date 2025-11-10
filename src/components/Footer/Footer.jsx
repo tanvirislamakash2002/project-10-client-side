@@ -16,6 +16,7 @@ import {
   Users,
   Award
 } from 'lucide-react';
+import Logo from '../Logo';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -36,13 +37,9 @@ const Footer = () => {
           
           {/* Section 1: Platform Overview & Value Proposition - Spans 4 columns */}
           <div className="lg:col-span-4">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-12 h-12 bg-gradient-to-br from-cyan-600 to-emerald-500 dark:from-cyan-400 dark:to-emerald-400 rounded-xl flex items-center justify-center shadow-lg">
-                <Home className="w-7 h-7 text-white dark:text-slate-900" />
-              </div>
-              <span className="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-emerald-600 dark:from-cyan-400 dark:to-emerald-400 bg-clip-text text-transparent">
-                RoomMatch
-              </span>
+            <div className='mb-4'>
+            <Logo></Logo>
+
             </div>
             
             <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-3 leading-tight">
