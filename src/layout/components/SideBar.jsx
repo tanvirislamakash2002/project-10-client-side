@@ -74,12 +74,12 @@ const SideBar = ({ props }) => {
                 {isAdmin && (
                     <>
                         <SidebarLink
-                            sidebarCollapsed={sidebarCollapsed}
-                            to="/dashboard/create-blog"
-                            icon={MdAssignmentInd}
-                            label="My Listings"
-                            exact={false}
-                        />
+    sidebarCollapsed={sidebarCollapsed}
+    to="/dashboard/create-blog"
+    icon={MdPostAdd}
+    label="Create Blog Post"
+    exact={true}
+/>
 
                     </>
                 )}
