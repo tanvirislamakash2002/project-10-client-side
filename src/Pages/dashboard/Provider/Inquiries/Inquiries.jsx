@@ -289,9 +289,9 @@ export default function Inquiries() {
       {/* Main Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Panel - Inquiry List */}
-        <div className="lg:col-span-1 bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col max-h-[800px]">
+        <div className="lg:col-span-1 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col max-h-[800px]">
           {/* Filters */}
-          <div className="p-4 border-b border-gray-200 space-y-3">
+          <div className="p-4 border-b border-gray-200 dark:border-gray-700 space-y-3">
             {/* Search */}
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
@@ -300,7 +300,7 @@ export default function Inquiries() {
                 placeholder="Search inquiries..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
               />
             </div>
 
@@ -308,7 +308,7 @@ export default function Inquiries() {
             <select
               value={selectedFilter}
               onChange={(e) => setSelectedFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
             >
               <option value="all">All Inquiries</option>
               <option value="unread">Unread</option>
@@ -323,7 +323,7 @@ export default function Inquiries() {
             <select
               value={selectedListing}
               onChange={(e) => setSelectedListing(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
             >
               <option value="all">All Listings</option>
               {uniqueListings.map(listing => (
@@ -335,7 +335,7 @@ export default function Inquiries() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
             >
               <option value="newest">Newest First</option>
               <option value="oldest">Oldest First</option>
@@ -344,15 +344,15 @@ export default function Inquiries() {
 
             {/* Bulk Actions */}
             {selectedInquiries.length > 0 && (
-              <div className="flex gap-2 pt-2 border-t border-gray-200">
+              <div className="flex gap-2 pt-2 border-t border-gray-200 dark:border-gray-600">
                 <button className="flex-1 px-3 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">
                   Mark Read ({selectedInquiries.length})
                 </button>
-                <button className="px-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
-                  <Archive size={18} className="text-gray-600" />
+                <button className="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                  <Archive size={18} className="text-gray-600 dark:text-gray-400" />
                 </button>
-                <button className="px-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
-                  <Trash2 size={18} className="text-red-600" />
+                <button className="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                  <Trash2 size={18} className="text-red-600 dark:text-red-400" />
                 </button>
               </div>
             )}
