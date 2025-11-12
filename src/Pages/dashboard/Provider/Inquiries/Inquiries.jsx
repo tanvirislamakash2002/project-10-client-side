@@ -375,11 +375,11 @@ export default function Inquiries() {
           </div>
 
           {/* Inquiry List */}
-          <div className="flex-1 overflow-y-auto">
+           <div className="flex-1 overflow-y-auto">
             {filteredInquiries.length === 0 ? (
               <div className="p-8 text-center">
-                <MessageSquare size={48} className="mx-auto text-gray-300 mb-3" />
-                <p className="text-gray-600">No inquiries found</p>
+                <MessageSquare size={48} className="mx-auto text-gray-300 dark:text-gray-600 mb-3" />
+                <p className="text-gray-600 dark:text-gray-400">No inquiries found</p>
               </div>
             ) : (
               filteredInquiries.map(inquiry => (
