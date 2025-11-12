@@ -19,7 +19,9 @@ const Root = () => {
             <header className='bg-base-100 dark:bg-gray-900 transition-colors duration-300 shadow-lg fixed w-full z-50'>
                 <Navbar></Navbar>
             </header>
-            <main className={` dark:bg-[#1F1F1F] bg-base-200 pt-16`}>
+            <main className='pt-16'
+            // className={` dark:bg-[#1F1F1F] bg-base-200 pt-16`}
+            >
                 <Outlet></Outlet>
                 <ToastContainer />
             </main>
