@@ -73,9 +73,9 @@ const SideBar = ({ props }) => {
                 {/* admin Routes */}
                 {isAdmin && (
                     <>
-                        <SidebarLink
+<SidebarLink
     sidebarCollapsed={sidebarCollapsed}
-    to="/dashboard/create-blog"
+    to="/dashboard/blogs/new"
     icon={MdPostAdd}
     label="Create Blog Post"
     exact={true}

@@ -102,7 +102,7 @@ export const router = createBrowserRouter([
       },
       // admin dashboard
       {
-        path: '/dashboard/create-blog',
+        path: '/dashboard/blogs/new',
         element:
           <PrivateRoute>
             <CreateBlogPost></CreateBlogPost>
