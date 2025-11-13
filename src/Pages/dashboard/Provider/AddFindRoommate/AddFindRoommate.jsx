@@ -78,7 +78,7 @@ const AddFindRoommate = () => {
         formData.append("image", image.file);
 
         const res = await axios.post(
-          `https://api.imgbb.com/1/upload?key=8071722e3d8140465d956914d39d6ec3`,
+          `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
