@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaHome, FaImages, FaUser, FaPhone } from 'react-icons/fa';
 import { FiFileText } from 'react-icons/fi';
 import { useMutation } from '@tanstack/react-query';
@@ -20,10 +20,11 @@ import RoomAvailability from './components/BasicInformation/RoomAvailability';
 import SubmitButton from './components/SubmitButton';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../../../provider/AuthProvider';
+import { useImageUpload } from '../../../../../hooks/useImageUpload';
 
 const AddFindRoommate = () => {
-  const { user } = use(AuthContext);
-
+  const { user } = useContext(AuthContext);
+  const { uploadImagesToImgBB, isUploading: isImageUploading, error: imageError } = useImageUpload()
   const {
     register,
     handleSubmit,
@@ -56,8 +57,6 @@ const AddFindRoommate = () => {
   });
 
   const [images, setImages] = useState([]);
-  // const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [errors, setErrors] = useState({});
 
   // Watch form values to access current state
   const formData = watch();
@@ -70,84 +69,58 @@ const AddFindRoommate = () => {
     }
   }, [user, setValue]);
 
-  const uploadImagesToImgBB = async (images) => {
-    try {
-      // images = array of { file, ... } objects
-      const uploadPromises = images.map(async (image) => {
-        const formData = new FormData();
-        formData.append("image", image.file);
-
-        const res = await axios.post(
-          `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        );
-
-        return res.data.data.url; // return image URL
-      });
-
-      // Wait for all uploads to finish
-      const imageUrls = await Promise.all(uploadPromises);
-      return imageUrls; // array of hosted URLs
-    } catch (err) {
-      console.error("Image upload failed:", err);
-      throw err;
-    }
-  };
 
   const addRoomMutation = useMutation({
     mutationFn: (roomData) =>
       axios.post(`${import.meta.env.VITE_API_URL}/add-roommate`, roomData),
-    
+
     onSuccess: (res) => {
       if (res.data.insertedId) {
-        Swal.fire("Success", "Donation added!", "success");
+        Swal.fire({
+          title: "Success!",
+          text: "Your listing has been submitted for admin approval!", // Updated message
+          icon: "success",
+          confirmButtonColor: "var(--color-primary)"
+        });
       }
     },
     onError: (err) => {
-      Swal.fire("Error", err.message, "error");
+      Swal.fire({
+        title: "Error!",
+        text: err.message,
+        icon: "error",
+        confirmButtonColor: "var(--color-error)"
+      });
     }
   });
 
-  // const handleInputChange = (e) => {
-  //   const { name, value, type, checked } = e.target;
-  //   if (name.includes('.')) {
-  //     const [parent, child] = name.split('.');
-  //     setFormData(prev => ({
-  //       ...prev,
-  //       [parent]: {
-  //         ...prev[parent],
-  //         [child]: type === 'checkbox' ? checked : value
-  //       }
-  //     }));
-  //   } else {
-  //     setFormData(prev => ({
-  //       ...prev,
-  //       [name]: type === 'checkbox' ? checked : value
-  //     }));
-  //   }
-
-  //   // Clear error when user starts typing
-  //   if (errors[name]) {
-  //     setErrors(prev => ({ ...prev, [name]: '' }));
-  //   }
-  // };
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     if (images.length + files.length > 5) {
-      alert('Maximum 5 images allowed');
+      Swal.fire({
+        title: "Too many images!",
+        text: "Maximum 5 images allowed",
+        icon: "warning",
+        confirmButtonColor: "var(--color-warning)"
+      });
       return;
     }
 
-    files.forEach(file => {
+    const validFiles = files.filter(file => {
       if (file.size > 5 * 1024 * 1024) {
-        alert(`${file.name} is too large. Maximum size is 5MB.`);
-        return;
+        Swal.fire({
+          title: "File too large!",
+          text: `${file.name} is too large. Maximum size is 5MB.`,
+          icon: "warning",
+          confirmButtonColor: "var(--color-warning)"
+        });
+        return false;
       }
+      return true;
+    });
 
+    validFiles.forEach(file => {
       const reader = new FileReader();
       reader.onload = (event) => {
         setImages(prev => [...prev, {
@@ -165,31 +138,22 @@ const AddFindRoommate = () => {
     setImages(prev => prev.filter(img => img.id !== imageId));
   };
 
-  // const validateForm = () => {
-  //   const newErrors = {};
 
-  //   if (!formData.title.trim()) newErrors.title = 'Title is required';
-  //   if (!formData.location.trim()) newErrors.location = 'Location is required';
-  //   if (!formData.rent) newErrors.rent = 'Rent amount is required';
-  //   if (!formData.availability) newErrors.availability = 'Availability date is required';
-  //   if (!formData.description.trim()) newErrors.description = 'Description is required';
-  //   if (formData.description.length < 50) newErrors.description = 'Description must be at least 50 characters';
-  //   if (images.length === 0) newErrors.images = 'At least one image is required';
-  //   if (!formData.preferences.gender) newErrors.gender = 'Gender preference is required';
-  //   if (!formData.poster.phone.trim()) newErrors.phone = 'Phone number is required';
-
-  //   setErrors(newErrors);
-  //   return Object.keys(newErrors).length === 0;
-  // };
 
   const onSubmit = async (data) => {
-    // React Hook Form already validates, but we still need to check images
-    // if (images.length === 0) {
-    //   Swal.fire("Error", "At least one image is required", "error");
-    //   return;
-    // }
+
     console.log(data);
     try {
+      // Check if we have images to upload
+      if (images.length === 0) {
+        Swal.fire({
+          title: "Images Required!",
+          text: "Please add at least one image of your space",
+          icon: "warning",
+          confirmButtonColor: "var(--color-warning)"
+        });
+        return;
+      }
       // 1. Upload all images to ImgBB
       const uploadedUrls = await uploadImagesToImgBB(images);
 
@@ -197,6 +161,8 @@ const AddFindRoommate = () => {
       const submissionData = {
         ...data,
         images: uploadedUrls,
+        createdAt: new Date().toISOString(), // Add timestamp
+        status: 'accepted' // Ensure status is pending for admin approval
       };
 
       // 3. Send to backend
@@ -231,56 +197,8 @@ const AddFindRoommate = () => {
     }
   };
 
-  // const handleSubmit = async () => {
-  //   if (!validateForm()) {
-  //     alert("Please fill in all required fields correctly.");
-  //     return;
-  //   }
-
-  //   setIsSubmitting(true);
-
-  //   try {
-  //     // 1. Upload all images to ImgBB
-  //     const uploadedUrls = await uploadImagesToImgBB(images);
-
-  //     // 2. Add the URLs to formData
-  //     const submissionData = {
-  //       ...formData,
-  //       images: uploadedUrls,
-  //     };
-
-  //     // 3. Send to backend
-  //     addRoomMutation.mutate(submissionData);
-
-  //     // Reset after success
-  //     setFormData({
-  //       title: "",
-  //       location: "",
-  //       rent: "",
-  //       availability: "",
-  //       description: "",
-  //       preferences: {
-  //         gender: "",
-  //         ageRange: "",
-  //         occupation: "",
-  //         lifestyle: "",
-  //       },
-  //       poster: {
-  //         name: user?.displayName,
-  //         email: user?.email,
-  //         photo: user?.photoURL,
-  //         phone: "",
-  //         verified: false,
-  //       },
-  //     });
-  //     setImages([]);
-  //     setErrors({});
-  //   } catch (err) {
-  //     Swal.fire("Error", "Image upload failed", "error");
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
+  // Combined loading state
+  const isLoading = isSubmitting || isImageUploading || addRoomMutation.isLoading;
 
 
   return (
@@ -298,7 +216,11 @@ const AddFindRoommate = () => {
         {/* Form */}
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="p-8 space-y-8">
-
+            {imageError && (
+              <div className="alert alert-error">
+                <span>Image Upload Error: {imageError}</span>
+              </div>
+            )}
             {/* Basic Information Section */}
             <div>
               <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
@@ -344,7 +266,13 @@ const AddFindRoommate = () => {
                 <h2 className="text-2xl font-bold text-gray-900">Property Images</h2>
               </div>
 
-              <RoomImage props={{ removeImage, images, handleImageUpload, errors }}></RoomImage>
+              <RoomImage props={{
+                removeImage,
+                images,
+                handleImageUpload,
+                errors,
+                isUploading: isImageUploading
+              }}></RoomImage>
             </div>
 
             {/* Preferences Section */}
@@ -387,7 +315,7 @@ const AddFindRoommate = () => {
             </div>
 
             {/* Submit Button */}
-            <SubmitButton props={{ handleSubmit, onSubmit, isSubmitting }}></SubmitButton>
+            <SubmitButton props={{ handleSubmit, onSubmit, isSubmitting: isLoading }}></SubmitButton>
           </div>
         </div>
 

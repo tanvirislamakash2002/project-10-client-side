@@ -27,7 +27,7 @@ export default function BrowsePage() {
         .then(res => res.json()),
   });
 
-
+console.log('ww',RoomData);
   const filteredListings = useListingsFilter(RoomData, filters);
 
   const handleFilterChange = (key, value) => {
