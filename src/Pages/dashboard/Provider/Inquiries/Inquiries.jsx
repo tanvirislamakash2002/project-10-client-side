@@ -367,7 +367,7 @@ export default function Inquiries() {
               </div>
             ) : (
               filteredInquiries.map(inquiry => (
-                <InquiryCard key={inquiry.id} inquiry={inquiry} />
+                <InquiryCard key={inquiry.id} props={{inquiry, selectedInquiry, setSelectedInquiry,selectedInquiries, setSelectedInquiries}} />
               ))
             )}
           </div>

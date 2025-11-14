@@ -1,10 +1,9 @@
 import { Circle } from "lucide-react";
 import { useState } from "react";
 
-export const InquiryCard = ({ inquiry }) => {
+export const InquiryCard = ({ props }) => {
+    const { inquiry, selectedInquiry, setSelectedInquiry, selectedInquiries, setSelectedInquiries } = props
 
-    const [selectedInquiry, setSelectedInquiry] = useState(null);
-    const [selectedInquiries, setSelectedInquiries] = useState([]);
     const getStatusBadge = (status) => {
         const badges = {
             new: { label: 'New', class: 'bg-blue-100 text-blue-700 border-blue-200' },
