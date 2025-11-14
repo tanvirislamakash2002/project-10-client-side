@@ -101,7 +101,6 @@ import {
       alert('Error creating post: ' + error.message);
     }
   });
-
   const onSubmit = (data) => {
     const postData = {
       ...data,
@@ -117,7 +116,7 @@ import {
         shares: 0
       }
     };
-    
+    console.log("last obj",postData);
     createPostMutation.mutate(postData);
   };
 
