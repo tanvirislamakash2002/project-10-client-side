@@ -121,11 +121,12 @@ export const BlogPostCard = ({ post, viewMode }) => {
         
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="avatar placeholder">
-              <div className="bg-primary text-primary-content rounded-full w-8">
-                <span className="text-xs">{post.author?.name?.charAt(0) || 'A'}</span>
-              </div>
-            </div>
+                              <div className="avatar placeholder">
+                    <div className="bg-primary text-primary-content rounded-full w-12">
+
+                      <img src={post.author?.avatar} alt="" />
+                    </div>
+                  </div>
             <div className="text-xs">
               <div className="font-semibold text-base-content dark:text-base-content">
                 {post.author?.name || 'Admin'}

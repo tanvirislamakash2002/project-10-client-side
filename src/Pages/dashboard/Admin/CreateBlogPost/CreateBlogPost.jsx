@@ -25,6 +25,7 @@ import {
 import Swal from 'sweetalert2';
 import { useImageUpload } from '../../../../../hooks/useImageUpload';
 import { FaStar, FaTimes, FaUpload } from 'react-icons/fa';
+import  useUser  from '../../../../../hooks/useUser';
 
  const CreateBlogPost = () => {
   const [activeTab, setActiveTab] = useState('basic');
@@ -42,19 +43,35 @@ import { FaStar, FaTimes, FaUpload } from 'react-icons/fa';
   const [schedulePublish, setSchedulePublish] = useState(false);
   const queryClient = useQueryClient();
   const [images, setImages] = useState([]);
+
+const user = useUser()
+console.log(user);
+
   const { uploadImagesToImgBB, isUploading: isImageUploading, error: imageError } = useImageUpload()
-  const { register, handleSubmit, watch, setValue, control, formState: { errors } } = useForm({
+  const { register, handleSubmit, watch, setValue, control, formState: { errors }, reset } = useForm({
     defaultValues: {
       status: 'draft',
       featured: false,
       commentsEnabled: true,
       author: {
-        name: 'Admin User',
-        avatar: ''
+        name: user?.name,
+        avatar: user?.photoURL
       }
     }
   });
-
+  useEffect(() => {
+    if (user) {
+      reset({
+        status: 'draft',
+        featured: false,
+        commentsEnabled: true,
+        author: {
+          name: user.name || '',
+          avatar: user.photoURL || ''
+        }
+      });
+    }
+  }, [user, reset]);
   const title = watch('title');
   const content = watch('content');
   const metaDescription = watch('meta.description');
@@ -177,7 +194,6 @@ import { FaStar, FaTimes, FaUpload } from 'react-icons/fa';
         shares: 0
       }
     };
-    console.log("last obj",postData);
     createPostMutation.mutate(postData);
   };
 
@@ -368,7 +384,7 @@ import { FaStar, FaTimes, FaUpload } from 'react-icons/fa';
                       )}
                     </div>
 
-                    <div className="form-control">
+                    <div className="form-control mb-6">
                       <label className="label">
                         <span className="label-text font-semibold text-base-content dark:text-base-content">
                           Excerpt/Summary *
@@ -390,7 +406,7 @@ import { FaStar, FaTimes, FaUpload } from 'react-icons/fa';
                       )}
                     </div>
 
-                    <div className="form-control">
+                    {/* <div className="form-control">
                       <label className="label">
                         <span className="label-text font-semibold text-base-content dark:text-base-content">
                           Author Name
@@ -402,7 +418,7 @@ import { FaStar, FaTimes, FaUpload } from 'react-icons/fa';
                         className="input input-bordered w-full bg-base-100 dark:bg-base-300 text-base-content dark:text-base-content"
                         {...register('author.name')}
                       />
-                    </div>
+                    </div> */}
                   </div>
                 )}
 
@@ -1097,17 +1113,18 @@ import { FaStar, FaTimes, FaUpload } from 'react-icons/fa';
                 <div className="flex items-center gap-3">
                   <div className="avatar placeholder">
                     <div className="bg-primary text-primary-content rounded-full w-12">
-                      <span className="text-xl">
+                      {/* <span className="text-xl">
                         {watch('author.name')?.charAt(0) || 'A'}
-                      </span>
+                      </span> */}
+                      <img src={user?.photoURL} alt="" />
                     </div>
                   </div>
                   <div>
                     <div className="font-semibold text-base-content dark:text-base-content">
-                      {watch('author.name') || 'Admin User'}
+                      {user?.name || 'Admin'}
                     </div>
                     <div className="text-xs text-text-muted dark:text-text-muted">
-                      Content Creator
+                      {user?.email || 'admin@gmail.com'}
                     </div>
                   </div>
                 </div>
