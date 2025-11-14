@@ -22,6 +22,9 @@ import {
   List,
   AlignLeft
 } from 'lucide-react';
+import Swal from 'sweetalert2';
+import { useImageUpload } from '../../../../../hooks/useImageUpload';
+import { FaStar, FaTimes, FaUpload } from 'react-icons/fa';
 
  const CreateBlogPost = () => {
   const [activeTab, setActiveTab] = useState('basic');
@@ -38,7 +41,8 @@ import {
   const [lastSaved, setLastSaved] = useState(null);
   const [schedulePublish, setSchedulePublish] = useState(false);
   const queryClient = useQueryClient();
-
+  const [images, setImages] = useState([]);
+  const { uploadImagesToImgBB, isUploading: isImageUploading, error: imageError } = useImageUpload()
   const { register, handleSubmit, watch, setValue, control, formState: { errors } } = useForm({
     defaultValues: {
       status: 'draft',
@@ -78,7 +82,7 @@ import {
   // Mutation for creating blog post
   const createPostMutation = useMutation({
     mutationFn: async (postData) => {
-      const response = await fetch('http://localhost:3000/posts', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/posts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -101,9 +105,66 @@ import {
       alert('Error creating post: ' + error.message);
     }
   });
-  const onSubmit = (data) => {
+  // handle image upload 
+    const handleImageUpload = (e) => {
+      const files = Array.from(e.target.files);
+      if (images.length + files.length > 5) {
+        Swal.fire({
+          title: "Too many images!",
+          text: "Maximum 5 images allowed",
+          icon: "warning",
+          confirmButtonColor: "var(--color-warning)"
+        });
+        return;
+      }
+  
+      const validFiles = files.filter(file => {
+        if (file.size > 5 * 1024 * 1024) {
+          Swal.fire({
+            title: "File too large!",
+            text: `${file.name} is too large. Maximum size is 5MB.`,
+            icon: "warning",
+            confirmButtonColor: "var(--color-warning)"
+          });
+          return false;
+        }
+        return true;
+      });
+  
+      validFiles.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          setImages(prev => [...prev, {
+            id: Date.now() + Math.random(),
+            file,
+            url: event.target.result,
+            name: file.name
+          }]);
+        };
+        reader.readAsDataURL(file);
+      });
+    };
+
+  const removeImage = (imageId) => {
+    setImages(prev => prev.filter(img => img.id !== imageId));
+  };
+
+  const onSubmit = async (data) => {
+          // Check if we have images to upload
+          if (images.length === 0) {
+            Swal.fire({
+              title: "Images Required!",
+              text: "Please add at least one image of your space",
+              icon: "warning",
+              confirmButtonColor: "var(--color-warning)"
+            });
+            return;
+          }
+          // 1. Upload all images to ImgBB
+          const uploadedUrls = await uploadImagesToImgBB(images);
     const postData = {
       ...data,
+      coverImage:uploadedUrls,
       tags,
       categories,
       meta: {
@@ -462,49 +523,109 @@ import {
                 )}
 
                 {/* Media Tab */}
-                {activeTab === 'media' && (
-                  <div className="space-y-6">
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text font-semibold text-base-content dark:text-base-content">
-                          Cover Image URL
-                        </span>
-                      </label>
-                      <div className="join w-full">
-                        <input
-                          type="url"
-                          placeholder="https://example.com/image.jpg"
-                          className="input input-bordered join-item flex-1 bg-base-100 dark:bg-base-300 text-base-content dark:text-base-content"
-                          {...register('coverImage')}
-                          onChange={(e) => setImagePreview(e.target.value)}
-                        />
-                        <button type="button" className="btn btn-primary join-item">
-                          <Upload size={16} /> Upload
-                        </button>
-                      </div>
-                    </div>
+{activeTab==='media'&&(<div>
+    <label className="block text-sm font-semibold text-gray-700 mb-4">
+        Upload Images * (1-5 images, max 5MB each)
+    </label>
 
-                    {imagePreview && (
-                      <div className="card bg-base-200 dark:bg-base-300 shadow-md">
-                        <div className="card-body">
-                          <h3 className="card-title text-base-content dark:text-base-content">Image Preview</h3>
-                          <img 
-                            src={imagePreview} 
-                            alt="Cover preview" 
-                            className="w-full max-h-96 object-cover rounded-lg"
-                          />
-                        </div>
-                      </div>
-                    )}
+    {/* Upload Area */}
+    <div className={`border-2 border-dashed rounded-xl p-8 text-center mb-6 transition-all ${images.length >= 5
+        ? 'border-gray-200 bg-gray-50'
+        : errors.images
+            ? 'border-red-300 bg-red-50'
+            : 'border-blue-300 bg-blue-50 hover:border-blue-400'
+        }`}>
+        <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="hidden"
+            id="imageUpload"
+            disabled={images.length >= 5}
+        />
+        <label
+            htmlFor="imageUpload"
+            className={`cursor-pointer block ${images.length >= 5 ? 'cursor-not-allowed opacity-50' : ''}`}
+        >
+            <FaUpload className="mx-auto text-4xl text-gray-400 mb-4" />
+            <p className="text-gray-600 mb-2 font-medium text-lg">
+                {images.length >= 5
+                    ? 'Maximum images uploaded'
+                    : images.length > 0
+                        ? 'Click to add more images'
+                        : 'Click to upload images'
+                }
+            </p>
+            <p className="text-sm text-gray-500">PNG, JPG, WEBP up to 5MB each</p>
+        </label>
+    </div>
 
-                    <div className="alert alert-info">
-                      <ImageIcon size={20} />
-                      <span className="text-sm">
-                        Recommended image size: 1200x630px for optimal social media sharing
-                      </span>
+    {errors.images && <p className="text-red-500 text-sm mb-4">{errors.images}</p>}
+
+    {/* Large Image Preview */}
+    {images.length > 0 && (
+        <div className="space-y-6">
+            {/* Main Image - Large Preview */}
+            <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-blue-200">
+                <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                        <FaStar className="text-yellow-500" />
+                        Main Image
+                    </h3>
+                    <span className="bg-blue-500 text-white text-sm px-3 py-1 rounded-full">
+                        Featured
+                    </span>
+                </div>
+                <div className="relative group">
+                    <img
+                        src={images[0].url}
+                        alt="Main upload"
+                        className="w-full h-80 object-cover rounded-lg shadow-md"
+                    />
+                    <button
+                        type="button"
+                        onClick={() => removeImage(images[0].id)}
+                        className="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all hover:bg-red-600 shadow-lg"
+                    >
+                        <FaTimes className="text-sm" />
+                    </button>
+                </div>
+            </div>
+
+            {/* Additional Images Grid */}
+            {images.length > 1 && (
+                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                        <FaImages className="text-gray-600" />
+                        Additional Images ({images.length - 1})
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {images.slice(1).map((image, index) => (
+                            <div key={image.id} className="relative group bg-gray-50 rounded-lg p-4 border-2 border-transparent hover:border-blue-300 transition-all">
+                                <img
+                                    src={image.url}
+                                    alt={`Upload ${index + 2}`}
+                                    className="w-full h-48 object-cover rounded-lg shadow-sm"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => removeImage(image.id)}
+                                    className="absolute -top-2 -right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all hover:bg-red-600 shadow-lg"
+                                >
+                                    <FaTimes className="text-xs" />
+                                </button>
+                                <div className="absolute bottom-3 left-3 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                                    Image {index + 2}
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                  </div>
-                )}
+                </div>
+            )}
+        </div>
+    )}
+</div>)}
 
                 {/* SEO Tab */}
                 {activeTab === 'seo' && (
