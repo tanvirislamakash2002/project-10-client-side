@@ -19,7 +19,6 @@ import SavedListings from "../Pages/dashboard/Seeker/SavedListings/SavedListings
 import AboutUs from "../Pages/public/AboutUs";
 import ContactUs from "../Pages/public/ContactUs";
 import Blog from "../Pages/public/Blog/Blog";
-import BlogPost from "../Pages/public/Blog/components/BlogPost";
 import CreateBlogPost from "../Pages/dashboard/Admin/CreateBlogPost/CreateBlogPost";
 import AddFindRoommate from "../Pages/dashboard/Provider/AddFindRoommate/AddFindRoommate";
 import BrowsePage from "../Pages/public/Browse/Browse";
@@ -53,11 +52,11 @@ export const router = createBrowserRouter([
         Component: Blog,
         hydrateFallbackElement: <Loading></Loading>
       },
-      {
-        path: '/blog/:slug',
-        Component: BlogPost,
-        hydrateFallbackElement: <Loading></Loading>
-      },
+      // {
+      //   path: '/blog/:slug',
+      //   Component: BlogPost,
+      //   hydrateFallbackElement: <Loading></Loading>
+      // },
 
       {
         path: '/details/:id',
