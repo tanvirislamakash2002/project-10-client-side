@@ -12,7 +12,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const {role:userRole}= useUserRole()
-console.log(userRole);
+// console.log(userRole);
   const handleLogout = async () => {
     try {
       await logOut();

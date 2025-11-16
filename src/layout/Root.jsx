@@ -5,10 +5,15 @@ import { ToastContainer } from 'react-toastify';
 import { AuthContext } from '../provider/AuthProvider';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer/Footer';
+import { useQuery } from '@tanstack/react-query';
+import RoleSwitcher from '../components/ForDeveloper/RoleSwitcher';
 
 const Root = () => {
     const navigation = useNavigation()
     const { darkMode, setDarkMode  } = use(AuthContext)
+
+
+
     if (navigation.state === 'loading') {
         return (
             <Loading></Loading>
@@ -16,6 +21,7 @@ const Root = () => {
     }
     return (
         <div className=''>
+            <RoleSwitcher />
             <header className='bg-base-100 dark:bg-gray-900 transition-colors duration-300 shadow-lg fixed w-full z-50'>
                 <Navbar></Navbar>
             </header>
