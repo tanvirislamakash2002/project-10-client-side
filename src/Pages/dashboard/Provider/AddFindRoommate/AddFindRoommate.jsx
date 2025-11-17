@@ -202,127 +202,125 @@ const AddFindRoommate = () => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-600 to-yellow-600 rounded-full mb-4">
-            <FaHome className="text-white text-2xl" />
+<div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+  <div className="container mx-auto px-4 py-8 max-w-4xl">
+    {/* Header */}
+    <div className="text-center mb-8">
+      <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-600 to-yellow-600 rounded-full mb-4">
+        <FaHome className="text-white text-2xl" />
+      </div>
+      <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Find Your Perfect Roommate</h1>
+      <p className="text-gray-600 dark:text-gray-300 text-lg">Create a detailed post to attract the right roommate for your space</p>
+    </div>
+
+    {/* Form */}
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+      <div className="p-8 space-y-8">
+        {imageError && (
+          <div className="alert alert-error dark:bg-red-900 dark:text-red-100">
+            <span>Image Upload Error: {imageError}</span>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Find Your Perfect Roommate</h1>
-          <p className="text-gray-600 text-lg">Create a detailed post to attract the right roommate for your space</p>
-        </div>
-
-        {/* Form */}
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-          <div className="p-8 space-y-8">
-            {imageError && (
-              <div className="alert alert-error">
-                <span>Image Upload Error: {imageError}</span>
-              </div>
-            )}
-            {/* Basic Information Section */}
-            <div>
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <FaHome className="text-blue-600 text-xl" />
-                </div>
-                <h2 className="text-2xl font-bold text-gray-900">Basic Information</h2>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Title */}
-                <RoomTitle props={{ register, errors }}></RoomTitle>
-
-                {/* Location */}
-                <RoomLocation props={{ register, errors }}></RoomLocation>
-
-                {/* Rent */}
-                <RoomRent props={{ register, errors }}></RoomRent>
-
-                {/* Availability */}
-                <RoomAvailability props={{ register, errors }}></RoomAvailability>
-              </div>
+        )}
+        {/* Basic Information Section */}
+        <div>
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+            <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
+              <FaHome className="text-blue-600 dark:text-blue-300 text-xl" />
             </div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Basic Information</h2>
+          </div>
 
-            {/* Description Section */}
-            <div>
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
-                <div className="p-2 bg-green-100 rounded-lg">
-                  <FiFileText className="text-green-600 text-xl" />
-                </div>
-                <h2 className="text-2xl font-bold text-gray-900">Description & Details</h2>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Title */}
+            <RoomTitle props={{ register, errors }}></RoomTitle>
 
-              <RoomDescription props={{ register, errors }}></RoomDescription>
-            </div>
+            {/* Location */}
+            <RoomLocation props={{ register, errors }}></RoomLocation>
 
-            {/* Images Section */}
-            <div>
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
-                <div className="p-2 bg-purple-100 rounded-lg">
-                  <FaImages className="text-purple-600 text-xl" />
-                </div>
-                <h2 className="text-2xl font-bold text-gray-900">Property Images</h2>
-              </div>
+            {/* Rent */}
+            <RoomRent props={{ register, errors }}></RoomRent>
 
-              <RoomImage props={{
-                removeImage,
-                images,
-                handleImageUpload,
-                errors,
-                isUploading: isImageUploading
-              }}></RoomImage>
-            </div>
-
-            {/* Preferences Section */}
-            <div>
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
-                <div className="p-2 bg-indigo-100 rounded-lg">
-                  <FaUser className="text-indigo-600 text-xl" />
-                </div>
-                <h2 className="text-2xl font-bold text-gray-900">Roommate Preferences</h2>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* gender preference */}
-                <GenderPreference props={{ register, errors }}></GenderPreference>
-
-                <Occupation props={{ register }}></Occupation>
-                {/* age range */}
-                <AgeRange props={{ register, setValue, watch, errors }}></AgeRange>
-
-
-                <Lifestyle props={{ register }}></Lifestyle>
-              </div>
-            </div>
-
-            {/* Contact Information Section */}
-            <div>
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
-                <div className="p-2 bg-orange-100 rounded-lg">
-                  <FaPhone className="text-orange-600 text-xl" />
-                </div>
-                <h2 className="text-2xl font-bold text-gray-900">Contact Information</h2>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* phone number */}
-                <PhoneNumber props={{ register, errors }}></PhoneNumber>
-                <ContactEmail props={{ register, errors }}></ContactEmail>
-
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <SubmitButton props={{ handleSubmit, onSubmit, isSubmitting: isLoading }}></SubmitButton>
+            {/* Availability */}
+            <RoomAvailability props={{ register, errors }}></RoomAvailability>
           </div>
         </div>
 
-        {/* Help Tips */}
-        <HelpTips></HelpTips>
+        {/* Description Section */}
+        <div>
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+            <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
+              <FiFileText className="text-green-600 dark:text-green-300 text-xl" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Description & Details</h2>
+          </div>
+
+          <RoomDescription props={{ register, errors }}></RoomDescription>
+        </div>
+
+        {/* Images Section */}
+        <div>
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+            <div className="p-2 bg-purple-100 dark:bg-purple-900 rounded-lg">
+              <FaImages className="text-purple-600 dark:text-purple-300 text-xl" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Property Images</h2>
+          </div>
+
+          <RoomImage props={{
+            removeImage,
+            images,
+            handleImageUpload,
+            errors,
+            isUploading: isImageUploading
+          }}></RoomImage>
+        </div>
+
+        {/* Preferences Section */}
+        <div>
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+            <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
+              <FaUser className="text-indigo-600 dark:text-indigo-300 text-xl" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Roommate Preferences</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* gender preference */}
+            <GenderPreference props={{ register, errors }}></GenderPreference>
+
+            <Occupation props={{ register }}></Occupation>
+            {/* age range */}
+            <AgeRange props={{ register, setValue, watch, errors }}></AgeRange>
+
+            <Lifestyle props={{ register }}></Lifestyle>
+          </div>
+        </div>
+
+        {/* Contact Information Section */}
+        <div>
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+            <div className="p-2 bg-orange-100 dark:bg-orange-900 rounded-lg">
+              <FaPhone className="text-orange-600 dark:text-orange-300 text-xl" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Contact Information</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* phone number */}
+            <PhoneNumber props={{ register, errors }}></PhoneNumber>
+            <ContactEmail props={{ register, errors }}></ContactEmail>
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <SubmitButton props={{ handleSubmit, onSubmit, isSubmitting: isLoading }}></SubmitButton>
       </div>
     </div>
+
+    {/* Help Tips */}
+    <HelpTips></HelpTips>
+  </div>
+</div>
   );
 };
 
