@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
+import { FaGoogle } from 'react-icons/fa';
 import { 
-  FaUser, 
-  FaEnvelope, 
-  FaLock, 
-  FaCamera, 
-  FaEye, 
-  FaEyeSlash, 
-  FaGoogle,
-  FaCheck,
-  FaTimes,
-  FaUpload,
-  FaUserPlus,
-  FaHome,
-  FaUsers,
-  FaMapMarkerAlt
-} from 'react-icons/fa';
+  Mail, 
+  Lock, 
+  Eye, 
+  EyeOff, 
+  Home, 
+  User, 
+  Shield, 
+  Sparkles,
+  ArrowRight,
+  CheckCircle2,
+  XCircle,
+  Camera,
+  Upload,
+  Search,
+  Key,
+  Users
+} from 'lucide-react';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { useMutation } from '@tanstack/react-query';
@@ -34,42 +37,29 @@ const Register = () => {
   const [processing, setProcessing] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [hostedImageUrl, setHostedImageUrl] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state || '/';
 
   const { register, handleSubmit, formState: { errors }, watch } = useForm();
-
   const password = watch('password');
+  const selectedRole = watch('role');
 
-  // Password validation helpers
-  const validatePassword = (value) => {
-    const hasUpperCase = /[A-Z]/.test(value);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
-    const hasMinLength = value?.length >= 6;
-
-    return {
-      hasUpperCase,
-      hasSpecialChar,
-      hasMinLength
-    };
-  };
+  const validatePassword = (value) => ({
+    hasUpperCase: /[A-Z]/.test(value),
+    hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(value),
+    hasMinLength: value?.length >= 6
+  });
 
   const passwordValidation = password ? validatePassword(password) : {};
 
   const mutation = useMutation({
     mutationFn: async ({ name, email, password, photoURL, role }) => {
-      console.log(email, password);
-      await createUser({email, password});
+      await createUser({ email, password });
       await updateUser({ displayName: name, photoURL });
       return axiosInstance.post('/register-user', { 
-        name, 
-        email, 
-        photoURL,
-        role: role || 'seeker' // Default role
+        name, email, photoURL, role: role || 'seeker'
       });
     },
     onSuccess: () => {
@@ -97,21 +87,13 @@ const Register = () => {
 
   const handleImageUpload = async (e) => {
     const imageFile = e.target.files[0];
-
     if (!imageFile) return;
 
     try {
-      const options = {
-        maxSizeMB: 0.1,
-        maxWidthOrHeight: 1024,
-        useWebWorker: true,
-      };
-
+      const options = { maxSizeMB: 0.1, maxWidthOrHeight: 1024, useWebWorker: true };
       const compressedFile = await imageCompression(imageFile, options);
-      const localPreviewUrl = URL.createObjectURL(compressedFile);
-      setPreviewImage(localPreviewUrl);
-
-      setProcessing(true); 
+      setPreviewImage(URL.createObjectURL(compressedFile));
+      setProcessing(true);
       setUploading(true);
       setUploadProgress(0);
 
@@ -122,20 +104,18 @@ const Register = () => {
         headers: { 'Content-Type': 'multipart/form-data' },
         onUploadProgress: (progressEvent) => {
           if (progressEvent.total) {
-            const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-            setUploadProgress(percent);
+            setUploadProgress(Math.round((progressEvent.loaded * 100) / progressEvent.total));
           }
         },
         timeout: 180000,
       });
 
       const url = res.data?.data?.url;
-
       if (!url) throw new Error('Image URL not returned');
 
       setHostedImageUrl(url);
       setProcessing(false);
-      setUploading(false); 
+      setUploading(false);
     } catch (err) {
       console.error('Upload error:', err);
       Swal.fire('Upload Failed', 'Could not upload image', 'error');
@@ -156,7 +136,7 @@ const Register = () => {
           name: data.user.displayName,
           email: data.user.email,
           photoURL: data.user.photoURL,
-          role: 'seeker' // Default role for Google signups
+          role: 'seeker'
         });
       }
       await axiosInstance.post('/login', { email: data.user.email });
@@ -166,389 +146,342 @@ const Register = () => {
         position: 'center',
         icon: 'success',
         title: 'Welcome to RoomEase!',
-        text: 'You have successfully registered with Google',
+        text: 'Successfully registered with Google',
         showConfirmButton: false,
         timer: 1500
       });
       navigate(from);
     },
-    onError: () => {
-      toast.error("Something went wrong with Google registration.");
-    }
+    onError: () => toast.error("Google registration failed. Please try again.")
   });
 
-  const handleSignInWithGoogle = () => {
-    googleLoginMutation.mutate();
-  };
+  const handleSignInWithGoogle = () => googleLoginMutation.mutate();
+
+  const RequirementItem = ({ met, text }) => (
+    <div className={`flex items-center gap-2 text-xs ${met ? 'text-success' : 'text-base-content/50'}`}>
+      {met ? <CheckCircle2 className="w-3.5 h-3.5" /> : <XCircle className="w-3.5 h-3.5" />}
+      <span>{text}</span>
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F9F9F9] to-[#E2E8F0] flex items-center justify-center p-4">
-      <div className="w-full max-w-6xl bg-white rounded-2xl shadow-2xl overflow-hidden grid lg:grid-cols-2">
-        
-        {/* Left Side - Branding & Benefits */}
-        <div className="bg-gradient-to-br from-[#10b981] to-[#059669] p-8 lg:p-12 text-white relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12"></div>
-          
-          <div className="relative z-10">
-            <div className="mb-8">
-              <h1 className="text-4xl font-bold mb-3">Join RoomEase</h1>
-              <p className="text-lg opacity-90 mb-6">
-                Find your perfect roommate or fill your empty room with trusted matches
-              </p>
-            </div>
+    <div className="min-h-screen bg-base-200 flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Background Decorations */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl"></div>
+      </div>
 
-            <div className="space-y-6">
-              <h3 className="text-xl font-semibold mb-4">Why Join RoomEase?</h3>
+      <div className="w-full max-w-5xl relative z-10">
+        <div className="bg-base-100 rounded-3xl shadow-xl overflow-hidden border border-base-300">
+          <div className="grid lg:grid-cols-5">
+            
+            {/* Left Panel - Branding */}
+            <div className="lg:col-span-2 bg-gradient-to-br from-primary via-primary to-secondary p-8 lg:p-10 text-primary-content relative">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -translate-y-20 translate-x-20"></div>
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-16 -translate-x-16"></div>
+              <div className="absolute top-1/2 right-0 w-24 h-24 bg-white/5 rounded-full translate-x-12"></div>
               
-              <div className="space-y-4">
-                <div className="flex items-start gap-4 p-4 bg-white/10 rounded-lg">
-                  <div className="bg-[#3182CE] p-2 rounded-lg flex-shrink-0">
-                    <FaUser className="w-5 h-5" />
+              <div className="relative z-10 h-full flex flex-col">
+                {/* Logo */}
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                    <Home className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-1">Find Roommates</h4>
-                    <p className="text-sm">Connect with verified roommates who match your lifestyle and preferences</p>
+                    <h1 className="text-2xl font-bold tracking-tight">RoomEase</h1>
+                    <p className="text-xs opacity-80">Find Your Perfect Match</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-4 bg-white/10 rounded-lg">
-                  <div className="bg-[#E28436] p-2 rounded-lg flex-shrink-0">
-                    <FaHome className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">List Your Space</h4>
-                    <p className="text-sm">Easily post available rooms and find compatible roommates</p>
+                {/* Why Join */}
+                <div className="mb-8">
+                  <h2 className="text-xl font-semibold mb-4">Why Join RoomEase?</h2>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <Search className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium text-sm">Find Roommates</h3>
+                        <p className="text-xs opacity-70">Connect with verified roommates matching your lifestyle</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <Key className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium text-sm">List Your Space</h3>
+                        <p className="text-xs opacity-70">Easily post rooms and find compatible roommates</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <Shield className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium text-sm">Verified Profiles</h3>
+                        <p className="text-xs opacity-70">All users go through our verification process</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-4 bg-white/10 rounded-lg">
-                  <div className="bg-[#2E5941] p-2 rounded-lg flex-shrink-0">
-                    <FaUsers className="w-5 h-5" />
+                {/* Stats */}
+                <div className="mt-auto">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-white/10 rounded-xl p-4 text-center">
+                      <div className="text-2xl font-bold">10K+</div>
+                      <div className="text-xs opacity-70">Active Users</div>
+                    </div>
+                    <div className="bg-white/10 rounded-xl p-4 text-center">
+                      <div className="text-2xl font-bold">5K+</div>
+                      <div className="text-xs opacity-70">Rooms Listed</div>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Verified Profiles</h4>
-                    <p className="text-sm">All users and listings go through our verification process for safety</p>
+                  <div className="mt-4 p-4 bg-white/10 rounded-xl">
+                    <p className="text-xs opacity-80 flex items-start gap-2">
+                      <Sparkles className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                      Join thousands who found their perfect living situation through RoomEase
+                    </p>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div className="mt-8 p-4 bg-white/10 rounded-lg">
-                <p className="text-sm">
-                  <strong>🏡 Trusted Community:</strong> Join thousands of users who have found their perfect living situation through RoomEase.
+            {/* Right Panel - Form */}
+            <div className="lg:col-span-3 p-8 lg:p-10 max-h-[90vh] overflow-y-auto">
+              <div className="max-w-md mx-auto">
+                {/* Header */}
+                <div className="text-center mb-6">
+                  <h2 className="text-2xl lg:text-3xl font-bold text-base-content mb-2">Create Account</h2>
+                  <p className="text-base-content/60 text-sm">Join our community and find your perfect space</p>
+                </div>
+
+                {/* Google Sign Up */}
+                <button
+                  type="button"
+                  onClick={handleSignInWithGoogle}
+                  disabled={googleLoginMutation.isPending}
+                  className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border-2 border-base-300 hover:border-primary/30 hover:bg-base-200/50 transition-all duration-200 mb-5"
+                >
+                  {googleLoginMutation.isPending ? (
+                    <span className="loading loading-spinner loading-sm"></span>
+                  ) : (
+                    <FaGoogle className="w-5 h-5 text-[#EA4335]" />
+                  )}
+                  <span className="font-medium text-base-content">
+                    {googleLoginMutation.isPending ? 'Connecting...' : 'Continue with Google'}
+                  </span>
+                </button>
+
+                {/* Divider */}
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="flex-1 h-px bg-base-300"></div>
+                  <span className="text-xs text-base-content/50 font-medium">or register with email</span>
+                  <div className="flex-1 h-px bg-base-300"></div>
+                </div>
+
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                  {/* Profile Photo */}
+                  <div className="flex items-center gap-4">
+                    <div className="relative">
+                      {previewImage ? (
+                        <img src={previewImage} alt="Preview" className="w-16 h-16 rounded-full object-cover ring-4 ring-base-200" />
+                      ) : (
+                        <div className="w-16 h-16 rounded-full bg-base-200 ring-4 ring-base-300 flex items-center justify-center">
+                          <User className="w-7 h-7 text-base-content/40" />
+                        </div>
+                      )}
+                      {uploading && (
+                        <div className="absolute inset-0 rounded-full bg-base-content/60 flex items-center justify-center">
+                          <span className="text-base-100 text-xs font-bold">{uploadProgress}%</span>
+                        </div>
+                      )}
+                      {hostedImageUrl && !uploading && (
+                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-success rounded-full flex items-center justify-center ring-2 ring-base-100">
+                          <CheckCircle2 className="w-3 h-3 text-success-content" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" id="photo-upload" disabled={uploading || processing} />
+                      <label
+                        htmlFor="photo-upload"
+                        className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-dashed border-base-300 hover:border-primary hover:bg-base-200/50 transition-all cursor-pointer ${uploading || processing ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      >
+                        {uploading ? <Upload className="w-4 h-4 animate-pulse" /> : <Camera className="w-4 h-4" />}
+                        <span className="text-sm font-medium">
+                          {uploading ? 'Uploading...' : processing ? 'Processing...' : 'Upload Photo'}
+                        </span>
+                      </label>
+                      <p className="text-xs text-base-content/50 mt-1">JPG, PNG (max 5MB)</p>
+                    </div>
+                  </div>
+
+                  {uploading && (
+                    <div className="w-full bg-base-200 rounded-full h-1.5 overflow-hidden">
+                      <div className="bg-primary h-full transition-all duration-300 rounded-full" style={{ width: `${uploadProgress}%` }} />
+                    </div>
+                  )}
+
+                  {/* Name Field */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-base-content">Full Name</label>
+                    <div className="relative">
+                      <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-base-content/40" />
+                      <input
+                        {...register('name', { required: "Name is required", minLength: { value: 2, message: "Min 2 characters" } })}
+                        type="text"
+                        className={`w-full pl-12 pr-4 py-3 rounded-xl bg-base-200/50 border-2 transition-all duration-200 outline-none ${errors.name ? 'border-error' : 'border-transparent focus:border-primary focus:bg-base-100'}`}
+                        placeholder="John Doe"
+                      />
+                    </div>
+                    {errors.name && <p className="text-xs text-error">{errors.name.message}</p>}
+                  </div>
+
+                  {/* Email Field */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-base-content">Email Address</label>
+                    <div className="relative">
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-base-content/40" />
+                      <input
+                        {...register('email', { required: "Email is required", pattern: { value: /^\S+@\S+$/i, message: "Invalid email" } })}
+                        type="email"
+                        className={`w-full pl-12 pr-4 py-3 rounded-xl bg-base-200/50 border-2 transition-all duration-200 outline-none ${errors.email ? 'border-error' : 'border-transparent focus:border-primary focus:bg-base-100'}`}
+                        placeholder="you@example.com"
+                      />
+                    </div>
+                    {errors.email && <p className="text-xs text-error">{errors.email.message}</p>}
+                  </div>
+
+                  {/* Role Selection */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-base-content">I want to</label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <label className={`relative flex flex-col items-center gap-2 p-4 rounded-xl border-2 cursor-pointer transition-all ${selectedRole === 'seeker' ? 'border-primary bg-primary/5' : 'border-base-300 hover:border-primary/50'}`}>
+                        <input {...register('role', { required: "Please select your role" })} type="radio" value="seeker" className="sr-only" />
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${selectedRole === 'seeker' ? 'bg-primary text-primary-content' : 'bg-base-200 text-base-content/60'}`}>
+                          <Search className="w-5 h-5" />
+                        </div>
+                        <div className="text-center">
+                          <div className="font-semibold text-sm">Find a Room</div>
+                          <div className="text-xs text-base-content/60">Looking for space</div>
+                        </div>
+                        {selectedRole === 'seeker' && (
+                          <div className="absolute top-2 right-2">
+                            <CheckCircle2 className="w-5 h-5 text-primary" />
+                          </div>
+                        )}
+                      </label>
+                      <label className={`relative flex flex-col items-center gap-2 p-4 rounded-xl border-2 cursor-pointer transition-all ${selectedRole === 'provider' ? 'border-primary bg-primary/5' : 'border-base-300 hover:border-primary/50'}`}>
+                        <input {...register('role', { required: "Please select your role" })} type="radio" value="provider" className="sr-only" />
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${selectedRole === 'provider' ? 'bg-primary text-primary-content' : 'bg-base-200 text-base-content/60'}`}>
+                          <Key className="w-5 h-5" />
+                        </div>
+                        <div className="text-center">
+                          <div className="font-semibold text-sm">List a Room</div>
+                          <div className="text-xs text-base-content/60">Have space to rent</div>
+                        </div>
+                        {selectedRole === 'provider' && (
+                          <div className="absolute top-2 right-2">
+                            <CheckCircle2 className="w-5 h-5 text-primary" />
+                          </div>
+                        )}
+                      </label>
+                    </div>
+                    {errors.role && <p className="text-xs text-error">{errors.role.message}</p>}
+                  </div>
+
+                  {/* Password Field */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-base-content">Password</label>
+                    <div className="relative">
+                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-base-content/40" />
+                      <input
+                        {...register('password', {
+                          required: 'Password is required',
+                          minLength: { value: 6, message: 'Min 6 characters' },
+                          validate: {
+                            hasUpperCase: v => /[A-Z]/.test(v) || 'Needs uppercase',
+                            hasSpecialChar: v => /[!@#$%^&*(),.?":{}|<>]/.test(v) || 'Needs special char',
+                          },
+                        })}
+                        type={showPassword ? "text" : "password"}
+                        className={`w-full pl-12 pr-12 py-3 rounded-xl bg-base-200/50 border-2 transition-all duration-200 outline-none ${errors.password ? 'border-error' : 'border-transparent focus:border-primary focus:bg-base-100'}`}
+                        placeholder="Create a strong password"
+                      />
+                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-base-content/40 hover:text-base-content">
+                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      </button>
+                    </div>
+                    {password && (
+                      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
+                        <RequirementItem met={passwordValidation.hasMinLength} text="6+ characters" />
+                        <RequirementItem met={passwordValidation.hasUpperCase} text="Uppercase" />
+                        <RequirementItem met={passwordValidation.hasSpecialChar} text="Special char" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Terms */}
+                  <label className="flex items-start gap-3 cursor-pointer group">
+                    <input {...register('terms', { required: "You must accept the terms" })} type="checkbox" className="checkbox checkbox-sm checkbox-primary rounded mt-0.5" />
+                    <span className="text-sm text-base-content/70 leading-relaxed">
+                      I agree to the{' '}
+                      <Link to="/terms" className="text-primary hover:underline">Terms of Service</Link>
+                      {' '}and{' '}
+                      <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link>
+                    </span>
+                  </label>
+                  {errors.terms && <p className="text-xs text-error">{errors.terms.message}</p>}
+
+                  {/* Submit */}
+                  <button
+                    type="submit"
+                    disabled={mutation.isPending || uploading || processing || !hostedImageUrl}
+                    className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-primary to-secondary text-primary-content font-semibold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                  >
+                    {mutation.isPending ? (
+                      <>
+                        <span className="loading loading-spinner loading-sm"></span>
+                        <span>Creating Account...</span>
+                      </>
+                    ) : uploading || processing ? (
+                      <>
+                        <Upload className="w-4 h-4 animate-pulse" />
+                        <span>{uploading ? 'Uploading...' : 'Processing...'}</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Create Account</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </>
+                    )}
+                  </button>
+                </form>
+
+                {/* Sign In Link */}
+                <p className="text-center mt-6 text-base-content/60">
+                  Already have an account?{' '}
+                  <Link to="/login" state={location.state} className="text-primary hover:text-primary/80 font-semibold transition-colors">
+                    Sign In
+                  </Link>
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right Side - Registration Form */}
-        <div className="p-8 lg:p-12">
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold text-[#1A202C] mb-2">Create Account</h2>
-            <p className="text-[#3D4451]">Join our community and find your perfect living situation</p>
-          </div>
-
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            {/* Profile Photo Upload */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold text-[#1A202C]">Profile Photo</span>
-              </label>
-              
-              <div className="flex items-center gap-4">
-                <div className="relative">
-                  {previewImage ? (
-                    <img 
-                      src={previewImage} 
-                      alt="Preview" 
-                      className="w-20 h-20 rounded-full object-cover border-4 border-[#E2E8F0]" 
-                    />
-                  ) : (
-                    <div className="w-20 h-20 rounded-full bg-[#E2E8F0] border-4 border-[#E2E8F0] flex items-center justify-center">
-                      <FaUser className="w-8 h-8 text-[#3D4451]" />
-                    </div>
-                  )}
-                  
-                  {uploading && (
-                    <div className="absolute inset-0 rounded-full bg-black bg-opacity-50 flex items-center justify-center">
-                      <div className="text-white text-xs font-bold">{uploadProgress}%</div>
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex-1">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                    id="photo-upload"
-                    disabled={uploading || processing}
-                  />
-                  <label 
-                    htmlFor="photo-upload"
-                    className={`btn btn-outline border-[#E2E8F0] hover:bg-[#10b981] hover:border-[#10b981] hover:text-white ${
-                      uploading || processing ? 'btn-disabled' : ''
-                    }`}
-                  >
-                    <FaCamera className="w-4 h-4" />
-                    {uploading ? 'Uploading...' : processing ? 'Processing...' : 'Choose Photo'}
-                  </label>
-                  <p className="text-xs text-[#3D4451] mt-1">
-                    JPG, PNG or GIF (max 5MB)
-                  </p>
-                </div>
-              </div>
-
-              {uploading && (
-                <div className="mt-3">
-                  <div className="w-full bg-[#E2E8F0] rounded-full h-2">
-                    <div
-                      className="bg-[#10b981] h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${uploadProgress}%` }}
-                    />
-                  </div>
-                  <p className="text-sm text-center mt-1 text-[#3D4451]">
-                    {processing ? 'Processing image...' : `Uploading: ${uploadProgress}%`}
-                  </p>
-                </div>
-              )}
-            </div>
-
-            {/* Name Field */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold text-[#1A202C]">Full Name</span>
-              </label>
-              <div className="relative">
-                <FaUser className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#3D4451] w-4 h-4" />
-                <input
-                  {...register('name', { 
-                    required: "Name is required",
-                    minLength: {
-                      value: 2,
-                      message: "Name must be at least 2 characters"
-                    }
-                  })}
-                  type="text"
-                  className="input input-bordered w-full pl-12 bg-[#F9F9F9] border-[#E2E8F0] focus:border-[#10b981] focus:outline-none"
-                  placeholder="Enter your full name"
-                />
-              </div>
-              {errors.name && (
-                <p className="text-sm text-[#E53E3E] mt-1">{errors.name.message}</p>
-              )}
-            </div>
-
-            {/* Email Field */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold text-[#1A202C]">Email Address</span>
-              </label>
-              <div className="relative">
-                <FaEnvelope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#3D4451] w-4 h-4" />
-                <input
-                  {...register('email', { 
-                    required: "Email is required",
-                    pattern: {
-                      value: /^\S+@\S+$/i,
-                      message: "Invalid email address"
-                    }
-                  })}
-                  type="email"
-                  className="input input-bordered w-full pl-12 bg-[#F9F9F9] border-[#E2E8F0] focus:border-[#10b981] focus:outline-none"
-                  placeholder="Enter your email"
-                />
-              </div>
-              {errors.email && (
-                <p className="text-sm text-[#E53E3E] mt-1">{errors.email.message}</p>
-              )}
-            </div>
-
-            {/* Role Selection */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold text-[#1A202C]">I want to</span>
-              </label>
-              <div className="grid grid-cols-2 gap-3">
-                <label className="flex items-center gap-3 p-4 border-2 border-[#E2E8F0] rounded-lg hover:border-[#10b981] cursor-pointer has-checked:border-[#10b981]">
-                  <input
-                    {...register('role', { required: "Please select your role" })}
-                    type="radio"
-                    value="seeker"
-                    className="radio radio-sm [--chkbg:#10b981]"
-                  />
-                  <div>
-                    <div className="font-medium">Find a Room</div>
-                    <div className="text-xs text-[#3D4451]">Looking for accommodation</div>
-                  </div>
-                </label>
-                <label className="flex items-center gap-3 p-4 border-2 border-[#E2E8F0] rounded-lg hover:border-[#10b981] cursor-pointer has-checked:border-[#10b981]">
-                  <input
-                    {...register('role', { required: "Please select your role" })}
-                    type="radio"
-                    value="provider"
-                    className="radio radio-sm [--chkbg:#10b981]"
-                  />
-                  <div>
-                    <div className="font-medium">List a Room</div>
-                    <div className="text-xs text-[#3D4451]">Have space to rent</div>
-                  </div>
-                </label>
-              </div>
-              {errors.role && (
-                <p className="text-sm text-[#E53E3E] mt-1">{errors.role.message}</p>
-              )}
-            </div>
-
-            {/* Password Field */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold text-[#1A202C]">Password</span>
-              </label>
-              <div className="relative">
-                <FaLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#3D4451] w-4 h-4" />
-                <input
-                  {...register('password', {
-                    required: 'Password is required',
-                    minLength: {
-                      value: 6,
-                      message: 'Password must be at least 6 characters',
-                    },
-                    validate: {
-                      hasUpperCase: value =>
-                        /[A-Z]/.test(value) || 'Password must include at least one uppercase letter',
-                      hasSpecialChar: value =>
-                        /[!@#$%^&*(),.?":{}|<>]/.test(value) || 'Password must include at least one special character',
-                    },
-                  })}
-                  type={showPassword ? "text" : "password"}
-                  className="input input-bordered w-full pl-12 pr-12 bg-[#F9F9F9] border-[#E2E8F0] focus:border-[#10b981] focus:outline-none"
-                  placeholder="Create a strong password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#3D4451] hover:text-[#10b981]"
-                >
-                  {showPassword ? <FaEyeSlash className="w-4 h-4" /> : <FaEye className="w-4 h-4" />}
-                </button>
-              </div>
-
-              {/* Password Requirements */}
-              {password && (
-                <div className="mt-2 space-y-1">
-                  <div className={`flex items-center gap-2 text-sm ${passwordValidation.hasMinLength ? 'text-[#10b981]' : 'text-[#E53E3E]'}`}>
-                    {passwordValidation.hasMinLength ? <FaCheck className="w-3 h-3" /> : <FaTimes className="w-3 h-3" />}
-                    <span>At least 6 characters</span>
-                  </div>
-                  <div className={`flex items-center gap-2 text-sm ${passwordValidation.hasUpperCase ? 'text-[#10b981]' : 'text-[#E53E3E]'}`}>
-                    {passwordValidation.hasUpperCase ? <FaCheck className="w-3 h-3" /> : <FaTimes className="w-3 h-3" />}
-                    <span>One uppercase letter</span>
-                  </div>
-                  <div className={`flex items-center gap-2 text-sm ${passwordValidation.hasSpecialChar ? 'text-[#10b981]' : 'text-[#E53E3E]'}`}>
-                    {passwordValidation.hasSpecialChar ? <FaCheck className="w-3 h-3" /> : <FaTimes className="w-3 h-3" />}
-                    <span>One special character</span>
-                  </div>
-                </div>
-              )}
-
-              {errors.password && (
-                <p className="text-sm text-[#E53E3E] mt-1">{errors.password.message}</p>
-              )}
-            </div>
-
-            {/* Terms and Conditions */}
-            <div className="form-control">
-              <label className="flex items-start gap-3 cursor-pointer">
-                <input 
-                  {...register('terms', { required: "You must accept the terms and conditions" })}
-                  type="checkbox" 
-                  className="checkbox checkbox-sm mt-1 border-[#E2E8F0] [--chkbg:#10b981] [--chkfg:white]" 
-                />
-                <span className="text-sm text-[#3D4451] leading-relaxed">
-                  I agree to the{' '}
-                  <Link to="/terms" className="text-[#10b981] hover:underline font-medium">
-                    Terms of Service
-                  </Link>
-                  {' '}and{' '}
-                  <Link to="/privacy" className="text-[#10b981] hover:underline font-medium">
-                    Privacy Policy
-                  </Link>
-                </span>
-              </label>
-              {errors.terms && (
-                <p className="text-sm text-[#E53E3E] mt-1">{errors.terms.message}</p>
-              )}
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={mutation.isPending || uploading || processing || !hostedImageUrl}
-              className="btn bg-[#10b981] hover:bg-[#059669] text-white border-none w-full h-12"
-            >
-              {mutation.isPending ? (
-                <>
-                  <span className="loading loading-spinner loading-sm"></span>
-                  Creating Account...
-                </>
-              ) : uploading ? (
-                <>
-                  <FaUpload className="w-4 h-4" />
-                  Image Uploading...
-                </>
-              ) : processing ? (
-                <>
-                  <span className="loading loading-spinner loading-sm"></span>
-                  Processing...
-                </>
-              ) : (
-                <>
-                  <FaUserPlus className="w-4 h-4" />
-                  Create Account
-                </>
-              )}
-            </button>
-
-            <div className="divider text-[#3D4451] text-sm">OR CONTINUE WITH</div>
-
-            {/* Google Sign Up */}
-            <button
-              type="button"
-              onClick={handleSignInWithGoogle}
-              disabled={googleLoginMutation.isPending}
-              className="btn btn-outline w-full h-12 border-[#E2E8F0] hover:bg-[#F9F9F9] hover:border-[#10b981]"
-            >
-              {googleLoginMutation.isPending ? (
-                <>
-                  <span className="loading loading-spinner loading-sm"></span>
-                  Connecting...
-                </>
-              ) : (
-                <>
-                  <FaGoogle className="w-4 h-4 text-[#EA4335]" />
-                  Sign up with Google
-                </>
-              )}
-            </button>
-
-            {/* Login Link */}
-            <div className="text-center pt-4">
-              <p className="text-[#3D4451]">
-                Already have an account?{' '}
-                <Link 
-                  to="/login" 
-                  state={location.state}
-                  className="text-[#10b981] hover:text-[#059669] font-semibold hover:underline"
-                >
-                  Sign In
-                </Link>
-              </p>
-            </div>
-          </form>
-        </div>
+        {/* Footer */}
+        <p className="text-center text-sm text-base-content/40 mt-6">
+          By creating an account, you agree to our{' '}
+          <Link to="/terms" className="text-primary hover:underline">Terms</Link>
+          {' '}and{' '}
+          <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link>
+        </p>
       </div>
     </div>
   );
