@@ -17,7 +17,7 @@ import RoleSwitcher from '../components/ForDeveloper/RoleSwitcher';
 const DashboardLayout = () => {
   const navigation = useNavigation();
   const navigate = useNavigate();
-  const { darkMode, setDarkMode, user, logOut } = use(AuthContext);
+  const { user, logOut } = use(AuthContext);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const { isModalOpen, closeModal } = useApplicationModal();
   const handleApplicationSuccess = () => {

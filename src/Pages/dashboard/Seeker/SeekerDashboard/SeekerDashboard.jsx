@@ -49,17 +49,17 @@ export default function SeekerDashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
+      <header className="bg-white border-b border-gray-200 top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Find Your Perfect Roommate</h1>
               <p className="text-gray-600 mt-1">Welcome back, Alex! Ready to find your new home?</p>
             </div>
-            <button className="relative p-2 text-gray-600 hover:bg-gray-100 rounded-full">
+            {/* <button className="relative p-2 text-gray-600 hover:bg-gray-100 rounded-full">
               <Bell className="w-6 h-6" />
               <span className="absolute top-1 right-1 w-3 h-3 bg-red-500 rounded-full"></span>
-            </button>
+            </button> */}
           </div>
           
           {/* Quick Search Bar */}
