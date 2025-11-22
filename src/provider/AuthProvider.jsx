@@ -68,7 +68,6 @@ useEffect(() => {
             unsubscribe()
         }
     }, [])
-
     const authData = {
         loading,
         user,
