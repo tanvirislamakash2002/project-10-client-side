@@ -16,9 +16,10 @@ const currentUser =useUser('tanvir@gmail.com')
   const { mutate: updateRole, isPending } = useMutation({
     mutationFn: async (newRole) => {
       console.log('Attempting to update role to:', newRole);
+      console.log('User ID:', currentUser);
       console.log('User ID:', currentUser?._id);
       
-      const response = await fetch('/api/users/update-role', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/update-role`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -68,11 +69,11 @@ const currentUser =useUser('tanvir@gmail.com')
   ];
 
   return (
-    <div className="relative">
+    <div className="relative flex  z-50">
       {/* Role Switcher Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="btn btn-outline btn-sm gap-2"
+        className="btn btn-outline btn-sm gap-2 fixed z-50 top-18"
         disabled={isPending}
       >
         <FiSettings className="w-4 h-4" />
@@ -90,7 +91,7 @@ const currentUser =useUser('tanvir@gmail.com')
           />
           
           {/* Menu */}
-          <div className="absolute top-12 right-0 z-50 w-64 p-2 bg-base-100 border border-base-300 rounded-lg shadow-lg">
+          <div className="fixed top-26 left-0 z-50 w-64 p-2 bg-base-100 border border-base-300 rounded-lg shadow-lg">
             <div className="text-sm font-semibold p-2 border-b border-base-300">
               Developer Role Switch
             </div>
