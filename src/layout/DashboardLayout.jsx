@@ -17,7 +17,7 @@ import RoleSwitcher from '../components/ForDeveloper/RoleSwitcher';
 const DashboardLayout = () => {
   const navigation = useNavigation();
   const navigate = useNavigate();
-  const { darkMode, setDarkMode, user, signOutUser } = use(AuthContext);
+  const { darkMode, setDarkMode, user, logOut } = use(AuthContext);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const { isModalOpen, closeModal } = useApplicationModal();
   const handleApplicationSuccess = () => {
@@ -25,7 +25,7 @@ const DashboardLayout = () => {
     closeModal();
   };
   const handleSignOut = () => {
-    signOutUser()
+    logOut()
       .then(() => navigate('/login'))
       .catch(error => console.error('Logout error:', error));
   };
@@ -42,7 +42,7 @@ const DashboardLayout = () => {
   <div className="drawer-content flex flex-col">
             <RoleSwitcher right0={'right-0'} justifyEnd={'justify-end'} />
     {/* Mobile Header */}
-    <MobileHeader user={user}></MobileHeader>
+    <MobileHeader props={{user,handleSignOut}}></MobileHeader>
 
     {/* Desktop Header */}
     <DesktopHeader props={{ user, handleSignOut }}></DesktopHeader>

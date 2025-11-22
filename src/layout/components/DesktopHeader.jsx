@@ -10,7 +10,7 @@ const DesktopHeader = ({props}) => {
     const {darkMode, setDarkMode}=useAuth()
     const {role}= useUserRole()
     return (
-        <div className="hidden lg:block bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <div className="hidden lg:block bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 z-50">
             <div className="px-8 py-4">
                 <div className="flex items-center justify-between">
                     <div>
