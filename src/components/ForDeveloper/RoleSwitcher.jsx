@@ -2,17 +2,14 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FiUser, FiHome, FiSearch, FiSettings } from 'react-icons/fi';
 import useUser from '../../../hooks/useUser';
-import useAuth from '../../../hooks/useAuth';
 
 const RoleSwitcher = () => {
   const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
-  const {user}=useAuth();
-const userInfo = useUser;
-
-const currentUser =userInfo(user?.email)
+// console.log('object',userInfo);
+const currentUser =useUser('tanvir@gmail.com')
   // Debug: Check what currentUser contains
-//   console.log('RoleSwitcher currentUser:', currentUser);
+  // console.log('RoleSwitcher currentUser:', currentUser);
 //   console.log('Is developer?', currentUser?.developer);
 
   // Mutation to update user role
@@ -55,6 +52,10 @@ const currentUser =userInfo(user?.email)
   // Only show if user is developer
   if (!currentUser?.developer) {
     console.log('User is not a developer, hiding RoleSwitcher');
+    return null;
+  }
+  if (currentUser?.developer=='false') {
+    console.log('User is not a developer, hiding RoleSwitcher', currentUser?.developer);
     return null;
   }
 
