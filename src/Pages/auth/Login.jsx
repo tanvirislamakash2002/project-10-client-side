@@ -39,8 +39,8 @@ const Login = () => {
       role: 'seeker',
       icon: User,
       label: 'Seeker',
-      email: 'seeker@example.com',
-      password: 'RoomEase123',
+      email: 'seeker@gmail.com',
+      password: 'Password@',
       gradient: 'from-blue-500 to-blue-600',
       bgLight: 'bg-blue-50',
       textColor: 'text-blue-600',
@@ -50,8 +50,8 @@ const Login = () => {
       role: 'provider',
       icon: Home,
       label: 'Provider',
-      email: 'provider@example.com',
-      password: 'RoomEase123',
+      email: 'provider@gmail.com',
+      password: 'Password@',
       gradient: 'from-amber-500 to-orange-500',
       bgLight: 'bg-amber-50',
       textColor: 'text-amber-600',
@@ -61,8 +61,8 @@ const Login = () => {
       role: 'verified',
       icon: Shield,
       label: 'Verified',
-      email: 'verified@example.com',
-      password: 'RoomEase123',
+      email: 'verified@gmail.com',
+      password: 'Password@',
       gradient: 'from-emerald-500 to-green-600',
       bgLight: 'bg-emerald-50',
       textColor: 'text-emerald-600',
@@ -72,8 +72,8 @@ const Login = () => {
       role: 'admin',
       icon: Settings,
       label: 'Admin',
-      email: 'admin@example.com',
-      password: 'RoomEase123',
+      email: 'admin@gmail.com',
+      password: 'Password@',
       gradient: 'from-slate-600 to-slate-700',
       bgLight: 'bg-slate-50',
       textColor: 'text-slate-600',
@@ -318,7 +318,7 @@ const Login = () => {
                             ? 'border-error focus:border-error' 
                             : 'border-transparent focus:border-primary focus:bg-base-100'
                         }`}
-                        placeholder="you@example.com"
+                        placeholder="you@email.com"
                       />
                     </div>
                     {errors.email && (

@@ -336,7 +336,7 @@ const Register = () => {
                         {...register('name', { required: "Name is required", minLength: { value: 2, message: "Min 2 characters" } })}
                         type="text"
                         className={`w-full pl-12 pr-4 py-3 rounded-xl bg-base-200/50 border-2 transition-all duration-200 outline-none ${errors.name ? 'border-error' : 'border-transparent focus:border-primary focus:bg-base-100'}`}
-                        placeholder="John Doe"
+                        placeholder="Your Name"
                       />
                     </div>
                     {errors.name && <p className="text-xs text-error">{errors.name.message}</p>}
@@ -351,7 +351,7 @@ const Register = () => {
                         {...register('email', { required: "Email is required", pattern: { value: /^\S+@\S+$/i, message: "Invalid email" } })}
                         type="email"
                         className={`w-full pl-12 pr-4 py-3 rounded-xl bg-base-200/50 border-2 transition-all duration-200 outline-none ${errors.email ? 'border-error' : 'border-transparent focus:border-primary focus:bg-base-100'}`}
-                        placeholder="you@example.com"
+                        placeholder="you@email.com"
                       />
                     </div>
                     {errors.email && <p className="text-xs text-error">{errors.email.message}</p>}
