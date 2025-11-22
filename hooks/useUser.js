@@ -26,7 +26,7 @@ const useUser = (email) => {
 
     // console.log('useUser debug:', { email, targetEmail, userInfo });
 
-    return userInfo; // ✅ Return the variable, not a string
+    return userInfo; 
 };
 
 export default useUser;

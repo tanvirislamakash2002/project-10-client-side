@@ -9,6 +9,7 @@ import MobileHeader from './components/MobileHeader';
 import { useApplicationModal } from '../../hooks/useApplicationModal';
 import ApplicationModal from '../Pages/dashboard/Seeker/ApplicationModal/ApplicationModal';
 import Footer from '../components/Footer/Footer';
+import RoleSwitcher from '../components/ForDeveloper/RoleSwitcher';
 
 
 
@@ -39,6 +40,7 @@ const DashboardLayout = () => {
 
   {/* Main Content */}
   <div className="drawer-content flex flex-col">
+            <RoleSwitcher right0={'right-0'} justifyEnd={'justify-end'} />
     {/* Mobile Header */}
     <MobileHeader user={user}></MobileHeader>
 

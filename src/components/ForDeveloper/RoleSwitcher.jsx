@@ -3,21 +3,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FiUser, FiHome, FiSearch, FiSettings } from 'react-icons/fi';
 import useUser from '../../../hooks/useUser';
 
-const RoleSwitcher = () => {
+const RoleSwitcher = ({justifyEnd, right0}) => {
   const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
-// console.log('object',userInfo);
-const currentUser =useUser('tanvir@gmail.com')
-  // Debug: Check what currentUser contains
-  // console.log('RoleSwitcher currentUser:', currentUser);
-//   console.log('Is developer?', currentUser?.developer);
+const currentUser =useUser()
 
   // Mutation to update user role
   const { mutate: updateRole, isPending } = useMutation({
     mutationFn: async (newRole) => {
-      console.log('Attempting to update role to:', newRole);
-      console.log('User ID:', currentUser);
-      console.log('User ID:', currentUser?._id);
       
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/update-role`, {
         method: 'PATCH',
@@ -28,9 +21,9 @@ const currentUser =useUser('tanvir@gmail.com')
         }),
       });
       
-      console.log('Response status:', response.status);
+      // console.log('Response status:', response.status);
       const data = await response.json();
-      console.log('Response data:', data);
+      // console.log('Response data:', data);
       
       if (!response.ok) {
         throw new Error(data.message || 'Failed to update role');
@@ -39,7 +32,7 @@ const currentUser =useUser('tanvir@gmail.com')
       return data;
     },
     onSuccess: (data) => {
-      console.log('Role update successful:', data);
+      // console.log('Role update successful:', data);
       queryClient.invalidateQueries({ queryKey: ['currentUser'] });
       queryClient.invalidateQueries({ queryKey: ['user'] });
       setIsOpen(false);
@@ -52,11 +45,11 @@ const currentUser =useUser('tanvir@gmail.com')
 
   // Only show if user is developer
   if (!currentUser?.developer) {
-    console.log('User is not a developer, hiding RoleSwitcher');
+    // console.log('User is not a developer, hiding RoleSwitcher');
     return null;
   }
   if (currentUser?.developer=='false') {
-    console.log('User is not a developer, hiding RoleSwitcher', currentUser?.developer);
+    // console.log('User is not a developer, hiding RoleSwitcher', currentUser?.developer);
     return null;
   }
 
@@ -69,7 +62,7 @@ const currentUser =useUser('tanvir@gmail.com')
   ];
 
   return (
-    <div className="relative flex  z-50">
+    <div className={`relative flex  z-50 ${justifyEnd}`}>
       {/* Role Switcher Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -91,7 +84,7 @@ const currentUser =useUser('tanvir@gmail.com')
           />
           
           {/* Menu */}
-          <div className="fixed top-26 left-0 z-50 w-64 p-2 bg-base-100 border border-base-300 rounded-lg shadow-lg">
+          <div className={`fixed top-26 ${right0?right0:'left-0'} z-50 w-64 p-2 bg-base-100 border border-base-300 rounded-lg shadow-lg`}>
             <div className="text-sm font-semibold p-2 border-b border-base-300">
               Developer Role Switch
             </div>
