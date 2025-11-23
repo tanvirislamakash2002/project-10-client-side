@@ -66,7 +66,7 @@ const currentUser =useUser()
       {/* Role Switcher Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="btn btn-outline btn-sm gap-2 fixed z-50 top-18"
+        className="btn btn-outline btn-sm gap-2 fixed z-50 top-22"
         disabled={isPending}
       >
         <FiSettings className="w-4 h-4" />
