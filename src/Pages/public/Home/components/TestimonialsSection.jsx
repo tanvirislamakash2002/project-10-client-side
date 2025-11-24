@@ -91,22 +91,22 @@ export default function TestimonialsSection() {
   }, [currentIndex, isAutoPlaying]);
 
   return (
-    <div className="bg-white dark:bg-gray-800 py-20 px-4 sm:px-6 lg:px-8">
+    <div className="bg-base-100 dark:bg-base-300 py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full shadow-md mb-6">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-secondary text-primary-content px-4 py-2 rounded-full shadow-md mb-6">
             <CheckCircle className="w-5 h-5" />
             <span className="text-sm font-semibold uppercase tracking-wide">
               Verified Experiences
             </span>
           </div>
           
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-base-content dark:text-base-content mb-4">
             Real Matches, Real Stories
           </h2>
           
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-lg text-neutral dark:text-neutral-content max-w-2xl mx-auto">
             Hear from roommates who found their perfect match through our platform
           </p>
         </div>
@@ -118,10 +118,10 @@ export default function TestimonialsSection() {
           onMouseLeave={() => setIsAutoPlaying(true)}
         >
           {/* Main Testimonial Card */}
-          <div className="bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-700 dark:to-gray-800 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+          <div className="bg-gradient-to-br from-base-200 to-base-300 dark:from-base-200 dark:to-base-300 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
             {/* Quote Icon */}
             <div className="absolute top-8 right-8 opacity-10">
-              <Quote className="w-24 h-24 text-blue-600 dark:text-blue-400" />
+              <Quote className="w-24 h-24 text-primary dark:text-primary" />
             </div>
 
             {/* Content */}
@@ -129,37 +129,37 @@ export default function TestimonialsSection() {
               {/* Rating Stars */}
               <div className="flex gap-1 mb-6">
                 {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
-                  <Star key={i} className="w-6 h-6 fill-yellow-400 text-yellow-400" />
+                  <Star key={i} className="w-6 h-6 fill-warning text-warning" />
                 ))}
               </div>
 
               {/* Quote */}
-              <blockquote className="text-xl sm:text-2xl md:text-3xl font-medium text-gray-900 dark:text-white mb-8 leading-relaxed">
+              <blockquote className="text-xl sm:text-2xl md:text-3xl font-medium text-base-content dark:text-base-content mb-8 leading-relaxed">
                 "{testimonials[currentIndex].quote}"
               </blockquote>
 
               {/* User Info */}
               <div className="flex items-center gap-4">
                 {/* Avatar */}
-                <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${testimonials[currentIndex].avatarColor} flex items-center justify-center text-white text-2xl font-bold shadow-lg`}>
+                <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${testimonials[currentIndex].avatarColor} flex items-center justify-center text-primary-content text-2xl font-bold shadow-lg`}>
                   {testimonials[currentIndex].avatar}
                 </div>
 
                 {/* Details */}
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <h4 className="text-xl font-bold text-gray-900 dark:text-white">
+                    <h4 className="text-xl font-bold text-base-content dark:text-base-content">
                       {testimonials[currentIndex].name}
                     </h4>
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span className="text-xs bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 px-2 py-1 rounded-full font-semibold">
+                    <CheckCircle className="w-5 h-5 text-success" />
+                    <span className="text-xs bg-success/20 text-success-content px-2 py-1 rounded-full font-semibold">
                       Verified User
                     </span>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-300 font-medium">
+                  <p className="text-neutral dark:text-neutral-content font-medium">
                     {testimonials[currentIndex].role}
                   </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="text-sm text-neutral/70 dark:text-neutral-content/70">
                     {testimonials[currentIndex].location} • {testimonials[currentIndex].moveInDate}
                   </p>
                 </div>
@@ -167,8 +167,8 @@ export default function TestimonialsSection() {
                 {/* User Type Badge */}
                 <div className={`hidden sm:block px-4 py-2 rounded-full text-sm font-semibold ${
                   testimonials[currentIndex].userType === 'Seeker' 
-                    ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
-                    : 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300'
+                    ? 'bg-primary/20 text-primary-content'
+                    : 'bg-success/20 text-success-content'
                 }`}>
                   {testimonials[currentIndex].userType === 'Seeker' ? 'Room Seeker' : 'Room Provider'}
                 </div>
@@ -179,17 +179,17 @@ export default function TestimonialsSection() {
           {/* Navigation Arrows */}
           <button
             onClick={prevTestimonial}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-full p-3 shadow-lg transition-all duration-200 hover:scale-110"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 bg-base-100 dark:bg-base-200 hover:bg-base-200 dark:hover:bg-base-100 rounded-full p-3 shadow-lg transition-all duration-200 hover:scale-110"
             aria-label="Previous testimonial"
           >
-            <ChevronLeft className="w-6 h-6 text-gray-800 dark:text-white" />
+            <ChevronLeft className="w-6 h-6 text-base-content dark:text-base-content" />
           </button>
           <button
             onClick={nextTestimonial}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-full p-3 shadow-lg transition-all duration-200 hover:scale-110"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 bg-base-100 dark:bg-base-200 hover:bg-base-200 dark:hover:bg-base-100 rounded-full p-3 shadow-lg transition-all duration-200 hover:scale-110"
             aria-label="Next testimonial"
           >
-            <ChevronRight className="w-6 h-6 text-gray-800 dark:text-white" />
+            <ChevronRight className="w-6 h-6 text-base-content dark:text-base-content" />
           </button>
 
           {/* Navigation Dots */}
@@ -200,8 +200,8 @@ export default function TestimonialsSection() {
                 onClick={() => goToTestimonial(index)}
                 className={`transition-all duration-300 rounded-full ${
                   index === currentIndex
-                    ? 'w-8 h-3 bg-gradient-to-r from-blue-600 to-purple-600'
-                    : 'w-3 h-3 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500'
+                    ? 'w-8 h-3 bg-gradient-to-r from-primary to-accent'
+                    : 'w-3 h-3 bg-base-300 dark:bg-base-content/30 hover:bg-base-content/50 dark:hover:bg-base-content/50'
                 }`}
                 aria-label={`Go to testimonial ${index + 1}`}
               />
@@ -214,36 +214,36 @@ export default function TestimonialsSection() {
           {testimonials.slice(0, 3).map((testimonial, index) => (
             <div 
               key={testimonial.id}
-              className={`bg-white dark:bg-gray-700 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer ${
-                currentIndex === index ? 'ring-2 ring-blue-500 dark:ring-blue-400' : ''
+              className={`bg-base-100 dark:bg-base-200 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer ${
+                currentIndex === index ? 'ring-2 ring-primary dark:ring-primary' : ''
               }`}
               onClick={() => goToTestimonial(index)}
             >
               {/* Rating */}
               <div className="flex gap-1 mb-3">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  <Star key={i} className="w-4 h-4 fill-warning text-warning" />
                 ))}
               </div>
 
               {/* Quote */}
-              <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+              <p className="text-sm text-neutral dark:text-neutral-content mb-4 line-clamp-3">
                 "{testimonial.quote}"
               </p>
 
               {/* User Info */}
               <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${testimonial.avatarColor} flex items-center justify-center text-white text-sm font-bold`}>
+                <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${testimonial.avatarColor} flex items-center justify-center text-primary-content text-sm font-bold`}>
                   {testimonial.avatar}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1">
-                    <p className="font-bold text-gray-900 dark:text-white text-sm truncate">
+                    <p className="font-bold text-base-content dark:text-base-content text-sm truncate">
                       {testimonial.name}
                     </p>
-                    <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
+                    <CheckCircle className="w-3 h-3 text-success flex-shrink-0" />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                  <p className="text-xs text-neutral/70 dark:text-neutral-content/70 truncate">
                     {testimonial.location}
                   </p>
                 </div>
@@ -254,7 +254,7 @@ export default function TestimonialsSection() {
 
         {/* Trust Message */}
         <div className="text-center mt-12">
-          <p className="text-gray-600 dark:text-gray-300 text-lg">
+          <p className="text-neutral dark:text-neutral-content text-lg">
             Join thousands of satisfied users who found their perfect match
           </p>
         </div>
