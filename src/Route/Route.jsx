@@ -20,7 +20,7 @@ import AboutUs from "../Pages/public/AboutUs";
 import ContactUs from "../Pages/public/ContactUs";
 import Blog from "../Pages/public/Blog/Blog";
 import CreateBlogPost from "../Pages/dashboard/Admin/CreateBlogPost/CreateBlogPost";
-import AddFindRoommate from "../Pages/dashboard/Provider/AddFindRoommate/AddFindRoommate";
+import CreateListing from "../Pages/dashboard/Provider/CreateListing/CreateListing";
 import BrowsePage from "../Pages/public/Browse/Browse";
 
 export const router = createBrowserRouter([
@@ -121,7 +121,7 @@ export const router = createBrowserRouter([
         path: '/dashboard/listings/new',
         element:
           <PrivateRoute>
-            <AddFindRoommate></AddFindRoommate>
+            <CreateListing></CreateListing>
           </PrivateRoute>,
       },
       {
