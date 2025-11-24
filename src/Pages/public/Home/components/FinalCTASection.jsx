@@ -47,28 +47,28 @@ export default function FinalCTASection() {
           Join thousands who found their perfect living situation. Safe, verified, and ready when you are.
         </p>
 
-        {/* Dual CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-          <Link to={'/browse'}>
-            <button
-              className="group bg-base-100 dark:bg-base-300 text-primary dark:text-primary-content hover:bg-base-200 dark:hover:bg-base-200 px-10 py-5 rounded-full text-lg font-bold shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 flex items-center gap-3 w-full sm:w-auto"
-            >
-              <Search className="w-6 h-6" />
-              <span>Find a Room</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </Link>
+{/* Dual CTA Buttons */}
+<div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+  <Link to={'/browse'}>
+    <button
+      className="group bg-base-100 text-primary hover:bg-base-200 px-10 py-5 rounded-full text-lg font-bold shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 flex items-center gap-3 w-full sm:w-auto dark:bg-base-300 dark:text-white dark:hover:bg-base-200"
+    >
+      <Search className="w-6 h-6" />
+      <span>Find a Room</span>
+      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+    </button>
+  </Link>
 
-          <Link to={'/dashboard/listings/new'}>
-            <button
-              className="group bg-transparent border-3 border-base-100 text-base-100 hover:bg-base-100 hover:text-primary dark:hover:text-primary-content px-10 py-5 rounded-full text-lg font-bold shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 flex items-center gap-3 w-full sm:w-auto"
-            >
-              <Home className="w-6 h-6" />
-              <span>List Your Space</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </Link>
-        </div>
+  <Link to={'/dashboard/listings/new'}>
+    <button
+      className="group bg-transparent border-3 border-base-100 text-base-100 hover:bg-base-100 hover:text-primary px-10 py-5 rounded-full text-lg font-bold shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-200 flex items-center gap-3 w-full sm:w-auto dark:border-base-100 dark:text-base-100 dark:hover:bg-base-100 dark:hover:text-white"
+    >
+      <Home className="w-6 h-6" />
+      <span>List Your Space</span>
+      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+    </button>
+  </Link>
+</div>
 
         {/* Trust Indicators */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-base-100/90">

@@ -46,22 +46,22 @@ export default function TrustSafetySection() {
   ];
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-20 px-4 sm:px-6 lg:px-8">
+<div className="bg-gradient-to-br from-base-200 via-base-300 to-secondary/20 dark:from-base-100 dark:via-base-200 dark:to-secondary/20 py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-white dark:bg-gray-800 px-4 py-2 rounded-full shadow-md mb-6">
-            <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-            <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide">
+          <div className="inline-flex items-center gap-2 bg-base-100 dark:bg-base-300 px-4 py-2 rounded-full shadow-md mb-6">
+            <Shield className="w-5 h-5 text-primary dark:text-primary" />
+            <span className="text-sm font-semibold text-base-content dark:text-base-content uppercase tracking-wide">
               Safety First
             </span>
           </div>
           
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+          <h2 className="text-4xl sm:text-5xl font-bold text-base-content dark:text-base-content mb-6">
             A Safer Way to Find a Home
           </h2>
           
-          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-neutral dark:text-neutral-content max-w-3xl mx-auto leading-relaxed">
             We go beyond simple listings. Every connection on our platform is built on a foundation of verification, security, and trust.
           </p>
         </div>
@@ -71,11 +71,11 @@ export default function TrustSafetySection() {
           {trustPoints.map((point, index) => (
             <div 
               key={index}
-              className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              className="bg-base-100 dark:bg-base-300 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
             >
               {/* Number Badge */}
               <div className="flex items-start justify-between mb-6">
-                <span className="text-6xl font-bold dark:text-gray-100 text-gray-700">
+                <span className="text-6xl font-bold text-base-content dark:text-base-content">
                   {point.number}
                 </span>
                 <div className={`${point.bgColor} rounded-2xl p-4 shadow-md`}>
@@ -86,10 +86,10 @@ export default function TrustSafetySection() {
               </div>
 
               {/* Content */}
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              <h3 className="text-2xl font-bold text-base-content dark:text-base-content mb-4">
                 {point.title}
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-neutral dark:text-neutral-content leading-relaxed">
                 {point.description}
               </p>
 
@@ -105,29 +105,29 @@ export default function TrustSafetySection() {
         </div>
 
         {/* Stats Section */}
-        <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl mb-12">
+        <div className="bg-base-100 dark:bg-base-300 rounded-3xl p-8 shadow-xl mb-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 pb-6 md:pb-0">
-              <div className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+            <div className="border-b md:border-b-0 md:border-r border-base-300 dark:border-base-content/20 pb-6 md:pb-0">
+              <div className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2">
                 10,000+
               </div>
-              <p className="text-gray-600 dark:text-gray-300 font-medium">
+              <p className="text-neutral dark:text-neutral-content font-medium">
                 Listings Verified
               </p>
             </div>
-            <div className="border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 pb-6 md:pb-0">
-              <div className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent mb-2">
+            <div className="border-b md:border-b-0 md:border-r border-base-300 dark:border-base-content/20 pb-6 md:pb-0">
+              <div className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-success to-secondary bg-clip-text text-transparent mb-2">
                 95%
               </div>
-              <p className="text-gray-600 dark:text-gray-300 font-medium">
+              <p className="text-neutral dark:text-neutral-content font-medium">
                 Users Feel Safer
               </p>
             </div>
             <div>
-              <div className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+              <div className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-2">
                 25,000+
               </div>
-              <p className="text-gray-600 dark:text-gray-300 font-medium">
+              <p className="text-neutral dark:text-neutral-content font-medium">
                 Successful Matches
               </p>
             </div>
@@ -139,18 +139,18 @@ export default function TrustSafetySection() {
           {additionalFeatures.map((feature, index) => (
             <div 
               key={index}
-              className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300 flex items-start gap-4"
+              className="bg-base-100 dark:bg-base-300 rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300 flex items-start gap-4"
             >
-              <div className="bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl p-3 flex-shrink-0">
-                <div className="text-white">
+              <div className="bg-gradient-to-br from-primary to-accent rounded-xl p-3 flex-shrink-0">
+                <div className="text-primary-content">
                   {feature.icon}
                 </div>
               </div>
               <div>
-                <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
+                <h4 className="text-lg font-bold text-base-content dark:text-base-content mb-1">
                   {feature.title}
                 </h4>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                <p className="text-neutral dark:text-neutral-content text-sm">
                   {feature.description}
                 </p>
               </div>
@@ -159,31 +159,31 @@ export default function TrustSafetySection() {
         </div>
 
         {/* Testimonial */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 md:p-12 shadow-2xl text-center text-white">
+        <div className="bg-gradient-to-r from-primary to-secondary rounded-3xl p-8 md:p-12 shadow-2xl text-center text-primary-content">
           <div className="flex justify-center mb-6">
-            <div className="bg-white bg-opacity-20 rounded-full p-4">
-              <Heart className="w-8 h-8 text-red-300" />
+            <div className="bg-base-100 bg-opacity-20 rounded-full p-4">
+              <Heart className="w-8 h-8 text-error" />
             </div>
           </div>
           <blockquote className="text-xl sm:text-2xl font-medium mb-6 italic">
             "I felt so much safer knowing every listing was actually verified! The peace of mind was worth everything."
           </blockquote>
           <div className="flex items-center justify-center gap-3">
-            <div className="w-12 h-12 bg-white/30 rounded-full flex items-center justify-center text-lg font-bold">
+            <div className="w-12 h-12 bg-base-100/30 rounded-full flex items-center justify-center text-lg font-bold">
               S
             </div>
             <div className="text-left">
               <p className="font-semibold">Sarah M.</p>
-              <p className="text-sm text-blue-100">Seattle, WA</p>
+              <p className="text-sm text-primary-content/80">Seattle, WA</p>
             </div>
           </div>
         </div>
 
         {/* Bottom Trust Message */}
         <div className="text-center mt-12">
-          <div className="inline-flex items-center gap-3 bg-white dark:bg-gray-800 px-6 py-4 rounded-full shadow-lg">
-            <Lock className="w-5 h-5 text-green-600 dark:text-green-400" />
-            <p className="text-gray-700 dark:text-gray-300 font-medium">
+          <div className="inline-flex items-center gap-3 bg-base-100 dark:bg-base-300 px-6 py-4 rounded-full shadow-lg">
+            <Lock className="w-5 h-5 text-success dark:text-success" />
+            <p className="text-base-content dark:text-base-content font-medium">
               Your safety is our top priority. Every step of the way.
             </p>
           </div>
