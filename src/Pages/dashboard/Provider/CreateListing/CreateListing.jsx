@@ -1,327 +1,237 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { FaHome, FaImages, FaUser, FaPhone } from 'react-icons/fa';
-import { FiFileText } from 'react-icons/fi';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
-import Swal from 'sweetalert2';
-import PhoneNumber from './components/contactInformation/phoneNumber';
-import ContactEmail from './components/contactInformation/ContactEmail';
-import GenderPreference from './components/preferences/GenderPreference';
-import AgeRange from './components/preferences/AgeRange';
-import Occupation from './components/preferences/Occupation';
-import Lifestyle from './components/preferences/Lifestyle';
-import RoomImage from './components/RoomImage';
-import RoomDescription from './components/RoomDescription';
-import HelpTips from './components/HelpTips';
-import RoomTitle from './components/BasicInformation/RoomTitle';
-import RoomLocation from './components/BasicInformation/RoomLocation';
-import RoomRent from './components/BasicInformation/RoomRent';
-import RoomAvailability from './components/BasicInformation/RoomAvailability';
-import SubmitButton from './components/SubmitButton';
-import { useForm } from 'react-hook-form';
-import { AuthContext } from '../../../../provider/AuthProvider';
-import { useImageUpload } from '../../../../../hooks/useImageUpload';
+import React, { useState } from 'react';
+import { FaHome, FaMapMarkerAlt, FaUsers, FaBed, FaDollarSign, FaCheckCircle } from 'react-icons/fa';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 
-const AddFindRoommate = () => {
-  const { user } = useContext(AuthContext);
-  const { uploadImagesToImgBB, isUploading: isImageUploading, error: imageError } = useImageUpload()
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors, isSubmitting }
-  } = useForm({
-    defaultValues: {
-      title: '',
-      location: '',
-      rent: '',
-      availableFrom: '',
-      description: '',
-      status: 'accepted',
-      preferences: {
-        gender: '',
-        ageRange: '',
-        occupation: '',
-        lifestyle: ''
-      },
-      poster: {
-        phone: '',
-        verified: false,
-        name: user?.displayName || '',
-        email: user?.email || '',
-        photo: user?.photoURL || ''
-      }
-    }
-  });
+const CreateListing = () => {
+  const [currentStep, setCurrentStep] = useState(1);
+  const totalSteps = 5;
 
-  const [images, setImages] = useState([]);
+  const steps = [
+    { number: 1, title: 'Basic Details', icon: FaHome },
+    { number: 2, title: 'Location & Address', icon: FaMapMarkerAlt },
+    { number: 3, title: 'Roommate Preferences', icon: FaUsers },
+    { number: 4, title: 'Property Features', icon: FaBed },
+    { number: 5, title: 'Financial & Final', icon: FaDollarSign }
+  ];
 
-  // Watch form values to access current state
-  const formData = watch();
-
-  useEffect(() => {
-    if (user) {
-      setValue('poster.name', user.displayName || '');
-      setValue('poster.email', user.email || '');
-      setValue('poster.photo', user.photoURL || '');
-    }
-  }, [user, setValue]);
-
-
-  const addRoomMutation = useMutation({
-    mutationFn: (roomData) =>
-      axios.post(`${import.meta.env.VITE_API_URL}/add-roommate`, roomData),
-
-    onSuccess: (res) => {
-      if (res.data.insertedId) {
-        Swal.fire({
-          title: "Success!",
-          text: "Your listing has been submitted for admin approval!", // Updated message
-          icon: "success",
-          confirmButtonColor: "var(--color-primary)"
-        });
-      }
-    },
-    onError: (err) => {
-      Swal.fire({
-        title: "Error!",
-        text: err.message,
-        icon: "error",
-        confirmButtonColor: "var(--color-error)"
-      });
-    }
-  });
-
-
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
-    if (images.length + files.length > 5) {
-      Swal.fire({
-        title: "Too many images!",
-        text: "Maximum 5 images allowed",
-        icon: "warning",
-        confirmButtonColor: "var(--color-warning)"
-      });
-      return;
-    }
-
-    const validFiles = files.filter(file => {
-      if (file.size > 5 * 1024 * 1024) {
-        Swal.fire({
-          title: "File too large!",
-          text: `${file.name} is too large. Maximum size is 5MB.`,
-          icon: "warning",
-          confirmButtonColor: "var(--color-warning)"
-        });
-        return false;
-      }
-      return true;
-    });
-
-    validFiles.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setImages(prev => [...prev, {
-          id: Date.now() + Math.random(),
-          file,
-          url: event.target.result,
-          name: file.name
-        }]);
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-
-  const removeImage = (imageId) => {
-    setImages(prev => prev.filter(img => img.id !== imageId));
-  };
-
-
-
-  const onSubmit = async (data) => {
-
-    console.log(data);
-    try {
-      // Check if we have images to upload
-      if (images.length === 0) {
-        Swal.fire({
-          title: "Images Required!",
-          text: "Please add at least one image of your space",
-          icon: "warning",
-          confirmButtonColor: "var(--color-warning)"
-        });
-        return;
-      }
-      // 1. Upload all images to ImgBB
-      const uploadedUrls = await uploadImagesToImgBB(images);
-
-      // 2. Add the URLs to formData
-      const submissionData = {
-        ...data,
-        images: uploadedUrls,
-        createdAt: new Date().toISOString(), // Add timestamp
-        status: 'accepted' // Ensure status is pending for admin approval
-      };
-
-      // 3. Send to backend
-      await addRoomMutation.mutateAsync(submissionData);
-
-      // Reset after success
-      reset({
-        title: "",
-        location: "",
-        rent: "",
-        availableFrom: "",
-        description: "",
-        status: 'pending',
-        preferences: {
-          gender: "",
-          ageRange: "",
-          occupation: "",
-          lifestyle: "",
-        },
-        poster: {
-          name: user?.displayName || '',
-          email: user?.email || '',
-          photo: user?.photoURL || '',
-          phone: "",
-          verified: false,
-        },
-      });
-      setImages([]);
-    } catch (err) {
-      // Error handling is done in mutation onError
-      console.error("Submission failed:", err);
+  const handleNext = () => {
+    if (currentStep < totalSteps) {
+      setCurrentStep(currentStep + 1);
     }
   };
 
-  // Combined loading state
-  const isLoading = isSubmitting || isImageUploading || addRoomMutation.isLoading;
+  const handlePrevious = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
 
+  const handleStepClick = (stepNumber) => {
+    setCurrentStep(stepNumber);
+  };
+
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 1:
+        return (
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold text-base-content">Basic Details</h3>
+            <p className="text-text-muted">Tell us about your space - title, description, and property type.</p>
+            <div className="bg-base-200 rounded-lg p-8 text-center">
+              <FaHome className="mx-auto text-6xl text-primary mb-4" />
+              <p className="text-text-muted">Step 1 content will go here</p>
+            </div>
+          </div>
+        );
+      case 2:
+        return (
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold text-base-content">Location & Address</h3>
+            <p className="text-text-muted">Where is your property located? Provide complete address details.</p>
+            <div className="bg-base-200 rounded-lg p-8 text-center">
+              <FaMapMarkerAlt className="mx-auto text-6xl text-primary mb-4" />
+              <p className="text-text-muted">Step 2 content will go here</p>
+            </div>
+          </div>
+        );
+      case 3:
+        return (
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold text-base-content">Roommate Preferences</h3>
+            <p className="text-text-muted">What kind of roommate are you looking for?</p>
+            <div className="bg-base-200 rounded-lg p-8 text-center">
+              <FaUsers className="mx-auto text-6xl text-primary mb-4" />
+              <p className="text-text-muted">Step 3 content will go here</p>
+            </div>
+          </div>
+        );
+      case 4:
+        return (
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold text-base-content">Property Features</h3>
+            <p className="text-text-muted">Add amenities, room details, and policies.</p>
+            <div className="bg-base-200 rounded-lg p-8 text-center">
+              <FaBed className="mx-auto text-6xl text-primary mb-4" />
+              <p className="text-text-muted">Step 4 content will go here</p>
+            </div>
+          </div>
+        );
+      case 5:
+        return (
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold text-base-content">Financial & Final Details</h3>
+            <p className="text-text-muted">Set rent, deposit, and review your listing before submission.</p>
+            <div className="bg-base-200 rounded-lg p-8 text-center">
+              <FaDollarSign className="mx-auto text-6xl text-primary mb-4" />
+              <p className="text-text-muted">Step 5 content will go here</p>
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
-<div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-  <div className="container mx-auto px-4 py-8 max-w-4xl">
-    {/* Header */}
-    <div className="text-center mb-8">
-      <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-600 to-yellow-600 rounded-full mb-4">
-        <FaHome className="text-white text-2xl" />
+    <div className="min-h-screen bg-gradient-to-br from-base-200 via-base-100 to-base-200">
+      <div className="container mx-auto px-4 py-8 max-w-5xl">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full mb-4">
+            <FaHome className="text-white text-2xl" />
+          </div>
+          <h1 className="text-4xl font-bold text-base-content mb-2">Create Your Listing</h1>
+          <p className="text-text-muted text-lg">Follow these steps to create an attractive listing</p>
+        </div>
+
+        {/* Progress Stepper */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between max-w-4xl mx-auto">
+            {steps.map((step, index) => {
+              const StepIcon = step.icon;
+              const isActive = currentStep === step.number;
+              const isCompleted = currentStep > step.number;
+
+              return (
+                <React.Fragment key={step.number}>
+                  <div className="flex flex-col items-center flex-1">
+                    <button
+                      onClick={() => handleStepClick(step.number)}
+                      className={`
+                        relative w-12 h-12 rounded-full flex items-center justify-center
+                        transition-all duration-300 mb-2
+                        ${isActive ? 'bg-primary text-primary-content scale-110 shadow-lg' : ''}
+                        ${isCompleted ? 'bg-success text-success-content' : ''}
+                        ${!isActive && !isCompleted ? 'bg-base-300 text-text-muted' : ''}
+                        hover:scale-105 cursor-pointer
+                      `}
+                    >
+                      {isCompleted ? (
+                        <FaCheckCircle className="text-xl" />
+                      ) : (
+                        <StepIcon className="text-lg" />
+                      )}
+                    </button>
+                    <span className={`
+                      text-xs font-medium text-center hidden md:block
+                      ${isActive ? 'text-primary' : ''}
+                      ${isCompleted ? 'text-success' : ''}
+                      ${!isActive && !isCompleted ? 'text-text-muted' : ''}
+                    `}>
+                      {step.title}
+                    </span>
+                  </div>
+                  
+                  {index < steps.length - 1 && (
+                    <div className={`
+                      h-1 flex-1 mx-2 rounded transition-all duration-300
+                      ${currentStep > step.number ? 'bg-success' : 'bg-base-300'}
+                    `} />
+                  )}
+                </React.Fragment>
+              );
+            })}
+          </div>
+
+          {/* Mobile Step Indicator */}
+          <div className="md:hidden text-center mt-4">
+            <span className="text-sm font-medium text-text-muted">
+              Step {currentStep} of {totalSteps}: {steps[currentStep - 1].title}
+            </span>
+          </div>
+        </div>
+
+        {/* Form Card */}
+        <div className="bg-base-100 rounded-2xl shadow-xl overflow-hidden border border-section-border">
+          <div className="p-8 min-h-[400px]">
+            {renderStepContent()}
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="bg-base-200 px-8 py-6 flex items-center justify-between border-t border-section-border">
+            <button
+              onClick={handlePrevious}
+              disabled={currentStep === 1}
+              className={`
+                btn btn-outline gap-2
+                ${currentStep === 1 ? 'btn-disabled opacity-50' : 'hover:bg-primary hover:text-primary-content'}
+              `}
+            >
+              <ChevronLeft className="w-5 h-5" />
+              Previous
+            </button>
+
+            <div className="text-sm font-medium text-text-muted">
+              {currentStep} / {totalSteps}
+            </div>
+
+            {currentStep === totalSteps ? (
+              <button className="btn btn-success gap-2 text-white">
+                <FaCheckCircle className="w-5 h-5" />
+                Submit for Review
+              </button>
+            ) : (
+              <button
+                onClick={handleNext}
+                className="btn btn-primary gap-2"
+              >
+                Next
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Progress Summary */}
+        <div className="mt-6 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-base-200 rounded-full">
+            <div className="w-32 h-2 bg-base-300 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-300"
+                style={{ width: `${(currentStep / totalSteps) * 100}%` }}
+              />
+            </div>
+            <span className="text-sm font-medium text-text-muted">
+              {Math.round((currentStep / totalSteps) * 100)}% Complete
+            </span>
+          </div>
+        </div>
+
+        {/* Help Text */}
+        <div className="mt-8 bg-info/10 border border-info/20 rounded-lg p-4">
+          <div className="flex items-start gap-3">
+            <div className="text-info text-xl">💡</div>
+            <div>
+              <h4 className="font-semibold text-base-content mb-1">Quick Tip</h4>
+              <p className="text-sm text-text-muted">
+                You can click on any completed step to go back and edit your information. Your progress is automatically saved.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-      <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Find Your Perfect Roommate</h1>
-      <p className="text-gray-600 dark:text-gray-300 text-lg">Create a detailed post to attract the right roommate for your space</p>
     </div>
-
-    {/* Form */}
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
-      <div className="p-8 space-y-8">
-        {imageError && (
-          <div className="alert alert-error dark:bg-red-900 dark:text-red-100">
-            <span>Image Upload Error: {imageError}</span>
-          </div>
-        )}
-        {/* Basic Information Section */}
-        <div>
-          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-            <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
-              <FaHome className="text-blue-600 dark:text-blue-300 text-xl" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Basic Information</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Title */}
-            <RoomTitle props={{ register, errors }}></RoomTitle>
-
-            {/* Location */}
-            <RoomLocation props={{ register, errors }}></RoomLocation>
-
-            {/* Rent */}
-            <RoomRent props={{ register, errors }}></RoomRent>
-
-            {/* Availability */}
-            <RoomAvailability props={{ register, errors }}></RoomAvailability>
-          </div>
-        </div>
-
-        {/* Description Section */}
-        <div>
-          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-            <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
-              <FiFileText className="text-green-600 dark:text-green-300 text-xl" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Description & Details</h2>
-          </div>
-
-          <RoomDescription props={{ register, errors }}></RoomDescription>
-        </div>
-
-        {/* Images Section */}
-        <div>
-          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-            <div className="p-2 bg-purple-100 dark:bg-purple-900 rounded-lg">
-              <FaImages className="text-purple-600 dark:text-purple-300 text-xl" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Property Images</h2>
-          </div>
-
-          <RoomImage props={{
-            removeImage,
-            images,
-            handleImageUpload,
-            errors,
-            isUploading: isImageUploading
-          }}></RoomImage>
-        </div>
-
-        {/* Preferences Section */}
-        <div>
-          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-            <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
-              <FaUser className="text-indigo-600 dark:text-indigo-300 text-xl" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Roommate Preferences</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* gender preference */}
-            <GenderPreference props={{ register, errors }}></GenderPreference>
-
-            <Occupation props={{ register }}></Occupation>
-            {/* age range */}
-            <AgeRange props={{ register, setValue, watch, errors }}></AgeRange>
-
-            <Lifestyle props={{ register }}></Lifestyle>
-          </div>
-        </div>
-
-        {/* Contact Information Section */}
-        <div>
-          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-            <div className="p-2 bg-orange-100 dark:bg-orange-900 rounded-lg">
-              <FaPhone className="text-orange-600 dark:text-orange-300 text-xl" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Contact Information</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* phone number */}
-            <PhoneNumber props={{ register, errors }}></PhoneNumber>
-            <ContactEmail props={{ register, errors }}></ContactEmail>
-          </div>
-        </div>
-
-        {/* Submit Button */}
-        <SubmitButton props={{ handleSubmit, onSubmit, isSubmitting: isLoading }}></SubmitButton>
-      </div>
-    </div>
-
-    {/* Help Tips */}
-    <HelpTips></HelpTips>
-  </div>
-</div>
   );
 };
 
-export default AddFindRoommate;
+export default CreateListing;
