@@ -54,6 +54,7 @@ const MultiStepListingForm = () => {
       amenities: [],
       petPolicy: '',
       smokingPolicy: '',
+      applicationRequirements: [],
 
       // Step 5: Financial & Final
       rent: '',
