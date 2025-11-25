@@ -3,7 +3,6 @@ import { FaHome, FaMapMarkerAlt, FaUsers, FaBed, FaDollarSign, FaCheckCircle } f
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { AuthContext } from '../../../../provider/AuthProvider';
 import { useForm } from 'react-hook-form';
-import BasicDetails from './components/BasicDetails/BasicDetails';
 import RenderStepContent from './components/RenderStepContent';
 
 const MultiStepListingForm = () => {
@@ -35,6 +34,10 @@ const MultiStepListingForm = () => {
         state: '',
         postalCode: '',
         country: 'USA'
+      },
+      location: {
+        type: 'Point',
+        coordinates: [0, 0] // Default coordinates
       },
 
       // Step 3: Roommate Preferences
@@ -121,6 +124,41 @@ const MultiStepListingForm = () => {
         return [];
     }
   };
+
+  // Add this to your component functions
+  const handleGeocodeAddress = async () => {
+    const addressData = watch('address');
+    const fullAddress = `${addressData.street}, ${addressData.city}, ${addressData.state} ${addressData.postalCode}, ${addressData.country}`;
+
+    if (!addressData.street || !addressData.city || !addressData.state) {
+      alert('Please complete the address fields first');
+      return;
+    }
+
+    try {
+      // Using Nominatim (OpenStreetMap) free geocoding service
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullAddress)}`
+      );
+      const data = await response.json();
+
+      if (data && data.length > 0) {
+        const { lat, lon } = data[0];
+        setValue('location', {
+          type: 'Point',
+          coordinates: [parseFloat(lon), parseFloat(lat)]
+        });
+
+        // Show success message
+        alert('Address verified and coordinates generated successfully!');
+      } else {
+        alert('Address not found. Please check the address and try again.');
+      }
+    } catch (error) {
+      console.error('Geocoding error:', error);
+      alert('Error verifying address. Please try again.');
+    }
+  };
   // submit functionality 
   const onSubmit = async (data) => {
     try {
@@ -144,7 +182,7 @@ const MultiStepListingForm = () => {
     }
   };
 
-  
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-base-200 via-base-100 to-base-200">
       <div className="container mx-auto px-4 py-8 max-w-5xl">
@@ -217,7 +255,7 @@ const MultiStepListingForm = () => {
         {/* Form Card */}
         <div className="bg-base-100 rounded-2xl shadow-xl overflow-hidden border border-section-border">
           <div className="p-8 min-h-[400px]">
-            <RenderStepContent props={{currentStep,register,errors}}></RenderStepContent>
+            <RenderStepContent props={{ currentStep, register, errors, watch, handleGeocodeAddress }}></RenderStepContent>
           </div>
 
           {/* Navigation Buttons */}
