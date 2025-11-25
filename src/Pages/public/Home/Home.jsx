@@ -12,6 +12,7 @@ const Home = () => {
             <HeroSection></HeroSection>
             <HowItWorksSection></HowItWorksSection>
             <FeaturedListingsSection></FeaturedListingsSection>
+            
             <TrustSafetySection></TrustSafetySection>
             <TestimonialsSection></TestimonialsSection>
             <FinalCTASection></FinalCTASection>
