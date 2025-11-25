@@ -3,6 +3,7 @@ import { FaHome, FaMapMarkerAlt, FaUsers, FaBed, FaDollarSign, FaCheckCircle } f
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { AuthContext } from '../../../../provider/AuthProvider';
 import { useForm } from 'react-hook-form';
+import BasicDetails from './components/BasicDetails/BasicDetails';
 
 const MultiStepListingForm = () => {
   const { user } = useContext(AuthContext);
@@ -69,7 +70,6 @@ const {
     },
     mode: 'onChange'
   });
-  
   const steps = [
     { number: 1, title: 'Basic Details', icon: FaHome },
     { number: 2, title: 'Location & Address', icon: FaMapMarkerAlt },
@@ -78,8 +78,12 @@ const {
     { number: 5, title: 'Financial & Final', icon: FaDollarSign }
   ];
 
-  const handleNext = () => {
-    if (currentStep < totalSteps) {
+  const handleNext = async () => {
+    // Validate current step before proceeding
+        const fields = getStepFields(currentStep);
+    const isStepValid = await trigger(fields);
+
+    if (isStepValid && currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -90,150 +94,60 @@ const {
     }
   };
 
-  const handleStepClick = (stepNumber) => {
-    setCurrentStep(stepNumber);
+  const handleStepClick = async (stepNumber) => {
+    if (stepNumber < currentStep) {
+      // Allow going back to previous steps
+      setCurrentStep(stepNumber);
+    } else if (stepNumber === currentStep + 1) {
+      // Only allow going forward with validation
+      await handleNext();
+    }
+  };
+  // Helper function to get fields for each step
+  const getStepFields = (step) => {
+    switch (step) {
+      case 1:
+        return ['title', 'description', 'propertyType', 'roomType', 'availableFrom', 'roomSize'];
+      case 2:
+        return ['address.street', 'address.city', 'address.state', 'address.postalCode'];
+      case 3:
+        return ['currentOccupants', 'totalRoommates', 'preferredGender', 'preferredAgeRange.min', 'preferredAgeRange.max', 'occupationPreference'];
+      case 4:
+        return ['bathroomType', 'furnishing', 'petPolicy', 'smokingPolicy'];
+      case 5:
+        return ['rent', 'securityDeposit', 'leaseDuration'];
+      default:
+        return [];
+    }
+  };
+// submit functionality 
+  const onSubmit = async (data) => {
+    try {
+      // Add timestamps and process data
+      const submissionData = {
+        ...data,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        providerId: user?.uid,
+        // Add your image upload logic here
+        images: [] // You'll add this from your image upload component
+      };
+
+      console.log('Form Data:', submissionData);
+      
+      // Here you'll integrate with your existing mutation
+      // await addRoomMutation.mutateAsync(submissionData);
+      
+    } catch (error) {
+      console.error('Submission error:', error);
+    }
   };
 
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
         return (
-          <div className="space-y-6">
-  <h3 className="text-2xl font-bold text-base-content">Basic Details</h3>
-  <p className="text-text-muted">Tell us about your space - title, description, and property type.</p>
-  
-  <div className="space-y-6">
-    {/* Title */}
-    <div className="form-control">
-      <label className="label">
-        <span className="label-text font-semibold text-base-content">Listing Title</span>
-      </label>
-      <input
-        type="text"
-        placeholder="e.g., Spacious Room in Quiet 3BR House near University"
-        className="input input-bordered w-full focus:input-primary"
-        {...register('title', { 
-          required: 'Title is required',
-          minLength: { value: 10, message: 'Title must be at least 10 characters' }
-        })}
-      />
-      {errors.title && (
-        <label className="label">
-          <span className="label-text-alt text-error">{errors.title.message}</span>
-        </label>
-      )}
-    </div>
-
-    {/* Description */}
-    <div className="form-control">
-      <label className="label">
-        <span className="label-text font-semibold text-base-content">Description</span>
-      </label>
-      <textarea
-        placeholder="Describe your space, neighborhood, and what makes it special..."
-        className="textarea textarea-bordered w-full h-32 focus:textarea-primary"
-        {...register('description', { 
-          required: 'Description is required',
-          minLength: { value: 50, message: 'Description must be at least 50 characters' }
-        })}
-      />
-      {errors.description && (
-        <label className="label">
-          <span className="label-text-alt text-error">{errors.description.message}</span>
-        </label>
-      )}
-    </div>
-
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {/* Property Type */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text font-semibold text-base-content">Property Type</span>
-        </label>
-        <select 
-          className="select select-bordered w-full focus:select-primary"
-          {...register('propertyType', { required: 'Property type is required' })}
-        >
-          <option value="">Select property type</option>
-          <option value="House">House</option>
-          <option value="Apartment">Apartment</option>
-          <option value="Condo">Condo</option>
-          <option value="Townhouse">Townhouse</option>
-          <option value="Duplex">Duplex</option>
-          <option value="Studio">Studio</option>
-        </select>
-        {errors.propertyType && (
-          <label className="label">
-            <span className="label-text-alt text-error">{errors.propertyType.message}</span>
-          </label>
-        )}
-      </div>
-
-      {/* Room Type */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text font-semibold text-base-content">Room Type</span>
-        </label>
-        <select 
-          className="select select-bordered w-full focus:select-primary"
-          {...register('roomType', { required: 'Room type is required' })}
-        >
-          <option value="">Select room type</option>
-          <option value="Private Room">Private Room</option>
-          <option value="Shared Room">Shared Room</option>
-          <option value="Studio">Studio</option>
-          <option value="Master Bedroom">Master Bedroom</option>
-        </select>
-        {errors.roomType && (
-          <label className="label">
-            <span className="label-text-alt text-error">{errors.roomType.message}</span>
-          </label>
-        )}
-      </div>
-
-      {/* Available From */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text font-semibold text-base-content">Available From</span>
-        </label>
-        <input
-          type="date"
-          className="input input-bordered w-full focus:input-primary"
-          {...register('availableFrom', { required: 'Available date is required' })}
-        />
-        {errors.availableFrom && (
-          <label className="label">
-            <span className="label-text-alt text-error">{errors.availableFrom.message}</span>
-          </label>
-        )}
-      </div>
-
-      {/* Room Size */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text font-semibold text-base-content">Room Size (sq ft)</span>
-        </label>
-        <div className="join">
-          <input
-            type="number"
-            placeholder="e.g., 120"
-            className="input input-bordered join-item w-full focus:input-primary"
-            {...register('roomSize', { 
-              required: 'Room size is required',
-              min: { value: 50, message: 'Room size must be at least 50 sq ft' }
-            })}
-          />
-          <span className="join-item bg-base-300 px-4 flex items-center text-text-muted">sq ft</span>
-        </div>
-        {errors.roomSize && (
-          <label className="label">
-            <span className="label-text-alt text-error">{errors.roomSize.message}</span>
-          </label>
-        )}
-      </div>
-    </div>
-  </div>
-</div>
+<BasicDetails props={{register,errors}}></BasicDetails>
         );
       case 2:
         return (
@@ -378,7 +292,9 @@ const {
             </div>
 
             {currentStep === totalSteps ? (
-              <button className="btn btn-success gap-2 text-white">
+              <button
+              onClick={handleSubmit(onSubmit)}
+               className="btn btn-success gap-2 text-white">
                 <FaCheckCircle className="w-5 h-5" />
                 Submit for Review
               </button>
