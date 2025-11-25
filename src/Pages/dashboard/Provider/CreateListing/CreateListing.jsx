@@ -4,13 +4,14 @@ import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { AuthContext } from '../../../../provider/AuthProvider';
 import { useForm } from 'react-hook-form';
 import BasicDetails from './components/BasicDetails/BasicDetails';
+import RenderStepContent from './components/RenderStepContent';
 
 const MultiStepListingForm = () => {
   const { user } = useContext(AuthContext);
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 5;
 
-const {
+  const {
     register,
     handleSubmit,
     setValue,
@@ -26,7 +27,7 @@ const {
       roomType: '',
       availableFrom: '',
       roomSize: '',
-      
+
       // Step 2: Location & Address
       address: {
         street: '',
@@ -35,7 +36,7 @@ const {
         postalCode: '',
         country: 'USA'
       },
-      
+
       // Step 3: Roommate Preferences
       currentOccupants: 1,
       totalRoommates: 2,
@@ -43,21 +44,21 @@ const {
       preferredAgeRange: { min: 18, max: 35 },
       occupationPreference: '',
       lifestyleTags: [],
-      
+
       // Step 4: Property Features
       bathroomType: '',
       furnishing: '',
       amenities: [],
       petPolicy: '',
       smokingPolicy: '',
-      
+
       // Step 5: Financial & Final
       rent: '',
       currency: 'USD',
       securityDeposit: '',
       utilitiesIncluded: true,
       leaseDuration: '',
-      
+
       // System fields
       status: 'pending',
       poster: {
@@ -80,7 +81,7 @@ const {
 
   const handleNext = async () => {
     // Validate current step before proceeding
-        const fields = getStepFields(currentStep);
+    const fields = getStepFields(currentStep);
     const isStepValid = await trigger(fields);
 
     if (isStepValid && currentStep < totalSteps) {
@@ -120,7 +121,7 @@ const {
         return [];
     }
   };
-// submit functionality 
+  // submit functionality 
   const onSubmit = async (data) => {
     try {
       // Add timestamps and process data
@@ -134,70 +135,16 @@ const {
       };
 
       console.log('Form Data:', submissionData);
-      
+
       // Here you'll integrate with your existing mutation
       // await addRoomMutation.mutateAsync(submissionData);
-      
+
     } catch (error) {
       console.error('Submission error:', error);
     }
   };
 
-  const renderStepContent = () => {
-    switch (currentStep) {
-      case 1:
-        return (
-<BasicDetails props={{register,errors}}></BasicDetails>
-        );
-      case 2:
-        return (
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-base-content">Location & Address</h3>
-            <p className="text-text-muted">Where is your property located? Provide complete address details.</p>
-            <div className="bg-base-200 rounded-lg p-8 text-center">
-              <FaMapMarkerAlt className="mx-auto text-6xl text-primary mb-4" />
-              <p className="text-text-muted">Step 2 content will go here</p>
-            </div>
-          </div>
-        );
-      case 3:
-        return (
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-base-content">Roommate Preferences</h3>
-            <p className="text-text-muted">What kind of roommate are you looking for?</p>
-            <div className="bg-base-200 rounded-lg p-8 text-center">
-              <FaUsers className="mx-auto text-6xl text-primary mb-4" />
-              <p className="text-text-muted">Step 3 content will go here</p>
-            </div>
-          </div>
-        );
-      case 4:
-        return (
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-base-content">Property Features</h3>
-            <p className="text-text-muted">Add amenities, room details, and policies.</p>
-            <div className="bg-base-200 rounded-lg p-8 text-center">
-              <FaBed className="mx-auto text-6xl text-primary mb-4" />
-              <p className="text-text-muted">Step 4 content will go here</p>
-            </div>
-          </div>
-        );
-      case 5:
-        return (
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-base-content">Financial & Final Details</h3>
-            <p className="text-text-muted">Set rent, deposit, and review your listing before submission.</p>
-            <div className="bg-base-200 rounded-lg p-8 text-center">
-              <FaDollarSign className="mx-auto text-6xl text-primary mb-4" />
-              <p className="text-text-muted">Step 5 content will go here</p>
-            </div>
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
-
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-base-200 via-base-100 to-base-200">
       <div className="container mx-auto px-4 py-8 max-w-5xl">
@@ -247,7 +194,7 @@ const {
                       {step.title}
                     </span>
                   </div>
-                  
+
                   {index < steps.length - 1 && (
                     <div className={`
                       h-1 flex-1 mx-2 rounded transition-all duration-300
@@ -270,7 +217,7 @@ const {
         {/* Form Card */}
         <div className="bg-base-100 rounded-2xl shadow-xl overflow-hidden border border-section-border">
           <div className="p-8 min-h-[400px]">
-            {renderStepContent()}
+            <RenderStepContent props={{currentStep,register,errors}}></RenderStepContent>
           </div>
 
           {/* Navigation Buttons */}
@@ -279,9 +226,9 @@ const {
               onClick={handlePrevious}
               disabled={currentStep === 1}
               className={`
-                btn btn-outline gap-2
-                ${currentStep === 1 ? 'btn-disabled opacity-50' : 'hover:bg-primary hover:text-primary-content'}
-              `}
+      btn btn-outline gap-2
+      ${currentStep === 1 ? 'btn-disabled opacity-50' : 'hover:bg-primary hover:text-primary-content'}
+    `}
             >
               <ChevronLeft className="w-5 h-5" />
               Previous
@@ -293,8 +240,9 @@ const {
 
             {currentStep === totalSteps ? (
               <button
-              onClick={handleSubmit(onSubmit)}
-               className="btn btn-success gap-2 text-white">
+                onClick={handleSubmit(onSubmit)}
+                className="btn btn-success gap-2 text-white"
+              >
                 <FaCheckCircle className="w-5 h-5" />
                 Submit for Review
               </button>
@@ -314,7 +262,7 @@ const {
         <div className="mt-6 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-base-200 rounded-full">
             <div className="w-32 h-2 bg-base-300 rounded-full overflow-hidden">
-              <div 
+              <div
                 className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-300"
                 style={{ width: `${(currentStep / totalSteps) * 100}%` }}
               />
