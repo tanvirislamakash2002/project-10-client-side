@@ -39,7 +39,7 @@ const BasicDetails = ({props}) => {
                           className="textarea textarea-bordered w-full h-32 focus:textarea-primary"
                           {...register('description', { 
                             required: 'Description is required',
-                            minLength: { value: 50, message: 'Description must be at least 50 characters' }
+                            minLength: { value: 5, message: 'Description must be at least 50 characters' }
                           })}
                         />
                         {errors.description && (

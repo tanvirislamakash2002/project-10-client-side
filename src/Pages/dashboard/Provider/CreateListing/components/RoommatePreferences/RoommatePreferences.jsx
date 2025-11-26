@@ -171,41 +171,51 @@ const RoommatePreferences = ({props}) => {
       )}
     </div>
 
-    {/* Lifestyle Tags */}
-    <div className="form-control">
-      <label className="label">
-        <span className="label-text font-semibold text-base-content">Lifestyle Preferences</span>
-        <span className="label-text-alt text-text-muted">Select all that apply</span>
+{/* Lifestyle Tags */}
+<div className="form-control">
+  <label className="label">
+    <span className="label-text font-semibold text-base-content">Lifestyle Preferences</span>
+    <span className="label-text-alt text-text-muted">Select up to 5 preferences</span>
+  </label>
+  
+  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">
+    {[
+  { value: 'Non-Smoking', icon: '🚭' },
+  { value: 'Pet-Friendly', icon: '🐾' },
+  { value: 'Quiet', icon: '🔇' },
+  { value: 'Social/Outgoing', icon: '💬' },
+  { value: 'Clean/Tidy', icon: '✨' },
+  { value: 'Night Owl', icon: '🌙' },
+  { value: 'Early Riser', icon: '🌅' },
+  { value: 'Vegetarian/Vegan', icon: '🥗' },
+  { value: 'Fitness Oriented', icon: '💪' },
+  { value: 'Music Lover', icon: '🎵' },
+  { value: 'Gamer', icon: '🎮' },
+  { value: 'Foodie', icon: '🍴' },
+  { value: 'Traveler', icon: '✈️' },
+  { value: 'Book Lover', icon: '📚' },
+  { value: 'Minimalist', icon: '⬜' }
+    ].map(({ value, icon }) => (
+      <label key={value} className="cursor-pointer flex items-center gap-2 p-2 rounded-lg border border-base-300 hover:bg-base-200 transition-colors text-xs">
+        <input
+          type="checkbox"
+          value={value}
+          className="checkbox checkbox-primary checkbox-xs"
+          {...register('lifestyleTags')}
+        />
+        <span className="text-base-content">{icon} {value}</span>
       </label>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        {[
-          'Non-Smoking', 'Pet-Friendly', 'Quiet', 'Social/Outgoing', 
-          'Clean/Tidy', 'Night Owl', 'Early Riser', 'Vegetarian/Vegan',
-          'LGBTQ+ Friendly', '420 Friendly', 'Music Lover', 'Gamer',
-          'Fitness Oriented', 'Foodie', 'Traveler', 'Book Lover',
-          'Minimalist', 'Plant Lover', 'Movie Buff', 'Sports Fan'
-        ].map((tag) => (
-          <label key={tag} className="cursor-pointer flex items-center gap-3 p-3 rounded-lg border border-base-300 hover:bg-base-200 transition-colors">
-            <input
-              type="checkbox"
-              value={tag}
-              className="checkbox checkbox-primary checkbox-sm"
-              {...register('lifestyleTags')}
-            />
-            <span className="text-sm text-base-content">{tag}</span>
-          </label>
-        ))}
-      </div>
-      
-      <div className="mt-3">
-        <label className="label">
-          <span className="label-text-alt text-text-muted">
-            Selected: {watch('lifestyleTags')?.length || 0} tags
-          </span>
-        </label>
-      </div>
-    </div>
+    ))}
+  </div>
+  
+  <div className="mt-2">
+    <label className="label">
+      <span className="label-text-alt text-text-muted">
+        Selected: {(watch('lifestyleTags') || []).length} of 5 preferences
+      </span>
+    </label>
+  </div>
+</div>
 
     {/* Preferences Summary */}
     <div className="bg-base-200 rounded-lg p-4">

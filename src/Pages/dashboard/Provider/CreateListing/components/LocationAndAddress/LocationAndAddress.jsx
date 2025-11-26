@@ -78,13 +78,13 @@ const LocationAndAddress = ({props}) => {
           <span className="label-text font-semibold text-base-content">Postal Code</span>
         </label>
         <input
-          type="text"
+          type="number"
           placeholder="e.g., 10001"
           className="input input-bordered w-full focus:input-primary"
           {...register('address.postalCode', { 
             required: 'Postal code is required',
             pattern: {
-              value: /^[0-9]{5}(-[0-9]{4})?$/,
+            //   value: /^[0-9]{5}(-[0-9]{4})?$/,
               message: 'Please enter a valid postal code'
             }
           })}
