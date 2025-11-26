@@ -189,6 +189,52 @@ const MultiStepListingForm = () => {
       alert('Error verifying address. Please try again.');
     }
   };
+
+// image uploading functionality
+    const handleImageUpload = (e) => {
+      const files = Array.from(e.target.files);
+      if (images.length + files.length > 5) {
+        Swal.fire({
+          title: "Too many images!",
+          text: "Maximum 5 images allowed",
+          icon: "warning",
+          confirmButtonColor: "var(--color-warning)"
+        });
+        return;
+      }
+  
+      const validFiles = files.filter(file => {
+        if (file.size > 5 * 1024 * 1024) {
+          Swal.fire({
+            title: "File too large!",
+            text: `${file.name} is too large. Maximum size is 5MB.`,
+            icon: "warning",
+            confirmButtonColor: "var(--color-warning)"
+          });
+          return false;
+        }
+        return true;
+      });
+  
+      validFiles.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          setImages(prev => [...prev, {
+            id: Date.now() + Math.random(),
+            file,
+            url: event.target.result,
+            name: file.name
+          }]);
+        };
+        reader.readAsDataURL(file);
+      });
+    };
+  
+    const removeImage = (imageId) => {
+      setImages(prev => prev.filter(img => img.id !== imageId));
+    };
+
+
   // submit functionality 
   const onSubmit = async (data) => {
     try {
