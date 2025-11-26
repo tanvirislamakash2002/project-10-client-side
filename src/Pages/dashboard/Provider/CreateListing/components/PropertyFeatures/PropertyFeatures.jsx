@@ -2,7 +2,7 @@ import React from 'react';
 
 const PropertyFeatures = ({ props }) => {
     const { register, errors, watch } = props;
-    
+
     // Safe array accessors
     const amenities = watch('amenities') || [];
     const applicationRequirements = watch('applicationRequirements') || [];
@@ -59,101 +59,101 @@ const PropertyFeatures = ({ props }) => {
                     </div>
                 </div>
 
-{/* Amenities - Categorized */}
-<div className="form-control">
-  <label className="label">
-    <span className="label-text font-semibold text-base-content">Amenities</span>
-    <span className="label-text-alt text-text-muted">Select available amenities</span>
-  </label>
+                {/* Amenities - Categorized */}
+                <div className="form-control">
+                    <label className="label">
+                        <span className="label-text font-semibold text-base-content">Amenities</span>
+                        <span className="label-text-alt text-text-muted">Select available amenities</span>
+                    </label>
 
-  <div className="space-y-6">
-    {/* Essential Utilities */}
-    <div>
-      <h6 className="font-semibold text-base-content mb-3 text-sm">Essential Utilities</h6>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-        {[
-          { value: 'WiFi', icon: '📶', category: 'utility' },
-          { value: 'Air Conditioning', icon: '❄️', category: 'utility' },
-          { value: 'Heating', icon: '🔥', category: 'utility' },
-          { value: 'Utilities Included', icon: '💡', category: 'utility' },
-          { value: 'Cable TV', icon: '📺', category: 'utility' },
-        ].map(({ value, icon }) => (
-          <label key={value} className="cursor-pointer flex items-center gap-2 p-2 rounded border border-base-300 hover:bg-base-200 transition-colors text-sm">
-            <input type="checkbox" value={value} className="checkbox checkbox-primary checkbox-sm" {...register('amenities')} />
-            <span>{icon} {value}</span>
-          </label>
-        ))}
-      </div>
-    </div>
+                    <div className="space-y-6">
+                        {/* Essential Utilities */}
+                        <div>
+                            <h6 className="font-semibold text-base-content mb-3 text-sm">Essential Utilities</h6>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                                {[
+                                    { value: 'WiFi', icon: '📶', category: 'utility' },
+                                    { value: 'Air Conditioning', icon: '❄️', category: 'utility' },
+                                    { value: 'Heating', icon: '🔥', category: 'utility' },
+                                    { value: 'Utilities Included', icon: '💡', category: 'utility' },
+                                    { value: 'Cable TV', icon: '📺', category: 'utility' },
+                                ].map(({ value, icon }) => (
+                                    <label key={value} className="cursor-pointer flex items-center gap-2 p-2 rounded border border-base-300 hover:bg-base-200 transition-colors text-sm">
+                                        <input type="checkbox" value={value} className="checkbox checkbox-primary checkbox-sm" {...register('amenities')} />
+                                        <span>{icon} {value}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
 
-    {/* Kitchen & Laundry */}
-    <div>
-      <h6 className="font-semibold text-base-content mb-3 text-sm">Kitchen & Laundry</h6>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-        {[
-          { value: 'Dishwasher', icon: '🍽️', category: 'kitchen' },
-          { value: 'Laundry In-Unit', icon: '🧺', category: 'laundry' },
-          { value: 'Laundry On-Site', icon: '🏢', category: 'laundry' },
-          { value: 'Furnished Common Areas', icon: '🛋️', category: 'common' },
-        ].map(({ value, icon }) => (
-          <label key={value} className="cursor-pointer flex items-center gap-2 p-2 rounded border border-base-300 hover:bg-base-200 transition-colors text-sm">
-            <input type="checkbox" value={value} className="checkbox checkbox-primary checkbox-sm" {...register('amenities')} />
-            <span>{icon} {value}</span>
-          </label>
-        ))}
-      </div>
-    </div>
+                        {/* Kitchen & Laundry */}
+                        <div>
+                            <h6 className="font-semibold text-base-content mb-3 text-sm">Kitchen & Laundry</h6>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                                {[
+                                    { value: 'Dishwasher', icon: '🍽️', category: 'kitchen' },
+                                    { value: 'Laundry In-Unit', icon: '🧺', category: 'laundry' },
+                                    { value: 'Laundry On-Site', icon: '🏢', category: 'laundry' },
+                                    { value: 'Furnished Common Areas', icon: '🛋️', category: 'common' },
+                                ].map(({ value, icon }) => (
+                                    <label key={value} className="cursor-pointer flex items-center gap-2 p-2 rounded border border-base-300 hover:bg-base-200 transition-colors text-sm">
+                                        <input type="checkbox" value={value} className="checkbox checkbox-primary checkbox-sm" {...register('amenities')} />
+                                        <span>{icon} {value}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
 
-    {/* Outdoor & Parking */}
-    <div>
-      <h6 className="font-semibold text-base-content mb-3 text-sm">Outdoor & Parking</h6>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-        {[
-          { value: 'Parking', icon: '🅿️', category: 'parking' },
-          { value: 'Balcony/Patio', icon: '🌆', category: 'outdoor' },
-          { value: 'Yard/Garden', icon: '🌳', category: 'outdoor' },
-          { value: 'Roof Access', icon: '🏙️', category: 'outdoor' },
-          { value: 'Bike Storage', icon: '🚲', category: 'storage' },
-          { value: 'Pet Area', icon: '🐕', category: 'pet' },
-        ].map(({ value, icon }) => (
-          <label key={value} className="cursor-pointer flex items-center gap-2 p-2 rounded border border-base-300 hover:bg-base-200 transition-colors text-sm">
-            <input type="checkbox" value={value} className="checkbox checkbox-primary checkbox-sm" {...register('amenities')} />
-            <span>{icon} {value}</span>
-          </label>
-        ))}
-      </div>
-    </div>
+                        {/* Outdoor & Parking */}
+                        <div>
+                            <h6 className="font-semibold text-base-content mb-3 text-sm">Outdoor & Parking</h6>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                                {[
+                                    { value: 'Parking', icon: '🅿️', category: 'parking' },
+                                    { value: 'Balcony/Patio', icon: '🌆', category: 'outdoor' },
+                                    { value: 'Yard/Garden', icon: '🌳', category: 'outdoor' },
+                                    { value: 'Roof Access', icon: '🏙️', category: 'outdoor' },
+                                    { value: 'Bike Storage', icon: '🚲', category: 'storage' },
+                                    { value: 'Pet Area', icon: '🐕', category: 'pet' },
+                                ].map(({ value, icon }) => (
+                                    <label key={value} className="cursor-pointer flex items-center gap-2 p-2 rounded border border-base-300 hover:bg-base-200 transition-colors text-sm">
+                                        <input type="checkbox" value={value} className="checkbox checkbox-primary checkbox-sm" {...register('amenities')} />
+                                        <span>{icon} {value}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
 
-    {/* Building Features */}
-    <div>
-      <h6 className="font-semibold text-base-content mb-3 text-sm">Building Features</h6>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-        {[
-          { value: 'Elevator', icon: '🛗', category: 'building' },
-          { value: 'Gym/Fitness Center', icon: '💪', category: 'facility' },
-          { value: 'Pool', icon: '🏊', category: 'facility' },
-          { value: 'Security System', icon: '🔒', category: 'security' },
-          { value: 'Concierge', icon: '💼', category: 'service' },
-          { value: 'Wheelchair Accessible', icon: '♿', category: 'accessibility' },
-          { value: 'Storage Space', icon: '📦', category: 'storage' },
-        ].map(({ value, icon }) => (
-          <label key={value} className="cursor-pointer flex items-center gap-2 p-2 rounded border border-base-300 hover:bg-base-200 transition-colors text-sm">
-            <input type="checkbox" value={value} className="checkbox checkbox-primary checkbox-sm" {...register('amenities')} />
-            <span>{icon} {value}</span>
-          </label>
-        ))}
-      </div>
-    </div>
-  </div>
+                        {/* Building Features */}
+                        <div>
+                            <h6 className="font-semibold text-base-content mb-3 text-sm">Building Features</h6>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                                {[
+                                    { value: 'Elevator', icon: '🛗', category: 'building' },
+                                    { value: 'Gym/Fitness Center', icon: '💪', category: 'facility' },
+                                    { value: 'Pool', icon: '🏊', category: 'facility' },
+                                    { value: 'Security System', icon: '🔒', category: 'security' },
+                                    { value: 'Concierge', icon: '💼', category: 'service' },
+                                    { value: 'Wheelchair Accessible', icon: '♿', category: 'accessibility' },
+                                    { value: 'Storage Space', icon: '📦', category: 'storage' },
+                                ].map(({ value, icon }) => (
+                                    <label key={value} className="cursor-pointer flex items-center gap-2 p-2 rounded border border-base-300 hover:bg-base-200 transition-colors text-sm">
+                                        <input type="checkbox" value={value} className="checkbox checkbox-primary checkbox-sm" {...register('amenities')} />
+                                        <span>{icon} {value}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
 
-  <div className="mt-3">
-    <label className="label">
-      <span className="label-text-alt text-text-muted">
-        Selected: {amenities.length} amenities
-      </span>
-    </label>
-  </div>
-</div>
+                    <div className="mt-3">
+                        <label className="label">
+                            <span className="label-text-alt text-text-muted">
+                                Selected: {amenities.length} amenities
+                            </span>
+                        </label>
+                    </div>
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Pet Policy */}
@@ -203,40 +203,79 @@ const PropertyFeatures = ({ props }) => {
                     </div>
                 </div>
 
-                {/* Application Requirements */}
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text font-semibold text-base-content">Application Requirements</span>
-                        <span className="label-text-alt text-text-muted">What documents do applicants need?</span>
-                    </label>
+{/* Application Requirements - Categorized */}
+<div className="form-control">
+  <label className="label">
+    <span className="label-text font-semibold text-base-content">Application Requirements</span>
+    <span className="label-text-alt text-text-muted">Select what applicants need to provide</span>
+  </label>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                        {[
-                            'ID Verification', 'Income Proof', 'Credit Check', 'Rental History',
-                            'Employment Verification', 'References', 'Background Check',
-                            'Security Deposit', 'First Month Rent', 'Application Fee',
-                            'Interview Required', 'Co-signer Required'
-                        ].map((requirement) => (
-                            <label key={requirement} className="cursor-pointer flex items-center gap-3 p-3 rounded-lg border border-base-300 hover:bg-base-200 transition-colors">
-                                <input
-                                    type="checkbox"
-                                    value={requirement}
-                                    className="checkbox checkbox-primary checkbox-sm"
-                                    {...register('applicationRequirements')}
-                                />
-                                <span className="text-sm text-base-content">{requirement}</span>
-                            </label>
-                        ))}
-                    </div>
+  <div className="space-y-4">
+    {/* Documentation */}
+    <div>
+      <h6 className="font-semibold text-base-content mb-3 text-sm">Documentation & Verification</h6>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        {[
+          { value: 'ID Verification', description: 'Government-issued photo ID' },
+          { value: 'Income Proof', description: 'Pay stubs or employment letter' },
+          { value: 'Employment Verification', description: 'Job confirmation' },
+          { value: 'Credit Check', description: 'Credit history review' },
+          { value: 'Rental History', description: 'Previous landlord references' },
+          { value: 'References', description: 'Personal or professional references' },
+          { value: 'Background Check', description: 'Criminal history check' },
+        ].map(({ value, description }) => (
+          <label key={value} className="cursor-pointer flex items-start gap-3 p-3 rounded-lg border border-base-300 hover:bg-base-200 transition-colors">
+            <input
+              type="checkbox"
+              value={value}
+              className="checkbox checkbox-primary checkbox-sm mt-1"
+              {...register('applicationRequirements')}
+            />
+            <div className="flex-1">
+              <div className="font-medium text-base-content text-sm">{value}</div>
+              <div className="text-text-muted text-xs">{description}</div>
+            </div>
+          </label>
+        ))}
+      </div>
+    </div>
 
-                    <div className="mt-3">
-                        <label className="label">
-                            <span className="label-text-alt text-text-muted">
-                                Selected: {applicationRequirements.length} requirements
-                            </span>
-                        </label>
-                    </div>
-                </div>
+    {/* Payments & Process */}
+    <div>
+      <h6 className="font-semibold text-base-content mb-3 text-sm">Payments & Process</h6>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        {[
+          { value: 'Security Deposit', description: 'Refundable deposit required' },
+          { value: 'First Month Rent', description: 'Rent payment upfront' },
+          { value: 'Application Fee', description: 'Non-refundable fee' },
+          { value: 'Interview Required', description: 'In-person or video meeting' },
+          { value: 'Co-signer Required', description: 'Guarantor needed' },
+        ].map(({ value, description }) => (
+          <label key={value} className="cursor-pointer flex items-start gap-3 p-3 rounded-lg border border-base-300 hover:bg-base-200 transition-colors">
+            <input
+              type="checkbox"
+              value={value}
+              className="checkbox checkbox-primary checkbox-sm mt-1"
+              {...register('applicationRequirements')}
+            />
+            <div className="flex-1">
+              <div className="font-medium text-base-content text-sm">{value}</div>
+              <div className="text-text-muted text-xs">{description}</div>
+            </div>
+          </label>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div className="mt-3">
+    <label className="label">
+      <span className="label-text-alt text-text-muted">
+        Selected: {applicationRequirements.length} requirements
+      </span>
+    </label>
+  </div>
+</div>
 
                 {/* Features Summary */}
                 <div className="bg-base-200 rounded-lg p-4">
