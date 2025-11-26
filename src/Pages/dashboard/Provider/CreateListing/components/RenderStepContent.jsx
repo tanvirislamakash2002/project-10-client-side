@@ -6,7 +6,7 @@ import PropertyFeatures from "./PropertyFeatures/PropertyFeatures";
 import FinancialAndFinalDetails from "./FinancialAndFinalDetails/FinancialAndFinalDetails";
 
 const RenderStepContent = ({ props }) => {
-    const { currentStep, register, errors, watch, handleGeocodeAddress } = props
+    const { currentStep, register, errors, watch, handleGeocodeAddress, images, handleImageUpload, removeImage } = props
     switch (currentStep) {
         case 1:
             return (
@@ -26,7 +26,7 @@ const RenderStepContent = ({ props }) => {
             );
         case 5:
             return (
-                <FinancialAndFinalDetails props={{ register, errors, watch }}></FinancialAndFinalDetails>
+                <FinancialAndFinalDetails props={{ register, errors, watch, images, handleImageUpload, removeImage }}></FinancialAndFinalDetails>
             );
         default:
             return null;

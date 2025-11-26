@@ -7,10 +7,14 @@ import RenderStepContent from './components/RenderStepContent';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useMutation } from '@tanstack/react-query';
+import { useImageUpload } from '../../../../../hooks/useImageUpload';
 
 const MultiStepListingForm = () => {
   const { user } = useContext(AuthContext);
+  const { uploadImagesToImgBB, isUploading: isImageUploading, error: imageError } = useImageUpload()
   const [currentStep, setCurrentStep] = useState(1);
+  const [images, setImages] = useState([]);
+
   const totalSteps = 5;
 
   const {
@@ -79,8 +83,8 @@ const MultiStepListingForm = () => {
     },
     mode: 'onChange'
   });
-// sent to database 
-    const addRoomMutation = useMutation({
+  // sent to database 
+  const addRoomMutation = useMutation({
     mutationFn: (roomData) =>
       axios.post(`${import.meta.env.VITE_API_URL}/add-roommate`, roomData),
 
@@ -190,62 +194,73 @@ const MultiStepListingForm = () => {
     }
   };
 
-// image uploading functionality
-    const handleImageUpload = (e) => {
-      const files = Array.from(e.target.files);
-      if (images.length + files.length > 5) {
+  // image uploading functionality
+  const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+    if (images.length + files.length > 5) {
+      Swal.fire({
+        title: "Too many images!",
+        text: "Maximum 5 images allowed",
+        icon: "warning",
+        confirmButtonColor: "var(--color-warning)"
+      });
+      return;
+    }
+
+    const validFiles = files.filter(file => {
+      if (file.size > 5 * 1024 * 1024) {
         Swal.fire({
-          title: "Too many images!",
-          text: "Maximum 5 images allowed",
+          title: "File too large!",
+          text: `${file.name} is too large. Maximum size is 5MB.`,
           icon: "warning",
           confirmButtonColor: "var(--color-warning)"
         });
-        return;
+        return false;
       }
-  
-      const validFiles = files.filter(file => {
-        if (file.size > 5 * 1024 * 1024) {
-          Swal.fire({
-            title: "File too large!",
-            text: `${file.name} is too large. Maximum size is 5MB.`,
-            icon: "warning",
-            confirmButtonColor: "var(--color-warning)"
-          });
-          return false;
-        }
-        return true;
-      });
-  
-      validFiles.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          setImages(prev => [...prev, {
-            id: Date.now() + Math.random(),
-            file,
-            url: event.target.result,
-            name: file.name
-          }]);
-        };
-        reader.readAsDataURL(file);
-      });
-    };
-  
-    const removeImage = (imageId) => {
-      setImages(prev => prev.filter(img => img.id !== imageId));
-    };
+      return true;
+    });
+
+    validFiles.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setImages(prev => [...prev, {
+          id: Date.now() + Math.random(),
+          file,
+          url: event.target.result,
+          name: file.name
+        }]);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const removeImage = (imageId) => {
+    setImages(prev => prev.filter(img => img.id !== imageId));
+  };
 
 
   // submit functionality 
   const onSubmit = async (data) => {
     try {
+      // Check if we have images to upload
+      if (images.length === 0) {
+        Swal.fire({
+          title: "Images Required!",
+          text: "Please add at least one image of your space",
+          icon: "warning",
+          confirmButtonColor: "var(--color-warning)"
+        });
+        return;
+      }
+      // 1. Upload all images to ImgBB
+      const uploadedUrls = await uploadImagesToImgBB(images);
       // Add timestamps and process data
       const submissionData = {
         ...data,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         providerId: user?.uid,
-        // Add your image upload logic here
-        images: [] // You'll add this from your image upload component
+        images: uploadedUrls
       };
 
       console.log('Form Data:', submissionData);
@@ -353,7 +368,7 @@ const MultiStepListingForm = () => {
         {/* Form Card */}
         <div className="bg-base-100 rounded-2xl shadow-xl overflow-hidden border border-section-border">
           <div className="p-8 min-h-[400px]">
-            <RenderStepContent props={{ currentStep, register, errors, watch, handleGeocodeAddress }}></RenderStepContent>
+            <RenderStepContent props={{ currentStep, register, errors, watch, handleGeocodeAddress, images, handleImageUpload, removeImage }}></RenderStepContent>
           </div>
 
           {/* Navigation Buttons */}
