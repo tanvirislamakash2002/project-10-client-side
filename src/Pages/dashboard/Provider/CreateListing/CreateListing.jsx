@@ -4,6 +4,9 @@ import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { AuthContext } from '../../../../provider/AuthProvider';
 import { useForm } from 'react-hook-form';
 import RenderStepContent from './components/RenderStepContent';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { useMutation } from '@tanstack/react-query';
 
 const MultiStepListingForm = () => {
   const { user } = useContext(AuthContext);
@@ -14,6 +17,7 @@ const MultiStepListingForm = () => {
     register,
     handleSubmit,
     setValue,
+    reset,
     watch,
     trigger,
     formState: { errors, isValid }
@@ -75,6 +79,31 @@ const MultiStepListingForm = () => {
     },
     mode: 'onChange'
   });
+// sent to database 
+    const addRoomMutation = useMutation({
+    mutationFn: (roomData) =>
+      axios.post(`${import.meta.env.VITE_API_URL}/add-roommate`, roomData),
+
+    onSuccess: (res) => {
+      if (res.data.insertedId) {
+        Swal.fire({
+          title: "Success!",
+          text: "Your listing has been submitted for admin approval!", // Updated message
+          icon: "success",
+          confirmButtonColor: "var(--color-primary)"
+        });
+      }
+    },
+    onError: (err) => {
+      Swal.fire({
+        title: "Error!",
+        text: err.message,
+        icon: "error",
+        confirmButtonColor: "var(--color-error)"
+      });
+    }
+  });
+
   const steps = [
     { number: 1, title: 'Basic Details', icon: FaHome },
     { number: 2, title: 'Location & Address', icon: FaMapMarkerAlt },
@@ -176,8 +205,30 @@ const MultiStepListingForm = () => {
       console.log('Form Data:', submissionData);
 
       // Here you'll integrate with your existing mutation
-      // await addRoomMutation.mutateAsync(submissionData);
+      await addRoomMutation.mutateAsync(submissionData);
 
+      // Reset after success
+      reset({
+        title: "",
+        location: "",
+        rent: "",
+        availableFrom: "",
+        description: "",
+        status: 'pending',
+        preferences: {
+          gender: "",
+          ageRange: "",
+          occupation: "",
+          lifestyle: "",
+        },
+        poster: {
+          name: user?.displayName || '',
+          email: user?.email || '',
+          photo: user?.photoURL || '',
+          phone: "",
+          verified: false,
+        },
+      });
     } catch (error) {
       console.error('Submission error:', error);
     }
