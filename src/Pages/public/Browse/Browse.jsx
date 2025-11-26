@@ -7,18 +7,19 @@ import { useListingsFilter } from '../../../../hooks/useListingsFilter';
 
 export default function BrowsePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [filters, setFilters] = useState({
-    priceMin: 0,
-    priceMax: 5000,
-    location: '',
-    roomType: [],
-    propertyType: [],
-    gender: 'any',
-    amenities: [],
-    verifiedOnly: false,
-    ageMin: 18,
-    ageMax: 65,
-  });
+const [filters, setFilters] = useState({
+  priceMin: 0,
+  priceMax: 5000,
+  location: '',
+  roomType: [],
+  propertyType: [],
+  gender: 'any', 
+  amenities: [],
+  verifiedOnly: false,
+  ageMin: 18,
+  ageMax: 65,
+});
+
 
   const { data: RoomData = [], isLoading, error } = useQuery({
     queryKey: ['posts'],
@@ -26,7 +27,6 @@ export default function BrowsePage() {
       fetch(`${import.meta.env.VITE_API_URL}/add-roommate`)
         .then(res => res.json()),
   });
-
 
   const filteredListings = useListingsFilter(RoomData, filters);
 
@@ -43,20 +43,20 @@ export default function BrowsePage() {
     }));
   };
 
-  const clearFilters = () => {
-    setFilters({
-      priceMin: 0,
-      priceMax: 5000,
-      location: '',
-      roomType: [],
-      propertyType: [],
-      gender: 'any',
-      amenities: [],
-      verifiedOnly: false,
-      ageMin: 18,
-      ageMax: 65,
-    });
-  };
+const clearFilters = () => {
+  setFilters({
+    priceMin: 0,
+    priceMax: 5000,
+    location: '',
+    roomType: [],
+    propertyType: [],
+    gender: 'any',
+    amenities: [],
+    verifiedOnly: false,
+    ageMin: 18,
+    ageMax: 65,
+  });
+};
 
 
   return (
@@ -113,7 +113,7 @@ export default function BrowsePage() {
             {!isLoading && filteredListings.length > 0 && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredListings.map(listing => (
-                  <ListingCard key={listing.id} listing={listing} />
+                  <ListingCard key={listing?._id} listing={listing} />
                 ))}
               </div>
             )}

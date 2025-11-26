@@ -71,7 +71,7 @@ export const ListingCard = ({ listing }) => {
                     {/* Location */}
                     <div className="flex items-center gap-1.5 text-text-muted mb-4 text-sm">
                         <MapPin size={16} strokeWidth={2} className="flex-shrink-0" />
-                        <span className="line-clamp-1">{listing.location}</span>
+                        <span className="line-clamp-1">{listing.location.type}</span>
                     </div>
 
                     {/* Price */}
@@ -115,7 +115,7 @@ export const ListingCard = ({ listing }) => {
                             <div className="min-w-0 flex-1">
                                 <p className="text-xs text-text-muted mb-0.5">Gender</p>
                                 <p className="font-semibold text-base-content text-sm truncate">
-                                    {listing.preferences.gender}
+                                    {listing.preferredGender}
                                 </p>
                             </div>
                         </div>
