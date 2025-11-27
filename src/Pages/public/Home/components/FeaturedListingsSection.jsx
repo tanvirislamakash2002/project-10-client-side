@@ -70,23 +70,23 @@ export default function FeaturedListingsSection() {
   ];
 
   return (
-    <div className="bg-white dark:bg-gray-800 py-20 px-4 sm:px-6 lg:px-8">
+<div className="bg-base-100 dark:bg-base-300 py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Shield className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-            <span className="text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wide">
+            <Shield className="w-6 h-6 text-primary dark:text-primary" />
+            <span className="text-sm font-semibold text-primary dark:text-primary uppercase tracking-wide">
               Verified & Approved
             </span>
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-base-content dark:text-base-content mb-4">
             Recently Approved Listings
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-lg text-neutral dark:text-neutral-content max-w-2xl mx-auto">
             All listings are manually verified by our team for your safety and peace of mind
           </p>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+          <p className="text-sm text-text-muted dark:text-neutral-content/80 mt-2">
             12 new listings approved this week • Join 5,000+ seekers finding their perfect match
           </p>
         </div>
@@ -106,10 +106,10 @@ export default function FeaturedListingsSection() {
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </button>
           </Link>
-          <p className="text-gray-600 dark:text-gray-300 mt-4">
+          <p className="text-neutral dark:text-neutral-content mt-4">
             See 50+ more verified rooms
           </p>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+          <p className="text-sm text-text-muted dark:text-neutral-content/80 mt-2">
             Filter by location, price, or move-in date on our main search page
           </p>
         </div>
@@ -134,7 +134,7 @@ function ListingCard({ listing }) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-700 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden group">
+<div className="bg-base-100 dark:bg-base-300 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden group">
       {/* Image Carousel */}
       <div className="relative h-64 overflow-hidden">
         <img 
@@ -145,14 +145,14 @@ function ListingCard({ listing }) {
         
         {/* Badge */}
         <div className="absolute top-4 left-4">
-          <span className="bg-green-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1 shadow-lg">
+          <span className="bg-success text-success-content text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1 shadow-lg">
             <CheckCircle className="w-3 h-3" />
             {listing.badge}
           </span>
         </div>
 
         {/* Photo Counter */}
-        <div className="absolute top-4 right-4 bg-black bg-opacity-60 text-white text-xs px-2.5 py-1 rounded-full">
+        <div className="absolute top-4 right-4 bg-base-content bg-opacity-60 text-base-100 text-xs px-2.5 py-1 rounded-full">
           {currentImageIndex + 1}/{listing.images.length}
         </div>
 
@@ -161,15 +161,15 @@ function ListingCard({ listing }) {
           <>
             <button
               onClick={prevImage}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-base-100 dark:bg-base-300 bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             >
-              <ChevronLeft className="w-5 h-5 text-gray-800 dark:text-white" />
+              <ChevronLeft className="w-5 h-5 text-base-content" />
             </button>
             <button
               onClick={nextImage}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-base-100 dark:bg-base-300 bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             >
-              <ChevronRight className="w-5 h-5 text-gray-800 dark:text-white" />
+              <ChevronRight className="w-5 h-5 text-base-content" />
             </button>
           </>
         )}
@@ -182,8 +182,8 @@ function ListingCard({ listing }) {
               onClick={() => setCurrentImageIndex(index)}
               className={`w-2 h-2 rounded-full transition-all duration-300 ${
                 index === currentImageIndex 
-                  ? 'bg-white w-6' 
-                  : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+                  ? 'bg-base-100 w-6' 
+                  : 'bg-base-100 bg-opacity-50 hover:bg-opacity-75'
               }`}
             />
           ))}
@@ -194,12 +194,12 @@ function ListingCard({ listing }) {
       <div className="p-6">
         {/* Location */}
         <div className="flex items-start gap-2 mb-3">
-          <MapPin className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+          <MapPin className="w-5 h-5 text-primary dark:text-primary flex-shrink-0 mt-0.5" />
           <div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+            <h3 className="text-xl font-bold text-base-content dark:text-base-content">
               {listing.location}
             </h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-neutral dark:text-neutral-content">
               {listing.proximity}
             </p>
           </div>
@@ -208,17 +208,17 @@ function ListingCard({ listing }) {
         {/* Pricing */}
         <div className="mb-4">
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-bold text-gray-900 dark:text-white">
+            <span className="text-3xl font-bold text-base-content dark:text-base-content">
               ${listing.price}
             </span>
-            <span className="text-gray-600 dark:text-gray-300">/month</span>
+            <span className="text-neutral dark:text-neutral-content">/month</span>
           </div>
           {listing.utilities > 0 && (
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            <p className="text-sm text-neutral dark:text-neutral-content mt-1">
               + ${listing.utilities} utilities
             </p>
           )}
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-neutral dark:text-neutral-content">
             ${listing.deposit} security deposit
           </p>
         </div>
@@ -228,9 +228,9 @@ function ListingCard({ listing }) {
           {listing.amenities.map((amenity, index) => (
             <div 
               key={index}
-              className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300"
+              className="flex items-center gap-2 text-sm text-neutral dark:text-neutral-content"
             >
-              <div className="text-blue-600 dark:text-blue-400">
+              <div className="text-primary dark:text-primary">
                 {amenity.icon}
               </div>
               <span>{amenity.label}</span>
@@ -239,7 +239,7 @@ function ListingCard({ listing }) {
         </div>
 
         {/* Action Button */}
-        <button className="w-full btn btn-outline border-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-400 dark:hover:text-gray-900 rounded-xl py-3 font-semibold transition-all duration-200">
+        <button className="w-full btn btn-outline border-2 border-primary dark:border-primary text-primary dark:text-primary hover:bg-primary hover:text-primary-content dark:hover:bg-primary dark:hover:text-primary-content rounded-xl py-3 font-semibold transition-all duration-200">
           View Details
         </button>
       </div>
