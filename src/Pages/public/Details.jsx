@@ -1,104 +1,109 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Heart, Share2, MapPin, DollarSign, Calendar, Clock, Wifi, Droplet, Zap, Wind, Car, Dumbbell, Home, Bed, Monitor, Sofa, Bath, Users, MessageSquare, CheckCircle, X, Phone, Mail, Star, TrendingUp, Shield, AlertCircle, Send, Eye } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
-import { Link, useParams } from 'react-router';
-import useAuth from '../../../hooks/useAuth';
-import { useFavorite } from '../../../hooks/useFavorite';
+import { useQuery } from '@tanstack/react-query'
+import {
+  ChevronLeft, ChevronRight, Heart, Share2, MapPin, DollarSign,
+  Calendar, Clock, Wifi, Home, Bed, Users, MessageSquare,
+  CheckCircle, X, Shield, AlertCircle, Send, Eye,
+  TrendingUp, Star, Bath, Sofa, Car, Dumbbell, Waves,
+  UserCheck, Briefcase, FileText
+} from 'lucide-react';
+import { useParams } from 'react-router';
 
-export default function ListingDetailsPage() {
+// Mock hooks - replace with your actual hooks
+const useAuth = () => ({ user: { email: 'user@example.com', displayName: 'John Doe', photoURL: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John' } });
+const useFavorite = (id, email) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+  return {
+    isFavorite,
+    toggleFavorite: () => setIsFavorite(!isFavorite)
+  };
+};
+
+// Mock data - this would come from your API
+const mockRoomData = {
+  "_id": "507f1f77bcf86cd799439011",
+  "providerId": "550e8400-e29b-41d4-a716-446655440000",
+  "status": "accepted",
+  "title": "Spacious Room in Quiet 3BR House near University",
+  "description": "Looking for a friendly roommate for our sunny third-floor room. The house is located in a peaceful neighborhood, just a 10-minute walk from the university campus. Perfect for students or young professionals who value a comfortable, clean living space. The room receives plenty of natural light and has been freshly painted. You'll be sharing the house with two other friendly professionals in their mid-20s who work in tech and healthcare.",
+  "createdAt": "2023-10-27T10:00:00Z",
+  "updatedAt": "2023-10-28T14:30:00Z",
+  "publishedAt": "2023-10-28T14:30:00Z",
+  "address": {
+    "street": "123 Main St",
+    "city": "College Town",
+    "state": "CA",
+    "postalCode": "12345",
+    "country": "USA"
+  },
+  "location": { "type": "Point", "coordinates": [-122.123, 37.123] },
+  "propertyType": "House",
+  "roomType": "Private Room",
+  "currentOccupants": 2,
+  "totalRoommates": 3,
+  "preferredGender": "No Preference",
+  "preferredAgeRange": { "min": 18, "max": 28 },
+  "occupationPreference": "Student",
+  "lifestyleTags": ["Non-Smoking", "Pet-Friendly", "Quiet"],
+  "rent": 850,
+  "currency": "USD",
+  "securityDeposit": 850,
+  "utilitiesIncluded": true,
+  "leaseDuration": "1 Year",
+  "images": [
+    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",
+    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800",
+    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800",
+    "https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800"
+  ],
+  "adminReviewerId": "admin-user-id-123",
+  "adminReviewedAt": "2023-10-28T14:30:00Z",
+  "viewCount": 142,
+  "availableFrom": "2023-11-01T00:00:00Z",
+  "roomSize": 120,
+  "bathroomType": "Private",
+  "furnishing": "Furnished",
+  "amenities": ["WiFi", "Laundry", "Parking", "Gym", "Pool"],
+  "petPolicy": "Cats Only",
+  "smokingPolicy": "Non-Smoking",
+  "applicationCount": 5,
+  "isFeatured": false,
+  "applicationRequirements": ["ID Verification", "Income Proof", "References"]
+};
+
+const RoomListingDetails = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isSaved, setIsSaved] = useState(false);
   const [showApplicationModal, setShowApplicationModal] = useState(false);
   const { user } = useAuth();
 
-  const { id } = useParams()
-
+  // In your actual component, this would be: const { id } = useParams();
+  const {id} = useParams();
   const { isFavorite, toggleFavorite } = useFavorite(id, user?.email);
+
+  // In your actual component, use this:
+  // const { data: singleRoom = {}, isLoading } = useQuery({...});
+  // const singleRoom = mockRoomData;
   const { data: singleRoom = {}, isLoading, error } = useQuery({
     queryKey: ['posts'],
     queryFn: () =>
       fetch(`${import.meta.env.VITE_API_URL}/add-roommate/${id}`)
         .then(res => res.json()),
   });
+  console.log(singleRoom);
+  console.log(id);
+  // const isLoading = false;
 
+  const formattedDate = singleRoom?.availableFrom
+    ? new Date(singleRoom.availableFrom).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })
+    : 'Not available';
 
-  const formattedDate =    singleRoom?.availableFrom? new Date(singleRoom.availableFrom).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  }) : 'Not available';
-  console.log(formattedDate);
-
-
-  // Mock listing data
-  const listing = {
-    id: 1,
-    title: "Sunny Private Room in Downtown Apartment",
-    rent: 950,
-    deposit: 500,
-    availableFrom: "November 1, 2025",
-    leaseTerm: "12 months",
-    roomType: "Private Room",
-    roomSize: "120 sq ft",
-    furnishing: "Furnished",
-    furniture: ["Queen Bed", "Desk & Chair", "Wardrobe", "Nightstand", "Reading Lamp"],
-    neighborhood: "Downtown",
-    address: "Near 5th Avenue & Main Street",
-    images: ["🏠", "🛏️", "🪟", "🚿", "🏢"],
-    description: "Beautiful, sunlit private room in a modern 3-bedroom apartment. Perfect for young professionals. The room faces east with large windows providing excellent natural light throughout the morning. Hardwood floors and freshly painted walls.",
-
-    amenities: {
-      inRoom: [
-        { name: "Private Bathroom", icon: Bath, available: false },
-        { name: "Air Conditioning", icon: Wind, available: true },
-        { name: "Heating", icon: Wind, available: true },
-        { name: "Desk & Chair", icon: Monitor, available: true },
-        { name: "Closet Space", icon: Home, available: true }
-      ],
-      building: [
-        { name: "Laundry In-Unit", icon: Home, available: true },
-        { name: "Gym", icon: Dumbbell, available: true },
-        { name: "Rooftop Access", icon: Home, available: true },
-        { name: "Parking (Extra $50)", icon: Car, available: true },
-        { name: "Bike Storage", icon: Home, available: true },
-        { name: "Elevator", icon: Home, available: true }
-      ]
-    },
-
-    utilities: ["WiFi", "Water", "Gas", "Electricity"],
-
-    transportation: [
-      "5-min walk to Metro Blue Line",
-      "Bus stop 50m away (Routes 12, 45)",
-      "15-min bike ride to Central Station",
-      "Easy highway access (I-95)"
-    ],
-
-    housemates: {
-      count: 2,
-      description: "2 working professionals in their late 20s - one software engineer and one graphic designer",
-      lifestyle: "We enjoy a clean, respectful living environment. Occasionally host small gatherings on weekends but generally quiet during weekdays."
-    },
-
-    preferences: {
-      ideal: "Professional or graduate student, non-smoker, clean, respectful of quiet hours after 11 PM",
-      pets: "Small pets negotiable (extra deposit required)",
-      smoking: "No smoking inside (designated outdoor area available)",
-      cleanliness: "We maintain a clean common space and have a weekly cleaning schedule",
-      social: "Social but respectful - we enjoy occasional movie nights but value personal space"
-    },
-
-    provider: {
-      name: "Sarah Chen",
-      type: "Current Tenant",
-      photo: "👩",
-      responseTime: "Usually responds within 24 hours",
-      rating: 4.8,
-      reviews: 12,
-      verified: true,
-      joinedDate: "Member since 2023"
-    }
-  };
+  const formattedAddress = singleRoom?.address
+    ? `${singleRoom.address.street}, ${singleRoom.address?.city}, ${singleRoom.address.state} ${singleRoom.address.postalCode}`
+    : '';
 
   const nextImage = () => {
     if (!singleRoom?.images?.length) return;
@@ -109,39 +114,44 @@ export default function ListingDetailsPage() {
     if (!singleRoom?.images?.length) return;
     setCurrentImageIndex((prev) => (prev - 1 + singleRoom.images.length) % singleRoom.images.length);
   };
+
+  const amenityIcons = {
+    'WiFi': Wifi,
+    'Laundry': Home,
+    'Parking': Car,
+    'Gym': Dumbbell,
+    'Pool': Waves
+  };
+
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="loading loading-spinner loading-lg"></div>
-        <span className="ml-2">Loading room details...</span>
+      <div className="min-h-screen bg-base-200 flex items-center justify-center">
+        <div className="loading loading-spinner loading-lg text-primary"></div>
+        <span className="ml-4 text-base-content">Loading room details...</span>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-base-200">
       {/* Header with Back Button */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
+      <div className="bg-base-100 border-b border-base-300 sticky top-0 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <Link to={'/browse'}>
-              <button className="flex items-center text-gray-600 hover:text-gray-900 transition">
-                <ChevronLeft className="w-5 h-5 mr-1" />
-                Back to Listings
-              </button>
-            </Link>
+            <button className="flex items-center text-base-content hover:text-primary transition gap-2">
+              <ChevronLeft className="w-5 h-5" />
+              <span className="font-medium">Back to Listings</span>
+            </button>
             <div className="flex gap-2">
-              <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                <Share2 className="w-5 h-5 text-gray-600" />
+              <button className="btn btn-ghost btn-sm btn-circle">
+                <Share2 className="w-5 h-5" />
               </button>
               <button
                 onClick={toggleFavorite}
-                className={`p-2 border rounded-lg transition ${isFavorite
-                  ? 'border-red-500 bg-red-50'
-                  : 'border-gray-300 hover:bg-gray-50'
+                className={`btn btn-sm btn-circle ${isFavorite ? 'btn-error' : 'btn-ghost'
                   }`}
               >
-                <Heart className={`w-5 h-5 ${isFavorite ? 'text-red-500 fill-current' : 'text-gray-600'}`} />
+                <Heart className={`w-5 h-5 ${isFavorite ? 'fill-current' : ''}`} />
               </button>
             </div>
           </div>
@@ -151,62 +161,80 @@ export default function ListingDetailsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-6">
             {/* Photo Gallery */}
-            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-              <div className="relative h-96 bg-gray-100 flex items-center justify-center">
-                {/* Main Image Display with safe fallback */}
-                <img
-                  src={singleRoom?.images?.[currentImageIndex] || "/placeholder-image.jpg"}
-                  alt={`Room image ${currentImageIndex + 1}`}
-                  className="w-full h-full object-cover"
-                />
+            <div className="card bg-base-100 shadow-lg overflow-hidden">
+              <div className="relative h-[500px] bg-base-300">
+                {singleRoom?.images?.[currentImageIndex] ? (
+                  <img
+                    src={singleRoom.images[currentImageIndex]}
+                    alt={`Room image ${currentImageIndex + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <Home className="w-24 h-24 text-base-content opacity-20" />
+                  </div>
+                )}
 
-                {/* Only show navigation if images exist and there are multiple */}
                 {singleRoom?.images && singleRoom.images.length > 1 && (
                   <>
                     <button
                       onClick={prevImage}
-                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
+                      className="btn btn-circle btn-sm absolute left-4 top-1/2 -translate-y-1/2 bg-base-100/90 hover:bg-base-100"
                     >
-                      <ChevronLeft className="w-6 h-6 text-gray-800" />
+                      <ChevronLeft className="w-5 h-5" />
                     </button>
                     <button
                       onClick={nextImage}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full hover:bg-opacity-100 transition shadow-lg"
+                      className="btn btn-circle btn-sm absolute right-4 top-1/2 -translate-y-1/2 bg-base-100/90 hover:bg-base-100"
                     >
-                      <ChevronRight className="w-6 h-6 text-gray-800" />
+                      <ChevronRight className="w-5 h-5" />
                     </button>
 
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
                       {singleRoom.images.map((_, idx) => (
                         <button
                           key={idx}
                           onClick={() => setCurrentImageIndex(idx)}
-                          className={`w-2 h-2 rounded-full transition ${idx === currentImageIndex ? 'bg-white w-8' : 'bg-white bg-opacity-50'
+                          className={`h-2 rounded-full transition-all ${idx === currentImageIndex
+                              ? 'bg-base-100 w-8'
+                              : 'bg-base-100/50 w-2'
                             }`}
                         />
                       ))}
                     </div>
                   </>
                 )}
+
+                {/* View Count Badge */}
+                <div className="absolute top-4 right-4 badge badge-lg bg-base-100/90 gap-2">
+                  <Eye className="w-4 h-4" />
+                  {singleRoom.viewCount} views
+                </div>
+
+                {/* Featured Badge */}
+                {singleRoom.isFeatured && (
+                  <div className="absolute top-4 left-4 badge badge-warning badge-lg gap-2">
+                    <Star className="w-4 h-4 fill-current" />
+                    Featured
+                  </div>
+                )}
               </div>
 
-              {/* Thumbnail strip - only if images exist */}
-              {singleRoom?.images && (
-                <div className="flex gap-2 p-4 overflow-x-auto">
+              {/* Thumbnail strip */}
+              {singleRoom?.images && singleRoom.images.length > 1 && (
+                <div className="flex gap-2 p-4 overflow-x-auto bg-base-100">
                   {singleRoom.images.map((img, idx) => (
                     <button
                       key={idx}
                       onClick={() => setCurrentImageIndex(idx)}
-                      className={`flex-shrink-0 w-20 h-20 bg-gray-100 rounded-lg overflow-hidden border-2 transition ${idx === currentImageIndex ? 'border-blue-500' : 'border-transparent hover:border-gray-300'
+                      className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition ${idx === currentImageIndex
+                          ? 'border-primary'
+                          : 'border-transparent hover:border-base-300'
                         }`}
                     >
-                      <img
-                        src={img}
-                        alt={`Thumbnail ${idx + 1}`}
-                        className="w-full h-full object-cover"
-                      />
+                      <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
                     </button>
                   ))}
                 </div>
@@ -214,295 +242,364 @@ export default function ListingDetailsPage() {
             </div>
 
             {/* Title and Quick Facts */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">{singleRoom.title}</h1>
+            <div className="card bg-base-100 shadow-lg">
+              <div className="card-body">
+                <h1 className="card-title text-3xl mb-4">{singleRoom.title}</h1>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                  <p className="text-sm text-green-600 font-medium mb-1">Monthly Rent</p>
-                  <p className="text-2xl font-bold text-green-700">${singleRoom.rent}</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="bg-success/10 border border-success/20 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <DollarSign className="w-4 h-4 text-success" />
+                      <p className="text-sm text-success font-medium">Monthly Rent</p>
+                    </div>
+                    <p className="text-2xl font-bold text-success">
+                      {singleRoom.currency === 'USD' ? '$' : ''}{singleRoom.rent}
+                    </p>
+                  </div>
+
+                  <div className="bg-info/10 border border-info/20 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Shield className="w-4 h-4 text-info" />
+                      <p className="text-sm text-info font-medium">Deposit</p>
+                    </div>
+                    <p className="text-2xl font-bold text-info">
+                      {singleRoom.currency === 'USD' ? '$' : ''}{singleRoom.securityDeposit}
+                    </p>
+                  </div>
+
+                  <div className="bg-warning/10 border border-warning/20 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Calendar className="w-4 h-4 text-warning" />
+                      <p className="text-sm text-warning font-medium">Available</p>
+                    </div>
+                    <p className="text-sm font-bold text-warning">{formattedDate}</p>
+                  </div>
+
+                  <div className="bg-secondary/10 border border-secondary/20 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Clock className="w-4 h-4 text-secondary" />
+                      <p className="text-sm text-secondary font-medium">Lease</p>
+                    </div>
+                    <p className="text-sm font-bold text-secondary">{singleRoom.leaseDuration}</p>
+                  </div>
                 </div>
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <p className="text-sm text-blue-600 font-medium mb-1">Security Deposit</p>
-                  <p className="text-2xl font-bold text-blue-700">${listing.deposit}</p>
-                </div>
-                <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-                  <p className="text-sm text-purple-600 font-medium mb-1">Available From</p>
-                  <p className="text-sm font-bold text-purple-700">{formattedDate}</p>
-                </div>
-                <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-                  <p className="text-sm text-orange-600 font-medium mb-1">Lease Term</p>
-                  <p className="text-sm font-bold text-orange-700">{listing.leaseTerm}</p>
-                </div>
+
+                {/* Application Count */}
+                {singleRoom.applicationCount > 0 && (
+                  <div className="alert alert-info mt-4">
+                    <TrendingUp className="w-5 h-5" />
+                    <span><strong>{singleRoom.applicationCount}</strong> people have applied for this room</span>
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Description */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">About This Space</h2>
-              <p className="text-gray-700 leading-relaxed">{singleRoom.description}</p>
+            <div className="card bg-base-100 shadow-lg">
+              <div className="card-body">
+                <h2 className="card-title text-xl">About This Space</h2>
+                <p className="text-base-content/80 leading-relaxed">{singleRoom.description}</p>
+              </div>
             </div>
 
-            {/* The Space & Offer */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Room Details</h2>
+            {/* Room Details */}
+            <div className="card bg-base-100 shadow-lg">
+              <div className="card-body">
+                <h2 className="card-title text-xl mb-4">Room Details</h2>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-                <div className="border border-gray-200 rounded-lg p-4">
-                  <p className="text-sm text-gray-600 mb-1">Room Type</p>
-                  <p className="font-semibold text-gray-900">{listing.roomType}</p>
-                </div>
-                <div className="border border-gray-200 rounded-lg p-4">
-                  <p className="text-sm text-gray-600 mb-1">Room Size</p>
-                  <p className="font-semibold text-gray-900">{listing.roomSize}</p>
-                </div>
-                <div className="border border-gray-200 rounded-lg p-4">
-                  <p className="text-sm text-gray-600 mb-1">Furnishing</p>
-                  <p className="font-semibold text-gray-900">{listing.furnishing}</p>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="stat bg-base-200 rounded-lg p-4">
+                    <div className="stat-figure text-primary">
+                      <Home className="w-8 h-8" />
+                    </div>
+                    <div className="stat-title text-xs">Property Type</div>
+                    <div className="stat-value text-lg">{singleRoom.propertyType}</div>
+                  </div>
+
+                  <div className="stat bg-base-200 rounded-lg p-4">
+                    <div className="stat-figure text-primary">
+                      <Bed className="w-8 h-8" />
+                    </div>
+                    <div className="stat-title text-xs">Room Type</div>
+                    <div className="stat-value text-lg">{singleRoom.roomType}</div>
+                  </div>
+
+                  <div className="stat bg-base-200 rounded-lg p-4">
+                    <div className="stat-figure text-primary">
+                      <Home className="w-8 h-8" />
+                    </div>
+                    <div className="stat-title text-xs">Room Size</div>
+                    <div className="stat-value text-lg">{singleRoom.roomSize} ft²</div>
+                  </div>
+
+                  <div className="stat bg-base-200 rounded-lg p-4">
+                    <div className="stat-figure text-primary">
+                      <Bath className="w-8 h-8" />
+                    </div>
+                    <div className="stat-title text-xs">Bathroom</div>
+                    <div className="stat-value text-lg text-sm">{singleRoom.bathroomType}</div>
+                  </div>
+
+                  <div className="stat bg-base-200 rounded-lg p-4">
+                    <div className="stat-figure text-primary">
+                      <Sofa className="w-8 h-8" />
+                    </div>
+                    <div className="stat-title text-xs">Furnishing</div>
+                    <div className="stat-value text-lg text-sm">{singleRoom.furnishing}</div>
+                  </div>
+
+                  <div className="stat bg-base-200 rounded-lg p-4">
+                    <div className="stat-figure text-primary">
+                      <Users className="w-8 h-8" />
+                    </div>
+                    <div className="stat-title text-xs">Roommates</div>
+                    <div className="stat-value text-lg">{singleRoom.currentOccupants}/{singleRoom.totalRoommates}</div>
+                  </div>
                 </div>
               </div>
+            </div>
 
-              <div className="mb-6">
-                <h3 className="font-semibold text-gray-900 mb-3">Included Furniture</h3>
-                <div className="flex flex-wrap gap-2">
-                  {listing.furniture.map((item, idx) => (
-                    <span key={idx} className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
+            {/* Amenities */}
+            <div className="card bg-base-100 shadow-lg">
+              <div className="card-body">
+                <h2 className="card-title text-xl mb-4">Amenities & Features</h2>
 
-              <div className="space-y-6">
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
-                    <Home className="w-5 h-5 mr-2 text-blue-600" />
-                    In-Room Amenities
-                  </h3>
-                  <div className="grid grid-cols-2 gap-3">
-                    {listing.amenities.inRoom.map((amenity, idx) => (
-                      <div key={idx} className="flex items-center gap-2">
-                        {amenity.available ? (
-                          <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-                        ) : (
-                          <X className="w-5 h-5 text-gray-300 flex-shrink-0" />
-                        )}
-                        <span className={amenity.available ? 'text-gray-900' : 'text-gray-400'}>
-                          {amenity.name}
-                        </span>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {singleRoom.amenities?.map((amenity, idx) => {
+                    const IconComponent = amenityIcons[amenity] || CheckCircle;
+                    return (
+                      <div key={idx} className="flex items-center gap-3 p-3 bg-base-200 rounded-lg">
+                        <IconComponent className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="font-medium">{amenity}</span>
                       </div>
-                    ))}
-                  </div>
+                    );
+                  })}
                 </div>
 
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
-                    <Dumbbell className="w-5 h-5 mr-2 text-blue-600" />
-                    Building Amenities
-                  </h3>
-                  <div className="grid grid-cols-2 gap-3">
-                    {listing.amenities.building.map((amenity, idx) => (
-                      <div key={idx} className="flex items-center gap-2">
-                        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-                        <span className="text-gray-900">{amenity.name}</span>
-                      </div>
-                    ))}
+                {singleRoom.utilitiesIncluded && (
+                  <div className="alert alert-success mt-4">
+                    <CheckCircle className="w-5 h-5" />
+                    <span>All utilities included in rent</span>
                   </div>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
-                    <Wifi className="w-5 h-5 mr-2 text-blue-600" />
-                    Utilities Included in Rent
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {listing.utilities.map((utility, idx) => (
-                      <span key={idx} className="bg-green-100 text-green-700 px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4" />
-                        {utility}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                )}
               </div>
             </div>
 
             {/* Location */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                <MapPin className="w-6 h-6 mr-2 text-blue-600" />
-                Location
-              </h2>
+            <div className="card bg-base-100 shadow-lg">
+              <div className="card-body">
+                <h2 className="card-title text-xl mb-4">
+                  <MapPin className="w-6 h-6 text-primary" />
+                  Location
+                </h2>
 
-              <div className="mb-4">
-                <p className="text-gray-900 font-semibold mb-1">{listing.neighborhood}</p>
-                <p className="text-gray-600 text-sm">{listing.address}</p>
-              </div>
-
-              {/* Mock Map */}
-              <div className="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg h-64 mb-4 flex items-center justify-center border border-gray-200">
-                <div className="text-center">
-                  <MapPin className="w-16 h-16 text-blue-600 mx-auto mb-2" />
-                  <p className="text-gray-600">Interactive Map</p>
-                  <p className="text-sm text-gray-500">Exact location shown after contact</p>
+                <div className="mb-4">
+                  <p className="font-semibold text-lg">{singleRoom.address?.city}, {singleRoom.address.state}</p>
+                  <p className="text-base-content/70">{formattedAddress}</p>
                 </div>
-              </div>
 
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-3">Transportation</h3>
-                <ul className="space-y-2">
-                  {listing.transportation.map((option, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-gray-700">
-                      <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                      <span>{option}</span>
-                    </li>
-                  ))}
-                </ul>
+                {/* Map Placeholder */}
+                <div className="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-lg h-64 flex items-center justify-center border border-base-300">
+                  <div className="text-center">
+                    <MapPin className="w-16 h-16 text-primary mx-auto mb-2" />
+                    <p className="text-base-content/70 font-medium">Interactive Map</p>
+                    <p className="text-sm text-base-content/50">Exact location shown after contact</p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Housemates & Lifestyle */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                <Users className="w-6 h-6 mr-2 text-blue-600" />
-                Housemates & Lifestyle
-              </h2>
+            {/* Preferences & Lifestyle */}
+            <div className="card bg-base-100 shadow-lg">
+              <div className="card-body">
+                <h2 className="card-title text-xl mb-4">
+                  <Users className="w-6 h-6 text-primary" />
+                  Ideal Roommate
+                </h2>
 
-              <div className="space-y-6">
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h3 className="font-semibold text-blue-900 mb-2">Current Housemates</h3>
-                  <p className="text-blue-800 text-sm mb-2">
-                    <span className="font-semibold">{listing.housemates.count} roommates</span>
-                  </p>
-                  <p className="text-blue-800 text-sm">{listing.housemates.description}</p>
-                  <p className="text-blue-700 text-sm mt-2 italic">"{listing.housemates.lifestyle}"</p>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-3">Looking For</h3>
-                  <p className="text-gray-700 mb-4">{listing.preferences.ideal}</p>
-
+                <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="border border-gray-200 rounded-lg p-4">
-                      <p className="text-sm text-gray-600 mb-1">🐾 Pets Policy</p>
-                      <p className="text-gray-900 font-medium">{listing.preferences.pets}</p>
+                    <div className="bg-base-200 rounded-lg p-4">
+                      <p className="text-sm text-base-content/70 mb-1 flex items-center gap-2">
+                        <UserCheck className="w-4 h-4" />
+                        Gender Preference
+                      </p>
+                      <p className="font-semibold">{singleRoom.preferredGender}</p>
                     </div>
-                    <div className="border border-gray-200 rounded-lg p-4">
-                      <p className="text-sm text-gray-600 mb-1">🚭 Smoking Policy</p>
-                      <p className="text-gray-900 font-medium">{listing.preferences.smoking}</p>
+
+                    <div className="bg-base-200 rounded-lg p-4">
+                      <p className="text-sm text-base-content/70 mb-1 flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        Age Range
+                      </p>
+                      <p className="font-semibold">
+                        {singleRoom.preferredAgeRange.min} - {singleRoom.preferredAgeRange.max} years
+                      </p>
                     </div>
-                    <div className="border border-gray-200 rounded-lg p-4">
-                      <p className="text-sm text-gray-600 mb-1">🧹 Cleanliness</p>
-                      <p className="text-gray-900 font-medium">{listing.preferences.cleanliness}</p>
+
+                    <div className="bg-base-200 rounded-lg p-4">
+                      <p className="text-sm text-base-content/70 mb-1 flex items-center gap-2">
+                        <Briefcase className="w-4 h-4" />
+                        Occupation
+                      </p>
+                      <p className="font-semibold">{singleRoom.occupationPreference}</p>
                     </div>
-                    <div className="border border-gray-200 rounded-lg p-4">
-                      <p className="text-sm text-gray-600 mb-1">👥 Social Environment</p>
-                      <p className="text-gray-900 font-medium">{listing.preferences.social}</p>
+
+                    <div className="bg-base-200 rounded-lg p-4">
+                      <p className="text-sm text-base-content/70 mb-1 flex items-center gap-2">
+                        <Home className="w-4 h-4" />
+                        Smoking Policy
+                      </p>
+                      <p className="font-semibold">{singleRoom.smokingPolicy}</p>
+                    </div>
+
+                    <div className="bg-base-200 rounded-lg p-4 md:col-span-2">
+                      <p className="text-sm text-base-content/70 mb-1 flex items-center gap-2">
+                        <Home className="w-4 h-4" />
+                        Pet Policy
+                      </p>
+                      <p className="font-semibold">{singleRoom.petPolicy}</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold mb-2">Lifestyle Preferences</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {singleRoom.lifestyleTags?.map((tag, idx) => (
+                        <span key={idx} className="badge badge-primary badge-lg">
+                          {tag}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
+            {/* Application Requirements */}
+            {singleRoom.applicationRequirements?.length > 0 && (
+              <div className="card bg-base-100 shadow-lg">
+                <div className="card-body">
+                  <h2 className="card-title text-xl mb-4">
+                    <FileText className="w-6 h-6 text-primary" />
+                    Application Requirements
+                  </h2>
+
+                  <div className="space-y-3">
+                    {singleRoom.applicationRequirements.map((req, idx) => (
+                      <div key={idx} className="flex items-center gap-3 p-3 bg-base-200 rounded-lg">
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
+                        <span className="font-medium">{req}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-6">
               {/* Provider Info */}
-              <div className="bg-white rounded-lg shadow-sm p-6">
-                <h3 className="font-semibold text-gray-900 mb-4">Posted By</h3>
+              <div className="card bg-base-100 shadow-lg">
+                <div className="card-body">
+                  <h3 className="card-title text-lg mb-4">Posted By</h3>
 
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full btn-circle flex items-center justify-center text-3xl flex-shrink-0 avatar p-[2px]">
-                    <img src={user?.photoURL} alt="" className=' rounded-full' />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-bold text-gray-900">{user?.displayName}</h4>
-                      {listing.provider.verified && (
-                        <Shield className="w-4 h-4 text-blue-600" />
-                      )}
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="avatar">
+                      <div className="w-16 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        <img src={user?.photoURL} alt={user?.displayName} />
+                      </div>
                     </div>
-                    <p className="text-sm text-gray-600">{listing.provider.type}</p>
-                    <div className="flex items-center gap-1 mt-1">
-                      <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                      <span className="text-sm font-semibold text-gray-900">{listing.provider.rating}</span>
-                      <span className="text-sm text-gray-600">({listing.provider.reviews} reviews)</span>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="font-bold">{user?.displayName}</h4>
+                        <Shield className="w-4 h-4 text-success" />
+                      </div>
+                      <p className="text-sm text-base-content/70">Current Tenant</p>
+                      <div className="flex items-center gap-1 mt-1">
+                        <Star className="w-4 h-4 text-warning fill-current" />
+                        <span className="text-sm font-semibold">4.8</span>
+                        <span className="text-sm text-base-content/70">(12 reviews)</span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="space-y-2 mb-4 text-sm">
-                  <p className="text-gray-600 flex items-center gap-2">
-                    <Clock className="w-4 h-4" />
-                    {listing.provider.responseTime}
-                  </p>
-                  <p className="text-gray-600 flex items-center gap-2">
-                    <Calendar className="w-4 h-4" />
-                    {listing.provider.joinedDate}
-                  </p>
-                </div>
+                  <div className="space-y-2 text-sm mb-4">
+                    <p className="flex items-center gap-2 text-base-content/70">
+                      <Clock className="w-4 h-4" />
+                      Usually responds within 24 hours
+                    </p>
+                    <p className="flex items-center gap-2 text-base-content/70">
+                      <Calendar className="w-4 h-4" />
+                      Member since 2023
+                    </p>
+                  </div>
 
-                <button className="w-full text-blue-600 text-sm font-semibold hover:underline">
-                  View Provider Profile
-                </button>
+                  <button className="btn btn-ghost btn-sm w-full">
+                    View Provider Profile
+                  </button>
+                </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="bg-white rounded-lg shadow-sm p-6 space-y-3">
-                <button
-                  onClick={() => setShowApplicationModal(true)}
-                  className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2 shadow-md"
-                >
-                  <Send className="w-5 h-5" />
-                  I'm Interested
-                </button>
+              <div className="card bg-base-100 shadow-lg">
+                <div className="card-body space-y-3">
+                  <button
+                    onClick={() => setShowApplicationModal(true)}
+                    className="btn btn-primary w-full gap-2"
+                  >
+                    <Send className="w-5 h-5" />
+                    I'm Interested
+                  </button>
 
-                <button className="w-full bg-green-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-green-700 transition flex items-center justify-center gap-2">
-                  <MessageSquare className="w-5 h-5" />
-                  Contact Provider
-                </button>
+                  <button className="btn btn-secondary w-full gap-2">
+                    <MessageSquare className="w-5 h-5" />
+                    Contact Provider
+                  </button>
 
-                <button className="w-full border-2 border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-50 transition flex items-center justify-center gap-2">
-                  <Calendar className="w-5 h-5" />
-                  Schedule Viewing
-                </button>
+                  <button className="btn btn-outline w-full gap-2">
+                    <Calendar className="w-5 h-5" />
+                    Schedule Viewing
+                  </button>
+                </div>
               </div>
 
               {/* Safety Tips */}
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <div className="flex items-start gap-3">
-                  <AlertCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-yellow-900 mb-2">Safety Tips</h4>
-                    <ul className="text-sm text-yellow-800 space-y-1">
-                      <li>• Always meet in person before committing</li>
-                      <li>• Never send money before viewing</li>
-                      <li>• Use our secure messaging system</li>
-                      <li>• Report suspicious listings</li>
-                    </ul>
-                  </div>
+              <div className="alert alert-warning">
+                <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold mb-1">Safety Tips</h4>
+                  <ul className="text-sm space-y-1">
+                    <li>• Meet in person before committing</li>
+                    <li>• Never send money before viewing</li>
+                    <li>• Use secure messaging</li>
+                    <li>• Report suspicious listings</li>
+                  </ul>
                 </div>
               </div>
 
               {/* Similar Listings */}
-              <div className="bg-white rounded-lg shadow-sm p-6">
-                <h3 className="font-semibold text-gray-900 mb-4">Similar Listings</h3>
-                <div className="space-y-3">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="border border-gray-200 rounded-lg p-3 hover:border-blue-500 transition cursor-pointer">
-                      <div className="flex gap-3">
-                        <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center text-2xl flex-shrink-0">
-                          🏘️
+              <div className="card bg-base-100 shadow-lg">
+                <div className="card-body">
+                  <h3 className="card-title text-lg mb-4">Similar Listings</h3>
+                  <div className="space-y-3">
+                    {[1, 2, 3].map((i) => (
+                      <div key={i} className="flex gap-3 p-3 bg-base-200 rounded-lg hover:bg-base-300 transition cursor-pointer">
+                        <div className="avatar">
+                          <div className="w-16 h-16 rounded-lg">
+                            <img src={`https://images.unsplash.com/photo-${1522708323590 + i}?w=200`} alt="Room" />
+                          </div>
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-gray-900 text-sm truncate">Room Near Downtown</h4>
-                          <p className="text-xs text-gray-600">Downtown</p>
-                          <p className="text-sm font-bold text-green-600 mt-1">${900 + (i * 50)}/mo</p>
+                          <h4 className="font-semibold text-sm truncate">Room Near Downtown</h4>
+                          <p className="text-xs text-base-content/70">Downtown</p>
+                          <p className="text-sm font-bold text-success mt-1">${900 + (i * 50)}/mo</p>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -510,26 +607,28 @@ export default function ListingDetailsPage() {
         </div>
       </div>
 
-      {/* Application Modal Placeholder */}
+      {/* Application Modal */}
       {showApplicationModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-8 text-center">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Send className="w-8 h-8 text-blue-600" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Application Modal</h2>
-            <p className="text-gray-600 mb-6">
-              This would open the full application modal component
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg mb-4">Express Your Interest</h3>
+            <p className="py-4">
+              This would open the full application form where you can introduce yourself and submit your application.
             </p>
-            <button
-              onClick={() => setShowApplicationModal(false)}
-              className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
-            >
-              Close
-            </button>
+            <div className="modal-action">
+              <button onClick={() => setShowApplicationModal(false)} className="btn">
+                Close
+              </button>
+              <button className="btn btn-primary">
+                Continue to Application
+              </button>
+            </div>
           </div>
+          <div className="modal-backdrop" onClick={() => setShowApplicationModal(false)}></div>
         </div>
       )}
     </div>
   );
-}
+};
+
+export default RoomListingDetails;
