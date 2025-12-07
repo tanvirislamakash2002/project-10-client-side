@@ -106,7 +106,7 @@ export default function HowItWorksSection() {
 
         {/* CTA Button */}
         <Link to={'/browse'}>
-          <button className="w-full mt-8 btn btn-primary btn-lg rounded-xl group">
+          <button className="w-full mt-8 btn btn-primary text-blue-900 btn-lg rounded-xl group">
             Browse Rooms
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </button>
@@ -200,7 +200,7 @@ export default function HowItWorksSection() {
 
         {/* CTA Button */}
         <Link to={'/dashboard/listings/new'}>
-          <button className="w-full mt-8 btn btn-success btn-lg rounded-xl group">
+          <button className="w-full mt-8 btn btn-success text-green-900 btn-lg rounded-xl group">
             List Your Space
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </button>
@@ -210,7 +210,7 @@ export default function HowItWorksSection() {
 
     {/* Bottom Message */}
     <div className="text-center mt-16">
-      <div className="inline-block bg-gradient-to-r from-primary to-success text-primary-content px-6 py-3 rounded-full shadow-lg">
+      <div className="inline-block bg-gradient-to-r from-primary to-success text-black px-6 py-3 rounded-full shadow-lg">
         <p className="font-semibold">
           <Shield className="w-5 h-5 inline-block mr-2" />
           All listings are verified for your safety and peace of mind

@@ -59,7 +59,7 @@
   name: "dark";
   /* Your existing dark theme colors */
   --color-primary: #7DD3FC;
-  --color-primary-content: #0C4A6E;
+  --color-primary-content: #DFF3FF;
   --color-secondary: #34D399;
   --color-secondary-content: #064E3B;
   --color-accent: #0E7490;
@@ -73,7 +73,7 @@
   --color-info: #38BDF8;
   --color-info-content: #0C4A6E;
   --color-success: #34D399;
-  --color-success-content: #064E3B;
+  --color-success-content: #D7FAED;
   --color-warning: #FBBF24;
   --color-warning-content: #451A03;
   --color-error: #F87171;

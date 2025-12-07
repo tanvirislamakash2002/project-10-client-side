@@ -19,70 +19,17 @@ const useFavorite = (id, email) => {
   };
 };
 
-// Mock data - this would come from your API
-const mockRoomData = {
-  "_id": "507f1f77bcf86cd799439011",
-  "providerId": "550e8400-e29b-41d4-a716-446655440000",
-  "status": "accepted",
-  "title": "Spacious Room in Quiet 3BR House near University",
-  "description": "Looking for a friendly roommate for our sunny third-floor room. The house is located in a peaceful neighborhood, just a 10-minute walk from the university campus. Perfect for students or young professionals who value a comfortable, clean living space. The room receives plenty of natural light and has been freshly painted. You'll be sharing the house with two other friendly professionals in their mid-20s who work in tech and healthcare.",
-  "createdAt": "2023-10-27T10:00:00Z",
-  "updatedAt": "2023-10-28T14:30:00Z",
-  "publishedAt": "2023-10-28T14:30:00Z",
-  "address": {
-    "street": "123 Main St",
-    "city": "College Town",
-    "state": "CA",
-    "postalCode": "12345",
-    "country": "USA"
-  },
-  "location": { "type": "Point", "coordinates": [-122.123, 37.123] },
-  "propertyType": "House",
-  "roomType": "Private Room",
-  "currentOccupants": 2,
-  "totalRoommates": 3,
-  "preferredGender": "No Preference",
-  "preferredAgeRange": { "min": 18, "max": 28 },
-  "occupationPreference": "Student",
-  "lifestyleTags": ["Non-Smoking", "Pet-Friendly", "Quiet"],
-  "rent": 850,
-  "currency": "USD",
-  "securityDeposit": 850,
-  "utilitiesIncluded": true,
-  "leaseDuration": "1 Year",
-  "images": [
-    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",
-    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800",
-    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800",
-    "https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800"
-  ],
-  "adminReviewerId": "admin-user-id-123",
-  "adminReviewedAt": "2023-10-28T14:30:00Z",
-  "viewCount": 142,
-  "availableFrom": "2023-11-01T00:00:00Z",
-  "roomSize": 120,
-  "bathroomType": "Private",
-  "furnishing": "Furnished",
-  "amenities": ["WiFi", "Laundry", "Parking", "Gym", "Pool"],
-  "petPolicy": "Cats Only",
-  "smokingPolicy": "Non-Smoking",
-  "applicationCount": 5,
-  "isFeatured": false,
-  "applicationRequirements": ["ID Verification", "Income Proof", "References"]
-};
+
 
 const RoomListingDetails = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showApplicationModal, setShowApplicationModal] = useState(false);
   const { user } = useAuth();
 
-  // In your actual component, this would be: const { id } = useParams();
   const {id} = useParams();
   const { isFavorite, toggleFavorite } = useFavorite(id, user?.email);
 
-  // In your actual component, use this:
-  // const { data: singleRoom = {}, isLoading } = useQuery({...});
-  // const singleRoom = mockRoomData;
+
   const { data: singleRoom = {}, isLoading, error } = useQuery({
     queryKey: ['posts'],
     queryFn: () =>
