@@ -4,7 +4,6 @@ import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { AuthContext } from '../../../../provider/AuthProvider';
 import { useForm } from 'react-hook-form';
 import RenderStepContent from './components/RenderStepContent';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useMutation } from '@tanstack/react-query';
 import { useImageUpload } from '../../../../../hooks/useImageUpload';
@@ -12,7 +11,7 @@ import useAxios from '../../../../../hooks/useAxios';
 
 const MultiStepListingForm = () => {
   const { user } = useContext(AuthContext);
-  const { uploadImagesToImgBB, isUploading: isImageUploading, error: imageError } = useImageUpload()
+  const { uploadImagesToImgBB } = useImageUpload()
   const [currentStep, setCurrentStep] = useState(1);
   const [images, setImages] = useState([]);
   const axiosInstance = useAxios()
@@ -26,7 +25,7 @@ const MultiStepListingForm = () => {
     reset,
     watch,
     trigger,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm({
     defaultValues: {
       // Step 1: Basic Details
