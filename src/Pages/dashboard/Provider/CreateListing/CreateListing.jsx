@@ -263,7 +263,6 @@ const MultiStepListingForm = () => {
         images: uploadedUrls
       };
 
-      console.log('Form Data:', submissionData);
 
       // Here you'll integrate with your existing mutation
       await addRoomMutation.mutateAsync(submissionData);

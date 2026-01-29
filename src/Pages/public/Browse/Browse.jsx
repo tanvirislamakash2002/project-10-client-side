@@ -4,29 +4,36 @@ import { Filter, X, ChevronDown, MapPin, DollarSign, Calendar, Home, Users, Shie
 import { ListingCard } from './Components/ListingCard';
 import { FilterSidebar } from './Components/FilterSidebar';
 import { useListingsFilter } from '../../../../hooks/useListingsFilter';
+import useAxios from '../../../../hooks/useAxios';
 
 export default function BrowsePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-const [filters, setFilters] = useState({
-  priceMin: 0,
-  priceMax: 5000,
-  location: '',
-  roomType: [],
-  propertyType: [],
-  gender: 'any', 
-  amenities: [],
-  verifiedOnly: false,
-  ageMin: 18,
-  ageMax: 65,
-});
-
-
-  const { data: RoomData = [], isLoading, error } = useQuery({
-    queryKey: ['posts'],
-    queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/add-roommate`)
-        .then(res => res.json()),
+  const [filters, setFilters] = useState({
+    priceMin: 0,
+    priceMax: 5000,
+    location: '',
+    roomType: [],
+    propertyType: [],
+    gender: 'any',
+    amenities: [],
+    verifiedOnly: false,
+    ageMin: 18,
+    ageMax: 65,
   });
+
+
+  const axiosInstance = useAxios()
+  const { data: RoomData = [], isLoading, error } = useQuery({
+    queryKey: ['listings'],
+    queryFn: async () => {
+      const response = await axiosInstance.get(`/api/v1/listings`)
+      return response.data
+    },
+    staleTime: 5 * 60 * 1000,
+    retry: 2
+  });
+
+  console.log('new 1-29', RoomData);
 
   const filteredListings = useListingsFilter(RoomData, filters);
 
@@ -43,20 +50,20 @@ const [filters, setFilters] = useState({
     }));
   };
 
-const clearFilters = () => {
-  setFilters({
-    priceMin: 0,
-    priceMax: 5000,
-    location: '',
-    roomType: [],
-    propertyType: [],
-    gender: 'any',
-    amenities: [],
-    verifiedOnly: false,
-    ageMin: 18,
-    ageMax: 65,
-  });
-};
+  const clearFilters = () => {
+    setFilters({
+      priceMin: 0,
+      priceMax: 5000,
+      location: '',
+      roomType: [],
+      propertyType: [],
+      gender: 'any',
+      amenities: [],
+      verifiedOnly: false,
+      ageMin: 18,
+      ageMax: 65,
+    });
+  };
 
 
   return (
@@ -80,7 +87,7 @@ const clearFilters = () => {
           {/* Sidebar - Desktop */}
           <div className="hidden md:block w-64 flex-shrink-0">
             <div className="sticky top-20">
-              <FilterSidebar props={{ filters, handleFilterChange, handleArrayFilter, clearFilters }}/>
+              <FilterSidebar props={{ filters, handleFilterChange, handleArrayFilter, clearFilters }} />
             </div>
           </div>
 

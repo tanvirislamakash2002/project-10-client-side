@@ -36,8 +36,7 @@ const RoomListingDetails = () => {
       fetch(`${import.meta.env.VITE_API_URL}/add-roommate/${id}`)
         .then(res => res.json()),
   });
-  console.log(singleRoom);
-  console.log(id);
+
   // const isLoading = false;
 
   const formattedDate = singleRoom?.availableFrom

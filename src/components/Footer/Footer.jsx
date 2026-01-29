@@ -23,7 +23,6 @@ const Footer = () => {
 
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
-    console.log('Newsletter signup:', email);
     setEmail('');
     // Add your newsletter signup logic here
   };

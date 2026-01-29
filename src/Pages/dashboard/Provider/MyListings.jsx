@@ -19,7 +19,7 @@ export default function MyListings() {
     const [showFilters, setShowFilters] = useState(false);
 
   const { role, roleLoading } = useUserRole();
-console.log(role);
+
 
     // Fetch listings
     const { data: RoomData = [], isLoading, error } = useQuery({
@@ -47,7 +47,6 @@ console.log(role);
                 })
                     .then(res => res.json())
                     .then(data => {
-                        console.log('after delete', data)
                         if (data.deletedCount > 0) {
                             Swal.fire({
                                 title: "Deleted!",

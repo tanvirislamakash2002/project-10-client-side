@@ -22,7 +22,6 @@ export default function SavedListings() {
 
     const {favorites, bulkRemoveFavorites, isBulkRemoving} = useFavorites(user.email)
 
-    // console.log(selectedListings);
 
     // Mock data
     const savedListings = [
@@ -81,7 +80,6 @@ export default function SavedListings() {
     };
 
     const handleCompare = (listing) => {
-        console.log(listing)
         if (compareListings.find(l => l.id === listing._id)) {
             setCompareListings(prev => prev.filter(l => l.id !== listing._id));
         } else if (compareListings.length < 3) {
@@ -242,7 +240,7 @@ export default function SavedListings() {
                             <ApplicationModal
                                 onClose={closeModal}
                                 onSuccess={() => {
-                                    console.log('Application submitted successfully');
+                                    alert('Application submitted successfully');
                                     closeModal();
                                 }}
                             />
@@ -257,7 +255,7 @@ export default function SavedListings() {
                             <ApplicationModal
                                 onClose={closeModal}
                                 onSuccess={() => {
-                                    console.log('Application submitted successfully');
+                                    alert('Application submitted successfully');
                                     closeModal();
                                 }}
                             />

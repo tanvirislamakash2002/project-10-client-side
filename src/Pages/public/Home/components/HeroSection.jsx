@@ -8,7 +8,7 @@ export default function HeroSection() {
   const [moveInDate, setMoveInDate] = useState('');
 
   const handleSearch = () => {
-    console.log('Searching:', { location, moveInDate });
+    alert('Searching:', { location, moveInDate });
   };
 
   return (

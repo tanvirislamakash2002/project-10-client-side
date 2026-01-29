@@ -24,7 +24,6 @@ const useUser = (email) => {
         },
     });
 
-    // console.log('useUser debug:', { email, targetEmail, userInfo });
 
     return userInfo; 
 };

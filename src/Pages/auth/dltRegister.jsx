@@ -11,7 +11,6 @@ const Register = () => {
 
     const location = useLocation()
     const navigate = useNavigate()
-    // console.log(createUser)
 
     const handleRegister = (e) => {
         e.preventDefault();
@@ -36,10 +35,8 @@ const Register = () => {
             setErrorMessage('')
         }
 
-        // console.log(data)
         createUser(data)
             .then(userCredential => {
-                //console.log(userCredential)
                 const user = userCredential.user;
                 updateUser({ displayName: name, photoURL: photo })
                     .then(() => {

@@ -183,28 +183,28 @@ const AdminDashboard = () => {
               value={metrics.pendingListings}
               subtext="Awaiting Review"
               highlight={true}
-              onClick={() => console.log('Navigate to Listing Management - Pending')}
+              onClick={() => alert('Navigate to Listing Management - Pending')}
             />
             <MetricCard
               icon={FiHome}
               title="Total Listings"
               value={metrics.totalListings}
               subtext="All Time"
-              onClick={() => console.log('Navigate to Listing Management')}
+              onClick={() => alert('Navigate to Listing Management')}
             />
             <MetricCard
               icon={FiUsers}
               title="Total Users"
               value={metrics.totalUsers}
               subtext={`${metrics.seekers.toLocaleString()} Seekers | ${metrics.providers.toLocaleString()} Providers`}
-              onClick={() => console.log('Navigate to User Management')}
+              onClick={() => alert('Navigate to User Management')}
             />
             <MetricCard
               icon={FiTrendingUp}
               title="New Users"
               value={metrics.newUsersThisMonth}
               subtext="Growth this month"
-              onClick={() => console.log('Navigate to User Management - Sorted by date')}
+              onClick={() => alert('Navigate to User Management - Sorted by date')}
             />
           </div>
 
@@ -286,7 +286,7 @@ const AdminDashboard = () => {
                           key={`cell-${index}`} 
                           fill={entry.color}
                           className="cursor-pointer hover:opacity-80 transition-opacity"
-                          onClick={() => console.log(`Navigate to ${entry.name} listings`)}
+                          onClick={() => alert(`Navigate to ${entry.name} listings`)}
                         />
                       ))}
                     </Pie>

@@ -8,14 +8,14 @@ const Login = () => {
     const { signIn, loginWithGoogle } = use(AuthContext)
     const location = useLocation()
     const navigate = useNavigate()
-    //console.log(location.state)
+
 
     const handleLogin = (e) => {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form)
         const data = Object.fromEntries(formData.entries())
-        //console.log('login', data)
+
 
         signIn(data)
             .then(res => {

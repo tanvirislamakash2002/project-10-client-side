@@ -21,9 +21,7 @@ const currentUser =useUser()
         }),
       });
       
-      // console.log('Response status:', response.status);
       const data = await response.json();
-      // console.log('Response data:', data);
       
       if (!response.ok) {
         throw new Error(data.message || 'Failed to update role');
@@ -32,7 +30,6 @@ const currentUser =useUser()
       return data;
     },
     onSuccess: (data) => {
-      // console.log('Role update successful:', data);
       queryClient.invalidateQueries({ queryKey: ['currentUser'] });
       queryClient.invalidateQueries({ queryKey: ['user'] });
       setIsOpen(false);
@@ -45,11 +42,10 @@ const currentUser =useUser()
 
   // Only show if user is developer
   if (!currentUser?.developer) {
-    // console.log('User is not a developer, hiding RoleSwitcher');
     return null;
   }
   if (currentUser?.developer=='false') {
-    // console.log('User is not a developer, hiding RoleSwitcher', currentUser?.developer);
+
     return null;
   }
 

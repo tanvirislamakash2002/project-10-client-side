@@ -51,7 +51,6 @@ const Blog = () => {
       popularPosts: []
     }
   });
-console.log(blogData);
   const { posts = [], categories = [], tags = [], popularPosts = [] } = blogData;
 
   // Filter and sort posts

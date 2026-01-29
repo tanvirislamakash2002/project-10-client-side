@@ -45,7 +45,6 @@ import  useUser  from '../../../../../hooks/useUser';
   const [images, setImages] = useState([]);
 
 const user = useUser()
-console.log(user);
 
   const { uploadImagesToImgBB, isUploading: isImageUploading, error: imageError } = useImageUpload()
   const { register, handleSubmit, watch, setValue, control, formState: { errors }, reset } = useForm({

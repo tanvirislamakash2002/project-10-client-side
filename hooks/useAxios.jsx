@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React from 'react';
+import config from '../config/index.js';
 
 const axiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL
+    baseURL: config.baseUrl
 })
 const useAxios = () => {
     return axiosInstance;
