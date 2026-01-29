@@ -8,12 +8,14 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useMutation } from '@tanstack/react-query';
 import { useImageUpload } from '../../../../../hooks/useImageUpload';
+import useAxios from '../../../../../hooks/useAxios';
 
 const MultiStepListingForm = () => {
   const { user } = useContext(AuthContext);
   const { uploadImagesToImgBB, isUploading: isImageUploading, error: imageError } = useImageUpload()
   const [currentStep, setCurrentStep] = useState(1);
   const [images, setImages] = useState([]);
+  const axiosInstance = useAxios()
 
   const totalSteps = 5;
 
@@ -86,7 +88,7 @@ const MultiStepListingForm = () => {
   // sent to database 
   const addRoomMutation = useMutation({
     mutationFn: (roomData) =>
-      axios.post(`${import.meta.env.VITE_API_URL}/add-roommate`, roomData),
+      axiosInstance.post(`/api/v1/listings`, roomData),
 
     onSuccess: (res) => {
       if (res.data.insertedId) {
@@ -267,66 +269,66 @@ const MultiStepListingForm = () => {
       // Here you'll integrate with your existing mutation
       await addRoomMutation.mutateAsync(submissionData);
 
-    // Reset form after successful submission
-    reset({
-      // Step 1: Basic Details
-      title: '',
-      description: '',
-      propertyType: '',
-      roomType: '',
-      availableFrom: '',
-      roomSize: '',
+      // Reset form after successful submission
+      reset({
+        // Step 1: Basic Details
+        title: '',
+        description: '',
+        propertyType: '',
+        roomType: '',
+        availableFrom: '',
+        roomSize: '',
 
-      // Step 2: Location & Address
-      address: {
-        street: '',
-        city: '',
-        state: '',
-        postalCode: '',
-        country: 'USA'
-      },
-      location: {
-        type: 'Point',
-        coordinates: [0, 0]
-      },
+        // Step 2: Location & Address
+        address: {
+          street: '',
+          city: '',
+          state: '',
+          postalCode: '',
+          country: 'USA'
+        },
+        location: {
+          type: 'Point',
+          coordinates: [0, 0]
+        },
 
-      // Step 3: Roommate Preferences
-      currentOccupants: 1,
-      totalRoommates: 2,
-      preferredGender: '',
-      preferredAgeRange: { min: 18, max: 35 },
-      occupationPreference: '',
-      lifestyleTags: [],
+        // Step 3: Roommate Preferences
+        currentOccupants: 1,
+        totalRoommates: 2,
+        preferredGender: '',
+        preferredAgeRange: { min: 18, max: 35 },
+        occupationPreference: '',
+        lifestyleTags: [],
 
-      // Step 4: Property Features
-      bathroomType: '',
-      furnishing: '',
-      amenities: [],
-      petPolicy: '',
-      smokingPolicy: '',
-      applicationRequirements: [],
+        // Step 4: Property Features
+        bathroomType: '',
+        furnishing: '',
+        amenities: [],
+        petPolicy: '',
+        smokingPolicy: '',
+        applicationRequirements: [],
 
-      // Step 5: Financial & Final
-      rent: '',
-      currency: 'USD',
-      securityDeposit: '',
-      utilitiesIncluded: true,
-      leaseDuration: '',
+        // Step 5: Financial & Final
+        rent: '',
+        currency: 'USD',
+        securityDeposit: '',
+        utilitiesIncluded: true,
+        leaseDuration: '',
 
-      // System fields
-      status: 'accepted',
-      poster: {
-        name: user?.displayName || '',
-        email: user?.email || '',
-        photo: user?.photoURL || '',
-        phone: '',
-        verified: false
-      }
-    });
-    
-    // Also reset any local state
-    setImages([]);
-    setCurrentStep(1); // Reset to first step if using multi-step
+        // System fields
+        status: 'accepted',
+        poster: {
+          name: user?.displayName || '',
+          email: user?.email || '',
+          photo: user?.photoURL || '',
+          phone: '',
+          verified: false
+        }
+      });
+
+      // Also reset any local state
+      setImages([]);
+      setCurrentStep(1); // Reset to first step if using multi-step
 
 
     } catch (error) {

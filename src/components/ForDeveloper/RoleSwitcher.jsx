@@ -2,34 +2,31 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FiUser, FiHome, FiSearch, FiSettings } from 'react-icons/fi';
 import useUser from '../../../hooks/useUser';
+import useAxios from '../../../hooks/useAxios';
 
-const RoleSwitcher = ({justifyEnd, right0}) => {
+const RoleSwitcher = ({ justifyEnd, right0 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
-const currentUser =useUser()
-
+  const currentUser = useUser()
+  const axiosInstance = useAxios()
   // Mutation to update user role
   const { mutate: updateRole, isPending } = useMutation({
     mutationFn: async (newRole) => {
-      
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/update-role`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          userId: currentUser._id, 
-          role: newRole 
-        }),
+
+      const response = await axiosInstance.patch(`/api/v1/role/update-role`, {
+        userId: currentUser._id,
+        role: newRole
       });
-      
-      const data = await response.json();
-      
-      if (!response.ok) {
+
+      const data = response.data
+
+      if (data && !data.success) {
         throw new Error(data.message || 'Failed to update role');
       }
-      
+
       return data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['currentUser'] });
       queryClient.invalidateQueries({ queryKey: ['user'] });
       setIsOpen(false);
@@ -44,7 +41,7 @@ const currentUser =useUser()
   if (!currentUser?.developer) {
     return null;
   }
-  if (currentUser?.developer=='false') {
+  if (currentUser?.developer == 'false') {
 
     return null;
   }
@@ -74,28 +71,27 @@ const currentUser =useUser()
       {isOpen && (
         <>
           {/* Backdrop */}
-          <div 
-            className="fixed inset-0 z-40" 
+          <div
+            className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
           />
-          
+
           {/* Menu */}
-          <div className={`fixed top-26 ${right0?right0:'left-0'} z-50 w-64 p-2 bg-base-100 border border-base-300 rounded-lg shadow-lg`}>
+          <div className={`fixed top-26 ${right0 ? right0 : 'left-0'} z-50 w-64 p-2 bg-base-100 border border-base-300 rounded-lg shadow-lg`}>
             <div className="text-sm font-semibold p-2 border-b border-base-300">
               Developer Role Switch
             </div>
-            
+
             <div className="space-y-1 p-2">
               {roles.map(({ key, label, icon: Icon, color }) => (
                 <button
                   key={key}
                   onClick={() => updateRole(key)}
                   disabled={isPending || currentUser.role === key}
-                  className={`w-full flex items-center gap-3 p-3 rounded-lg transition-colors ${
-                    currentUser.role === key 
-                      ? 'bg-primary text-primary-content' 
-                      : 'hover:bg-base-200'
-                  } ${isPending ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  className={`w-full flex items-center gap-3 p-3 rounded-lg transition-colors ${currentUser.role === key
+                    ? 'bg-primary text-primary-content'
+                    : 'hover:bg-base-200'
+                    } ${isPending ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   <div className={`w-8 h-8 rounded-full ${color} flex items-center justify-center`}>
                     <Icon className="w-4 h-4 text-base-100" />
@@ -109,7 +105,7 @@ const currentUser =useUser()
                 </button>
               ))}
             </div>
-            
+
             <div className="p-2 border-t border-base-300 text-xs text-gray-500">
               Developer mode enabled
             </div>
