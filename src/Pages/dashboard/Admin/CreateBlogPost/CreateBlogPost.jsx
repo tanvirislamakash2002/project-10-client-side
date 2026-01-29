@@ -29,7 +29,7 @@ import  useUser  from '../../../../../hooks/useUser';
 
  const CreateBlogPost = () => {
   const [activeTab, setActiveTab] = useState('basic');
-  const [imagePreview, setImagePreview] = useState('');
+  const [imagePreview] = useState('');
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState('');
   const [categories, setCategories] = useState([]);
@@ -46,8 +46,8 @@ import  useUser  from '../../../../../hooks/useUser';
 
 const user = useUser()
 
-  const { uploadImagesToImgBB, isUploading: isImageUploading, error: imageError } = useImageUpload()
-  const { register, handleSubmit, watch, setValue, control, formState: { errors }, reset } = useForm({
+  const { uploadImagesToImgBB } = useImageUpload()
+  const { register, handleSubmit, watch, setValue, formState: { errors }, reset } = useForm({
     defaultValues: {
       status: 'draft',
       featured: false,
