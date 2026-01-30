@@ -8,6 +8,7 @@ import {
   UserCheck, Briefcase, FileText
 } from 'lucide-react';
 import { useParams } from 'react-router';
+import useAxios from '../../../hooks/useAxios';
 
 // Mock hooks - replace with your actual hooks
 const useAuth = () => ({ user: { email: 'user@example.com', displayName: 'John Doe', photoURL: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John' } });
@@ -25,16 +26,19 @@ const RoomListingDetails = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showApplicationModal, setShowApplicationModal] = useState(false);
   const { user } = useAuth();
-
-  const {id} = useParams();
+  const { id } = useParams();
+  const axiosInstance = useAxios()
   const { isFavorite, toggleFavorite } = useFavorite(id, user?.email);
 
 
   const { data: singleRoom = {}, isLoading, error } = useQuery({
     queryKey: ['posts'],
-    queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/add-roommate/${id}`)
-        .then(res => res.json()),
+    queryFn: async() => {
+      const response = await axiosInstance.get(`/api/v1/listings/${id}`)
+      return response.data
+    },
+    staleTime:5*60*1000,
+    retry:2
   });
 
   // const isLoading = false;
@@ -144,8 +148,8 @@ const RoomListingDetails = () => {
                           key={idx}
                           onClick={() => setCurrentImageIndex(idx)}
                           className={`h-2 rounded-full transition-all ${idx === currentImageIndex
-                              ? 'bg-base-100 w-8'
-                              : 'bg-base-100/50 w-2'
+                            ? 'bg-base-100 w-8'
+                            : 'bg-base-100/50 w-2'
                             }`}
                         />
                       ))}
@@ -176,8 +180,8 @@ const RoomListingDetails = () => {
                       key={idx}
                       onClick={() => setCurrentImageIndex(idx)}
                       className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition ${idx === currentImageIndex
-                          ? 'border-primary'
-                          : 'border-transparent hover:border-base-300'
+                        ? 'border-primary'
+                        : 'border-transparent hover:border-base-300'
                         }`}
                     >
                       <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />

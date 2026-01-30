@@ -33,8 +33,6 @@ export default function BrowsePage() {
     retry: 2
   });
 
-  console.log('new 1-29', RoomData);
-
   const filteredListings = useListingsFilter(RoomData, filters);
 
   const handleFilterChange = (key, value) => {
