@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaHome, FaMapMarkerAlt, FaUsers, FaBed, FaDollarSign, FaCheckCircle } from 'react-icons/fa';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { AuthContext } from '../../../../provider/AuthProvider';
@@ -8,9 +8,11 @@ import Swal from 'sweetalert2';
 import { useMutation } from '@tanstack/react-query';
 import { useImageUpload } from '../../../../../hooks/useImageUpload';
 import useAxios from '../../../../../hooks/useAxios';
+import useUser from '../../../../../hooks/useUser';
 
 const MultiStepListingForm = () => {
   const { user } = useContext(AuthContext);
+  const userInfo = useUser(user.email)
   const { uploadImagesToImgBB } = useImageUpload()
   const [currentStep, setCurrentStep] = useState(1);
   const [images, setImages] = useState([]);
@@ -34,7 +36,10 @@ const MultiStepListingForm = () => {
       propertyType: '',
       roomType: '',
       availableFrom: '',
-      roomSize: '',
+      roomSize: {
+        value: '',
+        unit: 'sqft'
+      },
 
       // Step 2: Location & Address
       address: {
@@ -66,24 +71,28 @@ const MultiStepListingForm = () => {
       applicationRequirements: [],
 
       // Step 5: Financial & Final
-      rent: '',
-      currency: 'USD',
-      securityDeposit: '',
-      utilitiesIncluded: true,
+      pricing: {
+        rent: '',
+        currency: 'USD',
+        securityDeposit: '',
+        utilitiesIncluded: true,
+      },
       leaseDuration: '',
 
       // System fields
       status: 'accepted',
-      poster: {
-        name: user?.displayName || '',
-        email: user?.email || '',
-        photo: user?.photoURL || '',
-        phone: '',
-        verified: false
-      }
+      providerId: ''
     },
     mode: 'onChange'
   });
+
+  useEffect(() => {
+    if (userInfo?._id) {
+      setValue('providerId', userInfo._id, { shouldValidate: false });
+      console.log('provider ID set:', userInfo._id);
+    }
+  }, [userInfo, setValue])
+
   // sent to database 
   const addRoomMutation = useMutation({
     mutationFn: (roomData) =>
@@ -93,7 +102,7 @@ const MultiStepListingForm = () => {
       if (res.data.insertedId) {
         Swal.fire({
           title: "Success!",
-          text: "Your listing has been submitted for admin approval!", // Updated message
+          text: "Your listing has been submitted for admin approval!",
           icon: "success",
           confirmButtonColor: "var(--color-primary)"
         });
@@ -243,6 +252,18 @@ const MultiStepListingForm = () => {
   // submit functionality 
   const onSubmit = async (data) => {
     try {
+      if (!data.providerId && userInfo?._id) {
+        data.providerId = userInfo._id;
+      }
+      if (!data.providerId) {
+        Swal.fire({
+          title: "Authentication Error",
+          text: "Please login to create a listing",
+          icon: "error",
+          confirmButtonColor: "var(--color-error)"
+        });
+        return;
+      }
       // Check if we have images to upload
       if (images.length === 0) {
         Swal.fire({
@@ -260,13 +281,14 @@ const MultiStepListingForm = () => {
         ...data,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        providerId: user?.uid,
         images: uploadedUrls
       };
 
 
       // Here you'll integrate with your existing mutation
       await addRoomMutation.mutateAsync(submissionData);
+
+      console.log('suybunt 624', submissionData);
 
       // Reset form after successful submission
       reset({
@@ -276,7 +298,10 @@ const MultiStepListingForm = () => {
         propertyType: '',
         roomType: '',
         availableFrom: '',
-        roomSize: '',
+        roomSize: {
+          value: '',
+          unit: 'sqft'
+        },
 
         // Step 2: Location & Address
         address: {
@@ -308,21 +333,17 @@ const MultiStepListingForm = () => {
         applicationRequirements: [],
 
         // Step 5: Financial & Final
-        rent: '',
-        currency: 'USD',
-        securityDeposit: '',
-        utilitiesIncluded: true,
+        pricing: {
+          rent: '',
+          currency: 'USD',
+          securityDeposit: '',
+          utilitiesIncluded: true,
+        },
         leaseDuration: '',
 
         // System fields
         status: 'accepted',
-        poster: {
-          name: user?.displayName || '',
-          email: user?.email || '',
-          photo: user?.photoURL || '',
-          phone: '',
-          verified: false
-        }
+        providerId: userInfo?._id
       });
 
       // Also reset any local state

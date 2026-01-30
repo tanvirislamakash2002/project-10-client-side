@@ -19,21 +19,21 @@ const FinancialAndFinalDetails = ({ props }) => {
             </label>
             <div className="join">
               <span className="join-item bg-base-300 px-4 flex items-center text-text-muted">
-                {watch('currency') || 'USD'}
+                {watch('pricing?.currency') || 'USD'}
               </span>
               <input
                 type="number"
                 placeholder="e.g., 850"
                 className="input input-bordered join-item w-full focus:input-primary"
-                {...register('rent', {
+                {...register('pricing?.rent', {
                   required: 'Rent is required',
                   min: { value: 1, message: 'Rent must be greater than 0' }
                 })}
               />
             </div>
-            {errors.rent && (
+            {errors.pricing?.rent && (
               <label className="label">
-                <span className="label-text-alt text-error">{errors.rent.message}</span>
+                <span className="label-text-alt text-error">{errors.pricing?.rent.message}</span>
               </label>
             )}
           </div>
@@ -45,7 +45,7 @@ const FinancialAndFinalDetails = ({ props }) => {
             </label>
             <select
               className="select select-bordered w-full focus:select-primary"
-              {...register('currency', { required: 'Currency is required' })}
+              {...register('pricing?.currency', { required: 'Currency is required' })}
             >
               <option value="USD">USD ($)</option>
               <option value="CAD">CAD (C$)</option>
@@ -53,9 +53,9 @@ const FinancialAndFinalDetails = ({ props }) => {
               <option value="GBP">GBP (£)</option>
               <option value="AUD">AUD (A$)</option>
             </select>
-            {errors.currency && (
+            {errors.pricing?.currency && (
               <label className="label">
-                <span className="label-text-alt text-error">{errors.currency.message}</span>
+                <span className="label-text-alt text-error">{errors.pricing?.currency.message}</span>
               </label>
             )}
           </div>
@@ -67,21 +67,21 @@ const FinancialAndFinalDetails = ({ props }) => {
             </label>
             <div className="join">
               <span className="join-item bg-base-300 px-4 flex items-center text-text-muted">
-                {watch('currency') || 'USD'}
+                {watch('pricing?.currency') || 'USD'}
               </span>
               <input
                 type="number"
                 placeholder="e.g., 850"
                 className="input input-bordered join-item w-full focus:input-primary"
-                {...register('securityDeposit', {
+                {...register('pricing?.securityDeposit', {
                   required: 'Security deposit is required',
                   min: { value: 0, message: 'Security deposit cannot be negative' }
                 })}
               />
             </div>
-            {errors.securityDeposit && (
+            {errors.pricing?.securityDeposit && (
               <label className="label">
-                <span className="label-text-alt text-error">{errors.securityDeposit.message}</span>
+                <span className="label-text-alt text-error">{errors.pricing?.securityDeposit.message}</span>
               </label>
             )}
           </div>
@@ -121,7 +121,7 @@ const FinancialAndFinalDetails = ({ props }) => {
                 type="radio"
                 value={true}
                 className="radio radio-primary"
-                {...register('utilitiesIncluded')}
+                {...register('pricing?.utilitiesIncluded')}
               />
               <span className="label-text text-base-content">
                 <span className="font-semibold">Utilities Included</span>
@@ -134,7 +134,7 @@ const FinancialAndFinalDetails = ({ props }) => {
                 type="radio"
                 value={false}
                 className="radio radio-primary"
-                {...register('utilitiesIncluded')}
+                {...register('pricing?.utilitiesIncluded')}
               />
               <span className="label-text text-base-content">
                 <span className="font-semibold">Utilities Separate</span>
@@ -210,19 +210,19 @@ const FinancialAndFinalDetails = ({ props }) => {
                 <div className="flex justify-between">
                   <span className="text-text-muted">Monthly Rent:</span>
                   <span className="font-semibold text-base-content">
-                    {watch('currency')} {watch('rent') || '0'}
+                    {watch('pricing?.currency')} {watch('pricing?.rent') || '0'}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-text-muted">Security Deposit:</span>
                   <span className="font-semibold text-base-content">
-                    {watch('currency')} {watch('securityDeposit') || '0'}
+                    {watch('pricing?.currency')} {watch('pricing?.securityDeposit') || '0'}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-text-muted">Utilities:</span>
                   <span className="font-semibold text-base-content">
-                    {watch('utilitiesIncluded') ? 'Included' : 'Separate'}
+                    {watch('pricing?.utilitiesIncluded') ? 'Included' : 'Separate'}
                   </span>
                 </div>
                 <div className="flex justify-between">
@@ -263,8 +263,8 @@ const FinancialAndFinalDetails = ({ props }) => {
             <h5 className="font-semibold text-base-content mb-3">Ready to Submit?</h5>
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
-                <div className={`w-4 h-4 rounded-full ${watch('rent') ? 'bg-success' : 'bg-base-300'}`}></div>
-                <span className={watch('rent') ? 'text-base-content' : 'text-text-muted'}>
+                <div className={`w-4 h-4 rounded-full ${watch('pricing?.rent') ? 'bg-success' : 'bg-base-300'}`}></div>
+                <span className={watch('pricing?.rent') ? 'text-base-content' : 'text-text-muted'}>
                   Rent and financial details completed
                 </span>
               </div>

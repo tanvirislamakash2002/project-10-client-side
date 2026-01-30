@@ -11,10 +11,6 @@ const useUser = (email) => {
 
     const { 
         data: userInfo = null, 
-        isLoading, 
-        isError, 
-        error, 
-        refetch 
     } = useQuery({
         queryKey: ['user', targetEmail],
         enabled: !authLoading && !!targetEmail,
