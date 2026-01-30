@@ -9,16 +9,18 @@ import {
 } from 'lucide-react';
 import { useParams } from 'react-router';
 import useAxios from '../../../hooks/useAxios';
+import useAuth from '../../../hooks/useAuth';
+import { useFavorite } from '../../../hooks/useFavorite';
+import { useApplicationModal } from '../../../hooks/useApplicationModal';
+import ApplicationModal from '../dashboard/Seeker/ApplicationModal/ApplicationModal';
 
-// Mock hooks - replace with your actual hooks
-const useAuth = () => ({ user: { email: 'user@example.com', displayName: 'John Doe', photoURL: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John' } });
-const useFavorite = (id, email) => {
-  const [isFavorite, setIsFavorite] = useState(false);
-  return {
-    isFavorite,
-    toggleFavorite: () => setIsFavorite(!isFavorite)
-  };
-};
+// const useFavorite = (id, email) => {
+//   const [isFavorite, setIsFavorite] = useState(false);
+//   return {
+//     isFavorite,
+//     toggleFavorite: () => setIsFavorite(!isFavorite)
+//   };
+// };
 
 
 
@@ -28,17 +30,18 @@ const RoomListingDetails = () => {
   const { user } = useAuth();
   const { id } = useParams();
   const axiosInstance = useAxios()
+  const { isModalOpen, openModal, closeModal } = useApplicationModal();
   const { isFavorite, toggleFavorite } = useFavorite(id, user?.email);
 
 
   const { data: singleRoom = {}, isLoading, error } = useQuery({
     queryKey: ['posts'],
-    queryFn: async() => {
+    queryFn: async () => {
       const response = await axiosInstance.get(`/api/v1/listings/${id}`)
       return response.data
     },
-    staleTime:5*60*1000,
-    retry:2
+    staleTime: 5 * 60 * 1000,
+    retry: 2
   });
 
   // const isLoading = false;
@@ -160,7 +163,7 @@ const RoomListingDetails = () => {
                 {/* View Count Badge */}
                 <div className="absolute top-4 right-4 badge badge-lg bg-base-100/90 gap-2">
                   <Eye className="w-4 h-4" />
-                  {singleRoom.viewCount} views
+                  {singleRoom?.viewCount} views
                 </div>
 
                 {/* Featured Badge */}
@@ -203,7 +206,7 @@ const RoomListingDetails = () => {
                       <p className="text-sm text-success font-medium">Monthly Rent</p>
                     </div>
                     <p className="text-2xl font-bold text-success">
-                      {singleRoom.currency === 'USD' ? '$' : ''}{singleRoom.rent}
+                      {singleRoom?.pricing?.currency === 'USD' ? '$' : ''}{singleRoom?.pricing?.rent}
                     </p>
                   </div>
 
@@ -213,7 +216,7 @@ const RoomListingDetails = () => {
                       <p className="text-sm text-info font-medium">Deposit</p>
                     </div>
                     <p className="text-2xl font-bold text-info">
-                      {singleRoom.currency === 'USD' ? '$' : ''}{singleRoom.securityDeposit}
+                      {singleRoom?.pricing?.currency === 'USD' ? '$' : ''}{singleRoom?.pricing?.securityDeposit}
                     </p>
                   </div>
 
@@ -230,15 +233,15 @@ const RoomListingDetails = () => {
                       <Clock className="w-4 h-4 text-secondary" />
                       <p className="text-sm text-secondary font-medium">Lease</p>
                     </div>
-                    <p className="text-sm font-bold text-secondary">{singleRoom.leaseDuration}</p>
+                    <p className="text-sm font-bold text-secondary">{singleRoom?.leaseDuration}</p>
                   </div>
                 </div>
 
                 {/* Application Count */}
-                {singleRoom.applicationCount > 0 && (
+                {singleRoom?.applicationCount > 0 && (
                   <div className="alert alert-info mt-4">
                     <TrendingUp className="w-5 h-5" />
-                    <span><strong>{singleRoom.applicationCount}</strong> people have applied for this room</span>
+                    <span><strong>{singleRoom?.applicationCount}</strong> people have applied for this room</span>
                   </div>
                 )}
               </div>
@@ -248,7 +251,7 @@ const RoomListingDetails = () => {
             <div className="card bg-base-100 shadow-lg">
               <div className="card-body">
                 <h2 className="card-title text-xl">About This Space</h2>
-                <p className="text-base-content/80 leading-relaxed">{singleRoom.description}</p>
+                <p className="text-base-content/80 leading-relaxed">{singleRoom?.description}</p>
               </div>
             </div>
 
@@ -263,7 +266,7 @@ const RoomListingDetails = () => {
                       <Home className="w-8 h-8" />
                     </div>
                     <div className="stat-title text-xs">Property Type</div>
-                    <div className="stat-value text-lg">{singleRoom.propertyType}</div>
+                    <div className="stat-value text-lg">{singleRoom?.propertyType}</div>
                   </div>
 
                   <div className="stat bg-base-200 rounded-lg p-4">
@@ -271,7 +274,7 @@ const RoomListingDetails = () => {
                       <Bed className="w-8 h-8" />
                     </div>
                     <div className="stat-title text-xs">Room Type</div>
-                    <div className="stat-value text-lg">{singleRoom.roomType}</div>
+                    <div className="stat-value text-lg">{singleRoom?.roomType}</div>
                   </div>
 
                   <div className="stat bg-base-200 rounded-lg p-4">
@@ -279,7 +282,7 @@ const RoomListingDetails = () => {
                       <Home className="w-8 h-8" />
                     </div>
                     <div className="stat-title text-xs">Room Size</div>
-                    <div className="stat-value text-lg">{singleRoom.roomSize} ft²</div>
+                    <div className="stat-value text-lg">{singleRoom?.roomSize?.value} ft²</div>
                   </div>
 
                   <div className="stat bg-base-200 rounded-lg p-4">
@@ -497,7 +500,8 @@ const RoomListingDetails = () => {
               <div className="card bg-base-100 shadow-lg">
                 <div className="card-body space-y-3">
                   <button
-                    onClick={() => setShowApplicationModal(true)}
+                    // onClick={() => setShowApplicationModal(true)}
+                    onClick={ openModal}
                     className="btn btn-primary w-full gap-2"
                   >
                     <Send className="w-5 h-5" />
@@ -558,7 +562,7 @@ const RoomListingDetails = () => {
       </div>
 
       {/* Application Modal */}
-      {showApplicationModal && (
+      {/* {showApplicationModal && (
         <div className="modal modal-open">
           <div className="modal-box">
             <h3 className="font-bold text-lg mb-4">Express Your Interest</h3>
@@ -576,7 +580,16 @@ const RoomListingDetails = () => {
           </div>
           <div className="modal-backdrop" onClick={() => setShowApplicationModal(false)}></div>
         </div>
-      )}
+      )} */}
+                                  {isModalOpen && (
+                                      <ApplicationModal
+                                          onClose={closeModal}
+                                          onSuccess={() => {
+                                              alert('Application submitted successfully');
+                                              closeModal();
+                                          }}
+                                      />
+                                  )}
     </div>
   );
 };

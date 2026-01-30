@@ -1,4 +1,3 @@
-// hooks/useFavorites.js - FOR BULK OPERATIONS
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import useAxios from './useAxios';
@@ -11,7 +10,7 @@ export const useFavorites = (userEmail) => {
     const { data: favorites = [], isLoading, error } = useQuery({
         queryKey: ['favorites', userEmail],
         queryFn: async () => {
-            const res = await axiosInstance.get(`/favorites?userEmail=${userEmail}`);
+            const res = await axiosInstance.get(`/api/v1/favorites?userEmail=${userEmail}`);
             return res.data;
         },
         enabled: !!userEmail,

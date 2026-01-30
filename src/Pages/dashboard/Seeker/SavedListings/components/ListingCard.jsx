@@ -2,21 +2,25 @@ import { useQuery } from '@tanstack/react-query';
 import { Heart, Search, Filter, Grid, List, Share2, X, MapPin, Calendar, DollarSign, Eye, Send, Download, ChevronLeft, ChevronRight, ArrowUpDown, GitCompare, CheckCircle, Clock, AlertCircle, Home } from 'lucide-react';
 import useAuth from '../../../../../../hooks/useAuth';
 import { useFavorites } from '../../../../../../hooks/useFavorites';
+import useAxios from '../../../../../../hooks/useAxios';
 
 export const ListingCard = ({ props }) => {
-    const {user} =useAuth()
+    const { user } = useAuth()
 
-    
+
     const { handleSelectListing, handleCompare, listing, selectedListings, getStatusBadge, compareListings, openModal } = props
     const listingId = listing?.listingId
     const { removeFavorite, isRemoving } = useFavorites(user?.email);
+    const axiosInstance = useAxios()
     const { data: singleRoom = {}, isLoading, error } = useQuery({
         queryKey: ['room', listingId],
-        queryFn: () =>
-            fetch(`${import.meta.env.VITE_API_URL}/add-roommate/${listingId}`)
-                .then(res => res.json()),
+        queryFn: async() => {
+            const response = await axiosInstance.get(`/api/v1/listings/${listingId}`)
+            return response?.data
+        }
     });
-    const { availableFrom, description, images, location, poster, preferences, rent, status, title, _id } = singleRoom
+
+    const { availableFrom, description, address, images, location, preferences, pricing, status, title, _id } = singleRoom
 
     const formattedDate = singleRoom?.availableFrom ? new Date(singleRoom?.availableFrom).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -43,10 +47,10 @@ export const ListingCard = ({ props }) => {
                 >
                     <CheckCircle className="w-5 h-5" />
                 </button>
-                <button onClick={()=>removeFavorite(listing?._id)} className="absolute top-3 right-3 p-2 bg-white text-red-500 rounded-full shadow-md hover:bg-red-50 transition">
+                <button onClick={() => removeFavorite(listing?._id)} className="absolute top-3 right-3 p-2 bg-white text-red-500 rounded-full shadow-md hover:bg-red-50 transition">
                     <Heart className="w-5 h-5 fill-current" />
                 </button>
-                {listing.status === 'applied' && (
+                {listing?.status === 'applied' && (
                     <div className="absolute bottom-3 left-3 bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
                         Applied {'none'}
                     </div>
@@ -62,14 +66,14 @@ export const ListingCard = ({ props }) => {
                 <div className="space-y-2 mb-4">
                     <p className="text-sm text-gray-600 flex items-center">
                         <MapPin className="w-4 h-4 mr-1" />
-                        {location}
+                        {address?.street}
                     </p>
                     <p className="text-sm text-gray-600 flex items-center">
                         <Calendar className="w-4 h-4 mr-1" />
                         Available: {availableFrom}
                     </p>
                     <p className="text-xl font-bold text-green-600">
-                        ${rent}<span className="text-sm text-gray-600 font-normal">/month</span>
+                        ${pricing?.rent}<span className="text-sm text-gray-600 font-normal">/month</span>
                     </p>
                 </div>
 
@@ -88,7 +92,7 @@ export const ListingCard = ({ props }) => {
                     </span>
                     <span className="flex items-center">
                         <Eye className="w-3 h-3 mr-1" />
-                        Saved: {listing.savedDate || formattedDate}
+                        Saved: {listing?.savedDate || formattedDate}
                     </span>
                 </div>
 

@@ -18,10 +18,9 @@ export default function SavedListings() {
     const [compareListings, setCompareListings] = useState([]);
     const { isModalOpen, openModal, closeModal } = useApplicationModal();
 
-    const {user} =useAuth()
+    const { user } = useAuth()
 
-    const {favorites, bulkRemoveFavorites, isBulkRemoving} = useFavorites(user.email)
-
+    const { favorites, bulkRemoveFavorites, isBulkRemoving } = useFavorites(user?.email)
 
     // Mock data
     const savedListings = [
@@ -86,10 +85,6 @@ export default function SavedListings() {
             setCompareListings(prev => [...prev, listing]);
         }
     };
-
-
-
-
 
 
     return (
@@ -179,10 +174,10 @@ export default function SavedListings() {
                                 {selectedListings.length} listing{selectedListings.length > 1 ? 's' : ''} selected
                             </span>
                             <div className="flex gap-2">
-                                <button onClick={()=>alert('akash')} className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">
+                                <button onClick={() => alert('akash')} className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">
                                     Bulk Apply
                                 </button>
-                                <button onClick={()=>bulkRemoveFavorites(selectedListings)} className="bg-white text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition border border-gray-300">
+                                <button onClick={() => bulkRemoveFavorites(selectedListings)} className="bg-white text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition border border-gray-300">
                                     Remove All
                                 </button>
                                 <button className="bg-white text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition border border-gray-300 flex items-center">
@@ -227,26 +222,25 @@ export default function SavedListings() {
                     <EmptyState />
                 ) : (
                     <>
-                    <div className={view === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
-                        {favorites.map((listing) => (
-                            <ListingCard key={listing._id} props={{ 
-                                
-                                
-                                handleSelectListing, handleCompare, 
-                                selectedListings, getStatusBadge, compareListings, listing, openModal }} />
-                        ))}
+                        <div className={view === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
+                            {favorites.map((listing) => (
+                                <ListingCard key={listing._id} props={{
+                                    handleSelectListing, handleCompare,
+                                    selectedListings, getStatusBadge, compareListings, listing, openModal
+                                }} />
+                            ))}
 
-                        {isModalOpen && (
-                            <ApplicationModal
-                                onClose={closeModal}
-                                onSuccess={() => {
-                                    alert('Application submitted successfully');
-                                    closeModal();
-                                }}
-                            />
-                        )}
-                    </div>
-                    {/* <div className={view === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
+                            {isModalOpen && (
+                                <ApplicationModal
+                                    onClose={closeModal}
+                                    onSuccess={() => {
+                                        alert('Application submitted successfully');
+                                        closeModal();
+                                    }}
+                                />
+                            )}
+                        </div>
+                        {/* <div className={view === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}>
                         {sortedListings.map((listing) => (
                             <ListingCard key={listing.id} props={{ handleSelectListing, handleCompare, selectedListings, getStatusBadge, compareListings, listing, openModal }} />
                         ))}
