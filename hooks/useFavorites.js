@@ -66,8 +66,8 @@ export const useFavorites = (userEmail) => {
         favorites,
         isLoading,
         error,
-        removeFavorite, // ✅ NOW RETURNED
-        bulkRemoveFavorites, // ✅ RETURNED
+        removeFavorite, 
+        bulkRemoveFavorites, 
         isRemoving: removeMutation.isLoading,
         isBulkRemoving: bulkRemoveMutation.isLoading,
         refetch: () => queryClient.invalidateQueries(['favorites', userEmail])

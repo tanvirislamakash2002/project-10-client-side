@@ -65,19 +65,19 @@ export const ListingCard = ({ listing }) => {
                 <div className="p-5 flex-grow flex flex-col">
                     {/* Title */}
                     <h3 className="font-bold text-lg mb-2 line-clamp-2 text-base-content group-hover:text-primary transition-colors">
-                        {listing.title}
+                        {listing?.title}
                     </h3>
 
                     {/* Location */}
                     <div className="flex items-center gap-1.5 text-text-muted mb-4 text-sm">
                         <MapPin size={16} strokeWidth={2} className="flex-shrink-0" />
-                        <span className="line-clamp-1">{listing.location.type}</span>
+                        <span className="line-clamp-1">{listing?.location?.type}</span>
                     </div>
 
                     {/* Price */}
                     <div className="mb-4 pb-4 border-b border-base-300">
                         <div className="flex items-baseline gap-1">
-                            <span className="text-3xl font-bold text-primary">${listing.rent}</span>
+                            <span className="text-3xl font-bold text-primary">${listing?.pricing?.rent}</span>
                             <span className="text-sm text-text-muted font-medium">/month</span>
                         </div>
                     </div>
@@ -91,7 +91,7 @@ export const ListingCard = ({ listing }) => {
                             <div className="min-w-0 flex-1">
                                 <p className="text-xs text-text-muted mb-0.5">Type</p>
                                 <p className="font-semibold text-base-content text-sm truncate">
-                                    {listing.roomType}
+                                    {listing?.roomType}
                                 </p>
                             </div>
                         </div>
@@ -103,7 +103,7 @@ export const ListingCard = ({ listing }) => {
                             <div className="min-w-0 flex-1">
                                 <p className="text-xs text-text-muted mb-0.5">Property</p>
                                 <p className="font-semibold text-base-content text-sm truncate">
-                                    {listing.propertyType}
+                                    {listing?.propertyType}
                                 </p>
                             </div>
                         </div>
@@ -115,7 +115,7 @@ export const ListingCard = ({ listing }) => {
                             <div className="min-w-0 flex-1">
                                 <p className="text-xs text-text-muted mb-0.5">Gender</p>
                                 <p className="font-semibold text-base-content text-sm truncate">
-                                    {listing.preferredGender}
+                                    {listing?.preferredGender}
                                 </p>
                             </div>
                         </div>
@@ -127,7 +127,7 @@ export const ListingCard = ({ listing }) => {
                             <div className="min-w-0 flex-1">
                                 <p className="text-xs text-text-muted mb-0.5">Age Range</p>
                                 <p className="font-semibold text-base-content text-sm truncate">
-                                    {listing?.preferences?.ageRange?.min}-{listing?.preferences?.ageRange?.max}
+                                    {listing?.preferredAgeRange?.min}-{listing?.preferredAgeRange?.max}
                                 </p>
                             </div>
                         </div>
@@ -138,7 +138,7 @@ export const ListingCard = ({ listing }) => {
                         <div className="flex items-center justify-between">
                             <span className="text-xs text-text-muted font-medium">Available From</span>
                             <span className="text-sm font-semibold text-base-content">
-                                {new Date(listing.availableFrom).toLocaleDateString('en-US', { 
+                                {new Date(listing?.availableFrom).toLocaleDateString('en-US', { 
                                     month: 'short', 
                                     day: 'numeric', 
                                     year: 'numeric' 
@@ -158,7 +158,7 @@ export const ListingCard = ({ listing }) => {
                                 })}
                             </span>
                         </div>
-                        {listing.viewCount && (
+                        {listing?.viewCount && (
                             <div className="flex items-center gap-1">
                                 <Eye size={12} />
                                 <span>{listing.viewCount} views</span>
@@ -169,7 +169,7 @@ export const ListingCard = ({ listing }) => {
 
                 {/* CTA Button */}
                 <div className="p-4 border-t border-base-300 bg-base-200">
-                    <button className="w-full bg-primary text-primary-content py-2.5 rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]">
+                    <button className="w-full bg-primary text-primary-content py-2.5 rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
                         View Details
                     </button>
                 </div>

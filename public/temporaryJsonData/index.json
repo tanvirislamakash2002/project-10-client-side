@@ -1,0 +1,420 @@
+[
+  {
+    "_id": {
+      "$oid": "697cdc121aaf8f61c40c2db6"
+    },
+    "title": "Sunny Private Room in Downtown Apartment",
+    "description": "Beautiful private room in a newly renovated apartment building. Large windows with natural light, walk-in closet, and private balcony. Perfect for professionals or graduate students. Quiet building with friendly neighbors.",
+    "propertyType": "Apartment",
+    "roomType": "Private Room",
+    "availableFrom": "2024-03-01",
+    "roomSize": {
+      "value": "150",
+      "unit": "sqft"
+    },
+    "address": {
+      "street": "123 Main Street",
+      "city": "New York",
+      "state": "NY",
+      "postalCode": "10001",
+      "country": "USA"
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -74.006,
+        40.7128
+      ]
+    },
+    "currentOccupants": "2",
+    "totalRoommates": "3",
+    "preferredGender": "No Preference",
+    "preferredAgeRange": {
+      "min": "22",
+      "max": "35"
+    },
+    "occupationPreference": "Professional/Student",
+    "lifestyleTags": [
+      "Non-Smoking",
+      "Clean/Tidy",
+      "Social",
+      "Early Riser",
+      "Fitness Enthusiast",
+      "Foodie",
+      "Traveler"
+    ],
+    "bathroomType": "Shared",
+    "furnishing": "Fully Furnished",
+    "amenities": [
+      "WiFi",
+      "Air Conditioning",
+      "In-Unit Laundry",
+      "Dishwasher",
+      "Gym",
+      "Rooftop",
+      "Elevator",
+      "Security System"
+    ],
+    "petPolicy": "Small Pets Allowed",
+    "smokingPolicy": "No Smoking",
+    "applicationRequirements": [
+      "Income Proof",
+      "References",
+      "Credit Check",
+      "Security Deposit",
+      "First Month Rent"
+    ],
+    "pricing": {
+      "rent": "1450",
+      "currency": "USD",
+      "securityDeposit": "1450",
+      "utilitiesIncluded": "true"
+    },
+    "leaseDuration": "12 Months",
+    "status": "accepted",
+    "providerId": "6921fa528e6bf7e0604c0261",
+    "createdAt": "2024-01-15T10:30:00.000Z",
+    "updatedAt": "2024-01-15T10:30:00.000Z",
+    "images": [
+      "https://i.ibb.co.com/V0cQD9NJ/1-20-26.png",
+      "https://i.ibb.co.com/xqfj1TMp/1-29-26.png",
+      "https://i.ibb.co.com/nNY0xnrC/1-22-26.png",
+      "https://i.ibb.co.com/RT21kPfF/1-18-26.png",
+      "https://i.ibb.co.com/7JQncs7h/1-19-26.png"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "697cdc121aaf8f61c40c2db7"
+    },
+    "title": "Spacious Shared Room in Modern House",
+    "description": "Large shared room in a 4-bedroom house near university campus. Room comes with two twin beds, two desks, and two wardrobes. Great for students looking for affordable housing. Close to public transportation and campus facilities.",
+    "propertyType": "House",
+    "roomType": "Shared Room",
+    "availableFrom": "2024-02-15",
+    "roomSize": {
+      "value": "220",
+      "unit": "sqft"
+    },
+    "address": {
+      "street": "456 College Avenue",
+      "city": "Boston",
+      "state": "MA",
+      "postalCode": "02115",
+      "country": "USA"
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -71.092,
+        42.339
+      ]
+    },
+    "currentOccupants": "3",
+    "totalRoommates": "4",
+    "preferredGender": "Female Only",
+    "preferredAgeRange": {
+      "min": "18",
+      "max": "25"
+    },
+    "occupationPreference": "Student",
+    "lifestyleTags": [
+      "Non-Smoking",
+      "Quiet",
+      "Studious",
+      "Vegetarian",
+      "Artsy",
+      "Coffee Lover",
+      "Gardener"
+    ],
+    "bathroomType": "Shared",
+    "furnishing": "Semi-Furnished",
+    "amenities": [
+      "WiFi",
+      "Backyard",
+      "Parking",
+      "Bike Storage",
+      "Fireplace",
+      "Pet-Friendly Yard",
+      "Deck"
+    ],
+    "petPolicy": "No Pets",
+    "smokingPolicy": "No Smoking",
+    "applicationRequirements": [
+      "Student ID",
+      "References",
+      "Security Deposit",
+      "Co-signer Required"
+    ],
+    "pricing": {
+      "rent": "750",
+      "currency": "USD",
+      "securityDeposit": "750",
+      "utilitiesIncluded": "false"
+    },
+    "leaseDuration": "9 Months",
+    "status": "accepted",
+    "providerId": "6921fa528e6bf7e0604c0262",
+    "createdAt": "2024-01-16T14:20:00.000Z",
+    "updatedAt": "2024-01-16T14:20:00.000Z",
+    "images": [
+      "https://i.ibb.co.com/V0cQD9NJ/1-20-26.png",
+      "https://i.ibb.co.com/nNY0xnrC/1-22-26.png",
+      "https://i.ibb.co.com/xqfj1TMp/1-29-26.png",
+      "https://i.ibb.co.com/RT21kPfF/1-18-26.png",
+      "https://i.ibb.co.com/7JQncs7h/1-19-26.png"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "697cdc121aaf8f61c40c2db8"
+    },
+    "title": "Luxury Studio Apartment with City View",
+    "description": "Brand new studio apartment in luxury high-rise building. Floor-to-ceiling windows with stunning city views. Modern kitchen with granite countertops, smart home features, and concierge service. Perfect for young professionals.",
+    "propertyType": "Studio",
+    "roomType": "Entire Place",
+    "availableFrom": "2024-01-25",
+    "roomSize": {
+      "value": "550",
+      "unit": "sqft"
+    },
+    "address": {
+      "street": "789 Luxury Lane",
+      "city": "San Francisco",
+      "state": "CA",
+      "postalCode": "94102",
+      "country": "USA"
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -122.419,
+        37.774
+      ]
+    },
+    "currentOccupants": "0",
+    "totalRoommates": "1",
+    "preferredGender": "No Preference",
+    "preferredAgeRange": {
+      "min": "25",
+      "max": "40"
+    },
+    "occupationPreference": "Professional",
+    "lifestyleTags": [
+      "Non-Smoking",
+      "Professional",
+      "Active",
+      "Foodie",
+      "Wine Enthusiast",
+      "Tech Savvy",
+      "Minimalist"
+    ],
+    "bathroomType": "Private",
+    "furnishing": "Fully Furnished",
+    "amenities": [
+      "WiFi",
+      "Smart Home",
+      "Concierge",
+      "Gym",
+      "Pool",
+      "Rooftop Lounge",
+      "Pet Spa",
+      "Package Room",
+      "EV Charging"
+    ],
+    "petPolicy": "Pets Allowed",
+    "smokingPolicy": "No Smoking",
+    "applicationRequirements": [
+      "Income Proof (3x rent)",
+      "Credit Check",
+      "References",
+      "Security Deposit",
+      "First/Last Month Rent"
+    ],
+    "pricing": {
+      "rent": "3200",
+      "currency": "USD",
+      "securityDeposit": "6400",
+      "utilitiesIncluded": "true"
+    },
+    "leaseDuration": "Month-to-Month",
+    "status": "accepted",
+    "providerId": "6921fa528e6bf7e0604c0263",
+    "createdAt": "2024-01-17T09:15:00.000Z",
+    "updatedAt": "2024-01-17T09:15:00.000Z",
+    "images": [
+      "https://i.ibb.co.com/V0cQD9NJ/1-20-26.png",
+      "https://i.ibb.co.com/nNY0xnrC/1-22-26.png",
+      "https://i.ibb.co.com/RT21kPfF/1-18-26.png",
+      "https://i.ibb.co.com/xqfj1TMp/1-29-26.png",
+      "https://i.ibb.co.com/7JQncs7h/1-19-26.png"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "697cdc121aaf8f61c40c2db9"
+    },
+    "title": "Cozy Basement Suite in Quiet Neighborhood",
+    "description": "Private basement suite with separate entrance in a quiet residential neighborhood. Includes bedroom, living area, kitchenette, and private bathroom. Perfect for someone who values privacy and quiet surroundings. Close to parks and shopping.",
+    "propertyType": "Basement",
+    "roomType": "Private Room",
+    "availableFrom": "2024-02-01",
+    "roomSize": {
+      "value": "400",
+      "unit": "sqft"
+    },
+    "address": {
+      "street": "321 Maple Street",
+      "city": "Seattle",
+      "state": "WA",
+      "postalCode": "98101",
+      "country": "USA"
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -122.332,
+        47.606
+      ]
+    },
+    "currentOccupants": "0",
+    "totalRoommates": "1",
+    "preferredGender": "No Preference",
+    "preferredAgeRange": {
+      "min": "30",
+      "max": "60"
+    },
+    "occupationPreference": "Remote Worker/Retired",
+    "lifestyleTags": [
+      "Non-Smoking",
+      "Quiet",
+      "Private",
+      "Gardener",
+      "Reader",
+      "Home Cook",
+      "Pet Lover"
+    ],
+    "bathroomType": "Private",
+    "furnishing": "Unfurnished",
+    "amenities": [
+      "WiFi",
+      "Private Entrance",
+      "Kitchenette",
+      "Parking",
+      "Garden Access",
+      "Storage",
+      "Washer/Dryer Access"
+    ],
+    "petPolicy": "Small Pets Allowed",
+    "smokingPolicy": "No Smoking",
+    "applicationRequirements": [
+      "Income Proof",
+      "References",
+      "Security Deposit",
+      "First Month Rent",
+      "Background Check"
+    ],
+    "pricing": {
+      "rent": "1100",
+      "currency": "USD",
+      "securityDeposit": "1100",
+      "utilitiesIncluded": "true"
+    },
+    "leaseDuration": "6 Months",
+    "status": "accepted",
+    "providerId": "6921fa528e6bf7e0604c0264",
+    "createdAt": "2024-01-18T16:45:00.000Z",
+    "updatedAt": "2024-01-18T16:45:00.000Z",
+    "images": [
+      "https://i.ibb.co.com/V0cQD9NJ/1-20-26.png",
+      "https://i.ibb.co.com/xqfj1TMp/1-29-26.png",
+      "https://i.ibb.co.com/RT21kPfF/1-18-26.png",
+      "https://i.ibb.co.com/nNY0xnrC/1-22-26.png",
+      "https://i.ibb.co.com/7JQncs7h/1-19-26.png"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "697cdc121aaf8f61c40c2dba"
+    },
+    "title": "Master Bedroom in Townhouse Near Tech Park",
+    "description": "Large master bedroom with ensuite bathroom in a 3-bedroom townhouse. Walk-in closet, balcony, and modern fixtures. Located in a gated community close to major tech companies. Ideal for tech professionals.",
+    "propertyType": "Townhouse",
+    "roomType": "Master Bedroom",
+    "availableFrom": "2024-03-15",
+    "roomSize": {
+      "value": "180",
+      "unit": "sqft"
+    },
+    "address": {
+      "street": "654 Tech Boulevard",
+      "city": "Austin",
+      "state": "TX",
+      "postalCode": "73301",
+      "country": "USA"
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -97.743,
+        30.267
+      ]
+    },
+    "currentOccupants": "2",
+    "totalRoommates": "3",
+    "preferredGender": "No Preference",
+    "preferredAgeRange": {
+      "min": "25",
+      "max": "35"
+    },
+    "occupationPreference": "Tech Professional",
+    "lifestyleTags": [
+      "Non-Smoking",
+      "Tech Savvy",
+      "Active",
+      "Social",
+      "Gamer",
+      "Coffee Enthusiast",
+      "Outdoor Adventurer"
+    ],
+    "bathroomType": "Private",
+    "furnishing": "Fully Furnished",
+    "amenities": [
+      "High-Speed WiFi",
+      "Smart TV",
+      "Gym",
+      "Pool",
+      "BBQ Area",
+      "Bike Storage",
+      "EV Charging",
+      "Co-working Space"
+    ],
+    "petPolicy": "No Pets",
+    "smokingPolicy": "No Smoking",
+    "applicationRequirements": [
+      "Employment Verification",
+      "Credit Check",
+      "References",
+      "Security Deposit",
+      "First Month Rent"
+    ],
+    "pricing": {
+      "rent": "1650",
+      "currency": "USD",
+      "securityDeposit": "1650",
+      "utilitiesIncluded": "false"
+    },
+    "leaseDuration": "12 Months",
+    "status": "accepted",
+    "providerId": "6921fa528e6bf7e0604c0265",
+    "createdAt": "2024-01-19T11:30:00.000Z",
+    "updatedAt": "2024-01-19T11:30:00.000Z",
+    "images": [
+      "https://i.ibb.co.com/V0cQD9NJ/1-20-26.png",
+      "https://i.ibb.co.com/RT21kPfF/1-18-26.png",
+      "https://i.ibb.co.com/nNY0xnrC/1-22-26.png",
+      "https://i.ibb.co.com/xqfj1TMp/1-29-26.png",
+      "https://i.ibb.co.com/7JQncs7h/1-19-26.png"
+    ]
+  }
+]

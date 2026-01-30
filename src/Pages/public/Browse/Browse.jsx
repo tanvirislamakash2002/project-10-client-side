@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Filter, X, ChevronDown, MapPin, DollarSign, Calendar, Home, Users, Shield, Heart } from 'lucide-react';
 import { ListingCard } from './Components/ListingCard';

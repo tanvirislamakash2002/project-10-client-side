@@ -11,7 +11,7 @@ export const useFavorite = (listingId, userEmail) => {
     const { data: isFavorite = false, isLoading } = useQuery({
         queryKey: ['favorite', listingId, userEmail],
         queryFn: async () => {
-            const res = await axiosInstance.get(`/favorites/check?userEmail=${userEmail}&listingId=${listingId}`);
+            const res = await axiosInstance.get(`/api/v1/favorites/check?userEmail=${userEmail}&listingId=${listingId}`);
             return res.data.isFavorite;
         },
         enabled: !!userEmail && !!listingId,
@@ -21,7 +21,7 @@ export const useFavorite = (listingId, userEmail) => {
     // Toggle favorite mutation
     const mutation = useMutation({
         mutationFn: async () => {
-            const res = await axiosInstance.post('/favorites/toggle', {
+            const res = await axiosInstance.post('/api/v1/favorites/toggle', {
                 userEmail,
                 listingId,
             });

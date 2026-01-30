@@ -187,7 +187,7 @@ const ErrorPageDemo = () => {
   return (
     <div>
       {/* Demo Controls */}
-      <div className="fixed top-4 right-4 z-50">
+      {/* <div className="fixed top-4 right-4 z-50">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-sm btn-primary">
             Switch Error Type
@@ -198,7 +198,7 @@ const ErrorPageDemo = () => {
             <li><a onClick={() => setSelectedError("generic")}>Generic Error</a></li>
           </ul>
         </div>
-      </div>
+      </div> */}
 
       {/* Error Page */}
       <ErrorPage errorType={selectedError} />
