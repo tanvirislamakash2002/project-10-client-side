@@ -39,11 +39,8 @@ const RoomListingDetails = () => {
     queryFn: async () => {
       const response = await axiosInstance.get(`/api/v1/listings/${id}`)
       return response.data
-    },
-    staleTime: 5 * 60 * 1000,
-    retry: 2
+    }
   });
-
   // const isLoading = false;
 
   const formattedDate = singleRoom?.availableFrom
@@ -501,7 +498,7 @@ const RoomListingDetails = () => {
                 <div className="card-body space-y-3">
                   <button
                     // onClick={() => setShowApplicationModal(true)}
-                    onClick={ openModal}
+                    onClick={openModal}
                     className="btn btn-primary w-full gap-2"
                   >
                     <Send className="w-5 h-5" />
@@ -581,15 +578,16 @@ const RoomListingDetails = () => {
           <div className="modal-backdrop" onClick={() => setShowApplicationModal(false)}></div>
         </div>
       )} */}
-                                  {isModalOpen && (
-                                      <ApplicationModal
-                                          onClose={closeModal}
-                                          onSuccess={() => {
-                                              alert('Application submitted successfully');
-                                              closeModal();
-                                          }}
-                                      />
-                                  )}
+      {isModalOpen && (
+        <ApplicationModal
+          listingDetails={singleRoom}
+          onClose={closeModal}
+          onSuccess={() => {
+            alert('Application submitted successfully');
+            closeModal();
+          }}
+        />
+      )}
     </div>
   );
 };
