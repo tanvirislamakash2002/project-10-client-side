@@ -583,7 +583,7 @@ const RoomListingDetails = () => {
           listingDetails={singleRoom}
           onClose={closeModal}
           onSuccess={() => {
-            alert('Application submitted successfully');
+            // alert('Application submitted successfully');
             closeModal();
           }}
         />

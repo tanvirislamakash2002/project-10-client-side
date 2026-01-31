@@ -2,7 +2,7 @@ import { CheckCircle } from 'lucide-react';
 import React from 'react';
 
 const Footer = ({ props }) => {
-    const { step, setStep, totalSteps, handleClose, handleSubmit, isSubmitting } = props
+    const { step, setStep, totalSteps, onClose, handleSubmit, isSubmitting } = props
     return (
         <div className="sticky bottom-0 bg-white border-t border-gray-200 rounded-b-lg p-6">
             <div className="flex items-center justify-between gap-4">
@@ -18,7 +18,7 @@ const Footer = ({ props }) => {
                 <div className="flex-1"></div>
 
                 <button
-                    onClick={handleClose}
+                    onClick={onClose}
                     className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition"
                 >
                     Cancel

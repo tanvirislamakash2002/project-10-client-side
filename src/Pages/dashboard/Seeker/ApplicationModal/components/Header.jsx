@@ -2,7 +2,7 @@ import { DollarSign, MapPin, X } from 'lucide-react';
 import React from 'react';
 
 const Header = ({props}) => {
-    const {listingDetails, handleClose, step, totalSteps}=props;
+    const {listingDetails, onClose, step, totalSteps}=props;
     return (
         <div className="sticky top-0 bg-white border-b border-gray-200 rounded-t-lg p-6 z-10">
             <div className="flex items-start justify-between mb-4">
@@ -20,7 +20,7 @@ const Header = ({props}) => {
                     </div>
                 </div>
                 <button
-                    onClick={handleClose}
+                    onClick={onClose}
                     className="p-2 hover:bg-gray-100 rounded-full transition"
                 >
                     <X className="w-6 h-6 text-gray-600" />

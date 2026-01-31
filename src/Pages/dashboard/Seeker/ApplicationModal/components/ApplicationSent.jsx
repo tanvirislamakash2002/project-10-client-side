@@ -2,7 +2,7 @@ import { CheckCircle } from 'lucide-react';
 import React from 'react';
 
 const ApplicationSent = ({props}) => {
-    const {handleClose}=props;
+    const {onClose}=props;
     return (
         <div className="fixed inset-0 bg-black/60 bg-opacity-50 z-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-lg max-w-lg w-full p-8 text-center">
@@ -34,12 +34,12 @@ const ApplicationSent = ({props}) => {
 
                 <div className="space-y-3">
                     <button
-                        onClick={handleClose}
+                        onClick={onClose}
                         className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
                         View Your Applications
                     </button>
                     <button
-                        onClick={handleClose}
+                        onClick={onClose}
                         className="w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-200 transition">
                         Continue Browsing Listings
                     </button>

@@ -4,8 +4,6 @@ export const useApplicationModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
-
-
     setIsModalOpen(true);
   };
 

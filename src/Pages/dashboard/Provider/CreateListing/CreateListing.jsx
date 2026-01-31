@@ -288,7 +288,6 @@ const MultiStepListingForm = () => {
       // Here you'll integrate with your existing mutation
       await addRoomMutation.mutateAsync(submissionData);
 
-      console.log('suybunt 624', submissionData);
 
       // Reset form after successful submission
       reset({

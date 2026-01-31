@@ -2,7 +2,14 @@ import { Calendar, Clock, DollarSign, Mail, MessageSquare, Phone, Upload } from 
 import React from 'react';
 
 const Step2 = ({ props }) => {
-    const {formData, setFormData, listing, messageTemplates } = props
+    const {
+        register,
+        errors,
+        watch,
+        setValue,
+        listing,
+        messageTemplates
+    } = props
     return (
         <div className="space-y-6">
             {/* Application Details */}
@@ -17,8 +24,7 @@ const Step2 = ({ props }) => {
                         </label>
                         <input
                             type="date"
-                            value={formData.moveInDate}
-                            onChange={(e) => setFormData({ ...formData, moveInDate: e.target.value })}
+                            {...register('moveInDate', { required: 'Move-in date is required' })}
                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
@@ -29,8 +35,7 @@ const Step2 = ({ props }) => {
                             Lease Duration
                         </label>
                         <select
-                            value={formData.leaseDuration}
-                            onChange={(e) => setFormData({ ...formData, leaseDuration: e.target.value })}
+                            {...register('leaseDuration', { required: 'Lease duration is required' })}
                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                         >
                             <option>1 month</option>
@@ -48,8 +53,10 @@ const Step2 = ({ props }) => {
                         </label>
                         <input
                             type="number"
-                            value={formData.budget}
-                            onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                            {...register('budget', {
+                                required: 'Budget is required',
+                                min: { value: 1, message: 'Budget must be positive' }
+                            })}
                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                         />
                         <p className="text-sm text-gray-600 mt-1">Listing price: ${listing.price}/month</p>
@@ -65,14 +72,8 @@ const Step2 = ({ props }) => {
                         Personal Message to Provider
                     </label>
                     <select
-                        value={formData.messageTemplate}
-                        onChange={(e) => {
-                            setFormData({
-                                ...formData,
-                                messageTemplate: e.target.value,
-                                message: messageTemplates[e.target.value]
-                            });
-                        }}
+                        value={watch('messageTemplate')}
+                        onChange={(e)=>setValue('messageTemplate', e.target.value)}
                         className="text-sm px-3 py-1 border border-gray-300 rounded-lg"
                     >
                         <option value="professional">Professional</option>
@@ -81,8 +82,10 @@ const Step2 = ({ props }) => {
                     </select>
                 </div>
                 <textarea
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    {...register('message',{
+                        required:'Message is required',
+                        maxLength:{value:500, message: "Message cannot exceed 500 characters"}
+                    })}
                     rows={6}
                     maxLength={500}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
@@ -90,7 +93,8 @@ const Step2 = ({ props }) => {
                 />
                 <div className="flex justify-between text-sm text-gray-600 mt-1">
                     <span>Make it personal and genuine</span>
-                    <span>{formData.message.length}/500</span>
+                    {/* <span>{formData.message.length}/500</span> */}
+                    <span>33/500</span>
                 </div>
             </div>
 
@@ -111,13 +115,13 @@ const Step2 = ({ props }) => {
                             ].map((method) => (
                                 <button
                                     key={method.value}
-                                    onClick={() => setFormData({ ...formData, contactMethod: method.value })}
-                                    className={`p-4 border-2 rounded-lg transition ${formData.contactMethod === method.value
-                                            ? 'border-blue-500 bg-blue-50'
-                                            : 'border-gray-200 hover:border-gray-300'
+                                    onClick={() => setValue('contactMethod', method.value)}
+                                    className={`p-4 border-2 rounded-lg transition ${watch('contactMethod') === method?.value
+                                        ? 'border-blue-500 bg-blue-50'
+                                        : 'border-gray-200 hover:border-gray-300'
                                         }`}
                                 >
-                                    <method.icon className={`w-6 h-6 mx-auto mb-2 ${formData.contactMethod === method.value ? 'text-blue-600' : 'text-gray-400'
+                                    <method.icon className={`w-6 h-6 mx-auto mb-2 ${'email' === method.value ? 'text-blue-600' : 'text-gray-400'
                                         }`} />
                                     <p className="text-sm font-medium text-gray-900">{method.label}</p>
                                 </button>
@@ -131,8 +135,7 @@ const Step2 = ({ props }) => {
                         </label>
                         <input
                             type="text"
-                            value={formData.availability}
-                            onChange={(e) => setFormData({ ...formData, availability: e.target.value })}
+                            {...register('availability')}
                             placeholder="e.g., Weekday evenings, Weekends anytime"
                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                         />
@@ -148,7 +151,9 @@ const Step2 = ({ props }) => {
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                             Do you have any pets?
                         </label>
-                        <select className="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        <select
+                        {...register('pets')}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg">
                             <option>No</option>
                             <option>Yes - Cat</option>
                             <option>Yes - Dog</option>
@@ -159,7 +164,9 @@ const Step2 = ({ props }) => {
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                             Are you a smoker?
                         </label>
-                        <select className="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        <select
+                        {...register('smoker')}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg">
                             <option>No</option>
                             <option>Yes</option>
                             <option>Occasionally</option>
