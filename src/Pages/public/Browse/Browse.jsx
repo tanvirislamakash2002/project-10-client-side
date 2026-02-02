@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form'; // Add react-hook-form
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form'; 
 import { Filter, X, Home } from 'lucide-react';
 import { ListingCard } from './Components/ListingCard';
 import { FilterSidebar } from './Components/FilterSidebar';
-import useAxios from '../../../../hooks/useAxios';
-import { useListingsQuery } from '../../../../hooks/useListingsQuery'; // Custom hook
-import { prepareFiltersForAPI } from '../../../../utils/filterUtils';
+import { useListingsQuery } from '../../../../hooks/useListingsQuery';
 
 export default function BrowsePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
