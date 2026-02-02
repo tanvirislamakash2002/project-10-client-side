@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Filter, X, Home } from 'lucide-react';
 import { ListingCard } from './Components/ListingCard';
 import { FilterSidebar } from './Components/FilterSidebar';
-import { useListingsQuery } from '../../../../hooks/useListingsQuery';
+import { useListingsQuery } from '../../../../hooks/Listings/useListingsQuery';
 
 export default function BrowsePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

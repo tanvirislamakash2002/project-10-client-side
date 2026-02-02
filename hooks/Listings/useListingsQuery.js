@@ -1,7 +1,6 @@
-// hooks/useListingsQuery.js (NEW FILE)
 import { useQuery } from '@tanstack/react-query';
-import useAxios from './useAxios';
-import { prepareFiltersForAPI } from '../utils/filterUtils';
+import useAxios from '../useAxios';
+import { prepareFiltersForAPI } from '../../utils/filterUtils';
 
 export const useListingsQuery = (filters = {}) => {
   const axiosInstance = useAxios();
