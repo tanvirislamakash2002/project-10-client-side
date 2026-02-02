@@ -8,19 +8,23 @@ import useAxios from '../../../../hooks/useAxios';
 
 export default function BrowsePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [filters, setFilters] = useState({
-    priceMin: 0,
-    priceMax: 5000,
-    location: '',
-    roomType: [],
-    propertyType: [],
-    gender: 'any',
-    amenities: [],
-    verifiedOnly: false,
-    ageMin: 18,
-    ageMax: 65,
-  });
-
+const [filters, setFilters] = useState({
+  price_min: 0,
+  price_max: 5000,
+  location: '',
+  room_type: '', 
+  property_type: '', 
+  gender: 'any',
+  amenities: '', 
+  verified_only: false,
+  age_min: 18,
+  age_max: 65,
+  page: 1, 
+  limit: 20,
+  sort_by: 'createdAt', 
+  sort_order: 'desc'
+});
+console.log(filters);
 
   const axiosInstance = useAxios()
   const { data: RoomData = [], isLoading, error } = useQuery({
