@@ -3,7 +3,7 @@ import { useMemo } from "react";
 export const useListingsFilter = (listings, filters) => {
   const filteredListings = useMemo(() => {
     if (!Array.isArray(listings)) return [];
-    
+
 
 
     const result = listings.filter(listing => {
@@ -29,7 +29,7 @@ export const useListingsFilter = (listings, filters) => {
         const stateMatch = listing.address?.state?.toLowerCase().includes(searchTerm);
         const streetMatch = listing.address?.street?.toLowerCase().includes(searchTerm);
 
-        
+
         if (!cityMatch && !stateMatch && !streetMatch) {
           return false;
         }
@@ -43,22 +43,22 @@ export const useListingsFilter = (listings, filters) => {
 
       // Property type filter
       if (filters.propertyType.length > 0 && !filters.propertyType.includes(listing.propertyType)) {
- 
+
         return false;
       }
 
       // Gender preference filter
 
-      if (filters.gender !== 'any' && 
-          listing.preferredGender !== 'No Preference' && 
-          listing.preferredGender !== filters.gender) {
+      if (filters.gender !== 'any' &&
+        listing.preferredGender !== 'No Preference' &&
+        listing.preferredGender !== filters.gender) {
         return false;
       }
 
       // Verified filter
 
       if (filters.verifiedOnly && !listing.poster?.verified) {
-        
+
         return false;
       }
 
