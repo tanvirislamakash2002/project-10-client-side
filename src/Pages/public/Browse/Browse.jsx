@@ -4,6 +4,7 @@ import { Filter, X, Home } from 'lucide-react';
 import { ListingCard } from './Components/ListingCard';
 import { FilterSidebar } from './Components/FilterSidebar';
 import { useListingsQuery } from '../../../../hooks/Listings/useListingsQuery';
+import { useSyncFiltersToURL } from '../../../../hooks/Listings/useSyncFiltersToURL';
 
 export default function BrowsePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -27,7 +28,9 @@ export default function BrowsePage() {
       sort_order: 'desc'
     }
   });
+
   
+  useSyncFiltersToURL(watch(), setValue);
   // Watch all form values
   const formValues = watch();
   

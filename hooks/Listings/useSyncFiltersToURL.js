@@ -1,7 +1,7 @@
 // hooks/useSyncFiltersToURL.js
 import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { prepareFiltersForAPI } from '../utils/filterUtils';
+import { useSearchParams } from 'react-router';
+import { prepareFiltersForAPI } from '../../utils/filterUtils';
 
 export const useSyncFiltersToURL = (filters) => {
   const [searchParams, setSearchParams] = useSearchParams();
