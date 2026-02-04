@@ -60,8 +60,8 @@ export const useListingsQuery = (filters = {}) => {
       cleaned.limit = filters.limit;
     }
     
-    console.log('🧹 Cleaned filters (sent to API):', cleaned);
-    console.log('📤 URL will be:', `/api/v1/listings?${new URLSearchParams(cleaned).toString()}`);
+    // console.log('🧹 Cleaned filters (sent to API):', cleaned);
+    // console.log('📤 URL will be:', `/api/v1/listings?${new URLSearchParams(cleaned).toString()}`);
     
     return cleaned;
   }, [filters]);
@@ -69,18 +69,18 @@ export const useListingsQuery = (filters = {}) => {
   return useQuery({
     queryKey: ['listings', apiFilters],
     queryFn: async () => {
-      console.log('🚀 Making API call with cleaned filters:', apiFilters);
+      // console.log('🚀 Making API call with cleaned filters:', apiFilters);
       
       const response = await axiosInstance.get('/api/v1/listings', {
         params: apiFilters
       });
       
-      console.log('✅ API Response:', {
-        success: response.data.success,
-        count: response.data.data?.length,
-        total: response.data.pagination?.total,
-        firstListing: response.data.data?.[0]
-      });
+      // console.log('✅ API Response:', {
+      //   success: response.data.success,
+      //   count: response.data.data?.length,
+      //   total: response.data.pagination?.total,
+      //   firstListing: response.data.data?.[0]
+      // });
       
       return response.data;
     },
