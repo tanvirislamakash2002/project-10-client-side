@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import { Search, Shield, CheckCircle, Users, Home, MapPin, Calendar } from 'lucide-react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { motion } from 'framer-motion';
 
 export default function HeroSection() {
+  const navigate = useNavigate()
   const [location, setLocation] = useState('');
   const [moveInDate, setMoveInDate] = useState('');
 
   const handleSearch = () => {
-    alert('Searching:', { location, moveInDate });
+    console.log('Searching:', { location, moveInDate });
+
+    const params = new URLSearchParams()
+
+    if(location) params.append('location', location)
+    if(moveInDate) params.append('moveInDate', moveInDate)
+
+      navigate(`/browse?${params.toString()}`)
   };
 
   return (

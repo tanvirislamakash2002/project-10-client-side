@@ -33,8 +33,7 @@ export default function BrowsePage() {
   useSyncFiltersToURL(watch(), setValue);
   // Watch all form values
   const formValues = watch();
-  
-  // Use the custom query hook
+
   const { 
     data: listingsData = {}, 
     isLoading, 

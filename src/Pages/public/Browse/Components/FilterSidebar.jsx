@@ -229,7 +229,7 @@ export const FilterSidebar = ({
             </div>
 
             {/* Verified Only */}
-            <div>
+            {/* <div>
                 <Controller
                     name="verified_only"
                     control={control}
@@ -248,7 +248,7 @@ export const FilterSidebar = ({
                         </label>
                     )}
                 />
-            </div>
+            </div> */}
         </div>
     );
 };
