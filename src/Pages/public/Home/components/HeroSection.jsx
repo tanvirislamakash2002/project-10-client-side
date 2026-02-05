@@ -8,8 +8,8 @@ export default function HeroSection() {
   const [location, setLocation] = useState('');
   const [moveInTimeline, setMoveInTimeline] = useState('');
 
-  const handleSearch = () => {
-    console.log('Searching:', { location, moveInTimeline });
+  const handleSearch = (e) => {
+    e.preventDefault()
 
     const params = new URLSearchParams()
 
