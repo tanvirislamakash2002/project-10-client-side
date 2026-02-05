@@ -5,7 +5,6 @@ import useAxios from '../useAxios';
 
 export const useListingsQuery = (filters = {}) => {
   const axiosInstance = useAxios();
-  
   const apiFilters = useMemo(() => {
     if (!filters) return {};
     

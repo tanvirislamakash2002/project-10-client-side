@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React from 'react';
-import config from '../config/index.js';
+import { config } from '../src/config';
 
 const axiosInstance = axios.create({
-    baseURL: config.baseUrl
+    baseURL: config.API_URL
 })
 const useAxios = () => {
     return axiosInstance;
