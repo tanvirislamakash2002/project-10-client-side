@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run inject-config && vite build",
+    "inject-config": "node scripts/inject-runtime-config.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
