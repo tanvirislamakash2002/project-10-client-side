@@ -29,7 +29,6 @@ export default function BrowsePage() {
     }
   });
 
-  
   useSyncFiltersToURL(watch(), setValue);
   // Watch all form values
   const formValues = watch();
