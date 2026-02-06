@@ -7,7 +7,7 @@ import ErrorPage from "../Pages/ErrorPage";
 import UnderConstructionPage from "../Pages/UnderConstructionPage";
 import Root from "../layout/Root";
 import Details from "../Pages/public/Details";
-import Register from "../Pages/auth/Register";
+import Register from "../Pages/auth/Register/Register";
 import Login from "../Pages/auth/Login";
 import Home from "../Pages/public/Home/Home";
 import DashboardLayout from "../layout/DashboardLayout";

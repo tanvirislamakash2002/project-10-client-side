@@ -76,11 +76,9 @@
     "createdAt": "2024-01-15T10:30:00.000Z",
     "updatedAt": "2024-01-15T10:30:00.000Z",
     "images": [
-      "https://i.ibb.co.com/V0cQD9NJ/1-20-26.png",
-      "https://i.ibb.co.com/xqfj1TMp/1-29-26.png",
-      "https://i.ibb.co.com/nNY0xnrC/1-22-26.png",
-      "https://i.ibb.co.com/RT21kPfF/1-18-26.png",
-      "https://i.ibb.co.com/7JQncs7h/1-19-26.png"
+      "https://i.ibb.co.com/1tnvGMcM/7.jpg",
+      "https://i.ibb.co.com/mVs99ddq/1.jpg",
+      "https://i.ibb.co.com/kVhGvJbf/2.jpg"
     ]
   },
   {
@@ -158,11 +156,10 @@
     "createdAt": "2024-01-16T14:20:00.000Z",
     "updatedAt": "2024-01-16T14:20:00.000Z",
     "images": [
-      "https://i.ibb.co.com/V0cQD9NJ/1-20-26.png",
-      "https://i.ibb.co.com/nNY0xnrC/1-22-26.png",
-      "https://i.ibb.co.com/xqfj1TMp/1-29-26.png",
-      "https://i.ibb.co.com/RT21kPfF/1-18-26.png",
-      "https://i.ibb.co.com/7JQncs7h/1-19-26.png"
+      "https://i.ibb.co.com/xSkPy7tH/3.jpg",
+      "https://i.ibb.co.com/Csw9kBCG/4.jpg",
+      "https://i.ibb.co.com/hRw9fqWW/5.jpg",
+      "https://i.ibb.co.com/FkrFfXsW/6.jpg"
     ]
   },
   {
@@ -243,11 +240,10 @@
     "createdAt": "2024-01-17T09:15:00.000Z",
     "updatedAt": "2024-01-17T09:15:00.000Z",
     "images": [
-      "https://i.ibb.co.com/V0cQD9NJ/1-20-26.png",
-      "https://i.ibb.co.com/nNY0xnrC/1-22-26.png",
-      "https://i.ibb.co.com/RT21kPfF/1-18-26.png",
-      "https://i.ibb.co.com/xqfj1TMp/1-29-26.png",
-      "https://i.ibb.co.com/7JQncs7h/1-19-26.png"
+      "https://i.ibb.co.com/1tnvGMcM/7.jpg",
+      "https://i.ibb.co.com/mVs99ddq/1.jpg",
+      "https://i.ibb.co.com/kVhGvJbf/2.jpg",
+      "https://i.ibb.co.com/xSkPy7tH/3.jpg"
     ]
   },
   {
@@ -326,11 +322,9 @@
     "createdAt": "2024-01-18T16:45:00.000Z",
     "updatedAt": "2024-01-18T16:45:00.000Z",
     "images": [
-      "https://i.ibb.co.com/V0cQD9NJ/1-20-26.png",
-      "https://i.ibb.co.com/xqfj1TMp/1-29-26.png",
-      "https://i.ibb.co.com/RT21kPfF/1-18-26.png",
-      "https://i.ibb.co.com/nNY0xnrC/1-22-26.png",
-      "https://i.ibb.co.com/7JQncs7h/1-19-26.png"
+      "https://i.ibb.co.com/Csw9kBCG/4.jpg",
+      "https://i.ibb.co.com/hRw9fqWW/5.jpg",
+      "https://i.ibb.co.com/FkrFfXsW/6.jpg"
     ]
   },
   {
@@ -410,11 +404,411 @@
     "createdAt": "2024-01-19T11:30:00.000Z",
     "updatedAt": "2024-01-19T11:30:00.000Z",
     "images": [
-      "https://i.ibb.co.com/V0cQD9NJ/1-20-26.png",
-      "https://i.ibb.co.com/RT21kPfF/1-18-26.png",
-      "https://i.ibb.co.com/nNY0xnrC/1-22-26.png",
-      "https://i.ibb.co.com/xqfj1TMp/1-29-26.png",
-      "https://i.ibb.co.com/7JQncs7h/1-19-26.png"
+      "https://i.ibb.co.com/1tnvGMcM/7.jpg",
+      "https://i.ibb.co.com/kVhGvJbf/2.jpg",
+      "https://i.ibb.co.com/xSkPy7tH/3.jpg",
+      "https://i.ibb.co.com/hRw9fqWW/5.jpg"
+    ]
+  },  
+  {
+    "_id": {
+      "$oid": "697cdc121aaf8f61c40c2dbb"
+    },
+    "title": "Artist's Loft with High Ceilings in Warehouse District",
+    "description": "Converted industrial loft with original brick walls, large north-facing windows, and spacious open layout. Perfect for artists, creatives, or anyone who loves character. Exposed beams and concrete floors add to the unique charm.",
+    "propertyType": "Loft",
+    "roomType": "Entire Place",
+    "availableFrom": "2024-04-01",
+    "roomSize": {
+      "value": "850",
+      "unit": "sqft"
+    },
+    "address": {
+      "street": "888 Industrial Way",
+      "city": "Portland",
+      "state": "OR",
+      "postalCode": "97209",
+      "country": "USA"
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -122.676,
+        45.523
+      ]
+    },
+    "currentOccupants": "0",
+    "totalRoommates": "1",
+    "preferredGender": "No Preference",
+    "preferredAgeRange": {
+      "min": "25",
+      "max": "50"
+    },
+    "occupationPreference": "Creative/Artist/Freelancer",
+    "lifestyleTags": [
+      "Artsy",
+      "Creative",
+      "Non-Smoking",
+      "Vegetarian/Vegan Friendly",
+      "Music Lover",
+      "Night Owl",
+      "Minimalist"
+    ],
+    "bathroomType": "Private",
+    "furnishing": "Semi-Furnished",
+    "amenities": [
+      "WiFi",
+      "High Ceilings",
+      "Studio Space",
+      "Bike Storage",
+      "Roof Access",
+      "Communal Workshop",
+      "Parking"
+    ],
+    "petPolicy": "Cats Allowed",
+    "smokingPolicy": "No Smoking",
+    "applicationRequirements": [
+      "Portfolio/Creative Work (Optional)",
+      "References",
+      "Security Deposit",
+      "First Month Rent"
+    ],
+    "pricing": {
+      "rent": "1850",
+      "currency": "USD",
+      "securityDeposit": "1850",
+      "utilitiesIncluded": "false"
+    },
+    "leaseDuration": "12 Months",
+    "status": "accepted",
+    "providerId": "6921fa528e6bf7e0604c0266",
+    "createdAt": "2024-01-20T13:10:00.000Z",
+    "updatedAt": "2024-01-20T13:10:00.000Z",
+    "images": [
+      "https://i.ibb.co.com/kVhGvJbf/2.jpg",
+      "https://i.ibb.co.com/xSkPy7tH/3.jpg",
+      "https://i.ibb.co.com/FkrFfXsW/6.jpg",
+      "https://i.ibb.co.com/1tnvGMcM/7.jpg"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "697cdc121aaf8f61c40c2dbc"
+    },
+    "title": "Quiet Room in Historic Brownstone",
+    "description": "Charming room in a well-maintained historic brownstone on a tree-lined street. Hardwood floors, fireplace (non-working), and built-in bookshelves. Seeking a respectful roommate to share this beautiful home with two quiet professionals.",
+    "propertyType": "Brownstone",
+    "roomType": "Private Room",
+    "availableFrom": "2024-02-20",
+    "roomSize": {
+      "value": "120",
+      "unit": "sqft"
+    },
+    "address": {
+      "street": "22 Heritage Lane",
+      "city": "Brooklyn",
+      "state": "NY",
+      "postalCode": "11201",
+      "country": "USA"
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -73.99,
+        40.694
+      ]
+    },
+    "currentOccupants": "2",
+    "totalRoommates": "3",
+    "preferredGender": "No Preference",
+    "preferredAgeRange": {
+      "min": "26",
+      "max": "45"
+    },
+    "occupationPreference": "Professional",
+    "lifestyleTags": [
+      "Quiet",
+      "Respectful",
+      "Book Lover",
+      "Non-Smoking",
+      "Clean/Tidy",
+      "Tea Enthusiast",
+      "Low-Key"
+    ],
+    "bathroomType": "Shared",
+    "furnishing": "Fully Furnished",
+    "amenities": [
+      "WiFi",
+      "Fireplace",
+      "Back Garden",
+      "Original Details",
+      "Dishwasher",
+      "In-Unit Laundry"
+    ],
+    "petPolicy": "No Pets",
+    "smokingPolicy": "No Smoking",
+    "applicationRequirements": [
+      "Income Proof",
+      "References",
+      "Interview",
+      "Security Deposit"
+    ],
+    "pricing": {
+      "rent": "1300",
+      "currency": "USD",
+      "securityDeposit": "1300",
+      "utilitiesIncluded": "true"
+    },
+    "leaseDuration": "Month-to-Month",
+    "status": "accepted",
+    "providerId": "6921fa528e6bf7e0604c0267",
+    "createdAt": "2024-01-21T15:45:00.000Z",
+    "updatedAt": "2024-01-21T15:45:00.000Z",
+    "images": [
+      "https://i.ibb.co.com/mVs99ddq/1.jpg",
+      "https://i.ibb.co.com/Csw9kBCG/4.jpg",
+      "https://i.ibb.co.com/hRw9fqWW/5.jpg"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "697cdc121aaf8f61c40c2dbd"
+    },
+    "title": "Modern Shared Room for Graduate Students",
+    "description": "One spot available in a bright, modern 2-bed/2-bath apartment shared by two graduate students. Seeking a third roommate (shared room) who is clean, focused, and respectful of study hours. Great location between two major universities.",
+    "propertyType": "Apartment",
+    "roomType": "Shared Room",
+    "availableFrom": "2024-01-30",
+    "roomSize": {
+      "value": "200",
+      "unit": "sqft"
+    },
+    "address": {
+      "street": "45 University Drive",
+      "city": "Chicago",
+      "state": "IL",
+      "postalCode": "60601",
+      "country": "USA"
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -87.629,
+        41.878
+      ]
+    },
+    "currentOccupants": "2",
+    "totalRoommates": "3",
+    "preferredGender": "Male Only",
+    "preferredAgeRange": {
+      "min": "22",
+      "max": "30"
+    },
+    "occupationPreference": "Graduate Student",
+    "lifestyleTags": [
+      "Studious",
+      "Clean/Tidy",
+      "Non-Smoking",
+      "Quiet",
+      "Early Riser",
+      "Budget-Conscious",
+      "Fitness"
+    ],
+    "bathroomType": "Shared",
+    "furnishing": "Fully Furnished",
+    "amenities": [
+      "High-Speed WiFi",
+      "Study Desks",
+      "In-Unit Laundry",
+      "Dishwasher",
+      "AC/Heating",
+      "Bike Room",
+      "Package Room"
+    ],
+    "petPolicy": "No Pets",
+    "smokingPolicy": "No Smoking",
+    "applicationRequirements": [
+      "Student ID",
+      "References",
+      "Security Deposit",
+      "First Month Rent"
+    ],
+    "pricing": {
+      "rent": "650",
+      "currency": "USD",
+      "securityDeposit": "650",
+      "utilitiesIncluded": "true"
+    },
+    "leaseDuration": "12 Months",
+    "status": "accepted",
+    "providerId": "6921fa528e6bf7e0604c0268",
+    "createdAt": "2024-01-22T10:00:00.000Z",
+    "updatedAt": "2024-01-22T10:00:00.000Z",
+    "images": [
+      "https://i.ibb.co.com/xSkPy7tH/3.jpg",
+      "https://i.ibb.co.com/1tnvGMcM/7.jpg",
+      "https://i.ibb.co.com/mVs99ddq/1.jpg"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "697cdc121aaf8f61c40c2dbe"
+    },
+    "title": "Penthouse Suite with Private Roof Deck",
+    "description": "Incredible penthouse-level private room with direct access to a massive private roof deck offering 360-degree city views. The suite includes a luxurious bathroom and walk-in closet. Housemates are two travel professionals who are often away.",
+    "propertyType": "Penthouse",
+    "roomType": "Master Bedroom",
+    "availableFrom": "2024-03-10",
+    "roomSize": {
+      "value": "300",
+      "unit": "sqft"
+    },
+    "address": {
+      "street": "101 Skyline Avenue",
+      "city": "Denver",
+      "state": "CO",
+      "postalCode": "80202",
+      "country": "USA"
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -104.99,
+        39.739
+      ]
+    },
+    "currentOccupants": "2",
+    "totalRoommates": "3",
+    "preferredGender": "No Preference",
+    "preferredAgeRange": {
+      "min": "28",
+      "max": "45"
+    },
+    "occupationPreference": "Professional (Travel-Friendly a Plus)",
+    "lifestyleTags": [
+      "Social",
+      "Outdoor Enthusiast",
+      "Foodie",
+      "Wine/Spirits",
+      "Traveler",
+      "Non-Smoking",
+      "Pet Friendly"
+    ],
+    "bathroomType": "Private",
+    "furnishing": "Fully Furnished",
+    "amenities": [
+      "Private Roof Deck",
+      "Hot Tub",
+      "Outdoor Kitchen",
+      "Smart Home",
+      "Gym",
+      "Concierge",
+      "Pet Wash",
+      "Two Parking Spots"
+    ],
+    "petPolicy": "Dogs Allowed",
+    "smokingPolicy": "No Smoking",
+    "applicationRequirements": [
+      "Income Proof (4x rent)",
+      "Credit Check",
+      "References",
+      "Security Deposit",
+      "First/Last Month Rent"
+    ],
+    "pricing": {
+      "rent": "2200",
+      "currency": "USD",
+      "securityDeposit": "4400",
+      "utilitiesIncluded": "true"
+    },
+    "leaseDuration": "12 Months",
+    "status": "accepted",
+    "providerId": "6921fa528e6bf7e0604c0269",
+    "createdAt": "2024-01-23T17:20:00.000Z",
+    "updatedAt": "2024-01-23T17:20:00.000Z",
+    "images": [
+      "https://i.ibb.co.com/FkrFfXsW/6.jpg",
+      "https://i.ibb.co.com/hRw9fqWW/5.jpg",
+      "https://i.ibb.co.com/kVhGvJbf/2.jpg",
+      "https://i.ibb.co.com/1tnvGMcM/7.jpg"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "697cdc121aaf8f61c40c2dbf"
+    },
+    "title": "Budget-Friendly Room in Family Home",
+    "description": "A simple, clean room available in a friendly family home. Ideal for a responsible individual, intern, or service worker looking for affordable, stable housing. Shared use of kitchen, living room, and backyard. Must be comfortable in a family setting.",
+    "propertyType": "House",
+    "roomType": "Private Room",
+    "availableFrom": "2024-02-05",
+    "roomSize": {
+      "value": "110",
+      "unit": "sqft"
+    },
+    "address": {
+      "street": "777 Oak Street",
+      "city": "Columbus",
+      "state": "OH",
+      "postalCode": "43215",
+      "country": "USA"
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -82.998,
+        39.961
+      ]
+    },
+    "currentOccupants": "3",
+    "totalRoommates": "4",
+    "preferredGender": "Female Only",
+    "preferredAgeRange": {
+      "min": "20",
+      "max": "40"
+    },
+    "occupationPreference": "Any Stable Employment",
+    "lifestyleTags": [
+      "Respectful",
+      "Family-Friendly",
+      "Quiet",
+      "Non-Smoking",
+      "Clean",
+      "Home Cook",
+      "Early Riser"
+    ],
+    "bathroomType": "Shared",
+    "furnishing": "Semi-Furnished",
+    "amenities": [
+      "WiFi",
+      "Fully Equipped Kitchen",
+      "Backyard",
+      "Parking",
+      "Laundry Access",
+      "Family Room"
+    ],
+    "petPolicy": "No Pets",
+    "smokingPolicy": "No Smoking",
+    "applicationRequirements": [
+      "Informal Interview",
+      "References",
+      "Security Deposit"
+    ],
+    "pricing": {
+      "rent": "550",
+      "currency": "USD",
+      "securityDeposit": "550",
+      "utilitiesIncluded": "true"
+    },
+    "leaseDuration": "6 Months",
+    "status": "accepted",
+    "providerId": "6921fa528e6bf7e0604c0270",
+    "createdAt": "2024-01-24T12:05:00.000Z",
+    "updatedAt": "2024-01-24T12:05:00.000Z",
+    "images": [
+      "https://i.ibb.co.com/Csw9kBCG/4.jpg",
+      "https://i.ibb.co.com/mVs99ddq/1.jpg",
+      "https://i.ibb.co.com/xSkPy7tH/3.jpg"
     ]
   }
 ]
