@@ -72,7 +72,7 @@
     },
     "leaseDuration": "12 Months",
     "status": "accepted",
-    "providerId": "6921fa528e6bf7e0604c0261",
+    "providerId": "6985d7d64d67aca29b596c9f",
     "createdAt": "2024-01-15T10:30:00.000Z",
     "updatedAt": "2024-01-15T10:30:00.000Z",
     "images": [
@@ -152,7 +152,7 @@
     },
     "leaseDuration": "9 Months",
     "status": "accepted",
-    "providerId": "6921fa528e6bf7e0604c0262",
+    "providerId": "6985d0344d67aca29b596c9b",
     "createdAt": "2024-01-16T14:20:00.000Z",
     "updatedAt": "2024-01-16T14:20:00.000Z",
     "images": [
@@ -236,7 +236,7 @@
     },
     "leaseDuration": "Month-to-Month",
     "status": "accepted",
-    "providerId": "6921fa528e6bf7e0604c0263",
+    "providerId": "698607439b5a62d35f79733a",
     "createdAt": "2024-01-17T09:15:00.000Z",
     "updatedAt": "2024-01-17T09:15:00.000Z",
     "images": [
@@ -318,7 +318,7 @@
     },
     "leaseDuration": "6 Months",
     "status": "accepted",
-    "providerId": "6921fa528e6bf7e0604c0264",
+    "providerId": "6985d33a4d67aca29b596c9d",
     "createdAt": "2024-01-18T16:45:00.000Z",
     "updatedAt": "2024-01-18T16:45:00.000Z",
     "images": [
@@ -400,7 +400,7 @@
     },
     "leaseDuration": "12 Months",
     "status": "accepted",
-    "providerId": "6921fa528e6bf7e0604c0265",
+    "providerId": "6985e1bec4e46b59c27fa059",
     "createdAt": "2024-01-19T11:30:00.000Z",
     "updatedAt": "2024-01-19T11:30:00.000Z",
     "images": [
@@ -409,7 +409,7 @@
       "https://i.ibb.co.com/xSkPy7tH/3.jpg",
       "https://i.ibb.co.com/hRw9fqWW/5.jpg"
     ]
-  },  
+  },
   {
     "_id": {
       "$oid": "697cdc121aaf8f61c40c2dbb"
@@ -481,7 +481,7 @@
     },
     "leaseDuration": "12 Months",
     "status": "accepted",
-    "providerId": "6921fa528e6bf7e0604c0266",
+    "providerId": "69860b6c9b5a62d35f79733b",
     "createdAt": "2024-01-20T13:10:00.000Z",
     "updatedAt": "2024-01-20T13:10:00.000Z",
     "images": [
@@ -561,7 +561,7 @@
     },
     "leaseDuration": "Month-to-Month",
     "status": "accepted",
-    "providerId": "6921fa528e6bf7e0604c0267",
+    "providerId": "6985d0344d67aca29b596c9b",
     "createdAt": "2024-01-21T15:45:00.000Z",
     "updatedAt": "2024-01-21T15:45:00.000Z",
     "images": [
@@ -641,7 +641,7 @@
     },
     "leaseDuration": "12 Months",
     "status": "accepted",
-    "providerId": "6921fa528e6bf7e0604c0268",
+    "providerId": "6985d33a4d67aca29b596c9d",
     "createdAt": "2024-01-22T10:00:00.000Z",
     "updatedAt": "2024-01-22T10:00:00.000Z",
     "images": [
@@ -723,7 +723,7 @@
     },
     "leaseDuration": "12 Months",
     "status": "accepted",
-    "providerId": "6921fa528e6bf7e0604c0269",
+    "providerId": "698607439b5a62d35f79733a",
     "createdAt": "2024-01-23T17:20:00.000Z",
     "updatedAt": "2024-01-23T17:20:00.000Z",
     "images": [
@@ -802,7 +802,7 @@
     },
     "leaseDuration": "6 Months",
     "status": "accepted",
-    "providerId": "6921fa528e6bf7e0604c0270",
+    "providerId": "6985e1bec4e46b59c27fa059",
     "createdAt": "2024-01-24T12:05:00.000Z",
     "updatedAt": "2024-01-24T12:05:00.000Z",
     "images": [

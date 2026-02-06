@@ -15,7 +15,7 @@ const useUser = (email) => {
         queryKey: ['user', targetEmail],
         enabled: !authLoading && !!targetEmail,
         queryFn: async () => {
-            const res = await axiosInstance.get(`/api/v1/user/${targetEmail}`);
+            const res = await axiosInstance.get(`/api/v1/user?email=${targetEmail}`);
             return res.data;
         },
     });

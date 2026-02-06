@@ -41,6 +41,14 @@ const RoomListingDetails = () => {
       return response.data
     }
   });
+  const { data: providerInfo = {}, isLoading: providerLoading } = useQuery({
+    queryKey: ['user', singleRoom?.postedBy], // Use postedBy ID from room data
+    queryFn: async () => {
+      const response = await axiosInstance.get(`/api/v1/user?id=${singleRoom?.providerId}`)
+      return response.data
+    },
+    enabled: !!singleRoom?.providerId, 
+  });
   // const isLoading = false;
 
   const formattedDate = singleRoom?.availableFrom
@@ -459,12 +467,12 @@ const RoomListingDetails = () => {
                   <div className="flex items-start gap-4 mb-4">
                     <div className="avatar">
                       <div className="w-16 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                        <img src={user?.photoURL} alt={user?.displayName} />
+                        <img src={providerInfo?.user?.photoURL} alt={user?.displayName} />
                       </div>
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-bold">{user?.displayName}</h4>
+                        <h4 className="font-bold">{providerInfo?.user?.name}</h4>
                         <Shield className="w-4 h-4 text-success" />
                       </div>
                       <p className="text-sm text-base-content/70">Current Tenant</p>

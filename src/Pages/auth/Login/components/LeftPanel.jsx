@@ -9,8 +9,8 @@ const LeftPanel = ({ props }) => {
             role: 'seeker',
             icon: User,
             label: 'Seeker',
-            email: 'seeker@gmail.com',
-            password: 'Password@',
+            email: 'david@gmail.com',
+            password: 'David123@',
             gradient: 'from-blue-500 to-blue-600',
             bgLight: 'bg-blue-50',
             textColor: 'text-blue-600',
@@ -20,34 +20,34 @@ const LeftPanel = ({ props }) => {
             role: 'provider',
             icon: Home,
             label: 'Provider',
-            email: 'provider@gmail.com',
-            password: 'Password@',
+            email: 'michael@gmail.com',
+            password: 'Michael123@',
             gradient: 'from-amber-500 to-orange-500',
             bgLight: 'bg-amber-50',
             textColor: 'text-amber-600',
             borderColor: 'border-amber-200'
         },
         {
-            role: 'verified',
-            icon: Shield,
-            label: 'Verified',
-            email: 'verified@gmail.com',
-            password: 'Password@',
-            gradient: 'from-emerald-500 to-green-600',
-            bgLight: 'bg-emerald-50',
-            textColor: 'text-emerald-600',
-            borderColor: 'border-emerald-200'
-        },
-        {
             role: 'admin',
             icon: Settings,
             label: 'Admin',
-            email: 'admin@gmail.com',
-            password: 'Password@',
+            email: 'james@gmail.com',
+            password: 'James123@',
             gradient: 'from-slate-600 to-slate-700',
             bgLight: 'bg-slate-50',
             textColor: 'text-slate-600',
             borderColor: 'border-slate-200'
+        },
+        {
+            role: 'Developer',
+            icon: Shield,
+            label: 'Developer',
+            email: 'developer@gmail.com',
+            password: 'Developer123@',
+            gradient: 'from-emerald-500 to-green-600',
+            bgLight: 'bg-emerald-50',
+            textColor: 'text-emerald-600',
+            borderColor: 'border-emerald-200'
         }
     ];
     return (

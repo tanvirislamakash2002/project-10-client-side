@@ -12,9 +12,8 @@ const RoleSwitcher = ({ justifyEnd, right0 }) => {
   // Mutation to update user role
   const { mutate: updateRole, isPending } = useMutation({
     mutationFn: async (newRole) => {
-
       const response = await axiosInstance.patch(`/api/v1/role/update-role`, {
-        userId: currentUser._id,
+        userId: currentUser?.user?._id,
         role: newRole
       });
 
@@ -38,20 +37,19 @@ const RoleSwitcher = ({ justifyEnd, right0 }) => {
   });
 
   // Only show if user is developer
-  if (!currentUser?.developer) {
+  if (!currentUser?.user?.developer) {
     return null;
   }
-  if (currentUser?.developer == 'false') {
-
+  if (currentUser?.user?.developer == 'false') {
     return null;
   }
 
   // Rest of your component remains the same...
   const roles = [
-    { key: 'user', label: 'User', icon: FiUser, color: 'bg-neutral' },
+    // { key: 'user', label: 'User', icon: FiUser, color: 'bg-neutral' },
     { key: 'seeker', label: 'Seeker', icon: FiSearch, color: 'bg-primary' },
     { key: 'provider', label: 'Provider', icon: FiHome, color: 'bg-secondary' },
-    { key: 'admin', label: 'Admin', icon: FiSettings, color: 'bg-accent' },
+    { key: 'admin', label: 'Admin', icon: FiSettings, color: 'bg-yellow-800' },
   ];
 
   return (
@@ -63,7 +61,7 @@ const RoleSwitcher = ({ justifyEnd, right0 }) => {
         disabled={isPending}
       >
         <FiSettings className="w-4 h-4" />
-        Switch Role ({currentUser.role || 'unknown'})
+        Switch Role ({currentUser?.user?.role || 'unknown'})
         {isPending && <span className="loading loading-spinner loading-xs"></span>}
       </button>
 
@@ -87,7 +85,7 @@ const RoleSwitcher = ({ justifyEnd, right0 }) => {
                 <button
                   key={key}
                   onClick={() => updateRole(key)}
-                  disabled={isPending || currentUser.role === key}
+                  disabled={isPending || currentUser?.user?.role === key}
                   className={`w-full flex items-center gap-3 p-3 rounded-lg transition-colors ${currentUser.role === key
                     ? 'bg-primary text-primary-content'
                     : 'hover:bg-base-200'
@@ -98,7 +96,7 @@ const RoleSwitcher = ({ justifyEnd, right0 }) => {
                   </div>
                   <div className="flex-1 text-left">
                     <div className="font-medium">{label}</div>
-                    {currentUser.role === key && (
+                    {currentUser?.user?.role === key && (
                       <div className="text-xs opacity-80">Current Role</div>
                     )}
                   </div>
