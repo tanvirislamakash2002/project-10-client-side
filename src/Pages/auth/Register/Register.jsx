@@ -38,12 +38,14 @@ const Register = () => {
   const passwordValidation = password ? validatePassword(password) : {};
 
   const mutation = useMutation({
-    mutationFn: async ({ name, email, password, photoURL, role }) => {
+    mutationFn: async ({ name, email, password, photoURL, role = 'seeker' }) => {
       await createUser({ email, password });
       await updateUser({ displayName: name, photoURL });
-      return axiosInstance.post('/api/v1/auth/register-user', {
-        name, email, photoURL, role: role || 'seeker'
+
+      const response = await axiosInstance.post('/api/v1/auth/register-user', {
+        name, email, photoURL, role
       });
+      return response.data
     },
     onSuccess: () => {
       Swal.fire({
@@ -51,8 +53,10 @@ const Register = () => {
         text: 'Your account has been created successfully',
         timer: 1400,
         icon: 'success'
+      }).then(() => {
+        navigate(from);
       });
-      navigate(from);
+
     },
     onError: (error) => {
       Swal.fire({
@@ -100,7 +104,6 @@ const Register = () => {
       setProcessing(false);
       setUploading(false);
     } catch (err) {
-      console.error('Upload error:', err);
       Swal.fire('Upload Failed', 'Could not upload image', 'error');
       setPreviewImage('');
       setHostedImageUrl('');
