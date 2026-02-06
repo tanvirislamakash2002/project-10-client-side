@@ -8,7 +8,7 @@ import UnderConstructionPage from "../Pages/UnderConstructionPage";
 import Root from "../layout/Root";
 import Details from "../Pages/public/Details";
 import Register from "../Pages/auth/Register/Register";
-import Login from "../Pages/auth/Login";
+import Login from "../Pages/auth/Login/Login";
 import Home from "../Pages/public/Home/Home";
 import DashboardLayout from "../layout/DashboardLayout";
 import Inquiries from "../Pages/dashboard/Provider/Inquiries/Inquiries";

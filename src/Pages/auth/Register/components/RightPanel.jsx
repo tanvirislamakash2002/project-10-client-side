@@ -1,4 +1,4 @@
-import { ArrowRight, Camera, Lock, CheckCircle2, Eye, EyeOff, Key, Mail, Search, Upload, User } from 'lucide-react';
+import { ArrowRight, Camera, Lock, CheckCircle2, Eye, EyeOff, Key, Mail, Search, Upload, User, XCircle } from 'lucide-react';
 import React from 'react';
 import { FaGoogle } from 'react-icons/fa';
 import { Link } from 'react-router';
