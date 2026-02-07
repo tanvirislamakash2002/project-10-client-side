@@ -13,8 +13,7 @@ const ApplicationModal = ({ onClose, onSuccess, listingDetails }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
-  const userInfo = useUser()
-
+  const { user: userInfo } = useUser()
 
   // const [formData, setFormData] = useState({
   //   moveInDate: '2025-11-01',
@@ -60,9 +59,14 @@ const ApplicationModal = ({ onClose, onSuccess, listingDetails }) => {
     formState: { errors, isValid }
   } = useForm({
     defaultValues: {
+      listingId: '',
+      applicantId: '',
+      providerId: '',
+      status: 'pending',
       moveInDate: "2026-11-01",
-      leaseDuration: '5 months',
+      leaseDuration: '6 months',
       budget: listing?.price,
+      archived: false,
       message: 'Hi, there! Your room looks amazing',
       contactMethod: 'in-app',
       availability: '',
@@ -78,13 +82,19 @@ const ApplicationModal = ({ onClose, onSuccess, listingDetails }) => {
   const formData = watch()
 
   useEffect(() => {
+    setValue('listingId', listingDetails?._id)
+    setValue('providerId', listingDetails?.providerId)
+    setValue('applicantId', userInfo?._id)
+  }, [listingDetails, userInfo])
+
+  useEffect(() => {
     const template = getValues('messageTemplate');
     setValue('message', messageTemplates[template]);
   }, [watch('messageTemplate')])
 
   const onSubmit = (data) => {
     setIsSubmitting(true);
-    console.log('330', data);
+    console.log('330asw', data);
     setTimeout(() => {
       setIsSubmitting(false);
       setShowSuccess(true);
@@ -128,6 +138,7 @@ const ApplicationModal = ({ onClose, onSuccess, listingDetails }) => {
               setShowPreview,
               showPreview,
               userProfile,
+              userInfo,
               formData: watch()
             }} />
           )}

@@ -34,7 +34,6 @@ const RoomListingDetails = () => {
   const { isModalOpen, openModal, closeModal } = useApplicationModal();
   const { isFavorite, toggleFavorite } = useFavorite(id, user?.email);
   const { role } = useUserRole()
-  console.log('object27', role);
 
   const { data: singleRoom = {}, isLoading, error } = useQuery({
     queryKey: ['posts'],

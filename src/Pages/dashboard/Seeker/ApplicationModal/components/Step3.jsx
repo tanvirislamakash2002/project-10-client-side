@@ -2,7 +2,8 @@ import { AlertCircle, CheckCircle, Eye, TrendingUp } from 'lucide-react';
 import React from 'react';
 
 const Step3 = ({ props }) => {
-    const { setShowPreview, showPreview, userProfile, formData } = props;
+    const { setShowPreview, showPreview, userProfile, userInfo, formData } = props;
+    console.log(userInfo);
     return (
         <div className="space-y-6">
             {/* Application Preview */}
@@ -23,12 +24,12 @@ const Step3 = ({ props }) => {
                         <p className="text-sm text-gray-600 mb-4">This is how your application appears to the provider:</p>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                             <div className="flex items-start gap-4 mb-4">
-                                <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full flex items-center justify-center text-3xl">
-                                    {userProfile.photo}
+                                <div className="w-16 h-16 p-1 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full flex items-center justify-center text-3xl">
+                                    <img className='w-full h-full object-cover rounded-full' src={userInfo.photoURL} alt="" />
                                 </div>
                                 <div className="flex-1">
                                     <div className="flex items-center gap-2 mb-1">
-                                        <h4 className="text-lg font-bold text-gray-900">{userProfile.name}</h4>
+                                        <h4 className="text-lg font-bold text-gray-900">{userInfo.name}</h4>
                                         {userProfile.verified && (
                                             <CheckCircle className="w-5 h-5 text-green-600" />
                                         )}
