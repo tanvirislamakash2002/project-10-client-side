@@ -102,12 +102,12 @@ const ApplicationModal = ({ onClose, onSuccess, listingDetails }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 bg-opacity-50 z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white rounded-lg max-w-3xl w-full my-8">
+      <div className="bg-white rounded-lg max-w-3xl w-full my-8 max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
         <Header props={{ listingDetails, onClose, step, totalSteps }} />
 
         {/* Content */}
-        <div className="p-6 max-h-[60vh] overflow-y-auto">
+        <div className="p-6 flex-1 overflow-y-auto">
           {step === 1 && (
             <Step1 props={{ userInfo, userProfile }} />
           )}
