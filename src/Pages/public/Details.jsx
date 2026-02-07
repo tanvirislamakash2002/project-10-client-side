@@ -13,6 +13,7 @@ import useAuth from '../../../hooks/useAuth';
 import { useFavorite } from '../../../hooks/useFavorite';
 import { useApplicationModal } from '../../../hooks/useApplicationModal';
 import ApplicationModal from '../dashboard/Seeker/ApplicationModal/ApplicationModal';
+import useUserRole from '../../../hooks/useUserRole';
 
 // const useFavorite = (id, email) => {
 //   const [isFavorite, setIsFavorite] = useState(false);
@@ -32,7 +33,8 @@ const RoomListingDetails = () => {
   const axiosInstance = useAxios()
   const { isModalOpen, openModal, closeModal } = useApplicationModal();
   const { isFavorite, toggleFavorite } = useFavorite(id, user?.email);
-
+  const { role } = useUserRole()
+  console.log('object27', role);
 
   const { data: singleRoom = {}, isLoading, error } = useQuery({
     queryKey: ['posts'],
@@ -47,7 +49,7 @@ const RoomListingDetails = () => {
       const response = await axiosInstance.get(`/api/v1/user?id=${singleRoom?.providerId}`)
       return response.data
     },
-    enabled: !!singleRoom?.providerId, 
+    enabled: !!singleRoom?.providerId,
   });
   // const isLoading = false;
 
@@ -503,7 +505,7 @@ const RoomListingDetails = () => {
 
               {/* Action Buttons */}
               <div className="card bg-base-100 shadow-lg">
-                <div className="card-body space-y-3">
+                {role === "seeker" && <div className="card-body space-y-3">
                   <button
                     // onClick={() => setShowApplicationModal(true)}
                     onClick={openModal}
@@ -522,7 +524,7 @@ const RoomListingDetails = () => {
                     <Calendar className="w-5 h-5" />
                     Schedule Viewing
                   </button>
-                </div>
+                </div>}
               </div>
 
               {/* Safety Tips */}
