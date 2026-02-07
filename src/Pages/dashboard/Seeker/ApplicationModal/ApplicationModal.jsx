@@ -7,6 +7,9 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import ApplicationSent from './components/ApplicationSent';
 import { useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import useAxios from '../../../../../hooks/useAxios';
+import Swal from 'sweetalert2';
 
 const ApplicationModal = ({ onClose, onSuccess, listingDetails }) => {
   const [step, setStep] = useState(1);
@@ -14,7 +17,7 @@ const ApplicationModal = ({ onClose, onSuccess, listingDetails }) => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const { user: userInfo } = useUser()
-
+  const axiosInstance = useAxios()
   // const [formData, setFormData] = useState({
   //   moveInDate: '2025-11-01',
   //   leaseDuration: '6 months',
@@ -81,6 +84,30 @@ const ApplicationModal = ({ onClose, onSuccess, listingDetails }) => {
 
   const formData = watch()
 
+  // sent to database 
+  const application = useMutation({
+    mutationFn: (data) =>
+      axiosInstance.post(`/api/v1/application`, data),
+
+    onSuccess: (res) => {
+      if (res.data.result.insertedId) {
+        Swal.fire({
+          title: "Success!",
+          text: "Your listing has been submitted for admin approval!",
+          icon: "success",
+          confirmButtonColor: "var(--color-primary)"
+        });
+      }
+    },
+    onError: (err) => {
+      Swal.fire({
+        title: "Error!",
+        text: err.message,
+        icon: "error",
+        confirmButtonColor: "var(--color-error)"
+      });
+    }
+  });
   useEffect(() => {
     setValue('listingId', listingDetails?._id)
     setValue('providerId', listingDetails?.providerId)
@@ -92,9 +119,10 @@ const ApplicationModal = ({ onClose, onSuccess, listingDetails }) => {
     setValue('message', messageTemplates[template]);
   }, [watch('messageTemplate')])
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     setIsSubmitting(true);
-    console.log('330asw', data);
+    
+    await application.mutateAsync(data);
     setTimeout(() => {
       setIsSubmitting(false);
       setShowSuccess(true);

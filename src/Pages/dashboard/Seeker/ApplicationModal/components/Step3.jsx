@@ -3,7 +3,7 @@ import React from 'react';
 
 const Step3 = ({ props }) => {
     const { setShowPreview, showPreview, userProfile, userInfo, formData } = props;
-    console.log(userInfo);
+    
     return (
         <div className="space-y-6">
             {/* Application Preview */}
