@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged,
 import React, { createContext, useEffect, useState } from 'react';
 import { auth } from '../firebase/firebase.config';
 import { toast } from 'react-toastify';
+import useJwtToken from '../../hooks/auth/useJwtToken';
 
 export const AuthContext = createContext()
 const AuthProvider = ({ children }) => {
@@ -9,21 +10,21 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
     const [darkMode, setDarkMode] = useState(false)
-    
-useEffect(() => {
-  const html = document.documentElement;
-  
-  if (darkMode) {
-    html.classList.add('dark');
-    html.setAttribute('data-theme', 'dark');
-  } else {
-    html.classList.remove('dark');
-    html.setAttribute('data-theme', 'light');
-  }
-  
-  // Persist preference
-  localStorage.setItem('theme', darkMode ? 'dark' : 'light');
-}, [darkMode]);
+
+    useEffect(() => {
+        const html = document.documentElement;
+
+        if (darkMode) {
+            html.classList.add('dark');
+            html.setAttribute('data-theme', 'dark');
+        } else {
+            html.classList.remove('dark');
+            html.setAttribute('data-theme', 'light');
+        }
+
+        // Persist preference
+        localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+    }, [darkMode]);
 
     //register
     const createUser = ({ email, password }) => {
@@ -37,30 +38,36 @@ useEffect(() => {
     }
 
     //login
-    const signInUser = (email, password)=>{
+    const signInUser = (email, password) => {
         setLoading(true)
         return signInWithEmailAndPassword(auth, email, password)
     }
 
     //login with google
-    const signInWithGoogle=()=>{
+    const signInWithGoogle = () => {
         setLoading(true)
         const provider = new GoogleAuthProvider()
         return signInWithPopup(auth, provider)
     }
 
     //logOut
-    const logOut = () =>{
+    const logOut = () => {
         signOut(auth)
-        .then(res=>{
-            toast.success('logout successful')
-        })
+            .then(res => {
+                toast.success('logout successful')
+            })
     }
-
+    const { mutate: fetchJwtToken } = useJwtToken()
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
             setLoading(false)
+            if (currentUser?.email) {
+                console.log('proviider', currentUser.email);
+                fetchJwtToken(currentUser.email)
+            } else {
+                localStorage.removeItem('token')
+            }
 
         })
         return () => {

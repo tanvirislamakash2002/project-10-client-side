@@ -1,16 +1,13 @@
 import { useMutation } from "@tanstack/react-query"
-import useAxios from "../useAxios"
+import useAxios from "../useAxios";
 
-const postJWT = async (email) => {
+const useJwtToken = () => {
     const axiosInstance = useAxios()
-    const { data } = await axiosInstance.post(`/api/v1/auth`, email)
-    return data
-}
-
-export const useJwtToken = () => {
-    return useMutation({
-        mutationFn: postJWT,
-        onSuccess: (data) => {
+    return  useMutation({
+        mutationFn: (email) => {
+           return axiosInstance.post(`/api/v1/auth/login`, {email})
+        },
+        onSuccess: ({data}) => {
             localStorage.setItem('token', data.token)
         },
         onError: (error) => {
@@ -18,3 +15,5 @@ export const useJwtToken = () => {
         }
     })
 }
+
+export default useJwtToken;
