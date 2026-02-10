@@ -38,12 +38,14 @@ const RoomListingDetails = () => {
   const { role } = useUserRole()
 
   const { data: singleRoom = {}, isLoading, error } = useQuery({
-    queryKey: ['posts'],
+    queryKey: ['posts', id],
     queryFn: async () => {
       const response = await axiosInstance.get(`/api/v1/listings/${id}`)
       return response.data
-    }
+    },
+    
   });
+  console.log(singleRoom);
   const { data: providerInfo = {}, isLoading: providerLoading } = useQuery({
     queryKey: ['user', singleRoom?.postedBy], // Use postedBy ID from room data
     queryFn: async () => {

@@ -1,8 +1,9 @@
 import { ChevronLeft, ChevronRight, Eye, Home, Star } from 'lucide-react';
 import React from 'react';
 
-const PhotoGallery = (props) => {
+const PhotoGallery = ({props}) => {
     const { singleRoom, currentImageIndex, prevImage, nextImage, setCurrentImageIndex } = props
+    console.log(singleRoom);
     return (
         <div className="card bg-base-100 shadow-lg overflow-hidden">
             <div className="relative h-[500px] bg-base-300">
@@ -55,7 +56,7 @@ const PhotoGallery = (props) => {
                 </div>
 
                 {/* Featured Badge */}
-                {singleRoom.isFeatured && (
+                {singleRoom?.isFeatured && (
                     <div className="absolute top-4 left-4 badge badge-warning badge-lg gap-2">
                         <Star className="w-4 h-4 fill-current" />
                         Featured

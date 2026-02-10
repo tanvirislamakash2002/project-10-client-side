@@ -1,7 +1,7 @@
 import { AlertCircle, Calendar, Clock, MessageSquare, Send, Shield, Star } from 'lucide-react';
 import React from 'react';
 
-const Sidebar = (props) => {
+const Sidebar = ({props}) => {
     const { providerInfo, user, role, openModal } = props
     return (
         <div className="lg:col-span-1">
