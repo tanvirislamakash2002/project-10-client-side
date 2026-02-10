@@ -10,7 +10,6 @@ const Amenities = ({ props }) => {
         'Gym': Dumbbell,
         'Pool': Waves
     };
-    console.log(singleRoom);
     return (
         <div className="card bg-base-100 shadow-lg">
             <div className="card-body">
