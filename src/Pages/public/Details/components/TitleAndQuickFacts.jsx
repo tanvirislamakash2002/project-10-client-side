@@ -2,7 +2,14 @@ import { Calendar, Clock, DollarSign, Shield, TrendingUp } from 'lucide-react';
 import React from 'react';
 
 const TitleAndQuickFacts = ({ props }) => {
-    const { singleRoom, formattedDate } = props;
+    const { singleRoom } = props;
+    const formattedDate = singleRoom?.availableFrom
+        ? new Date(singleRoom.availableFrom).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        })
+        : 'Not available';
     return (
         <div className="card bg-base-100 shadow-lg">
             <div className="card-body">

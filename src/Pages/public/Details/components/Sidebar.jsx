@@ -1,8 +1,50 @@
-import { AlertCircle, Calendar, Clock, MessageSquare, Send, Shield, Star } from 'lucide-react';
-import React from 'react';
+import { AlertCircle, Calendar, Clock, ClockIcon, MessageSquare, Send, Shield, Star } from 'lucide-react';
+import React, { useState } from 'react';
+import useAxios from '../../../../../hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
 
-const Sidebar = ({props}) => {
-    const { providerInfo, user, role, openModal } = props
+const Sidebar = ({ props }) => {
+    const { singleRoom, user, role, id, openModal } = props;
+
+    const [viewModalOpen, setViewModalOpen] = useState(false)
+    const [selectedApplication, setSelectedApplication] = useState(null)
+
+    const axiosInstance = useAxios()
+    const { data: providerInfo = {}, isLoading: providerLoading } = useQuery({
+        queryKey: ['user', singleRoom?.postedBy],
+        queryFn: async () => {
+            const response = await axiosInstance.get(`/api/v1/user?id=${singleRoom?.providerId}`)
+            return response.data
+        },
+        enabled: !!singleRoom?.providerId,
+    });
+
+    const { data: pendingApplication = {}, isLoading: pendingApplicationLoading } = useQuery({
+        queryKey: ['user', id], // Use postedBy ID from room data
+        queryFn: async () => {
+            const response = await axiosInstance.get(`/api/v1/application?listing_id=${id}`)
+            return response.data
+        },
+        enabled: !!singleRoom?.providerId,
+    });
+
+    const openViewApplicationModal = () => {
+        if (pendingApplication?.success) {
+            setSelectedApplication(pendingApplication?.details);
+            setViewModalOpen(true)
+        }
+    }
+
+    const handleButtonClick = () => {
+        if (hasApplied) {
+            openViewApplicationModal();
+        } else {
+            openModal()
+        }
+    }
+
+    console.log('dis applirr ---', pendingApplication);
+
     return (
         <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-6">
@@ -51,14 +93,29 @@ const Sidebar = ({props}) => {
                 {/* Action Buttons */}
                 <div className="card bg-base-100 shadow-lg">
                     {role === "seeker" && <div className="card-body space-y-3">
-                        <button
-                            // onClick={() => setShowApplicationModal(true)}
-                            onClick={openModal}
-                            className="btn btn-primary w-full gap-2"
-                        >
-                            <Send className="w-5 h-5" />
-                            I'm Interested
-                        </button>
+                        {pendingApplication?.success ? (
+                            <>
+                                <button
+                                    // onClick={openViewApplicationModal}
+                                    className="btn btn-warning w-full gap-2 group"
+                                >
+                                    <ClockIcon className="w-5 h-5" />
+                                    <span>Pending Application</span>
+                                    <span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                                        (View)
+                                    </span>
+                                </button>
+
+
+                            </>
+                        ) :
+                            (<button
+                                onClick={openModal}
+                                className="btn btn-primary w-full gap-2"
+                            >
+                                <Send className="w-5 h-5" />
+                                I'm Interested
+                            </button>)}
 
                         <button className="btn btn-secondary w-full gap-2">
                             <MessageSquare className="w-5 h-5" />

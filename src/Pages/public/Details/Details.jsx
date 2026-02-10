@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query'
-import {
-  ChevronLeft, ChevronRight, Heart, Share2, MapPin, DollarSign,
-  Calendar, Clock, Wifi, Home, Bed, Users, MessageSquare,
-  CheckCircle, X, Shield, AlertCircle, Send, Eye,
-  TrendingUp, Star, Bath, Sofa, Car, Dumbbell, Waves,
-  UserCheck, Briefcase, FileText
-} from 'lucide-react';
+import { ChevronLeft, Heart, Share2, CheckCircle, FileText } from 'lucide-react';
 import { useParams } from 'react-router';
 import useAxios from '../../../../hooks/useAxios';
 import useAuth from '../../../../hooks/useAuth';
@@ -22,19 +16,8 @@ import Amenities from './components/Amenities';
 import Location from './components/Location';
 import PreferencesAndLifestyle from './components/PreferencesAndLifestyle';
 
-// const useFavorite = (id, email) => {
-//   const [isFavorite, setIsFavorite] = useState(false);
-//   return {
-//     isFavorite,
-//     toggleFavorite: () => setIsFavorite(!isFavorite)
-//   };
-// };
-
-
-
 const RoomListingDetails = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  // const [showApplicationModal, setShowApplicationModal] = useState(false);
   const { user } = useAuth();
   const { id } = useParams();
   const axiosInstance = useAxios()
@@ -50,36 +33,6 @@ const RoomListingDetails = () => {
     },
 
   });
-  const { data: providerInfo = {}, isLoading: providerLoading } = useQuery({
-    queryKey: ['user', singleRoom?.postedBy], // Use postedBy ID from room data
-    queryFn: async () => {
-      const response = await axiosInstance.get(`/api/v1/user?id=${singleRoom?.providerId}`)
-      return response.data
-    },
-    enabled: !!singleRoom?.providerId,
-  });
-  const { data: checkPendingApplication = {}, isLoading: checkPendingApplicationLoading } = useQuery({
-    queryKey: ['user', id], // Use postedBy ID from room data
-    queryFn: async () => {
-      const response = await axiosInstance.get(`/api/v1/application?listing_id=${id}`)
-      return response.data
-    },
-    enabled: !!singleRoom?.providerId,
-  });
-  console.log('dis appli', checkPendingApplication);
-  // const isLoading = false;
-
-  const formattedDate = singleRoom?.availableFrom
-    ? new Date(singleRoom.availableFrom).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })
-    : 'Not available';
-
-  const formattedAddress = singleRoom?.address
-    ? `${singleRoom.address.street}, ${singleRoom.address?.city}, ${singleRoom.address.state} ${singleRoom.address.postalCode}`
-    : '';
 
   const nextImage = () => {
     if (!singleRoom?.images?.length) return;
@@ -107,7 +60,9 @@ const RoomListingDetails = () => {
       <div className="bg-base-100 border-b border-base-300 sticky top-0 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <button className="flex items-center text-base-content hover:text-primary transition gap-2">
+            <button
+              onClick={() => window.history.back()}
+              className="flex items-center text-base-content hover:text-primary transition gap-2">
               <ChevronLeft className="w-5 h-5" />
               <span className="font-medium">Back to Listings</span>
             </button>
@@ -135,7 +90,7 @@ const RoomListingDetails = () => {
             <PhotoGallery props={{ singleRoom, currentImageIndex, prevImage, nextImage, setCurrentImageIndex }}></PhotoGallery>
 
             {/* Title and Quick Facts */}
-            <TitleAndQuickFacts props={{ singleRoom, formattedDate }}></TitleAndQuickFacts>
+            <TitleAndQuickFacts props={{ singleRoom }}></TitleAndQuickFacts>
 
             {/* Description */}
             <div className="card bg-base-100 shadow-lg">
@@ -152,7 +107,7 @@ const RoomListingDetails = () => {
             <Amenities props={{ singleRoom }}></Amenities>
 
             {/* Location */}
-            <Location props={{ singleRoom, formattedAddress }}></Location>
+            <Location props={{ singleRoom }}></Location>
 
             {/* Preferences & Lifestyle */}
             <PreferencesAndLifestyle props={{ singleRoom }}></PreferencesAndLifestyle>
@@ -180,7 +135,7 @@ const RoomListingDetails = () => {
           </div>
 
           {/* Sidebar */}
-          <Sidebar props={{ providerInfo, user, role, openModal }}></Sidebar>
+          <Sidebar props={{ singleRoom, user, role, id, openModal }}></Sidebar>
         </div>
       </div>
 

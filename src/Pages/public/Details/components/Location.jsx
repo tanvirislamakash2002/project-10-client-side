@@ -2,7 +2,10 @@ import { MapPin } from 'lucide-react';
 import React from 'react';
 
 const Location = ({ props }) => {
-    const { singleRoom, formattedAddress } = props
+    const { singleRoom } = props
+    const formattedAddress = singleRoom?.address
+        ? `${singleRoom.address.street}, ${singleRoom.address?.city}, ${singleRoom.address.state} ${singleRoom.address.postalCode}`
+        : '';
     return (
         <div className="card bg-base-100 shadow-lg">
             <div className="card-body">
