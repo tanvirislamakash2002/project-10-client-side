@@ -44,8 +44,8 @@ const getConfig = () => {
   
   // 🎯 STRATEGY 3: On Netlify but no config? Use production URL!
   if (isNetlify) {
-    console.warn('⚠️  On Netlify but no window.__APP_CONFIG found!');
-    console.warn('   Using production URL as fallback.');
+    // console.warn('⚠️  On Netlify but no window.__APP_CONFIG found!');
+    // console.warn('   Using production URL as fallback.');
     
     return {
       API_URL: import.meta.env.VITE_API_VERCEL_URL, 

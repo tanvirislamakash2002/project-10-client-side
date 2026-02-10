@@ -6,7 +6,7 @@ import Loading from "../components/Loading";
 import ErrorPage from "../Pages/ErrorPage";
 import UnderConstructionPage from "../Pages/UnderConstructionPage";
 import Root from "../layout/Root";
-import Details from "../Pages/public/Details";
+import Details from "../Pages/public/Details/Details";
 import Register from "../Pages/auth/Register/Register";
 import Login from "../Pages/auth/Login/Login";
 import Home from "../Pages/public/Home/Home";
