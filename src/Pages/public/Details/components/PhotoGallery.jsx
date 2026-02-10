@@ -3,7 +3,6 @@ import React from 'react';
 
 const PhotoGallery = ({props}) => {
     const { singleRoom, currentImageIndex, prevImage, nextImage, setCurrentImageIndex } = props
-    console.log(singleRoom);
     return (
         <div className="card bg-base-100 shadow-lg overflow-hidden">
             <div className="relative h-[500px] bg-base-300">

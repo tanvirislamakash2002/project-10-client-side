@@ -17,6 +17,8 @@ import useUserRole from '../../../../hooks/useUserRole';
 import Sidebar from './components/Sidebar';
 import PhotoGallery from './components/PhotoGallery';
 import TitleAndQuickFacts from './components/TitleAndQuickFacts';
+import RoomDetails from './components/RoomDetails';
+import Amenities from './components/Amenities';
 
 // const useFavorite = (id, email) => {
 //   const [isFavorite, setIsFavorite] = useState(false);
@@ -87,13 +89,7 @@ const RoomListingDetails = () => {
     setCurrentImageIndex((prev) => (prev - 1 + singleRoom.images.length) % singleRoom.images.length);
   };
 
-  const amenityIcons = {
-    'WiFi': Wifi,
-    'Laundry': Home,
-    'Parking': Car,
-    'Gym': Dumbbell,
-    'Pool': Waves
-  };
+
 
   if (isLoading) {
     return (
@@ -149,87 +145,10 @@ const RoomListingDetails = () => {
             </div>
 
             {/* Room Details */}
-            <div className="card bg-base-100 shadow-lg">
-              <div className="card-body">
-                <h2 className="card-title text-xl mb-4">Room Details</h2>
-
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  <div className="stat bg-base-200 rounded-lg p-4">
-                    <div className="stat-figure text-primary">
-                      <Home className="w-8 h-8" />
-                    </div>
-                    <div className="stat-title text-xs">Property Type</div>
-                    <div className="stat-value text-lg">{singleRoom?.propertyType}</div>
-                  </div>
-
-                  <div className="stat bg-base-200 rounded-lg p-4">
-                    <div className="stat-figure text-primary">
-                      <Bed className="w-8 h-8" />
-                    </div>
-                    <div className="stat-title text-xs">Room Type</div>
-                    <div className="stat-value text-lg">{singleRoom?.roomType}</div>
-                  </div>
-
-                  <div className="stat bg-base-200 rounded-lg p-4">
-                    <div className="stat-figure text-primary">
-                      <Home className="w-8 h-8" />
-                    </div>
-                    <div className="stat-title text-xs">Room Size</div>
-                    <div className="stat-value text-lg">{singleRoom?.roomSize?.value} ft²</div>
-                  </div>
-
-                  <div className="stat bg-base-200 rounded-lg p-4">
-                    <div className="stat-figure text-primary">
-                      <Bath className="w-8 h-8" />
-                    </div>
-                    <div className="stat-title text-xs">Bathroom</div>
-                    <div className="stat-value text-lg text-sm">{singleRoom.bathroomType}</div>
-                  </div>
-
-                  <div className="stat bg-base-200 rounded-lg p-4">
-                    <div className="stat-figure text-primary">
-                      <Sofa className="w-8 h-8" />
-                    </div>
-                    <div className="stat-title text-xs">Furnishing</div>
-                    <div className="stat-value text-lg text-sm">{singleRoom.furnishing}</div>
-                  </div>
-
-                  <div className="stat bg-base-200 rounded-lg p-4">
-                    <div className="stat-figure text-primary">
-                      <Users className="w-8 h-8" />
-                    </div>
-                    <div className="stat-title text-xs">Roommates</div>
-                    <div className="stat-value text-lg">{singleRoom.currentOccupants}/{singleRoom.totalRoommates}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <RoomDetails props={{ singleRoom }}></RoomDetails>
 
             {/* Amenities */}
-            <div className="card bg-base-100 shadow-lg">
-              <div className="card-body">
-                <h2 className="card-title text-xl mb-4">Amenities & Features</h2>
-
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {singleRoom.amenities?.map((amenity, idx) => {
-                    const IconComponent = amenityIcons[amenity] || CheckCircle;
-                    return (
-                      <div key={idx} className="flex items-center gap-3 p-3 bg-base-200 rounded-lg">
-                        <IconComponent className="w-5 h-5 text-primary flex-shrink-0" />
-                        <span className="font-medium">{amenity}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {singleRoom.utilitiesIncluded && (
-                  <div className="alert alert-success mt-4">
-                    <CheckCircle className="w-5 h-5" />
-                    <span>All utilities included in rent</span>
-                  </div>
-                )}
-              </div>
-            </div>
+            <Amenities props={{singleRoom}}></Amenities>
 
             {/* Location */}
             <div className="card bg-base-100 shadow-lg">
