@@ -2,6 +2,7 @@ import { AlertCircle, Calendar, Clock, ClockIcon, MessageSquare, Send, Shield, S
 import React, { useState } from 'react';
 import useAxios from '../../../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
+import ApplicationDetailsModal from '../../../dashboard/Seeker/components/ApplicationDetailsModal/ApplicationDetailsModal';
 
 const Sidebar = ({ props }) => {
     const { singleRoom, user, role, id, openModal } = props;
@@ -35,15 +36,6 @@ const Sidebar = ({ props }) => {
         }
     }
 
-    const handleButtonClick = () => {
-        if (hasApplied) {
-            openViewApplicationModal();
-        } else {
-            openModal()
-        }
-    }
-
-    console.log('dis applirr ---', pendingApplication);
 
     return (
         <div className="lg:col-span-1">
@@ -96,7 +88,7 @@ const Sidebar = ({ props }) => {
                         {pendingApplication?.success ? (
                             <>
                                 <button
-                                    // onClick={openViewApplicationModal}
+                                    onClick={openViewApplicationModal}
                                     className="btn btn-warning w-full gap-2 group"
                                 >
                                     <ClockIcon className="w-5 h-5" />
@@ -166,6 +158,12 @@ const Sidebar = ({ props }) => {
                     </div>
                 </div>
             </div>
+            {/* Application Details Modal */}
+            <ApplicationDetailsModal
+                application={selectedApplication}
+                isOpen={viewModalOpen}
+                onClose={() => setViewModalOpen(false)}
+            />
         </div>
     );
 };

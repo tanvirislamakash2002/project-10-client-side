@@ -64,7 +64,7 @@ const ApplicationDetailsModal = ({ application, isOpen, onClose }) => {
                     <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
                         <div className="p-6 space-y-6">
                             {/* Application Overview */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="card bg-base-200">
                                     <div className="card-body p-4">
                                         <div className="flex items-center gap-2 mb-2">
@@ -91,7 +91,7 @@ const ApplicationDetailsModal = ({ application, isOpen, onClose }) => {
                                         </p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
                             {/* Key Details */}
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

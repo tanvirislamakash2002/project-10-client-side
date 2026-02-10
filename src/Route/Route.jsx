@@ -22,6 +22,8 @@ import Blog from "../Pages/public/Blog/Blog";
 import CreateBlogPost from "../Pages/dashboard/Admin/CreateBlogPost/CreateBlogPost";
 import CreateListing from "../Pages/dashboard/Provider/CreateListing/CreateListing";
 import BrowsePage from "../Pages/public/Browse/Browse";
+import MyApplications from "../Pages/dashboard/Seeker/Myapplications/Myapplications";
+import SeekerProfile from "../Pages/dashboard/Seeker/SeekerProfile/SeekerProfile";
 
 export const router = createBrowserRouter([
   {
@@ -99,6 +101,13 @@ export const router = createBrowserRouter([
         hydrateFallbackElement: <Loading></Loading>
 
       },
+      {
+        path: '/dashboard/profile',
+        element:
+          <PrivateRoute>
+            <SeekerProfile></SeekerProfile>
+          </PrivateRoute>,
+      },
       // admin dashboard
       {
         path: '/dashboard/blogs/new',
@@ -146,20 +155,13 @@ export const router = createBrowserRouter([
           </PrivateRoute>,
       },
       {
-        path: '/dashboard/profile',
-        element:
-          <PrivateRoute>
-            <UnderConstructionPage></UnderConstructionPage>
-          </PrivateRoute>,
-      },
-      {
         path: '/dashboard/settings',
         element:
           <PrivateRoute>
             <UnderConstructionPage></UnderConstructionPage>
           </PrivateRoute>,
       },
-// seeker Dashboard
+      // seeker Dashboard
       {
         path: '/dashboard/saved',
         element:
@@ -167,6 +169,14 @@ export const router = createBrowserRouter([
             <SavedListings></SavedListings>
           </PrivateRoute>,
       },
+      {
+        path: '/dashboard/applications',
+        element:
+          <PrivateRoute>
+            <MyApplications></MyApplications>
+          </PrivateRoute>,
+      },
+
     ]
   }
 ]);

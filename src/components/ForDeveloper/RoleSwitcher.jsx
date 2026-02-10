@@ -57,10 +57,10 @@ const RoleSwitcher = ({ justifyEnd, right0 }) => {
       {/* Role Switcher Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="btn btn-outline btn-sm gap-2 fixed z-50 top-22"
+        className="btn btn-outline btn-sm gap-2 fixed z-50 top-32 py-6 opacity-40 hover:opacity-100 transition-opacity duration-200"
         disabled={isPending}
       >
-        <FiSettings className="w-4 h-4" />
+        <FiSettings className="w-8 h-8" />
         Switch Role ({currentUser?.user?.role || 'unknown'})
         {isPending && <span className="loading loading-spinner loading-xs"></span>}
       </button>
