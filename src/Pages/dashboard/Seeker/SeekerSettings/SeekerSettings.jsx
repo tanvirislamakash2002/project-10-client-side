@@ -44,7 +44,10 @@ import {
   Star,
   TrendingUp
 } from 'lucide-react';
-
+// Import and export all section components
+import  { PreferencesSection, PrivacySection, NotificationsSection } from './components/SettingsSections1';
+import  { SecuritySection, CommunicationSection, SubscriptionSection, AccessibilitySection } from './components/SettingsSections2';
+import  { AccountSection, SupportSection } from './components/SettingsSections3';
 // Mock settings data
 const mockSettings = {
   profile: {
@@ -515,10 +518,5 @@ const ProfileSection = ({ settings, updateSetting, updateNestedSetting }) => {
     </div>
   );
 };
-
-// Import and export all section components
-export { PreferencesSection, PrivacySection, NotificationsSection } from './components/SettingsSections1';
-export { SecuritySection, CommunicationSection, SubscriptionSection, AccessibilitySection } from './components/SettingsSections2';
-export { AccountSection, SupportSection } from './components/SettingsSections3';
 
 export default SeekerSettings;
