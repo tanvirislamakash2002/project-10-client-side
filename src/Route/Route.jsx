@@ -25,6 +25,7 @@ import BrowsePage from "../Pages/public/Browse/Browse";
 import MyApplications from "../Pages/dashboard/Seeker/Myapplications/Myapplications";
 import SeekerProfile from "../Pages/dashboard/Seeker/SeekerProfile/SeekerProfile";
 import SeekerSettings from "../Pages/dashboard/Seeker/SeekerSettings/SeekerSettings";
+import Preferences from "../Pages/dashboard/Seeker/Preferences/Preferences";
 
 export const router = createBrowserRouter([
   {
@@ -175,6 +176,13 @@ export const router = createBrowserRouter([
         element:
           <PrivateRoute>
             <MyApplications></MyApplications>
+          </PrivateRoute>,
+      },
+      {
+        path: '/dashboard/preferences',
+        element:
+          <PrivateRoute>
+            <Preferences></Preferences>
           </PrivateRoute>,
       },
 

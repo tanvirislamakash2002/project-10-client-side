@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { 
-  Save, 
-  Eye, 
-  Calendar, 
-  Image as ImageIcon, 
-  Tag, 
-  Settings, 
-  Search, 
+import {
+  Save,
+  Eye,
+  Calendar,
+  Image as ImageIcon,
+  Tag,
+  Settings,
+  Search,
   X,
   Clock,
   FileText,
@@ -25,9 +25,10 @@ import {
 import Swal from 'sweetalert2';
 import { useImageUpload } from '../../../../../hooks/useImageUpload';
 import { FaStar, FaTimes, FaUpload } from 'react-icons/fa';
-import  useUser  from '../../../../../hooks/useUser';
+import useUser from '../../../../../hooks/useUser';
+import useAxios from '../../../../../hooks/useAxios';
 
- const CreateBlogPost = () => {
+const CreateBlogPost = () => {
   const [activeTab, setActiveTab] = useState('basic');
   const [imagePreview] = useState('');
   const [tags, setTags] = useState([]);
@@ -43,8 +44,8 @@ import  useUser  from '../../../../../hooks/useUser';
   const [schedulePublish, setSchedulePublish] = useState(false);
   const queryClient = useQueryClient();
   const [images, setImages] = useState([]);
-
-const user = useUser()
+  const axiosInstance = useAxios()
+  const user = useUser()
 
   const { uploadImagesToImgBB } = useImageUpload()
   const { register, handleSubmit, watch, setValue, formState: { errors }, reset } = useForm({
@@ -98,18 +99,18 @@ const user = useUser()
   // Mutation for creating blog post
   const createPostMutation = useMutation({
     mutationFn: async (postData) => {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/posts`, {
+      const response = await axiosInstance(`/api/v1/blog/posts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(postData),
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to create post');
       }
-      
+
       return response.json();
     },
     onSuccess: () => {
@@ -122,65 +123,65 @@ const user = useUser()
     }
   });
   // handle image upload 
-    const handleImageUpload = (e) => {
-      const files = Array.from(e.target.files);
-      if (images.length + files.length > 5) {
+  const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+    if (images.length + files.length > 5) {
+      Swal.fire({
+        title: "Too many images!",
+        text: "Maximum 5 images allowed",
+        icon: "warning",
+        confirmButtonColor: "var(--color-warning)"
+      });
+      return;
+    }
+
+    const validFiles = files.filter(file => {
+      if (file.size > 5 * 1024 * 1024) {
         Swal.fire({
-          title: "Too many images!",
-          text: "Maximum 5 images allowed",
+          title: "File too large!",
+          text: `${file.name} is too large. Maximum size is 5MB.`,
           icon: "warning",
           confirmButtonColor: "var(--color-warning)"
         });
-        return;
+        return false;
       }
-  
-      const validFiles = files.filter(file => {
-        if (file.size > 5 * 1024 * 1024) {
-          Swal.fire({
-            title: "File too large!",
-            text: `${file.name} is too large. Maximum size is 5MB.`,
-            icon: "warning",
-            confirmButtonColor: "var(--color-warning)"
-          });
-          return false;
-        }
-        return true;
-      });
-  
-      validFiles.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          setImages(prev => [...prev, {
-            id: Date.now() + Math.random(),
-            file,
-            url: event.target.result,
-            name: file.name
-          }]);
-        };
-        reader.readAsDataURL(file);
-      });
-    };
+      return true;
+    });
+
+    validFiles.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setImages(prev => [...prev, {
+          id: Date.now() + Math.random(),
+          file,
+          url: event.target.result,
+          name: file.name
+        }]);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
 
   const removeImage = (imageId) => {
     setImages(prev => prev.filter(img => img.id !== imageId));
   };
 
   const onSubmit = async (data) => {
-          // Check if we have images to upload
-          if (images.length === 0) {
-            Swal.fire({
-              title: "Images Required!",
-              text: "Please add at least one image of your space",
-              icon: "warning",
-              confirmButtonColor: "var(--color-warning)"
-            });
-            return;
-          }
-          // 1. Upload all images to ImgBB
-          const uploadedUrls = await uploadImagesToImgBB(images);
+    // Check if we have images to upload
+    if (images.length === 0) {
+      Swal.fire({
+        title: "Images Required!",
+        text: "Please add at least one image of your space",
+        icon: "warning",
+        confirmButtonColor: "var(--color-warning)"
+      });
+      return;
+    }
+    // 1. Upload all images to ImgBB
+    const uploadedUrls = await uploadImagesToImgBB(images);
     const postData = {
       ...data,
-      coverImage:uploadedUrls,
+      coverImage: uploadedUrls,
       tags,
       categories,
       meta: {
@@ -249,7 +250,7 @@ const user = useUser()
 
   const predefinedCategories = [
     'Tips for Seekers',
-    'Advice for Providers', 
+    'Advice for Providers',
     'For Both',
     'City Guides',
     'Safety & Trust',
@@ -287,7 +288,7 @@ const user = useUser()
                   Saved {lastSaved.toLocaleTimeString()}
                 </span>
               )}
-              <button 
+              <button
                 type="button"
                 onClick={saveDraft}
                 className="btn btn-outline btn-sm"
@@ -296,7 +297,7 @@ const user = useUser()
                 <Save size={16} />
                 Save Draft
               </button>
-              <button 
+              <button
                 type="button"
                 onClick={() => setShowPreview(!showPreview)}
                 className="btn btn-outline btn-sm"
@@ -320,11 +321,10 @@ const user = useUser()
                       key={tab.id}
                       type="button"
                       onClick={() => setActiveTab(tab.id)}
-                      className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors ${
-                        activeTab === tab.id
-                          ? 'text-primary dark:text-primary border-b-2 border-primary'
-                          : 'text-text-muted dark:text-text-muted hover:text-base-content dark:hover:text-base-content'
-                      }`}
+                      className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors ${activeTab === tab.id
+                        ? 'text-primary dark:text-primary border-b-2 border-primary'
+                        : 'text-text-muted dark:text-text-muted hover:text-base-content dark:hover:text-base-content'
+                        }`}
                     >
                       <tab.icon size={18} />
                       {tab.label}
@@ -351,7 +351,7 @@ const user = useUser()
                         type="text"
                         placeholder="Enter an engaging title..."
                         className="input input-bordered input-lg w-full bg-base-100 dark:bg-base-300 text-base-content dark:text-base-content"
-                        {...register('title', { 
+                        {...register('title', {
                           required: 'Title is required',
                           maxLength: { value: 100, message: 'Title must be less than 100 characters' }
                         })}
@@ -395,7 +395,7 @@ const user = useUser()
                       <textarea
                         placeholder="Brief description for preview cards and social sharing..."
                         className="textarea textarea-bordered h-24 bg-base-100 dark:bg-base-300 text-base-content dark:text-base-content"
-                        {...register('excerpt', { 
+                        {...register('excerpt', {
                           required: 'Excerpt is required',
                           maxLength: { value: 200, message: 'Excerpt must be less than 200 characters' }
                         })}
@@ -472,8 +472,8 @@ const user = useUser()
                             <option key={cat} value={cat}>{cat}</option>
                           ))}
                         </select>
-                        <button 
-                          type="button" 
+                        <button
+                          type="button"
                           className="btn btn-primary"
                           onClick={addCategory}
                         >
@@ -484,7 +484,7 @@ const user = useUser()
                         {categories.map(cat => (
                           <span key={cat} className="badge badge-lg badge-secondary gap-2">
                             {cat}
-                            <button 
+                            <button
                               type="button"
                               onClick={() => removeCategory(cat)}
                               className="hover:text-error"
@@ -511,8 +511,8 @@ const user = useUser()
                           onChange={(e) => setTagInput(e.target.value)}
                           onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
                         />
-                        <button 
-                          type="button" 
+                        <button
+                          type="button"
                           className="btn btn-primary"
                           onClick={addTag}
                         >
@@ -523,7 +523,7 @@ const user = useUser()
                         {tags.map(tag => (
                           <span key={tag} className="badge badge-primary gap-2">
                             {tag}
-                            <button 
+                            <button
                               type="button"
                               onClick={() => removeTag(tag)}
                               className="hover:text-error"
@@ -538,109 +538,109 @@ const user = useUser()
                 )}
 
                 {/* Media Tab */}
-{activeTab==='media'&&(<div>
-    <label className="block text-sm font-semibold text-gray-700 mb-4">
-        Upload Images * (1-5 images, max 5MB each)
-    </label>
+                {activeTab === 'media' && (<div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-4">
+                    Upload Images * (1-5 images, max 5MB each)
+                  </label>
 
-    {/* Upload Area */}
-    <div className={`border-2 border-dashed rounded-xl p-8 text-center mb-6 transition-all ${images.length >= 5
-        ? 'border-gray-200 bg-gray-50'
-        : errors.images
-            ? 'border-red-300 bg-red-50'
-            : 'border-blue-300 bg-blue-50 hover:border-blue-400'
-        }`}>
-        <input
-            type="file"
-            multiple
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="hidden"
-            id="imageUpload"
-            disabled={images.length >= 5}
-        />
-        <label
-            htmlFor="imageUpload"
-            className={`cursor-pointer block ${images.length >= 5 ? 'cursor-not-allowed opacity-50' : ''}`}
-        >
-            <FaUpload className="mx-auto text-4xl text-gray-400 mb-4" />
-            <p className="text-gray-600 mb-2 font-medium text-lg">
-                {images.length >= 5
-                    ? 'Maximum images uploaded'
-                    : images.length > 0
-                        ? 'Click to add more images'
-                        : 'Click to upload images'
-                }
-            </p>
-            <p className="text-sm text-gray-500">PNG, JPG, WEBP up to 5MB each</p>
-        </label>
-    </div>
-
-    {errors.images && <p className="text-red-500 text-sm mb-4">{errors.images}</p>}
-
-    {/* Large Image Preview */}
-    {images.length > 0 && (
-        <div className="space-y-6">
-            {/* Main Image - Large Preview */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-blue-200">
-                <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                        <FaStar className="text-yellow-500" />
-                        Main Image
-                    </h3>
-                    <span className="bg-blue-500 text-white text-sm px-3 py-1 rounded-full">
-                        Featured
-                    </span>
-                </div>
-                <div className="relative group">
-                    <img
-                        src={images[0].url}
-                        alt="Main upload"
-                        className="w-full h-80 object-cover rounded-lg shadow-md"
+                  {/* Upload Area */}
+                  <div className={`border-2 border-dashed rounded-xl p-8 text-center mb-6 transition-all ${images.length >= 5
+                    ? 'border-gray-200 bg-gray-50'
+                    : errors.images
+                      ? 'border-red-300 bg-red-50'
+                      : 'border-blue-300 bg-blue-50 hover:border-blue-400'
+                    }`}>
+                    <input
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                      id="imageUpload"
+                      disabled={images.length >= 5}
                     />
-                    <button
-                        type="button"
-                        onClick={() => removeImage(images[0].id)}
-                        className="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all hover:bg-red-600 shadow-lg"
+                    <label
+                      htmlFor="imageUpload"
+                      className={`cursor-pointer block ${images.length >= 5 ? 'cursor-not-allowed opacity-50' : ''}`}
                     >
-                        <FaTimes className="text-sm" />
-                    </button>
-                </div>
-            </div>
+                      <FaUpload className="mx-auto text-4xl text-gray-400 mb-4" />
+                      <p className="text-gray-600 mb-2 font-medium text-lg">
+                        {images.length >= 5
+                          ? 'Maximum images uploaded'
+                          : images.length > 0
+                            ? 'Click to add more images'
+                            : 'Click to upload images'
+                        }
+                      </p>
+                      <p className="text-sm text-gray-500">PNG, JPG, WEBP up to 5MB each</p>
+                    </label>
+                  </div>
 
-            {/* Additional Images Grid */}
-            {images.length > 1 && (
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                        <FaImages className="text-gray-600" />
-                        Additional Images ({images.length - 1})
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {images.slice(1).map((image, index) => (
-                            <div key={image.id} className="relative group bg-gray-50 rounded-lg p-4 border-2 border-transparent hover:border-blue-300 transition-all">
+                  {errors.images && <p className="text-red-500 text-sm mb-4">{errors.images}</p>}
+
+                  {/* Large Image Preview */}
+                  {images.length > 0 && (
+                    <div className="space-y-6">
+                      {/* Main Image - Large Preview */}
+                      <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-blue-200">
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                            <FaStar className="text-yellow-500" />
+                            Main Image
+                          </h3>
+                          <span className="bg-blue-500 text-white text-sm px-3 py-1 rounded-full">
+                            Featured
+                          </span>
+                        </div>
+                        <div className="relative group">
+                          <img
+                            src={images[0].url}
+                            alt="Main upload"
+                            className="w-full h-80 object-cover rounded-lg shadow-md"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removeImage(images[0].id)}
+                            className="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all hover:bg-red-600 shadow-lg"
+                          >
+                            <FaTimes className="text-sm" />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Additional Images Grid */}
+                      {images.length > 1 && (
+                        <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+                          <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                            <FaImages className="text-gray-600" />
+                            Additional Images ({images.length - 1})
+                          </h3>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {images.slice(1).map((image, index) => (
+                              <div key={image.id} className="relative group bg-gray-50 rounded-lg p-4 border-2 border-transparent hover:border-blue-300 transition-all">
                                 <img
-                                    src={image.url}
-                                    alt={`Upload ${index + 2}`}
-                                    className="w-full h-48 object-cover rounded-lg shadow-sm"
+                                  src={image.url}
+                                  alt={`Upload ${index + 2}`}
+                                  className="w-full h-48 object-cover rounded-lg shadow-sm"
                                 />
                                 <button
-                                    type="button"
-                                    onClick={() => removeImage(image.id)}
-                                    className="absolute -top-2 -right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all hover:bg-red-600 shadow-lg"
+                                  type="button"
+                                  onClick={() => removeImage(image.id)}
+                                  className="absolute -top-2 -right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all hover:bg-red-600 shadow-lg"
                                 >
-                                    <FaTimes className="text-xs" />
+                                  <FaTimes className="text-xs" />
                                 </button>
                                 <div className="absolute bottom-3 left-3 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                                    Image {index + 2}
+                                  Image {index + 2}
                                 </div>
-                            </div>
-                        ))}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                </div>
-            )}
-        </div>
-    )}
-</div>)}
+                  )}
+                </div>)}
 
                 {/* SEO Tab */}
                 {activeTab === 'seo' && (
@@ -697,8 +697,8 @@ const user = useUser()
                           onChange={(e) => setKeywordInput(e.target.value)}
                           onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addKeyword())}
                         />
-                        <button 
-                          type="button" 
+                        <button
+                          type="button"
                           className="btn btn-outline"
                           onClick={addKeyword}
                         >
@@ -709,7 +709,7 @@ const user = useUser()
                         {seoKeywords.map(kw => (
                           <span key={kw} className="badge badge-outline gap-2">
                             {kw}
-                            <button 
+                            <button
                               type="button"
                               onClick={() => removeKeyword(kw)}
                             >
@@ -875,8 +875,8 @@ const user = useUser()
 
                 {/* Action Buttons */}
                 <div className="flex gap-4 pt-6 border-t border-section-border dark:border-section-border">
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="btn btn-primary flex-1"
                     disabled={createPostMutation.isLoading}
                   >
@@ -892,7 +892,7 @@ const user = useUser()
                       </>
                     )}
                   </button>
-                  <button 
+                  <button
                     type="button"
                     onClick={saveDraft}
                     className="btn btn-outline"
@@ -961,17 +961,16 @@ const user = useUser()
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
-                    <div className={`badge ${
-                      watch('status') === 'published' 
-                        ? 'badge-success' 
-                        : watch('status') === 'draft'
+                    <div className={`badge ${watch('status') === 'published'
+                      ? 'badge-success'
+                      : watch('status') === 'draft'
                         ? 'badge-warning'
                         : 'badge-neutral'
-                    }`}>
+                      }`}>
                       {watch('status') || 'draft'}
                     </div>
                   </div>
-                  
+
                   {watch('featured') && (
                     <div className="flex items-center gap-2 text-warning dark:text-warning">
                       <Star size={16} />
@@ -1005,63 +1004,63 @@ const user = useUser()
                 </h3>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
-                    <input 
-                      type="checkbox" 
-                      className="checkbox checkbox-sm checkbox-success" 
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-sm checkbox-success"
                       checked={!!title}
                       readOnly
                     />
                     <span className="text-sm text-base-content dark:text-base-content">Title added</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <input 
-                      type="checkbox" 
-                      className="checkbox checkbox-sm checkbox-success" 
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-sm checkbox-success"
                       checked={!!watch('excerpt')}
                       readOnly
                     />
                     <span className="text-sm text-base-content dark:text-base-content">Excerpt added</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <input 
-                      type="checkbox" 
-                      className="checkbox checkbox-sm checkbox-success" 
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-sm checkbox-success"
                       checked={!!watch('coverImage')}
                       readOnly
                     />
                     <span className="text-sm text-base-content dark:text-base-content">Cover image added</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <input 
-                      type="checkbox" 
-                      className="checkbox checkbox-sm checkbox-success" 
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-sm checkbox-success"
                       checked={categories.length > 0}
                       readOnly
                     />
                     <span className="text-sm text-base-content dark:text-base-content">Categories added</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <input 
-                      type="checkbox" 
-                      className="checkbox checkbox-sm checkbox-success" 
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-sm checkbox-success"
                       checked={tags.length >= 3}
                       readOnly
                     />
                     <span className="text-sm text-base-content dark:text-base-content">3+ tags added</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <input 
-                      type="checkbox" 
-                      className="checkbox checkbox-sm checkbox-success" 
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-sm checkbox-success"
                       checked={!!watch('meta.description')}
                       readOnly
                     />
                     <span className="text-sm text-base-content dark:text-base-content">Meta description added</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <input 
-                      type="checkbox" 
-                      className="checkbox checkbox-sm checkbox-success" 
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-sm checkbox-success"
                       checked={wordCount >= 300}
                       readOnly
                     />
@@ -1071,7 +1070,7 @@ const user = useUser()
                 <div className="divider my-2"></div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-semibold text-base-content dark:text-base-content">SEO Score</span>
-                  <div className="radial-progress text-primary dark:text-primary" 
+                  <div className="radial-progress text-primary dark:text-primary"
                     style={{
                       "--value": Math.round(
                         ([
@@ -1084,7 +1083,7 @@ const user = useUser()
                           wordCount >= 300
                         ].filter(Boolean).length / 7) * 100
                       )
-                    }} 
+                    }}
                     role="progressbar"
                   >
                     {Math.round(
@@ -1140,27 +1139,27 @@ const user = useUser()
                 <h3 className="font-bold text-xl text-base-content dark:text-base-content">
                   Preview
                 </h3>
-                <button 
+                <button
                   className="btn btn-sm btn-circle btn-ghost"
                   onClick={() => setShowPreview(false)}
                 >
                   <X size={20} />
                 </button>
               </div>
-              
+
               <div className="prose max-w-none">
                 {imagePreview && (
-                  <img 
-                    src={imagePreview} 
-                    alt="Cover" 
+                  <img
+                    src={imagePreview}
+                    alt="Cover"
                     className="w-full h-64 object-cover rounded-lg mb-6"
                   />
                 )}
-                
+
                 <h1 className="text-3xl font-bold mb-2 text-base-content dark:text-base-content">
                   {title || 'Your Blog Post Title'}
                 </h1>
-                
+
                 <div className="flex items-center gap-4 text-sm text-text-muted dark:text-text-muted mb-6">
                   <span>By {watch('author.name') || 'Admin User'}</span>
                   <span>•</span>
@@ -1178,11 +1177,11 @@ const user = useUser()
                     ))}
                   </div>
                 )}
-                
+
                 <p className="text-lg text-text-muted dark:text-text-muted mb-6">
                   {watch('excerpt') || 'Your excerpt will appear here...'}
                 </p>
-                
+
                 <div className="whitespace-pre-wrap text-base-content dark:text-base-content">
                   {content || 'Your content will appear here...'}
                 </div>
@@ -1197,9 +1196,9 @@ const user = useUser()
                   </div>
                 )}
               </div>
-              
+
               <div className="modal-action">
-                <button 
+                <button
                   className="btn btn-primary"
                   onClick={() => setShowPreview(false)}
                 >

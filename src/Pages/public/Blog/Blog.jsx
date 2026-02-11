@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { BlogPostCard } from './components/BlogPostCard';
+import useAxios from '../../../../hooks/useAxios';
 
 const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -36,13 +37,14 @@ const Blog = () => {
   const [viewMode, setViewMode] = useState('grid');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [postsPerPage, setPostsPerPage] = useState(9);
-
+const axiosInstance = useAxios()
   // Fetch blog posts
   const { data: blogData, isLoading } = useQuery({
     queryKey: ['blogPosts'],
     queryFn: async () => {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/blog/posts`);
-      return response.json();
+      const response = await axiosInstance.get(`/api/v1/blog/posts`)
+      console.log(response);
+      return response?.data?.posts;
     },
     placeholderData: {
       posts: generateMockPosts(),

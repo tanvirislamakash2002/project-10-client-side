@@ -44,6 +44,8 @@ import {
   Sliders,
   Info
 } from 'lucide-react';
+import { LocationSection, RoomApartmentSection, RoommateSection } from './components/PreferenceSections1';
+import { LifestyleSection, MatchingSettingsSection } from './components/PreferenceSections2';
 
 // Mock preferences data
 const mockPreferences = {
@@ -114,7 +116,7 @@ const mockPreferences = {
   }
 };
 
-const RoommatePreferences = () => {
+const Preferences = () => {
   const [preferences, setPreferences] = useState(mockPreferences);
   const [completeness, setCompleteness] = useState(85);
   const [matchingListings, setMatchingListings] = useState(47);
@@ -163,7 +165,7 @@ const RoommatePreferences = () => {
         </div>
 
         {/* Geometric Pattern */}
-        <div 
+        <div
           className="absolute inset-0 opacity-5"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
@@ -207,16 +209,16 @@ const RoommatePreferences = () => {
 
             {/* Actions */}
             <div className="flex flex-wrap gap-3">
-              <button 
+              <button
                 onClick={() => window.location.href = '/listings?matched=true'}
                 className="btn btn-lg bg-white text-[var(--color-primary)] hover:bg-[var(--color-base-200)] border-none shadow-xl gap-2"
               >
                 <Eye className="w-5 h-5" />
                 See Matching Listings
               </button>
-              
+
               {hasChanges && (
-                <button 
+                <button
                   onClick={savePreferences}
                   className="btn btn-lg btn-success gap-2 animate-pulse"
                 >
@@ -240,7 +242,7 @@ const RoommatePreferences = () => {
             <span className="text-lg font-bold text-[var(--color-primary)]">{completeness}%</span>
           </div>
           <div className="w-full bg-[var(--color-base-200)] dark:bg-[var(--color-base-300)] rounded-full h-4 overflow-hidden">
-            <div 
+            <div
               className="bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-success)] h-full rounded-full transition-all duration-700"
               style={{ width: `${completeness}%` }}
             ></div>
@@ -261,11 +263,10 @@ const RoommatePreferences = () => {
                 element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 setActiveSection(section.id);
               }}
-              className={`px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 flex items-center gap-2 ${
-                activeSection === section.id
+              className={`px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 flex items-center gap-2 ${activeSection === section.id
                   ? 'bg-[var(--color-primary)] text-white shadow-lg scale-105'
                   : 'bg-white dark:bg-[var(--color-base-200)] text-[var(--color-base-content)] hover:bg-[var(--color-primary)]/10 border border-[var(--color-section-border)]'
-              }`}
+                }`}
             >
               <section.icon className="w-4 h-4" />
               {section.label}
@@ -277,48 +278,48 @@ const RoommatePreferences = () => {
         <div className="space-y-8">
           {/* 1. Budget & Timeline */}
           <section id="budget" className="scroll-mt-4">
-            <BudgetTimelineSection 
-              preferences={preferences} 
+            <BudgetTimelineSection
+              preferences={preferences}
               updatePreference={updatePreference}
             />
           </section>
 
           {/* 2. Location & Area */}
           <section id="location" className="scroll-mt-4">
-            <LocationSection 
-              preferences={preferences} 
+            <LocationSection
+              preferences={preferences}
               updatePreference={updatePreference}
             />
           </section>
 
           {/* 3. Room & Apartment */}
           <section id="room" className="scroll-mt-4">
-            <RoomApartmentSection 
-              preferences={preferences} 
+            <RoomApartmentSection
+              preferences={preferences}
               updatePreference={updatePreference}
             />
           </section>
 
           {/* 4. Ideal Roommate */}
           <section id="roommate" className="scroll-mt-4">
-            <RoommateSection 
-              preferences={preferences} 
+            <RoommateSection
+              preferences={preferences}
               updatePreference={updatePreference}
             />
           </section>
 
           {/* 5. Lifestyle & Habits */}
           <section id="lifestyle" className="scroll-mt-4">
-            <LifestyleSection 
-              preferences={preferences} 
+            <LifestyleSection
+              preferences={preferences}
               updatePreference={updatePreference}
             />
           </section>
 
           {/* 6. Matching Settings */}
           <section id="matching" className="scroll-mt-4">
-            <MatchingSettingsSection 
-              preferences={preferences} 
+            <MatchingSettingsSection
+              preferences={preferences}
               updatePreference={updatePreference}
             />
           </section>
@@ -326,7 +327,7 @@ const RoommatePreferences = () => {
 
         {/* Action Buttons */}
         <div className="mt-12 flex flex-wrap gap-4 justify-center">
-          <button 
+          <button
             onClick={savePreferences}
             className="btn btn-primary btn-lg gap-2"
           >
@@ -334,7 +335,7 @@ const RoommatePreferences = () => {
             Save & Continue
           </button>
 
-          <button 
+          <button
             onClick={() => window.location.href = '/listings?matched=true'}
             className="btn btn-secondary btn-lg gap-2"
           >
@@ -342,7 +343,7 @@ const RoommatePreferences = () => {
             Browse Matches
           </button>
 
-          <button 
+          <button
             onClick={resetToDefaults}
             className="btn btn-outline btn-lg gap-2"
           >
@@ -355,7 +356,7 @@ const RoommatePreferences = () => {
       {/* Floating Save Button */}
       {hasChanges && (
         <div className="fixed bottom-6 right-6 z-50 animate-slideUp">
-          <button 
+          <button
             onClick={savePreferences}
             className="btn btn-success btn-lg shadow-2xl gap-2 animate-pulse"
           >
@@ -388,7 +389,7 @@ const BudgetTimelineSection = ({ preferences, updatePreference }) => {
           <label className="label">
             <span className="label-text font-semibold text-lg">Monthly Budget Range</span>
           </label>
-          
+
           <div className="grid md:grid-cols-2 gap-4 mb-4">
             <div>
               <label className="label">
@@ -427,7 +428,7 @@ const BudgetTimelineSection = ({ preferences, updatePreference }) => {
 
           {/* Range Visualization */}
           <div className="relative h-2 bg-[var(--color-base-200)] rounded-full">
-            <div 
+            <div
               className="absolute h-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] rounded-full"
               style={{
                 left: `${(preferences.budget.min / 3000) * 100}%`,
@@ -435,7 +436,7 @@ const BudgetTimelineSection = ({ preferences, updatePreference }) => {
               }}
             ></div>
           </div>
-          
+
           <div className="flex justify-between text-sm text-[var(--color-text-muted)] mt-2">
             <span>$0</span>
             <span className="font-bold text-[var(--color-primary)]">
@@ -463,7 +464,7 @@ const BudgetTimelineSection = ({ preferences, updatePreference }) => {
           <label className="label">
             <span className="label-text font-semibold text-lg">Move-in Date</span>
           </label>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="label">
@@ -502,8 +503,4 @@ const BudgetTimelineSection = ({ preferences, updatePreference }) => {
   );
 };
 
-// Import section components
-export { LocationSection, RoomApartmentSection, RoommateSection } from './PreferenceSections1';
-export { LifestyleSection, MatchingSettingsSection } from './PreferenceSections2';
-
-export default RoommatePreferences;
+export default Preferences;
