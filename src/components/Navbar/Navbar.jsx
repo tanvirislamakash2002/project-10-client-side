@@ -41,7 +41,7 @@ const Navbar = () => {
   // User dropdown menu items
   const userMenuItems = [
     { path: '/dashboard', label: 'Dashboard', icon: <MdDashboard className="w-4 h-4" /> },
-    { path: '/profile', label: 'My Profile', icon: <FiUser className="w-4 h-4" /> },
+    { path: '/dashboard/profile', label: 'My Profile', icon: <FiUser className="w-4 h-4" /> },
     { path: '/dashboard/inquiries', label: 'Messages', icon: <MdOutlineMessage  className="w-4 h-4" /> },
     { path: '/settings', label: 'Settings', icon: <FiSettings className="w-4 h-4" /> },
     { path: '/help', label: 'Help Center', icon: <FiHelpCircle className="w-4 h-4" /> },

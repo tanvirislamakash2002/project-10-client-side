@@ -24,6 +24,7 @@ import CreateListing from "../Pages/dashboard/Provider/CreateListing/CreateListi
 import BrowsePage from "../Pages/public/Browse/Browse";
 import MyApplications from "../Pages/dashboard/Seeker/Myapplications/Myapplications";
 import SeekerProfile from "../Pages/dashboard/Seeker/SeekerProfile/SeekerProfile";
+import SeekerSettings from "../Pages/dashboard/Seeker/SeekerSettings/SeekerSettings";
 
 export const router = createBrowserRouter([
   {
@@ -158,7 +159,7 @@ export const router = createBrowserRouter([
         path: '/dashboard/settings',
         element:
           <PrivateRoute>
-            <UnderConstructionPage></UnderConstructionPage>
+            <SeekerSettings></SeekerSettings>
           </PrivateRoute>,
       },
       // seeker Dashboard
