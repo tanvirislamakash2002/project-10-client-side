@@ -195,7 +195,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="/faq" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
+                <a href="/help" className="group flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200">
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   <span>Help Center / FAQ</span>
                 </a>

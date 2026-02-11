@@ -35,7 +35,7 @@ import {
   Settings
 } from 'lucide-react';
 
-const ViewingRequestsPage = () => {
+const ViewingRequests = () => {
   const queryClient = useQueryClient();
   
   // State Management
@@ -966,4 +966,4 @@ const ViewingRequestsPage = () => {
   );
 };
 
-export default ViewingRequestsPage;
+export default ViewingRequests;

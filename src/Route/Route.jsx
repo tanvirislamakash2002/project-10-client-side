@@ -26,6 +26,9 @@ import MyApplications from "../Pages/dashboard/Seeker/Myapplications/Myapplicati
 import SeekerProfile from "../Pages/dashboard/Seeker/SeekerProfile/SeekerProfile";
 import SeekerSettings from "../Pages/dashboard/Seeker/SeekerSettings/SeekerSettings";
 import Preferences from "../Pages/dashboard/Seeker/Preferences/Preferences";
+import ViewingRequests from "../Pages/dashboard/Provider/ViewingRequests/ViewingRequests";
+import Analytics from "../Pages/dashboard/Provider/Analytics/Analytics";
+import HelpCenter from "../Pages/public/HelpCenter/HelpCenter";
 
 export const router = createBrowserRouter([
   {
@@ -82,6 +85,10 @@ export const router = createBrowserRouter([
       {
         path: '/contact-us',
         Component: ContactUs
+      },
+      {
+        path: '/help',
+        element: <HelpCenter></HelpCenter>
       },
 
     ]
@@ -143,17 +150,17 @@ export const router = createBrowserRouter([
           </PrivateRoute>,
       },
       {
-        path: '/dashboard/favorites',
+        path: '/dashboard/viewing-requests',
         element:
           <PrivateRoute>
-            <UnderConstructionPage></UnderConstructionPage>
+            <ViewingRequests></ViewingRequests>
           </PrivateRoute>,
       },
       {
         path: '/dashboard/analytics',
         element:
           <PrivateRoute>
-            <UnderConstructionPage></UnderConstructionPage>
+            <Analytics></Analytics>
           </PrivateRoute>,
       },
       {
