@@ -99,27 +99,26 @@ const CreateBlogPost = () => {
   // Mutation for creating blog post
   const createPostMutation = useMutation({
     mutationFn: async (postData) => {
-      const response = await axiosInstance(`/api/v1/blog/posts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create post');
-      }
-
-      return response.json();
+      axiosInstance.post(`/api/v1/blog/posts`,  postData );
+console.log(postData);
     },
-    onSuccess: () => {
+    onSuccess: (res) => {
       queryClient.invalidateQueries(['blogPosts']);
       setLastSaved(new Date());
-      alert('Blog post created successfully!');
+              Swal.fire({
+                title: "Success!",
+                text: "Blog Has been Posted!",
+                icon: "success",
+                confirmButtonColor: "var(--color-primary)"
+              });
     },
     onError: (error) => {
-      alert('Error creating post: ' + error.message);
+            Swal.fire({
+              title: "Error!",
+              text: error.message,
+              icon: "error",
+              confirmButtonColor: "var(--color-error)"
+            });
     }
   });
   // handle image upload 
@@ -167,6 +166,7 @@ const CreateBlogPost = () => {
   };
 
   const onSubmit = async (data) => {
+    console.log(data);
     // Check if we have images to upload
     if (images.length === 0) {
       Swal.fire({
@@ -194,6 +194,7 @@ const CreateBlogPost = () => {
         shares: 0
       }
     };
+    console.log(postData);
     createPostMutation.mutate(postData);
   };
 

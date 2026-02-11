@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { 
-  Search, 
-  Clock, 
-  User, 
-  Calendar, 
+import {
+  Search,
+  Clock,
+  User,
+  Calendar,
   ArrowRight,
   Grid3x3,
   List,
@@ -37,7 +37,7 @@ const Blog = () => {
   const [viewMode, setViewMode] = useState('grid');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [postsPerPage, setPostsPerPage] = useState(9);
-const axiosInstance = useAxios()
+  const axiosInstance = useAxios()
   // Fetch blog posts
   const { data: blogData, isLoading } = useQuery({
     queryKey: ['blogPosts'],
@@ -53,6 +53,8 @@ const axiosInstance = useAxios()
       popularPosts: []
     }
   });
+
+  console.log(blogData);
   const { posts = [], categories = [], tags = [], popularPosts = [] } = blogData;
 
   // Filter and sort posts
@@ -66,7 +68,7 @@ const axiosInstance = useAxios()
       return matchesSearch && matchesCategory && matchesTag && isPublished;
     })
     .sort((a, b) => {
-      switch(sortBy) {
+      switch (sortBy) {
         case 'newest':
           return new Date(b.createdAt) - new Date(a.createdAt);
         case 'popular':
@@ -80,7 +82,7 @@ const axiosInstance = useAxios()
 
   // Get featured posts
   const featuredPosts = posts.filter(post => post.featured && post.status === 'published').slice(0, 3);
-  
+
   // Pagination
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -114,7 +116,7 @@ const axiosInstance = useAxios()
             <p className="text-lg text-text-muted dark:text-text-muted mb-8">
               Expert advice, tips, and guides to help you find the perfect roommate and create a harmonious living space
             </p>
-            
+
             {/* Search Bar */}
             <div className="relative max-w-2xl mx-auto">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-text-muted dark:text-text-muted" size={20} />
@@ -163,11 +165,10 @@ const axiosInstance = useAxios()
                   <div className="space-y-2">
                     <button
                       onClick={() => setSelectedCategory('all')}
-                      className={`btn btn-sm w-full justify-start ${
-                        selectedCategory === 'all' 
-                          ? 'btn-primary' 
+                      className={`btn btn-sm w-full justify-start ${selectedCategory === 'all'
+                          ? 'btn-primary'
                           : 'btn-ghost hover:bg-card-hover dark:hover:bg-card-hover'
-                      }`}
+                        }`}
                     >
                       All Articles
                       <span className="ml-auto badge badge-neutral">{posts.length}</span>
@@ -178,11 +179,10 @@ const axiosInstance = useAxios()
                         <button
                           key={category}
                           onClick={() => setSelectedCategory(category)}
-                          className={`btn btn-sm w-full justify-start ${
-                            selectedCategory === category 
-                              ? 'btn-primary' 
+                          className={`btn btn-sm w-full justify-start ${selectedCategory === category
+                              ? 'btn-primary'
                               : 'btn-ghost hover:bg-card-hover dark:hover:bg-card-hover'
-                          }`}
+                            }`}
                         >
                           {category}
                           <span className="ml-auto badge badge-neutral">{count}</span>
@@ -204,11 +204,10 @@ const axiosInstance = useAxios()
                       <button
                         key={tag}
                         onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
-                        className={`badge badge-lg gap-1 cursor-pointer transition-all ${
-                          selectedTag === tag
+                        className={`badge badge-lg gap-1 cursor-pointer transition-all ${selectedTag === tag
                             ? 'badge-primary'
                             : 'badge-outline hover:badge-primary'
-                        }`}
+                          }`}
                       >
                         <Tag size={12} />
                         {tag}
@@ -411,7 +410,7 @@ const axiosInstance = useAxios()
                         <div className="text-sm text-text-muted dark:text-text-muted">
                           Showing {indexOfFirstPost + 1}-{Math.min(indexOfLastPost, filteredAndSortedPosts.length)} of {filteredAndSortedPosts.length} articles
                         </div>
-                        
+
                         <div className="join">
                           <button
                             className="join-item btn btn-sm"
@@ -431,9 +430,8 @@ const axiosInstance = useAxios()
                               return (
                                 <button
                                   key={pageNumber}
-                                  className={`join-item btn btn-sm ${
-                                    currentPage === pageNumber ? 'btn-primary' : ''
-                                  }`}
+                                  className={`join-item btn btn-sm ${currentPage === pageNumber ? 'btn-primary' : ''
+                                    }`}
                                   onClick={() => setCurrentPage(pageNumber)}
                                 >
                                   {pageNumber}
@@ -475,7 +473,7 @@ const axiosInstance = useAxios()
                 )}
               </>
             ) : (
-              <EmptyState 
+              <EmptyState
                 searchTerm={searchTerm}
                 selectedCategory={selectedCategory}
                 selectedTag={selectedTag}
@@ -525,7 +523,7 @@ const axiosInstance = useAxios()
                 <X size={20} />
               </button>
             </div>
-            
+
             {/* Mobile filter content */}
             <div className="space-y-4">
               <div>
@@ -536,9 +534,8 @@ const axiosInstance = useAxios()
                       setSelectedCategory('all');
                       setShowMobileFilters(false);
                     }}
-                    className={`btn btn-sm w-full justify-start ${
-                      selectedCategory === 'all' ? 'btn-primary' : 'btn-ghost'
-                    }`}
+                    className={`btn btn-sm w-full justify-start ${selectedCategory === 'all' ? 'btn-primary' : 'btn-ghost'
+                      }`}
                   >
                     All Articles
                   </button>
@@ -549,9 +546,8 @@ const axiosInstance = useAxios()
                         setSelectedCategory(category);
                         setShowMobileFilters(false);
                       }}
-                      className={`btn btn-sm w-full justify-start ${
-                        selectedCategory === category ? 'btn-primary' : 'btn-ghost'
-                      }`}
+                      className={`btn btn-sm w-full justify-start ${selectedCategory === category ? 'btn-primary' : 'btn-ghost'
+                        }`}
                     >
                       {category}
                     </button>
@@ -569,9 +565,8 @@ const axiosInstance = useAxios()
                         setSelectedTag(selectedTag === tag ? null : tag);
                         setShowMobileFilters(false);
                       }}
-                      className={`badge badge-lg cursor-pointer ${
-                        selectedTag === tag ? 'badge-primary' : 'badge-outline'
-                      }`}
+                      className={`badge badge-lg cursor-pointer ${selectedTag === tag ? 'badge-primary' : 'badge-outline'
+                        }`}
                     >
                       {tag}
                     </button>
@@ -654,10 +649,10 @@ const EmptyState = ({ searchTerm, selectedCategory, selectedTag, onClear }) => (
         {searchTerm
           ? `We couldn't find any articles matching "${searchTerm}"`
           : selectedCategory !== 'all'
-          ? `No articles found in "${selectedCategory}" category`
-          : selectedTag
-          ? `No articles found with tag "${selectedTag}"`
-          : 'No articles available at the moment'}
+            ? `No articles found in "${selectedCategory}" category`
+            : selectedTag
+              ? `No articles found with tag "${selectedTag}"`
+              : 'No articles available at the moment'}
       </p>
       <button className="btn btn-primary gap-2" onClick={onClear}>
         <X size={16} />
@@ -679,7 +674,7 @@ const LoadingSkeleton = () => (
         </div>
       </div>
     </div>
-    
+
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <div className="lg:col-span-1 space-y-4">

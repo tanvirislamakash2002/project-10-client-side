@@ -116,7 +116,7 @@ const Sidebar = ({ props }) => {
 
                         <button className="btn btn-outline w-full gap-2">
                             <Calendar className="w-5 h-5" />
-                            Schedule Viewing
+                            Request Viewing
                         </button>
                     </div>}
                 </div>
