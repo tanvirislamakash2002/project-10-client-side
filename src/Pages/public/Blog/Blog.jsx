@@ -38,88 +38,87 @@ const Blog = () => {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [postsPerPage, setPostsPerPage] = useState(9);
   const axiosInstance = useAxios()
-  // Fetch blog posts
-  const { data: blogData, isLoading } = useQuery({
-    queryKey: ['blogPosts'],
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedCategory, selectedTag, sortBy, postsPerPage]);
+
+  // Fetch blog posts with filters applied server-side
+  const { 
+    data: blogData, 
+    isLoading,
+    isError,
+    error,
+    isFetching
+  } = useQuery({
+    queryKey: ['blogPosts', currentPage, postsPerPage, searchTerm, selectedCategory, selectedTag, sortBy],
     queryFn: async () => {
       try {
-        const response = await axiosInstance.get(`/api/v1/blog`)
-        console.log('API Response:', response);
-        console.log('Response data:', response?.data);
+        const params = new URLSearchParams({
+          page: currentPage,
+          limit: postsPerPage,
+          ...(searchTerm && { search: searchTerm }),
+          ...(selectedCategory && selectedCategory !== 'all' && { category: selectedCategory }),
+          ...(selectedTag && { tag: selectedTag }),
+          sort: sortBy
+        });
+
+        const response = await axiosInstance.get(`/api/v1/blog?${params}`);
         return response?.data;
       } catch (err) {
         console.error('API Error:', err);
         throw err;
       }
     },
+    keepPreviousData: true,
   });
 
-  console.log('Blog Data:', blogData);
-
-  // Reset to page 1 when filters change
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, selectedCategory, selectedTag, sortBy]);
-
-  // Handle loading state FIRST
-  if (isLoading) {
+  // Handle loading state
+  if (isLoading && !blogData) {
     return <LoadingSkeleton />;
   }
 
-  // Handle case when no data is returned
-  if (!blogData) {
+  // Handle error state
+  if (isError) {
+    return <div>Error loading blog posts: {error?.message}</div>;
+  }
+
+  // Handle no data
+  if (!blogData?.posts) {
     return <div>No blog posts available</div>;
   }
 
-  // Safe to destructure now - blogData is guaranteed to exist
+  // Destructure data from API response
   const { 
-    posts = [], // Provide default empty array
-    categories = [], 
-    tags = [], 
-    popularPosts = [] 
+    posts = [], 
+    pagination = {},
+    categories = [],
+    tags = []
   } = blogData;
 
-  console.log('Posts:', posts);
+  const {
+    currentPage: serverPage,
+    totalPages,
+    totalPosts,
+    hasNext,
+    hasPrev
+  } = pagination;
 
-  // Filter and sort posts
-  const filteredAndSortedPosts = posts
-    .filter(post => {
-      const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = selectedCategory === 'all' || post.categories?.includes(selectedCategory);
-      const matchesTag = !selectedTag || post.tags?.includes(selectedTag);
-      const isPublished = post.status === 'published';
-      return matchesSearch && matchesCategory && matchesTag && isPublished;
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case 'newest':
-          return new Date(b.createdAt) - new Date(a.createdAt);
-        case 'popular':
-          return (b.stats?.views || 0) - (a.stats?.views || 0);
-        case 'trending':
-          return (b.stats?.likes || 0) - (a.stats?.likes || 0);
-        default:
-          return 0;
-      }
-    });
+  const filteredAndSortedPosts = posts; // Server already filtered and sorted
 
-  // Get featured posts
-  const featuredPosts = posts.filter(post => post.featured && post.status === 'published').slice(0, 3);
+// Pagination calculations
+const indexOfLastPost = currentPage * postsPerPage;
+const indexOfFirstPost = indexOfLastPost - postsPerPage;
+const currentPosts = filteredAndSortedPosts.slice(indexOfFirstPost, indexOfLastPost);
 
-  // Get popular posts (top 5 by views)
+  // Get featured posts (you might want a separate API endpoint for this)
+  const featuredPosts = posts.filter(post => post.featured).slice(0, 3);
+  
+  // For popular posts, you might want a separate API call
+  // But for now, using the current page's posts
   const topPosts = [...posts]
-    .filter(post => post.status === 'published')
     .sort((a, b) => (b.stats?.views || 0) - (a.stats?.views || 0))
     .slice(0, 5);
-
-  // Pagination
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filteredAndSortedPosts.slice(indexOfFirstPost, indexOfLastPost);
-  const totalPages = Math.ceil(filteredAndSortedPosts.length / postsPerPage);
-
-
 
   return (
     <div className="min-h-screen bg-base-200 dark:bg-base-100">
