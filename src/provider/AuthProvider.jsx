@@ -63,7 +63,7 @@ const AuthProvider = ({ children }) => {
             setUser(currentUser)
             setLoading(false)
             if (currentUser?.email) {
-                console.log('proviider', currentUser.email);
+                // console.log('proviider', currentUser.email);
                 fetchJwtToken(currentUser.email)
             } else {
                 localStorage.removeItem('token')

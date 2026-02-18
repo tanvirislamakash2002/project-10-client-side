@@ -42,20 +42,44 @@ const Blog = () => {
   const { data: blogData, isLoading } = useQuery({
     queryKey: ['blogPosts'],
     queryFn: async () => {
-      const response = await axiosInstance.get(`/api/v1/blog/posts`)
-      console.log(response);
-      return response?.data?.posts;
+      try {
+        const response = await axiosInstance.get(`/api/v1/blog`)
+        console.log('API Response:', response);
+        console.log('Response data:', response?.data);
+        return response?.data;
+      } catch (err) {
+        console.error('API Error:', err);
+        throw err;
+      }
     },
-    placeholderData: {
-      posts: generateMockPosts(),
-      categories: ['Tips for Seekers', 'Advice for Providers', 'For Both', 'City Guides', 'Safety & Trust', 'Decorating on a Budget'],
-      tags: ['budget', 'safety', 'legal', 'moving', 'lifestyle', 'cleaning', 'communication', 'contracts'],
-      popularPosts: []
-    }
   });
 
-  console.log(blogData);
-  const { posts = [], categories = [], tags = [], popularPosts = [] } = blogData;
+  console.log('Blog Data:', blogData);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedCategory, selectedTag, sortBy]);
+
+  // Handle loading state FIRST
+  if (isLoading) {
+    return <LoadingSkeleton />;
+  }
+
+  // Handle case when no data is returned
+  if (!blogData) {
+    return <div>No blog posts available</div>;
+  }
+
+  // Safe to destructure now - blogData is guaranteed to exist
+  const { 
+    posts = [], // Provide default empty array
+    categories = [], 
+    tags = [], 
+    popularPosts = [] 
+  } = blogData;
+
+  console.log('Posts:', posts);
 
   // Filter and sort posts
   const filteredAndSortedPosts = posts
@@ -83,26 +107,19 @@ const Blog = () => {
   // Get featured posts
   const featuredPosts = posts.filter(post => post.featured && post.status === 'published').slice(0, 3);
 
-  // Pagination
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filteredAndSortedPosts.slice(indexOfFirstPost, indexOfLastPost);
-  const totalPages = Math.ceil(filteredAndSortedPosts.length / postsPerPage);
-
-  // Reset to page 1 when filters change
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, selectedCategory, selectedTag, sortBy]);
-
   // Get popular posts (top 5 by views)
   const topPosts = [...posts]
     .filter(post => post.status === 'published')
     .sort((a, b) => (b.stats?.views || 0) - (a.stats?.views || 0))
     .slice(0, 5);
 
-  if (isLoading) {
-    return <LoadingSkeleton />;
-  }
+  // Pagination
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = filteredAndSortedPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPages = Math.ceil(filteredAndSortedPosts.length / postsPerPage);
+
+
 
   return (
     <div className="min-h-screen bg-base-200 dark:bg-base-100">
@@ -166,8 +183,8 @@ const Blog = () => {
                     <button
                       onClick={() => setSelectedCategory('all')}
                       className={`btn btn-sm w-full justify-start ${selectedCategory === 'all'
-                          ? 'btn-primary'
-                          : 'btn-ghost hover:bg-card-hover dark:hover:bg-card-hover'
+                        ? 'btn-primary'
+                        : 'btn-ghost hover:bg-card-hover dark:hover:bg-card-hover'
                         }`}
                     >
                       All Articles
@@ -180,8 +197,8 @@ const Blog = () => {
                           key={category}
                           onClick={() => setSelectedCategory(category)}
                           className={`btn btn-sm w-full justify-start ${selectedCategory === category
-                              ? 'btn-primary'
-                              : 'btn-ghost hover:bg-card-hover dark:hover:bg-card-hover'
+                            ? 'btn-primary'
+                            : 'btn-ghost hover:bg-card-hover dark:hover:bg-card-hover'
                             }`}
                         >
                           {category}
@@ -205,8 +222,8 @@ const Blog = () => {
                         key={tag}
                         onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
                         className={`badge badge-lg gap-1 cursor-pointer transition-all ${selectedTag === tag
-                            ? 'badge-primary'
-                            : 'badge-outline hover:badge-primary'
+                          ? 'badge-primary'
+                          : 'badge-outline hover:badge-primary'
                           }`}
                       >
                         <Tag size={12} />
@@ -702,162 +719,162 @@ const LoadingSkeleton = () => (
 );
 
 // Mock Data Generator
-function generateMockPosts() {
-  return [
-    {
-      _id: '1',
-      title: '10 Essential Tips for First-Time Roommate Seekers',
-      slug: '10-essential-tips-first-time-seekers',
-      excerpt: 'Starting your roommate search? Here are the top 10 things you need to know before signing that lease.',
-      content: 'Full content here...',
-      coverImage: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop',
-      author: { name: 'Sarah Johnson', avatar: '' },
-      status: 'published',
-      categories: ['Tips for Seekers', 'For Both'],
-      tags: ['budget', 'safety', 'communication'],
-      featured: true,
-      meta: { title: 'SEO Title', description: 'SEO Description' },
-      stats: { views: 1243, likes: 89, shares: 34 },
-      createdAt: new Date('2024-11-01'),
-      readTime: '8 min read'
-    },
-    {
-      _id: '2',
-      title: 'How to Screen Potential Roommates: A Provider\'s Guide',
-      slug: 'screen-potential-roommates-guide',
-      excerpt: 'Learn the best practices for vetting roommates to ensure you find the perfect match for your space.',
-      content: 'Full content here...',
-      coverImage: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&fit=crop',
-      author: { name: 'Michael Chen', avatar: '' },
-      status: 'published',
-      categories: ['Advice for Providers'],
-      tags: ['safety', 'legal', 'screening'],
-      featured: true,
-      meta: { title: 'SEO Title', description: 'SEO Description' },
-      stats: { views: 956, likes: 67, shares: 23 },
-      createdAt: new Date('2024-10-28'),
-      readTime: '6 min read'
-    },
-    {
-      _id: '3',
-      title: 'Budget-Friendly Decorating Ideas for Shared Spaces',
-      slug: 'budget-decorating-shared-spaces',
-      excerpt: 'Transform your shared living space without breaking the bank with these creative decorating tips.',
-      content: 'Full content here...',
-      coverImage: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=600&fit=crop',
-      author: { name: 'Emma Williams', avatar: '' },
-      status: 'published',
-      categories: ['Decorating on a Budget', 'For Both'],
-      tags: ['budget', 'lifestyle', 'moving'],
-      featured: false,
-      meta: { title: 'SEO Title', description: 'SEO Description' },
-      stats: { views: 2103, likes: 145, shares: 67 },
-      createdAt: new Date('2024-10-25'),
-      readTime: '5 min read'
-    },
-    {
-      _id: '4',
-      title: 'Understanding Your Rights: Roommate Agreements 101',
-      slug: 'understanding-rights-roommate-agreements',
-      excerpt: 'Everything you need to know about roommate agreements and your legal rights as a tenant.',
-      content: 'Full content here...',
-      coverImage: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=600&fit=crop',
-      author: { name: 'David Martinez', avatar: '' },
-      status: 'published',
-      categories: ['For Both', 'Safety & Trust'],
-      tags: ['legal', 'contracts', 'safety'],
-      featured: false,
-      meta: { title: 'SEO Title', description: 'SEO Description' },
-      stats: { views: 1567, likes: 92, shares: 45 },
-      createdAt: new Date('2024-10-22'),
-      readTime: '10 min read'
-    },
-    {
-      _id: '5',
-      title: 'Best Neighborhoods for Young Professionals in NYC',
-      slug: 'best-neighborhoods-young-professionals-nyc',
-      excerpt: 'Discover the top NYC neighborhoods perfect for young professionals seeking roommates.',
-      content: 'Full content here...',
-      coverImage: 'https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?w=800&h=600&fit=crop',
-      author: { name: 'Lisa Anderson', avatar: '' },
-      status: 'published',
-      categories: ['City Guides'],
-      tags: ['location', 'budget', 'lifestyle'],
-      featured: true,
-      meta: { title: 'SEO Title', description: 'SEO Description' },
-      stats: { views: 3421, likes: 234, shares: 89 },
-      createdAt: new Date('2024-10-20'),
-      readTime: '12 min read'
-    },
-    {
-      _id: '6',
-      title: 'How to Handle Roommate Conflicts Like a Pro',
-      slug: 'handle-roommate-conflicts',
-      excerpt: 'Practical strategies for resolving disagreements and maintaining a peaceful living environment.',
-      content: 'Full content here...',
-      coverImage: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=600&fit=crop',
-      author: { name: 'James Wilson', avatar: '' },
-      status: 'published',
-      categories: ['For Both', 'Safety & Trust'],
-      tags: ['communication', 'lifestyle'],
-      featured: false,
-      meta: { title: 'SEO Title', description: 'SEO Description' },
-      stats: { views: 1876, likes: 112, shares: 56 },
-      createdAt: new Date('2024-10-18'),
-      readTime: '7 min read'
-    },
-    {
-      _id: '7',
-      title: 'Creating a Cleaning Schedule That Actually Works',
-      slug: 'cleaning-schedule-that-works',
-      excerpt: 'Say goodbye to passive-aggressive notes! Learn how to create a fair cleaning schedule for shared spaces.',
-      content: 'Full content here...',
-      coverImage: 'https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=800&h=600&fit=crop',
-      author: { name: 'Rachel Kim', avatar: '' },
-      status: 'published',
-      categories: ['For Both'],
-      tags: ['cleaning', 'communication', 'lifestyle'],
-      featured: false,
-      meta: { title: 'SEO Title', description: 'SEO Description' },
-      stats: { views: 892, likes: 54, shares: 21 },
-      createdAt: new Date('2024-10-15'),
-      readTime: '5 min read'
-    },
-    {
-      _id: '8',
-      title: 'Red Flags to Watch Out for When Meeting Potential Roommates',
-      slug: 'red-flags-potential-roommates',
-      excerpt: 'Protect yourself by knowing these warning signs before committing to a roommate situation.',
-      content: 'Full content here...',
-      coverImage: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop',
-      author: { name: 'Tom Harris', avatar: '' },
-      status: 'published',
-      categories: ['Tips for Seekers', 'Safety & Trust'],
-      tags: ['safety', 'screening'],
-      featured: false,
-      meta: { title: 'SEO Title', description: 'SEO Description' },
-      stats: { views: 2654, likes: 187, shares: 78 },
-      createdAt: new Date('2024-10-12'),
-      readTime: '9 min read'
-    },
-    {
-      _id: '9',
-      title: 'Maximizing Small Spaces: Storage Solutions for Roommates',
-      slug: 'maximizing-small-spaces-storage',
-      excerpt: 'Make the most of your shared space with these clever storage and organization ideas.',
-      content: 'Full content here...',
-      coverImage: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=800&h=600&fit=crop',
-      author: { name: 'Sophie Taylor', avatar: '' },
-      status: 'published',
-      categories: ['Decorating on a Budget', 'For Both'],
-      tags: ['budget', 'lifestyle', 'moving'],
-      featured: false,
-      meta: { title: 'SEO Title', description: 'SEO Description' },
-      stats: { views: 1234, likes: 78, shares: 34 },
-      createdAt: new Date('2024-10-10'),
-      readTime: '6 min read'
-    }
-  ];
-}
+// function generateMockPosts() {
+//   return [
+//     {
+//       _id: '1',
+//       title: '10 Essential Tips for First-Time Roommate Seekers',
+//       slug: '10-essential-tips-first-time-seekers',
+//       excerpt: 'Starting your roommate search? Here are the top 10 things you need to know before signing that lease.',
+//       content: 'Full content here...',
+//       coverImage: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop',
+//       author: { name: 'Sarah Johnson', avatar: '' },
+//       status: 'published',
+//       categories: ['Tips for Seekers', 'For Both'],
+//       tags: ['budget', 'safety', 'communication'],
+//       featured: true,
+//       meta: { title: 'SEO Title', description: 'SEO Description' },
+//       stats: { views: 1243, likes: 89, shares: 34 },
+//       createdAt: new Date('2024-11-01'),
+//       readTime: '8 min read'
+//     },
+//     {
+//       _id: '2',
+//       title: 'How to Screen Potential Roommates: A Provider\'s Guide',
+//       slug: 'screen-potential-roommates-guide',
+//       excerpt: 'Learn the best practices for vetting roommates to ensure you find the perfect match for your space.',
+//       content: 'Full content here...',
+//       coverImage: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&fit=crop',
+//       author: { name: 'Michael Chen', avatar: '' },
+//       status: 'published',
+//       categories: ['Advice for Providers'],
+//       tags: ['safety', 'legal', 'screening'],
+//       featured: true,
+//       meta: { title: 'SEO Title', description: 'SEO Description' },
+//       stats: { views: 956, likes: 67, shares: 23 },
+//       createdAt: new Date('2024-10-28'),
+//       readTime: '6 min read'
+//     },
+//     {
+//       _id: '3',
+//       title: 'Budget-Friendly Decorating Ideas for Shared Spaces',
+//       slug: 'budget-decorating-shared-spaces',
+//       excerpt: 'Transform your shared living space without breaking the bank with these creative decorating tips.',
+//       content: 'Full content here...',
+//       coverImage: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=600&fit=crop',
+//       author: { name: 'Emma Williams', avatar: '' },
+//       status: 'published',
+//       categories: ['Decorating on a Budget', 'For Both'],
+//       tags: ['budget', 'lifestyle', 'moving'],
+//       featured: false,
+//       meta: { title: 'SEO Title', description: 'SEO Description' },
+//       stats: { views: 2103, likes: 145, shares: 67 },
+//       createdAt: new Date('2024-10-25'),
+//       readTime: '5 min read'
+//     },
+//     {
+//       _id: '4',
+//       title: 'Understanding Your Rights: Roommate Agreements 101',
+//       slug: 'understanding-rights-roommate-agreements',
+//       excerpt: 'Everything you need to know about roommate agreements and your legal rights as a tenant.',
+//       content: 'Full content here...',
+//       coverImage: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=600&fit=crop',
+//       author: { name: 'David Martinez', avatar: '' },
+//       status: 'published',
+//       categories: ['For Both', 'Safety & Trust'],
+//       tags: ['legal', 'contracts', 'safety'],
+//       featured: false,
+//       meta: { title: 'SEO Title', description: 'SEO Description' },
+//       stats: { views: 1567, likes: 92, shares: 45 },
+//       createdAt: new Date('2024-10-22'),
+//       readTime: '10 min read'
+//     },
+//     {
+//       _id: '5',
+//       title: 'Best Neighborhoods for Young Professionals in NYC',
+//       slug: 'best-neighborhoods-young-professionals-nyc',
+//       excerpt: 'Discover the top NYC neighborhoods perfect for young professionals seeking roommates.',
+//       content: 'Full content here...',
+//       coverImage: 'https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?w=800&h=600&fit=crop',
+//       author: { name: 'Lisa Anderson', avatar: '' },
+//       status: 'published',
+//       categories: ['City Guides'],
+//       tags: ['location', 'budget', 'lifestyle'],
+//       featured: true,
+//       meta: { title: 'SEO Title', description: 'SEO Description' },
+//       stats: { views: 3421, likes: 234, shares: 89 },
+//       createdAt: new Date('2024-10-20'),
+//       readTime: '12 min read'
+//     },
+//     {
+//       _id: '6',
+//       title: 'How to Handle Roommate Conflicts Like a Pro',
+//       slug: 'handle-roommate-conflicts',
+//       excerpt: 'Practical strategies for resolving disagreements and maintaining a peaceful living environment.',
+//       content: 'Full content here...',
+//       coverImage: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=600&fit=crop',
+//       author: { name: 'James Wilson', avatar: '' },
+//       status: 'published',
+//       categories: ['For Both', 'Safety & Trust'],
+//       tags: ['communication', 'lifestyle'],
+//       featured: false,
+//       meta: { title: 'SEO Title', description: 'SEO Description' },
+//       stats: { views: 1876, likes: 112, shares: 56 },
+//       createdAt: new Date('2024-10-18'),
+//       readTime: '7 min read'
+//     },
+//     {
+//       _id: '7',
+//       title: 'Creating a Cleaning Schedule That Actually Works',
+//       slug: 'cleaning-schedule-that-works',
+//       excerpt: 'Say goodbye to passive-aggressive notes! Learn how to create a fair cleaning schedule for shared spaces.',
+//       content: 'Full content here...',
+//       coverImage: 'https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=800&h=600&fit=crop',
+//       author: { name: 'Rachel Kim', avatar: '' },
+//       status: 'published',
+//       categories: ['For Both'],
+//       tags: ['cleaning', 'communication', 'lifestyle'],
+//       featured: false,
+//       meta: { title: 'SEO Title', description: 'SEO Description' },
+//       stats: { views: 892, likes: 54, shares: 21 },
+//       createdAt: new Date('2024-10-15'),
+//       readTime: '5 min read'
+//     },
+//     {
+//       _id: '8',
+//       title: 'Red Flags to Watch Out for When Meeting Potential Roommates',
+//       slug: 'red-flags-potential-roommates',
+//       excerpt: 'Protect yourself by knowing these warning signs before committing to a roommate situation.',
+//       content: 'Full content here...',
+//       coverImage: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop',
+//       author: { name: 'Tom Harris', avatar: '' },
+//       status: 'published',
+//       categories: ['Tips for Seekers', 'Safety & Trust'],
+//       tags: ['safety', 'screening'],
+//       featured: false,
+//       meta: { title: 'SEO Title', description: 'SEO Description' },
+//       stats: { views: 2654, likes: 187, shares: 78 },
+//       createdAt: new Date('2024-10-12'),
+//       readTime: '9 min read'
+//     },
+//     {
+//       _id: '9',
+//       title: 'Maximizing Small Spaces: Storage Solutions for Roommates',
+//       slug: 'maximizing-small-spaces-storage',
+//       excerpt: 'Make the most of your shared space with these clever storage and organization ideas.',
+//       content: 'Full content here...',
+//       coverImage: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=800&h=600&fit=crop',
+//       author: { name: 'Sophie Taylor', avatar: '' },
+//       status: 'published',
+//       categories: ['Decorating on a Budget', 'For Both'],
+//       tags: ['budget', 'lifestyle', 'moving'],
+//       featured: false,
+//       meta: { title: 'SEO Title', description: 'SEO Description' },
+//       stats: { views: 1234, likes: 78, shares: 34 },
+//       createdAt: new Date('2024-10-10'),
+//       readTime: '6 min read'
+//     }
+//   ];
+// }
 
 export default Blog;
