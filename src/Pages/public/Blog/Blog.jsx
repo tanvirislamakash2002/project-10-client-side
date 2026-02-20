@@ -25,8 +25,11 @@ import {
   MessageCircle
 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { BlogPostCard } from './components/BlogPostCard';
+import { BlogPostCard } from './components/BlogPostCard/BlogPostCard';
 import useAxios from '../../../../hooks/useAxios';
+import Sidebar from './components/sidebar/Sidebar';
+import FilterAndController from './components/FilterAndController/FilterAndController';
+import Pagination from './components/Pagination';
 
 const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,8 +47,8 @@ const Blog = () => {
   }, [searchTerm, selectedCategory, selectedTag, sortBy, postsPerPage]);
 
   // Fetch blog posts with filters applied server-side
-  const { 
-    data: blogData, 
+  const {
+    data: blogData,
     isLoading,
     isError,
     error,
@@ -89,8 +92,8 @@ const Blog = () => {
   }
 
   // Destructure data from API response
-  const { 
-    posts = [], 
+  const {
+    posts = [],
     pagination = {},
     categories = [],
     tags = []
@@ -106,14 +109,14 @@ const Blog = () => {
 
   const filteredAndSortedPosts = posts; // Server already filtered and sorted
 
-// Pagination calculations
-const indexOfLastPost = currentPage * postsPerPage;
-const indexOfFirstPost = indexOfLastPost - postsPerPage;
-const currentPosts = filteredAndSortedPosts.slice(indexOfFirstPost, indexOfLastPost);
+  // Pagination calculations
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = filteredAndSortedPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   // Get featured posts (you might want a separate API endpoint for this)
   const featuredPosts = posts.filter(post => post.featured).slice(0, 3);
-  
+
   // For popular posts, you might want a separate API call
   // But for now, using the current page's posts
   const topPosts = [...posts]
@@ -170,101 +173,12 @@ const currentPosts = filteredAndSortedPosts.slice(indexOfFirstPost, indexOfLastP
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
-          
+          <Sidebar props={{ selectedCategory, setSelectedCategory, categories, posts, tags, selectedTag, setSelectedTag, topPosts }}></Sidebar>
 
           {/* Main Content */}
           <main className="flex-1 order-1 lg:order-2">
             {/* Filters and Controls */}
-            <div className="card bg-base-100 dark:bg-base-200 shadow-lg mb-6">
-              <div className="card-body">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                  {/* Results Info */}
-                  <div className="flex items-center gap-2">
-                    <h2 className="text-xl font-bold text-base-content dark:text-base-content">
-                      {searchTerm || selectedCategory !== 'all' || selectedTag ? 'Filtered Results' : 'Latest Articles'}
-                    </h2>
-                    <span className="badge badge-primary badge-lg">
-                      {filteredAndSortedPosts.length} {filteredAndSortedPosts.length === 1 ? 'article' : 'articles'}
-                    </span>
-                  </div>
-
-                  {/* Controls */}
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {/* Sort */}
-                    <select
-                      className="select select-bordered select-sm bg-base-100 dark:bg-base-300 text-base-content dark:text-base-content"
-                      value={sortBy}
-                      onChange={(e) => setSortBy(e.target.value)}
-                    >
-                      <option value="newest">Newest First</option>
-                      <option value="popular">Most Viewed</option>
-                      <option value="trending">Most Liked</option>
-                    </select>
-
-                    {/* View Mode Toggle */}
-                    <div className="join">
-                      <button
-                        className={`btn btn-sm join-item ${viewMode === 'grid' ? 'btn-primary' : 'btn-outline'}`}
-                        onClick={() => setViewMode('grid')}
-                      >
-                        <Grid3x3 size={16} />
-                      </button>
-                      <button
-                        className={`btn btn-sm join-item ${viewMode === 'list' ? 'btn-primary' : 'btn-outline'}`}
-                        onClick={() => setViewMode('list')}
-                      >
-                        <List size={16} />
-                      </button>
-                    </div>
-
-                    {/* Mobile Filter Toggle */}
-                    <button
-                      className="btn btn-sm btn-outline lg:hidden"
-                      onClick={() => setShowMobileFilters(!showMobileFilters)}
-                    >
-                      <Filter size={16} />
-                      Filters
-                    </button>
-                  </div>
-                </div>
-
-                {/* Active Filters */}
-                {(searchTerm || selectedCategory !== 'all' || selectedTag) && (
-                  <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-section-border dark:border-section-border">
-                    <span className="text-sm text-text-muted dark:text-text-muted">Active filters:</span>
-                    {searchTerm && (
-                      <span className="badge badge-primary gap-2">
-                        Search: "{searchTerm}"
-                        <X size={14} className="cursor-pointer" onClick={() => setSearchTerm('')} />
-                      </span>
-                    )}
-                    {selectedCategory !== 'all' && (
-                      <span className="badge badge-secondary gap-2">
-                        {selectedCategory}
-                        <X size={14} className="cursor-pointer" onClick={() => setSelectedCategory('all')} />
-                      </span>
-                    )}
-                    {selectedTag && (
-                      <span className="badge badge-accent gap-2">
-                        #{selectedTag}
-                        <X size={14} className="cursor-pointer" onClick={() => setSelectedTag(null)} />
-                      </span>
-                    )}
-                    <button
-                      className="badge badge-ghost gap-1 cursor-pointer hover:badge-error"
-                      onClick={() => {
-                        setSearchTerm('');
-                        setSelectedCategory('all');
-                        setSelectedTag(null);
-                      }}
-                    >
-                      <X size={14} />
-                      Clear all
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
+            <FilterAndController props={{ searchTerm, selectedCategory, selectedTag, filteredAndSortedPosts, sortBy, setSortBy, viewMode, setViewMode, setShowMobileFilters, showMobileFilters, setSearchTerm, setSelectedCategory, setSelectedTag }}></FilterAndController>
 
             {/* Blog Posts Grid/List */}
             {currentPosts.length > 0 ? (
@@ -281,72 +195,7 @@ const currentPosts = filteredAndSortedPosts.slice(indexOfFirstPost, indexOfLastP
 
                 {/* Pagination */}
                 {totalPages > 1 && (
-                  <div className="card bg-base-100 dark:bg-base-200 shadow-lg">
-                    <div className="card-body">
-                      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <div className="text-sm text-text-muted dark:text-text-muted">
-                          Showing {indexOfFirstPost + 1}-{Math.min(indexOfLastPost, filteredAndSortedPosts.length)} of {filteredAndSortedPosts.length} articles
-                        </div>
-
-                        <div className="join">
-                          <button
-                            className="join-item btn btn-sm"
-                            disabled={currentPage === 1}
-                            onClick={() => setCurrentPage(currentPage - 1)}
-                          >
-                            «
-                          </button>
-                          {[...Array(totalPages)].map((_, index) => {
-                            const pageNumber = index + 1;
-                            // Show first, last, current, and adjacent pages
-                            if (
-                              pageNumber === 1 ||
-                              pageNumber === totalPages ||
-                              (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
-                            ) {
-                              return (
-                                <button
-                                  key={pageNumber}
-                                  className={`join-item btn btn-sm ${currentPage === pageNumber ? 'btn-primary' : ''
-                                    }`}
-                                  onClick={() => setCurrentPage(pageNumber)}
-                                >
-                                  {pageNumber}
-                                </button>
-                              );
-                            } else if (
-                              pageNumber === currentPage - 2 ||
-                              pageNumber === currentPage + 2
-                            ) {
-                              return <span key={pageNumber} className="join-item btn btn-sm btn-disabled">...</span>;
-                            }
-                            return null;
-                          })}
-                          <button
-                            className="join-item btn btn-sm"
-                            disabled={currentPage === totalPages}
-                            onClick={() => setCurrentPage(currentPage + 1)}
-                          >
-                            »
-                          </button>
-                        </div>
-
-                        <select
-                          className="select select-bordered select-sm bg-base-100 dark:bg-base-300"
-                          value={postsPerPage}
-                          onChange={(e) => {
-                            setPostsPerPage(Number(e.target.value));
-                            setCurrentPage(1);
-                          }}
-                        >
-                          <option value={6}>6 per page</option>
-                          <option value={9}>9 per page</option>
-                          <option value={12}>12 per page</option>
-                          <option value={24}>24 per page</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
+                  <Pagination props={{ indexOfFirstPost, indexOfLastPost, filteredAndSortedPosts, currentPage, setCurrentPage, totalPages, postsPerPage, setPostsPerPage }}></Pagination>
                 )}
               </>
             ) : (

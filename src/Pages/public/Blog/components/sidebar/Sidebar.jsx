@@ -1,6 +1,8 @@
+import { Eye, Facebook, Instagram, Linkedin, Mail, Tag, TrendingUp, Twitter } from 'lucide-react';
 import React from 'react';
 
-const Sidebar = () => {
+const Sidebar = ({ props }) => {
+    const { selectedCategory, setSelectedCategory, categories, posts, tags, selectedTag, setSelectedTag, topPosts } = props;
     return (
         <aside className="lg:w-80 order-2 lg:order-1">
             <div className="sticky top-4 space-y-6">
