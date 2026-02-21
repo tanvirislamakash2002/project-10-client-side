@@ -1,3 +1,5 @@
+import { X } from "lucide-react";
+
 const EmptyState = ({ searchTerm, selectedCategory, selectedTag, onClear }) => (
     <div className="card bg-base-100 dark:bg-base-200 shadow-lg">
         <div className="card-body items-center text-center py-16">

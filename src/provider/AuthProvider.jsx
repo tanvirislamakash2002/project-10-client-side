@@ -62,10 +62,10 @@ const AuthProvider = ({ children }) => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
             setLoading(false)
-            if (currentUser?.email) {
-                // console.log('proviider', currentUser.email);
+            if (currentUser?.email && localStorage.getItem('token')) {
+                // console.log('provider', currentUser.email);
                 fetchJwtToken(currentUser.email)
-            } else {
+            } else if (!currentUser) {
                 localStorage.removeItem('token')
             }
 

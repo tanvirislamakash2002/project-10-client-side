@@ -1,29 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  Search,
-  Clock,
-  User,
-  Calendar,
-  ArrowRight,
-  Grid3x3,
-  List,
-  TrendingUp,
-  Eye,
-  Heart,
-  Bookmark,
-  Filter,
-  X,
-  ChevronDown,
-  ChevronUp,
-  Star,
-  Tag,
-  Mail,
-  Facebook,
-  Twitter,
-  Linkedin,
-  Instagram,
-  MessageCircle
-} from 'lucide-react';
+import { Star } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { BlogPostCard } from './components/BlogPostCard/BlogPostCard';
 import useAxios from '../../../../hooks/useAxios';
@@ -113,7 +89,7 @@ const Blog = () => {
     hasPrev
   } = pagination;
 
-  const filteredAndSortedPosts = posts; // Server already filtered and sorted
+  const filteredAndSortedPosts = posts; 
 
   // Pagination calculations
   const indexOfLastPost = currentPage * postsPerPage;
