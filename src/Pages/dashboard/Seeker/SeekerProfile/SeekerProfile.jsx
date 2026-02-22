@@ -44,13 +44,14 @@ import {
 } from 'lucide-react';
 
 // Import tab components
-import { 
-  LifestyleTab, 
-  PreferencesTab, 
-  ScheduleTab, 
-  MediaTab, 
-  ReferencesTab 
+import {
+  LifestyleTab,
+  PreferencesTab,
+  ScheduleTab,
+  MediaTab,
+  ReferencesTab
 } from './components/ProfileTabs';
+import useUser from '../../../../../hooks/useUser';
 
 // Mock user data - replace with actual API data
 const mockUserProfile = {
@@ -63,7 +64,7 @@ const mockUserProfile = {
   memberSince: "2024-06-15",
   profilePhoto: "https://i.pravatar.cc/400?img=33",
   videoIntro: null,
-  
+
   // Verification
   verifications: {
     email: true,
@@ -71,7 +72,7 @@ const mockUserProfile = {
     id: true,
     socialMedia: false
   },
-  
+
   // Stats
   stats: {
     applicationsSubmitted: 12,
@@ -79,17 +80,17 @@ const mockUserProfile = {
     avgRating: 4.7,
     profileCompleteness: 90
   },
-  
+
   // About Me
   bio: "Hi! I'm a UX designer working remotely for a tech startup. I value a clean, peaceful living space and enjoy cooking, yoga, and weekend hikes. Looking for like-minded roommates who appreciate a balanced lifestyle.",
-  
+
   occupation: {
     type: "professional", // professional, student, both
     title: "Senior UX Designer",
     company: "TechFlow Inc.",
     schedule: "remote"
   },
-  
+
   // Lifestyle
   lifestyle: {
     personality: ["organized", "friendly", "quiet", "creative"],
@@ -100,7 +101,7 @@ const mockUserProfile = {
     social: 7,
     schedule: "early-bird" // early-bird, night-owl, flexible
   },
-  
+
   // Schedule
   schedule: {
     wakeTime: "6:30 AM",
@@ -109,7 +110,7 @@ const mockUserProfile = {
     cookingFrequency: "daily",
     gymSchedule: "morning, 3x/week"
   },
-  
+
   // Roommate Preferences
   preferences: {
     roomType: "private",
@@ -123,7 +124,7 @@ const mockUserProfile = {
     ageRange: [25, 35],
     maxRoommates: 3
   },
-  
+
   // Must-haves & Deal-breakers
   mustHaves: {
     pets: "cat-friendly",
@@ -133,14 +134,14 @@ const mockUserProfile = {
     cleaning: "weekly shared schedule",
     sharedExpenses: "split equally"
   },
-  
+
   // Smoking/Drinking
   habits: {
     smoking: "no",
     drinking: "socially",
     substances: "no"
   },
-  
+
   // Social Preferences
   socialPreferences: {
     socializingLevel: 7, // 1-10
@@ -150,7 +151,7 @@ const mockUserProfile = {
     conflictResolution: "direct but respectful",
     houseMeetings: "monthly"
   },
-  
+
   // Financial
   financial: {
     employmentVerified: true,
@@ -158,7 +159,7 @@ const mockUserProfile = {
     budgetRange: [800, 1500],
     securityDepositReady: true
   },
-  
+
   // Media
   photos: [
     "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400",
@@ -166,7 +167,7 @@ const mockUserProfile = {
     "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400",
     "https://images.unsplash.com/photo-1517331156700-3c241d2b4d83?w=400"
   ],
-  
+
   // References
   references: [
     {
@@ -182,7 +183,7 @@ const mockUserProfile = {
       comment: "Reliable and professional. Great person to live with."
     }
   ],
-  
+
   // Social Links
   socialLinks: {
     linkedin: "https://linkedin.com/in/alexthompson",
@@ -194,6 +195,8 @@ const SeekerProfile = () => {
   const [profile, setProfile] = useState(mockUserProfile);
   const [isEditing, setIsEditing] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
+  const userInfo = useUser()
+  const user = userInfo?.user;
 
   const completionPercentage = profile.stats.profileCompleteness;
 
@@ -210,10 +213,10 @@ const SeekerProfile = () => {
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse-slow"></div>
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }}></div>
         </div>
-        
+
         {/* Geometric Pattern Overlay */}
-        <div 
-          className="absolute inset-0 opacity-5" 
+        <div
+          className="absolute inset-0 opacity-5"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
           }}
@@ -240,21 +243,21 @@ const SeekerProfile = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10 pb-16">
         {/* Main Profile Card */}
         <div className="bg-white dark:bg-[var(--color-base-200)] rounded-3xl shadow-2xl border border-[var(--color-section-border)] overflow-hidden">
-          
+
           {/* Profile Header Section */}
           <div className="p-8 border-b border-[var(--color-section-border)]">
             <div className="flex flex-col lg:flex-row gap-8 items-start">
-              
+
               {/* Profile Photo/Video */}
               <div className="relative group">
                 <div className="w-40 h-40 rounded-2xl overflow-hidden ring-4 ring-white dark:ring-[var(--color-base-300)] shadow-xl">
-                  <img 
-                    src={profile.profilePhoto} 
-                    alt={profile.fullName}
+                  <img
+                    src={user?.photoURL}
+                    alt={user?.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                
+
                 {/* Upload Overlay */}
                 <div className="absolute inset-0 bg-black/60 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center cursor-pointer">
                   <div className="text-center text-white">
@@ -262,7 +265,7 @@ const SeekerProfile = () => {
                     <div className="text-xs">Update Photo</div>
                   </div>
                 </div>
-                
+
                 {/* Verification Badge */}
                 {getVerificationCount() > 0 && (
                   <div className="absolute -bottom-2 -right-2 bg-[var(--color-verified-badge)] text-[var(--color-verified-badge-content)] rounded-full p-2 shadow-lg">
@@ -277,16 +280,16 @@ const SeekerProfile = () => {
                   <div className="flex items-start justify-between gap-4 mb-2">
                     <div>
                       <h1 className="text-4xl font-bold text-[var(--color-base-content)] mb-1">
-                        {profile.fullName}
+                        {user?.name}
                       </h1>
-                      {profile.preferredName && profile.preferredName !== profile.fullName && (
-                        <p className="text-lg text-[var(--color-text-muted)]">
-                          "{profile.preferredName}"
-                        </p>
-                      )}
+                      {/* {profile.preferredName && profile.preferredName !== profile.fullName && ( */}
+                      <p className="text-lg text-[var(--color-text-muted)]">
+                        "{user?.name.split(' ')[0]}"
+                      </p>
+                      {/* )} */}
                     </div>
-                    
-                    <button 
+
+                    <button
                       onClick={() => setIsEditing(!isEditing)}
                       className="btn btn-primary gap-2"
                     >
@@ -336,25 +339,25 @@ const SeekerProfile = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="bg-gradient-to-br from-[var(--color-primary)]/10 to-[var(--color-primary)]/5 p-4 rounded-xl border border-[var(--color-primary)]/20">
                     <div className="text-2xl font-bold text-[var(--color-primary)] mb-1">
-                      {new Date(profile.memberSince).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                      {new Date(user?.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
                     </div>
                     <div className="text-xs text-[var(--color-text-muted)]">Member Since</div>
                   </div>
-                  
+
                   <div className="bg-gradient-to-br from-[var(--color-secondary)]/10 to-[var(--color-secondary)]/5 p-4 rounded-xl border border-[var(--color-secondary)]/20">
                     <div className="text-2xl font-bold text-[var(--color-secondary)] mb-1">
                       {profile.stats.applicationsSubmitted}
                     </div>
                     <div className="text-xs text-[var(--color-text-muted)]">Applications</div>
                   </div>
-                  
+
                   <div className="bg-gradient-to-br from-[var(--color-accent)]/10 to-[var(--color-accent)]/5 p-4 rounded-xl border border-[var(--color-accent)]/20">
                     <div className="text-2xl font-bold text-[var(--color-accent-content)] mb-1">
                       {profile.stats.responseRate}%
                     </div>
                     <div className="text-xs text-[var(--color-text-muted)]">Response Rate</div>
                   </div>
-                  
+
                   <div className="bg-gradient-to-br from-[var(--color-warning)]/10 to-[var(--color-warning)]/5 p-4 rounded-xl border border-[var(--color-warning)]/20">
                     <div className="flex items-center gap-1 mb-1">
                       <Star className="w-5 h-5 text-[var(--color-warning)] fill-current" />
@@ -377,7 +380,7 @@ const SeekerProfile = () => {
                     </span>
                   </div>
                   <div className="w-full bg-[var(--color-base-200)] dark:bg-[var(--color-base-100)] rounded-full h-3 overflow-hidden">
-                    <div 
+                    <div
                       className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] h-full rounded-full transition-all duration-500"
                       style={{ width: `${completionPercentage}%` }}
                     ></div>
@@ -406,11 +409,10 @@ const SeekerProfile = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-6 py-4 font-medium transition-all duration-200 border-b-2 flex items-center gap-2 ${
-                    activeTab === tab.id
-                      ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
-                      : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-base-content)] hover:border-[var(--color-text-muted)]'
-                  }`}
+                  className={`px-6 py-4 font-medium transition-all duration-200 border-b-2 flex items-center gap-2 ${activeTab === tab.id
+                    ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
+                    : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-base-content)] hover:border-[var(--color-text-muted)]'
+                    }`}
                 >
                   <tab.icon className="w-4 h-4" />
                   {tab.label}
@@ -524,13 +526,13 @@ const OverviewTab = ({ profile }) => (
         <Sparkles className="w-6 h-6 text-[var(--color-primary)]" />
         Personality & Interests
       </h2>
-      
+
       <div className="space-y-4">
         <div>
           <h3 className="text-sm font-semibold text-[var(--color-text-muted)] mb-3">Personality Traits</h3>
           <div className="flex flex-wrap gap-2">
             {profile.lifestyle.personality.map((trait, idx) => (
-              <span 
+              <span
                 key={idx}
                 className="px-4 py-2 bg-gradient-to-r from-[var(--color-primary)]/10 to-[var(--color-secondary)]/10 text-[var(--color-primary)] rounded-full font-medium text-sm border border-[var(--color-primary)]/20"
               >
@@ -544,7 +546,7 @@ const OverviewTab = ({ profile }) => (
           <h3 className="text-sm font-semibold text-[var(--color-text-muted)] mb-3">Hobbies & Interests</h3>
           <div className="flex flex-wrap gap-2">
             {profile.lifestyle.hobbies.map((hobby, idx) => (
-              <span 
+              <span
                 key={idx}
                 className="px-4 py-2 bg-[var(--color-accent)]/10 text-[var(--color-accent-content)] rounded-full font-medium text-sm border border-[var(--color-accent)]/20"
               >
@@ -567,7 +569,7 @@ const OverviewTab = ({ profile }) => (
         <Home className="w-6 h-6 text-[var(--color-primary)]" />
         Living Style
       </h2>
-      
+
       <div className="grid md:grid-cols-2 gap-6">
         <div className="bg-gradient-to-br from-[var(--color-primary)]/5 to-transparent p-6 rounded-xl border border-[var(--color-section-border)]">
           <div className="flex items-center justify-between mb-2">
@@ -575,7 +577,7 @@ const OverviewTab = ({ profile }) => (
             <span className="text-lg font-bold text-[var(--color-primary)]">{profile.lifestyle.cleanliness}/10</span>
           </div>
           <div className="w-full bg-[var(--color-base-200)] rounded-full h-2">
-            <div 
+            <div
               className="bg-[var(--color-primary)] h-2 rounded-full"
               style={{ width: `${profile.lifestyle.cleanliness * 10}%` }}
             ></div>
@@ -588,7 +590,7 @@ const OverviewTab = ({ profile }) => (
             <span className="text-lg font-bold text-[var(--color-secondary)]">{profile.lifestyle.noiseTolerance}/10</span>
           </div>
           <div className="w-full bg-[var(--color-base-200)] rounded-full h-2">
-            <div 
+            <div
               className="bg-[var(--color-secondary)] h-2 rounded-full"
               style={{ width: `${profile.lifestyle.noiseTolerance * 10}%` }}
             ></div>
@@ -601,7 +603,7 @@ const OverviewTab = ({ profile }) => (
             <span className="text-lg font-bold text-[var(--color-accent-content)]">{profile.lifestyle.social}/10</span>
           </div>
           <div className="w-full bg-[var(--color-base-200)] rounded-full h-2">
-            <div 
+            <div
               className="bg-[var(--color-accent)] h-2 rounded-full"
               style={{ width: `${profile.lifestyle.social * 10}%` }}
             ></div>

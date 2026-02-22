@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Home,
   DollarSign,
@@ -22,7 +22,9 @@ import {
   ExternalLink,
   Upload,
   X,
-  Plus
+  Plus,
+  Briefcase,
+  Eye
 } from 'lucide-react';
 
 // Lifestyle Tab Component
