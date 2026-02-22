@@ -45,9 +45,10 @@ import {
   TrendingUp
 } from 'lucide-react';
 // Import and export all section components
-import  { PreferencesSection, PrivacySection, NotificationsSection } from './components/SettingsSections1';
-import  { SecuritySection, CommunicationSection, SubscriptionSection, AccessibilitySection } from './components/SettingsSections2';
-import  { AccountSection, SupportSection } from './components/SettingsSections3';
+import { PreferencesSection, PrivacySection, NotificationsSection } from './components/SettingsSections1';
+import { SecuritySection, CommunicationSection, SubscriptionSection, AccessibilitySection } from './components/SettingsSections2';
+import { AccountSection, SupportSection } from './components/SettingsSections3';
+import useUser from '../../../../../hooks/useUser';
 // Mock settings data
 const mockSettings = {
   profile: {
@@ -155,6 +156,7 @@ const SeekerSettings = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
+
   const updateSetting = (section, field, value) => {
     setSettings(prev => ({
       ...prev,
@@ -216,9 +218,9 @@ const SeekerSettings = () => {
                 Manage your account and preferences
               </p>
             </div>
-            
+
             {hasUnsavedChanges && (
-              <button 
+              <button
                 onClick={saveSettings}
                 className="btn btn-lg bg-white text-[var(--color-primary)] hover:bg-[var(--color-base-200)] border-none shadow-xl gap-2"
               >
@@ -254,11 +256,10 @@ const SeekerSettings = () => {
                   <button
                     key={section.id}
                     onClick={() => setActiveSection(section.id)}
-                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                      activeSection === section.id
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${activeSection === section.id
                         ? 'bg-[var(--color-primary)] text-white shadow-md'
                         : 'hover:bg-[var(--color-base-100)] dark:hover:bg-[var(--color-base-300)] text-[var(--color-base-content)]'
-                    }`}
+                      }`}
                   >
                     <section.icon className="w-5 h-5" />
                     <span className="text-sm font-medium flex-1 text-left">{section.label}</span>
@@ -292,7 +293,7 @@ const SeekerSettings = () => {
         <div className="fixed bottom-6 right-6 bg-[var(--color-warning)] text-[var(--color-warning-content)] px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 animate-slideUp">
           <AlertCircle className="w-5 h-5" />
           <span className="font-medium">You have unsaved changes</span>
-          <button 
+          <button
             onClick={saveSettings}
             className="btn btn-sm bg-white/20 hover:bg-white/30 border-none ml-4"
           >
@@ -307,6 +308,8 @@ const SeekerSettings = () => {
 // Profile Management Section
 const ProfileSection = ({ settings, updateSetting, updateNestedSetting }) => {
   const [photoPreview, setPhotoPreview] = useState(settings.profile.photo);
+  const userInfo = useUser()
+  const user = userInfo?.user;
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
@@ -332,9 +335,9 @@ const ProfileSection = ({ settings, updateSetting, updateNestedSetting }) => {
         <h3 className="text-lg font-semibold text-[var(--color-base-content)] mb-4">Profile Photo</h3>
         <div className="flex items-center gap-6">
           <div className="relative group">
-            <img 
-              src={photoPreview} 
-              alt="Profile" 
+            <img
+              src={user?.photoURL}
+              alt="Profile"
               className="w-32 h-32 rounded-full object-cover ring-4 ring-[var(--color-primary)]/20"
             />
             <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -345,9 +348,9 @@ const ProfileSection = ({ settings, updateSetting, updateNestedSetting }) => {
             <label className="btn btn-primary gap-2 cursor-pointer">
               <Camera className="w-4 h-4" />
               Upload New Photo
-              <input 
-                type="file" 
-                accept="image/*" 
+              <input
+                type="file"
+                accept="image/*"
                 onChange={handlePhotoChange}
                 className="hidden"
               />
@@ -362,7 +365,7 @@ const ProfileSection = ({ settings, updateSetting, updateNestedSetting }) => {
       {/* Personal Details */}
       <div className="bg-[var(--color-base-100)] dark:bg-[var(--color-base-300)] p-6 rounded-xl space-y-4">
         <h3 className="text-lg font-semibold text-[var(--color-base-content)] mb-4">Personal Details</h3>
-        
+
         <div className="grid md:grid-cols-2 gap-4">
           <div>
             <label className="label">
@@ -370,7 +373,7 @@ const ProfileSection = ({ settings, updateSetting, updateNestedSetting }) => {
             </label>
             <input
               type="text"
-              value={settings.profile.fullName}
+              value={user?.name}
               onChange={(e) => updateSetting('profile', 'fullName', e.target.value)}
               className="input input-bordered w-full"
             />
@@ -433,7 +436,7 @@ const ProfileSection = ({ settings, updateSetting, updateNestedSetting }) => {
       {/* Contact Information */}
       <div className="bg-[var(--color-base-100)] dark:bg-[var(--color-base-300)] p-6 rounded-xl space-y-4">
         <h3 className="text-lg font-semibold text-[var(--color-base-content)] mb-4">Contact Information</h3>
-        
+
         <div>
           <label className="label">
             <span className="label-text font-medium">Email</span>
@@ -441,17 +444,17 @@ const ProfileSection = ({ settings, updateSetting, updateNestedSetting }) => {
           <div className="flex gap-2">
             <input
               type="email"
-              value={settings.profile.email}
+              value={user?.email}
               onChange={(e) => updateSetting('profile', 'email', e.target.value)}
               className="input input-bordered flex-1"
             />
             <div className="form-control">
               <label className="label cursor-pointer gap-2">
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   checked={settings.profile.emailVisible}
                   onChange={(e) => updateSetting('profile', 'emailVisible', e.target.checked)}
-                  className="checkbox checkbox-primary" 
+                  className="checkbox checkbox-primary"
                 />
                 <span className="label-text">Visible</span>
               </label>
@@ -472,11 +475,11 @@ const ProfileSection = ({ settings, updateSetting, updateNestedSetting }) => {
             />
             <div className="form-control">
               <label className="label cursor-pointer gap-2">
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   checked={settings.profile.phoneVisible}
                   onChange={(e) => updateSetting('profile', 'phoneVisible', e.target.checked)}
-                  className="checkbox checkbox-primary" 
+                  className="checkbox checkbox-primary"
                 />
                 <span className="label-text">Visible</span>
               </label>
@@ -488,7 +491,7 @@ const ProfileSection = ({ settings, updateSetting, updateNestedSetting }) => {
       {/* Social Media Links */}
       <div className="bg-[var(--color-base-100)] dark:bg-[var(--color-base-300)] p-6 rounded-xl space-y-4">
         <h3 className="text-lg font-semibold text-[var(--color-base-content)] mb-4">Social Media Links (Optional)</h3>
-        
+
         <div>
           <label className="label">
             <span className="label-text font-medium">LinkedIn</span>
