@@ -45,10 +45,11 @@ import {
   TrendingUp
 } from 'lucide-react';
 // Import and export all section components
-import { PreferencesSection, PrivacySection, NotificationsSection } from './components/SettingsSections1';
+import {  PrivacySection, NotificationsSection } from './components/SettingsSections1';
 import { SecuritySection, CommunicationSection, SubscriptionSection, AccessibilitySection } from './components/SettingsSections2';
 import { AccountSection, SupportSection } from './components/SettingsSections3';
 import useUser from '../../../../../hooks/useUser';
+import { PreferencesSection } from './components/PreferencesSection';
 // Mock settings data
 const mockSettings = {
   profile: {
