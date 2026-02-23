@@ -17,7 +17,7 @@ import {
   Filter
 } from 'lucide-react';
 // Import and export all section components
-import {   SubscriptionSection, AccessibilitySection } from './components/SettingsSections2';
+import {    AccessibilitySection } from './components/SettingsSections2';
 import { AccountSection, SupportSection } from './components/SettingsSections3';
 import useUser from '../../../../../hooks/useUser';
 import { PreferencesSection } from './components/PreferencesSection';
@@ -25,6 +25,7 @@ import { PrivacySection } from './components/PrivacySection';
 import { NotificationsSection } from './components/NotificationsSection';
 import { SecuritySection } from './components/SecuritySection';
 import { CommunicationSection } from './components/CommunicationSection';
+import { SubscriptionSection } from './components/SubscriptionSection';
 // Mock settings data
 const mockSettings = {
   profile: {
