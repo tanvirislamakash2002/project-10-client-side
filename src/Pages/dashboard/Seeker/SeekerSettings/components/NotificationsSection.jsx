@@ -1,42 +1,4 @@
-import React, { useState } from 'react';
-import {
-  Filter,
-  MapPin,
-  DollarSign,
-  Home,
-  Calendar,
-  Users,
-  Eye,
-  EyeOff,
-  Bell,
-  Mail,
-  Smartphone,
-  Shield,
-  Lock,
-  Key,
-  Monitor,
-  MessageSquare,
-  Clock,
-  X,
-  CreditCard,
-  Download,
-  Trash2,
-  AlertCircle,
-  Check,
-  Moon,
-  Sun,
-  Palette,
-  Accessibility,
-  Volume2,
-  HelpCircle,
-  FileText,
-  Send,
-  Star,
-  ChevronDown,
-  ChevronUp,
-  Plus,
-  Zap
-} from 'lucide-react';
+import { Bell, Mail, Smartphone } from 'lucide-react';
 
 
 // Notifications Section
@@ -54,13 +16,13 @@ export const NotificationsSection = ({ settings, updateNestedSetting }) => {
           <Mail className="w-5 h-5 text-[var(--color-primary)]" />
           Email Notifications
         </h3>
-        
+
         <label className="flex items-center justify-between p-4 bg-[var(--color-base-100)] dark:bg-[var(--color-base-200)] rounded-lg">
           <div>
             <div className="font-medium text-[var(--color-base-content)]">New Listings</div>
             <div className="text-sm text-[var(--color-text-muted)]">Get notified when new rooms match your preferences</div>
           </div>
-          <input 
+          <input
             type="checkbox"
             checked={settings.notifications.email.newListings}
             onChange={(e) => updateNestedSetting('notifications', 'email', 'newListings', e.target.checked)}
@@ -73,7 +35,7 @@ export const NotificationsSection = ({ settings, updateNestedSetting }) => {
             <div className="font-medium text-[var(--color-base-content)]">Matches</div>
             <div className="text-sm text-[var(--color-text-muted)]">When you match with a provider</div>
           </div>
-          <input 
+          <input
             type="checkbox"
             checked={settings.notifications.email.matches}
             onChange={(e) => updateNestedSetting('notifications', 'email', 'matches', e.target.checked)}
@@ -86,7 +48,7 @@ export const NotificationsSection = ({ settings, updateNestedSetting }) => {
             <div className="font-medium text-[var(--color-base-content)]">Messages</div>
             <div className="text-sm text-[var(--color-text-muted)]">When you receive a new message</div>
           </div>
-          <input 
+          <input
             type="checkbox"
             checked={settings.notifications.email.messages}
             onChange={(e) => updateNestedSetting('notifications', 'email', 'messages', e.target.checked)}
@@ -99,7 +61,7 @@ export const NotificationsSection = ({ settings, updateNestedSetting }) => {
             <div className="font-medium text-[var(--color-base-content)]">Application Updates</div>
             <div className="text-sm text-[var(--color-text-muted)]">Status changes on your applications</div>
           </div>
-          <input 
+          <input
             type="checkbox"
             checked={settings.notifications.email.applicationUpdates}
             onChange={(e) => updateNestedSetting('notifications', 'email', 'applicationUpdates', e.target.checked)}
@@ -130,10 +92,10 @@ export const NotificationsSection = ({ settings, updateNestedSetting }) => {
           <Bell className="w-5 h-5 text-[var(--color-primary)]" />
           Push Notifications
         </h3>
-        
+
         <label className="flex items-center justify-between p-4 bg-[var(--color-base-100)] dark:bg-[var(--color-base-200)] rounded-lg">
           <span className="font-medium text-[var(--color-base-content)]">Enable Push Notifications</span>
-          <input 
+          <input
             type="checkbox"
             checked={settings.notifications.push.enabled}
             onChange={(e) => updateNestedSetting('notifications', 'push', 'enabled', e.target.checked)}
@@ -145,7 +107,7 @@ export const NotificationsSection = ({ settings, updateNestedSetting }) => {
           <div className="space-y-3 pl-4 border-l-2 border-[var(--color-primary)]">
             <label className="flex items-center justify-between p-3 bg-[var(--color-base-100)] dark:bg-[var(--color-base-200)] rounded-lg">
               <span className="text-[var(--color-base-content)]">Messages</span>
-              <input 
+              <input
                 type="checkbox"
                 checked={settings.notifications.push.messages}
                 onChange={(e) => updateNestedSetting('notifications', 'push', 'messages', e.target.checked)}
@@ -155,7 +117,7 @@ export const NotificationsSection = ({ settings, updateNestedSetting }) => {
 
             <label className="flex items-center justify-between p-3 bg-[var(--color-base-100)] dark:bg-[var(--color-base-200)] rounded-lg">
               <span className="text-[var(--color-base-content)]">Matches</span>
-              <input 
+              <input
                 type="checkbox"
                 checked={settings.notifications.push.matches}
                 onChange={(e) => updateNestedSetting('notifications', 'push', 'matches', e.target.checked)}
@@ -165,7 +127,7 @@ export const NotificationsSection = ({ settings, updateNestedSetting }) => {
 
             <label className="flex items-center justify-between p-3 bg-[var(--color-base-100)] dark:bg-[var(--color-base-200)] rounded-lg">
               <span className="text-[var(--color-base-content)]">New Listings</span>
-              <input 
+              <input
                 type="checkbox"
                 checked={settings.notifications.push.newListings}
                 onChange={(e) => updateNestedSetting('notifications', 'push', 'newListings', e.target.checked)}
@@ -182,13 +144,13 @@ export const NotificationsSection = ({ settings, updateNestedSetting }) => {
           <Smartphone className="w-5 h-5 text-[var(--color-primary)]" />
           SMS Notifications
         </h3>
-        
+
         <label className="flex items-center justify-between p-4 bg-[var(--color-base-100)] dark:bg-[var(--color-base-200)] rounded-lg">
           <div>
             <div className="font-medium text-[var(--color-base-content)]">Enable SMS</div>
             <div className="text-sm text-[var(--color-text-muted)]">Standard messaging rates apply</div>
           </div>
-          <input 
+          <input
             type="checkbox"
             checked={settings.notifications.sms.enabled}
             onChange={(e) => updateNestedSetting('notifications', 'sms', 'enabled', e.target.checked)}
@@ -199,7 +161,7 @@ export const NotificationsSection = ({ settings, updateNestedSetting }) => {
         {settings.notifications.sms.enabled && (
           <label className="flex items-center justify-between p-4 bg-[var(--color-base-100)] dark:bg-[var(--color-base-200)] rounded-lg">
             <span className="text-[var(--color-base-content)]">Critical Updates Only</span>
-            <input 
+            <input
               type="checkbox"
               checked={settings.notifications.sms.critical}
               onChange={(e) => updateNestedSetting('notifications', 'sms', 'critical', e.target.checked)}
@@ -212,6 +174,3 @@ export const NotificationsSection = ({ settings, updateNestedSetting }) => {
   );
 };
 
-export default {
-  NotificationsSection
-};

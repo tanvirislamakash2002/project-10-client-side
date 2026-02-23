@@ -1,56 +1,28 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   User,
-  Mail,
-  Phone,
-  Lock,
   Bell,
   Shield,
   Eye,
-  EyeOff,
-  Globe,
   CreditCard,
-  Download,
-  Trash2,
   Settings,
   Search,
   ChevronRight,
-  Check,
-  X,
   Camera,
   Save,
   AlertCircle,
-  Home,
-  DollarSign,
-  MapPin,
-  Calendar,
-  Users,
   MessageSquare,
-  Heart,
-  Clock,
-  Moon,
-  Sun,
-  Monitor,
-  Smartphone,
   HelpCircle,
-  FileText,
-  LogOut,
-  Palette,
   Accessibility,
-  Volume2,
-  VolumeX,
-  Zap,
-  Filter,
-  Star,
-  TrendingUp
+  Filter
 } from 'lucide-react';
 // Import and export all section components
-import {  NotificationsSection } from './components/SettingsSections1';
 import { SecuritySection, CommunicationSection, SubscriptionSection, AccessibilitySection } from './components/SettingsSections2';
 import { AccountSection, SupportSection } from './components/SettingsSections3';
 import useUser from '../../../../../hooks/useUser';
 import { PreferencesSection } from './components/PreferencesSection';
 import { PrivacySection } from './components/PrivacySection';
+import { NotificationsSection } from './components/NotificationsSection';
 // Mock settings data
 const mockSettings = {
   profile: {
@@ -259,8 +231,8 @@ const SeekerSettings = () => {
                     key={section.id}
                     onClick={() => setActiveSection(section.id)}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${activeSection === section.id
-                        ? 'bg-[var(--color-primary)] text-white shadow-md'
-                        : 'hover:bg-[var(--color-base-100)] dark:hover:bg-[var(--color-base-300)] text-[var(--color-base-content)]'
+                      ? 'bg-[var(--color-primary)] text-white shadow-md'
+                      : 'hover:bg-[var(--color-base-100)] dark:hover:bg-[var(--color-base-300)] text-[var(--color-base-content)]'
                       }`}
                   >
                     <section.icon className="w-5 h-5" />
