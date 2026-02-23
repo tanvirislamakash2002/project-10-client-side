@@ -1,6 +1,6 @@
 import { Eye, EyeOff, Mail, Smartphone, Users } from "lucide-react";
 
-export const PrivacySection = ({ settings, updateSetting, updateNestedSetting }) => {
+export const PrivacySection = ({ settings, updateNestedSetting }) => {
   return (
     <div className="space-y-8">
       <div>
@@ -11,7 +11,7 @@ export const PrivacySection = ({ settings, updateSetting, updateNestedSetting })
       {/* Profile Visibility */}
       <div className="bg-[var(--color-base-100)] dark:bg-[var(--color-base-300)] p-6 rounded-xl">
         <h3 className="text-lg font-semibold text-[var(--color-base-content)] mb-4">Profile Visibility</h3>
-        
+
         <div className="space-y-3">
           <label className="flex items-center justify-between p-4 bg-[var(--color-base-100)] dark:bg-[var(--color-base-200)] rounded-lg cursor-pointer hover:shadow-md transition-shadow">
             <div className="flex items-center gap-3">
@@ -21,8 +21,8 @@ export const PrivacySection = ({ settings, updateSetting, updateNestedSetting })
                 <div className="text-sm text-[var(--color-text-muted)]">Visible to everyone</div>
               </div>
             </div>
-            <input 
-              type="radio" 
+            <input
+              type="radio"
               name="visibility"
               checked={settings.privacy.profileVisibility === 'public'}
               onChange={() => updateNestedSetting('privacy', 'profileVisibility', null, 'public')}
@@ -38,8 +38,8 @@ export const PrivacySection = ({ settings, updateSetting, updateNestedSetting })
                 <div className="text-sm text-[var(--color-text-muted)]">Visible to registered users</div>
               </div>
             </div>
-            <input 
-              type="radio" 
+            <input
+              type="radio"
               name="visibility"
               checked={settings.privacy.profileVisibility === 'logged-in'}
               onChange={() => updateNestedSetting('privacy', 'profileVisibility', null, 'logged-in')}
@@ -55,8 +55,8 @@ export const PrivacySection = ({ settings, updateSetting, updateNestedSetting })
                 <div className="text-sm text-[var(--color-text-muted)]">Only providers you contact</div>
               </div>
             </div>
-            <input 
-              type="radio" 
+            <input
+              type="radio"
               name="visibility"
               checked={settings.privacy.profileVisibility === 'private'}
               onChange={() => updateNestedSetting('privacy', 'profileVisibility', null, 'private')}
@@ -69,13 +69,13 @@ export const PrivacySection = ({ settings, updateSetting, updateNestedSetting })
       {/* Contact Visibility */}
       <div className="bg-[var(--color-base-100)] dark:bg-[var(--color-base-300)] p-6 rounded-xl space-y-4">
         <h3 className="text-lg font-semibold text-[var(--color-base-content)] mb-4">Contact Information Visibility</h3>
-        
+
         <label className="flex items-center justify-between p-4 bg-[var(--color-base-100)] dark:bg-[var(--color-base-200)] rounded-lg">
           <div className="flex items-center gap-3">
             <Mail className="w-5 h-5 text-[var(--color-primary)]" />
             <span className="font-medium text-[var(--color-base-content)]">Show Email</span>
           </div>
-          <input 
+          <input
             type="checkbox"
             checked={settings.privacy.showEmail}
             onChange={(e) => updateNestedSetting('privacy', 'showEmail', null, e.target.checked)}
@@ -88,7 +88,7 @@ export const PrivacySection = ({ settings, updateSetting, updateNestedSetting })
             <Smartphone className="w-5 h-5 text-[var(--color-primary)]" />
             <span className="font-medium text-[var(--color-base-content)]">Show Phone</span>
           </div>
-          <input 
+          <input
             type="checkbox"
             checked={settings.privacy.showPhone}
             onChange={(e) => updateNestedSetting('privacy', 'showPhone', null, e.target.checked)}
@@ -100,7 +100,7 @@ export const PrivacySection = ({ settings, updateSetting, updateNestedSetting })
       {/* Activity Status */}
       <div className="bg-[var(--color-base-100)] dark:bg-[var(--color-base-300)] p-6 rounded-xl">
         <h3 className="text-lg font-semibold text-[var(--color-base-content)] mb-4">Activity Status</h3>
-        
+
         <select
           value={settings.privacy.activityStatus}
           onChange={(e) => updateNestedSetting('privacy', 'activityStatus', null, e.target.value)}
