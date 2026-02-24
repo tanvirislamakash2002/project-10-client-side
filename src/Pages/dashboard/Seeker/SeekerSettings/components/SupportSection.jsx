@@ -186,6 +186,3 @@ export const SupportSection = () => {
   );
 };
 
-export default {
-  SupportSection
-};
