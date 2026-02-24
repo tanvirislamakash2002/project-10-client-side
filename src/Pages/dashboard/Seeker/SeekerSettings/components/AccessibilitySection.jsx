@@ -127,6 +127,3 @@ export const AccessibilitySection = ({ settings, updateNestedSetting }) => {
   );
 };
 
-export default {
-  AccessibilitySection
-};
